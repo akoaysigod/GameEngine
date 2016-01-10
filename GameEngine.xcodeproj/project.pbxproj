@@ -1,0 +1,688 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
+		EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */; };
+		EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
+		EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
+		EAA99DBD1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */; };
+		EAA99DBE1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */; };
+		EAA99DBF1C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */; };
+		EAA99DC01C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */; };
+		EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
+		EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
+		EAA99DC41C41E48900CF3246 /* GLMatrix4Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLMatrix4Extensions.swift */; };
+		EAA99DC51C41E48900CF3246 /* GLMatrix4Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLMatrix4Extensions.swift */; };
+		EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC61C41E4B900CF3246 /* Globals.swift */; };
+		EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC61C41E4B900CF3246 /* Globals.swift */; };
+		EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC91C41E4F100CF3246 /* Pipelines.swift */; };
+		EAA99DCD1C41E4F100CF3246 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC91C41E4F100CF3246 /* Pipelines.swift */; };
+		EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DCA1C41E4F100CF3246 /* Renderer.swift */; };
+		EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DCA1C41E4F100CF3246 /* Renderer.swift */; };
+		EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */; };
+		EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */; };
+		EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DD21C41E50200CF3246 /* BufferQueue.swift */; };
+		EAA99DD51C41E50200CF3246 /* BufferQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DD21C41E50200CF3246 /* BufferQueue.swift */; };
+		EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DD31C41E50200CF3246 /* Vertex.swift */; };
+		EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DD31C41E50200CF3246 /* Vertex.swift */; };
+		EAA99DDC1C41E51C00CF3246 /* GEAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDB1C41E51C00CF3246 /* GEAction.swift */; };
+		EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDB1C41E51C00CF3246 /* GEAction.swift */; };
+		EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */; };
+		EAA99DE21C41E52700CF3246 /* GEColorRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */; };
+		EAA99DE31C41E52700CF3246 /* GENode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDF1C41E52700CF3246 /* GENode.swift */; };
+		EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDF1C41E52700CF3246 /* GENode.swift */; };
+		EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DE01C41E52700CF3246 /* GESprite.swift */; };
+		EAA99DE61C41E52700CF3246 /* GESprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DE01C41E52700CF3246 /* GESprite.swift */; };
+		EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DEE1C41E57300CF3246 /* GEViewController.swift */; };
+		EAA99DF01C41E57300CF3246 /* GEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DEE1C41E57300CF3246 /* GEViewController.swift */; };
+		EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* GECamera.swift */; };
+		EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* GECamera.swift */; };
+		EAA99E281C41E66B00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
+		EAA99E291C41E66C00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
+		EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */; };
+		EAA99E321C41E6D600CF3246 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2E1C41E6A500CF3246 /* Main.storyboard */; };
+		EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
+		EAA99E341C41E6EB00CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
+		EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ColorShaders.metal */; };
+		EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ColorShaders.metal */; };
+		EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
+		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EA0363D01C31C85F00D283E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA0363B11C31C85E00D283E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA0363B81C31C85E00D283E3;
+			remoteInfo = MKTest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EA0363B91C31C85E00D283E3 /* GameEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameEngine.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
+		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAA99D781C41E10900CF3246 /* GameEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GameEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFTimeIntervalExtensions.swift; path = src/extensions/CFTimeIntervalExtensions.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGPointExtensions.swift; path = src/extensions/CGPointExtensions.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGSizeExtensions.swift; path = src/extensions/CGSizeExtensions.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = src/extensions/UIColorExtensions.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DC31C41E48900CF3246 /* GLMatrix4Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GLMatrix4Extensions.swift; path = src/extensions/GLMatrix4Extensions.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DC61C41E4B900CF3246 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = src/private/Globals.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DC91C41E4F100CF3246 /* Pipelines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipelines.swift; path = src/private/Pipelines.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DCA1C41E4F100CF3246 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = src/private/Renderer.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderPassQueue.swift; path = src/private/RenderPassQueue.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DD21C41E50200CF3246 /* BufferQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferQueue.swift; path = src/private/BufferQueue.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DD31C41E50200CF3246 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vertex.swift; path = src/private/Vertex.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DDB1C41E51C00CF3246 /* GEAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEAction.swift; path = src/public/GEAction.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEColorRect.swift; path = src/public/GEColorRect.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DDF1C41E52700CF3246 /* GENode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GENode.swift; path = src/public/GENode.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DE01C41E52700CF3246 /* GESprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GESprite.swift; path = src/public/GESprite.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DEE1C41E57300CF3246 /* GEViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEViewController.swift; path = src/public/GEViewController.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DF11C41E57C00CF3246 /* GECamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GECamera.swift; path = src/public/GECamera.swift; sourceTree = SOURCE_ROOT; };
+		EAA99E241C41E65700CF3246 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = resources/Assets.xcassets; sourceTree = "<group>"; };
+		EAA99E271C41E65700CF3246 /* Test2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Test2.png; path = resources/Test2.png; sourceTree = "<group>"; };
+		EAA99E2C1C41E6A500CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/Test/Info.plist; sourceTree = "<group>"; };
+		EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = resources/Test/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EAA99E2E1C41E6A500CF3246 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Main.storyboard; path = resources/Test/Main.storyboard; sourceTree = "<group>"; };
+		EAA99E2F1C41E6BC00CF3246 /* GameEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameEngine.h; path = resources/GEFramework/GameEngine.h; sourceTree = "<group>"; };
+		EAA99E301C41E6BC00CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/GEFramework/Info.plist; sourceTree = "<group>"; };
+		EAA99E371C41E80E00CF3246 /* ColorShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ColorShaders.metal; path = src/shaders/ColorShaders.metal; sourceTree = SOURCE_ROOT; };
+		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EA0363B61C31C85E00D283E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA0363CC1C31C85F00D283E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAA99D741C41E10900CF3246 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EA0363B01C31C85E00D283E3 = {
+			isa = PBXGroup;
+			children = (
+				EA0363BB1C31C85E00D283E3 /* GameEngine */,
+				EAA99E231C41E64700CF3246 /* resources */,
+				EA0363D21C31C85F00D283E3 /* GameEngineTests */,
+				EA0363BA1C31C85E00D283E3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EA0363BA1C31C85E00D283E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA0363B91C31C85E00D283E3 /* GameEngine.app */,
+				EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */,
+				EAA99D781C41E10900CF3246 /* GameEngine.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA0363BB1C31C85E00D283E3 /* GameEngine */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */,
+				EAA99DC61C41E4B900CF3246 /* Globals.swift */,
+				EAA99DE71C41E53800CF3246 /* Shaders */,
+				EAC6405B1C34708700B6AE68 /* RenderPipelines */,
+				EAC6405A1C346D6B00B6AE68 /* Nodes */,
+				EAA99DEE1C41E57300CF3246 /* GEViewController.swift */,
+				EAA99DF11C41E57C00CF3246 /* GECamera.swift */,
+				EAC640A01C34B17A00B6AE68 /* Extensions */,
+			);
+			name = GameEngine;
+			path = MKTest;
+			sourceTree = "<group>";
+		};
+		EA0363D21C31C85F00D283E3 /* GameEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				EA0363D31C31C85F00D283E3 /* MKTestTests.swift */,
+				EA0363D51C31C85F00D283E3 /* Info.plist */,
+			);
+			name = GameEngineTests;
+			path = MKTestTests;
+			sourceTree = "<group>";
+		};
+		EA4A58571C38823D00D39F17 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99DDB1C41E51C00CF3246 /* GEAction.swift */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
+		EAA99DE71C41E53800CF3246 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99E371C41E80E00CF3246 /* ColorShaders.metal */,
+				EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
+		EAA99E231C41E64700CF3246 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99E241C41E65700CF3246 /* Assets.xcassets */,
+				EAA99E271C41E65700CF3246 /* Test2.png */,
+				EAA99E2B1C41E68D00CF3246 /* Test */,
+				EAA99E2A1C41E68800CF3246 /* GEFramework */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		EAA99E2A1C41E68800CF3246 /* GEFramework */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99E2F1C41E6BC00CF3246 /* GameEngine.h */,
+				EAA99E301C41E6BC00CF3246 /* Info.plist */,
+			);
+			name = GEFramework;
+			sourceTree = "<group>";
+		};
+		EAA99E2B1C41E68D00CF3246 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99E2C1C41E6A500CF3246 /* Info.plist */,
+				EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */,
+				EAA99E2E1C41E6A500CF3246 /* Main.storyboard */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
+		EAC6405A1C346D6B00B6AE68 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				EA4A58571C38823D00D39F17 /* Animation */,
+				EAC640A11C34B60E00B6AE68 /* DataStructures */,
+				EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */,
+				EAA99DDF1C41E52700CF3246 /* GENode.swift */,
+				EAA99DE01C41E52700CF3246 /* GESprite.swift */,
+			);
+			name = Nodes;
+			sourceTree = "<group>";
+		};
+		EAC6405B1C34708700B6AE68 /* RenderPipelines */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99DC91C41E4F100CF3246 /* Pipelines.swift */,
+				EAA99DCA1C41E4F100CF3246 /* Renderer.swift */,
+				EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */,
+			);
+			name = RenderPipelines;
+			sourceTree = "<group>";
+		};
+		EAC640A01C34B17A00B6AE68 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */,
+				EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */,
+				EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */,
+				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
+				EAA99DC31C41E48900CF3246 /* GLMatrix4Extensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		EAC640A11C34B60E00B6AE68 /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99DD21C41E50200CF3246 /* BufferQueue.swift */,
+				EAA99DD31C41E50200CF3246 /* Vertex.swift */,
+			);
+			name = DataStructures;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		EAA99D751C41E10900CF3246 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		EA0363B81C31C85E00D283E3 /* GameEngineTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA0363E31C31C85F00D283E3 /* Build configuration list for PBXNativeTarget "GameEngineTest" */;
+			buildPhases = (
+				EA0363B51C31C85E00D283E3 /* Sources */,
+				EA0363B61C31C85E00D283E3 /* Frameworks */,
+				EA0363B71C31C85E00D283E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GameEngineTest;
+			productName = MKTest;
+			productReference = EA0363B91C31C85E00D283E3 /* GameEngine.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EA0363CE1C31C85F00D283E3 /* GameEngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA0363E61C31C85F00D283E3 /* Build configuration list for PBXNativeTarget "GameEngineTests" */;
+			buildPhases = (
+				EA0363CB1C31C85F00D283E3 /* Sources */,
+				EA0363CC1C31C85F00D283E3 /* Frameworks */,
+				EA0363CD1C31C85F00D283E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA0363D11C31C85F00D283E3 /* PBXTargetDependency */,
+			);
+			name = GameEngineTests;
+			productName = MKTestTests;
+			productReference = EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EAA99D771C41E10900CF3246 /* GameEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAA99D7D1C41E10A00CF3246 /* Build configuration list for PBXNativeTarget "GameEngine" */;
+			buildPhases = (
+				EAA99D731C41E10900CF3246 /* Sources */,
+				EAA99D741C41E10900CF3246 /* Frameworks */,
+				EAA99D751C41E10900CF3246 /* Headers */,
+				EAA99D761C41E10900CF3246 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GameEngine;
+			productName = GameEngine;
+			productReference = EAA99D781C41E10900CF3246 /* GameEngine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA0363B11C31C85E00D283E3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Tony Green";
+				TargetAttributes = {
+					EA0363B81C31C85E00D283E3 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = TVJM564TQF;
+					};
+					EA0363CE1C31C85F00D283E3 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = EA0363B81C31C85E00D283E3;
+					};
+					EAA99D771C41E10900CF3246 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = EA0363B41C31C85E00D283E3 /* Build configuration list for PBXProject "GameEngine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EA0363B01C31C85E00D283E3;
+			productRefGroup = EA0363BA1C31C85E00D283E3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EA0363B81C31C85E00D283E3 /* GameEngineTest */,
+				EAA99D771C41E10900CF3246 /* GameEngine */,
+				EA0363CE1C31C85F00D283E3 /* GameEngineTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA0363B71C31C85E00D283E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */,
+				EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */,
+				EAA99E321C41E6D600CF3246 /* Main.storyboard in Resources */,
+				EAA99E291C41E66C00CF3246 /* Test2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA0363CD1C31C85F00D283E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAA99D761C41E10900CF3246 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAA99E341C41E6EB00CF3246 /* Assets.xcassets in Resources */,
+				EAA99E281C41E66B00CF3246 /* Test2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EA0363B51C31C85E00D283E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */,
+				EAA99DDC1C41E51C00CF3246 /* GEAction.swift in Sources */,
+				EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */,
+				EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */,
+				EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
+				EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */,
+				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
+				EAA99DBD1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */,
+				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
+				EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
+				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
+				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
+				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
+				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
+				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
+				EAA99DC41C41E48900CF3246 /* GLMatrix4Extensions.swift in Sources */,
+				EAA99DBF1C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */,
+				EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */,
+				EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */,
+				EAA99DE31C41E52700CF3246 /* GENode.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA0363CB1C31C85F00D283E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAA99D731C41E10900CF3246 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAA99DF01C41E57300CF3246 /* GEViewController.swift in Sources */,
+				EAA99DE21C41E52700CF3246 /* GEColorRect.swift in Sources */,
+				EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
+				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
+				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
+				EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */,
+				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
+				EAA99DC01C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */,
+				EAA99DBE1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */,
+				EAA99DD51C41E50200CF3246 /* BufferQueue.swift in Sources */,
+				EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
+				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
+				EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */,
+				EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */,
+				EAA99DC51C41E48900CF3246 /* GLMatrix4Extensions.swift in Sources */,
+				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
+				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
+				EAA99DE61C41E52700CF3246 /* GESprite.swift in Sources */,
+				EAA99DCD1C41E4F100CF3246 /* Pipelines.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EA0363D11C31C85F00D283E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA0363B81C31C85E00D283E3 /* GameEngineTest */;
+			targetProxy = EA0363D01C31C85F00D283E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EA0363E11C31C85F00D283E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EA0363E21C31C85F00D283E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EA0363E41C31C85F00D283E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = solarjetmen.GameEngine;
+				PRODUCT_NAME = GameEngine;
+			};
+			name = Debug;
+		};
+		EA0363E51C31C85F00D283E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = solarjetmen.GameEngine;
+				PRODUCT_NAME = GameEngine;
+			};
+			name = Release;
+		};
+		EA0363E71C31C85F00D283E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = MKTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = asda.MKTestTests;
+				PRODUCT_NAME = GameEngine;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GameEngine.app/GameEngine";
+			};
+			name = Debug;
+		};
+		EA0363E81C31C85F00D283E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = MKTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = asda.MKTestTests;
+				PRODUCT_NAME = GameEngine;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GameEngine.app/GameEngine";
+			};
+			name = Release;
+		};
+		EAA99D7E1C41E10A00CF3246 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/resources/GEFramework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = solarjetmen.GameEngine;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EAA99D7F1C41E10A00CF3246 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/resources/GEFramework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = solarjetmen.GameEngine;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EA0363B41C31C85E00D283E3 /* Build configuration list for PBXProject "GameEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA0363E11C31C85F00D283E3 /* Debug */,
+				EA0363E21C31C85F00D283E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA0363E31C31C85F00D283E3 /* Build configuration list for PBXNativeTarget "GameEngineTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA0363E41C31C85F00D283E3 /* Debug */,
+				EA0363E51C31C85F00D283E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA0363E61C31C85F00D283E3 /* Build configuration list for PBXNativeTarget "GameEngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA0363E71C31C85F00D283E3 /* Debug */,
+				EA0363E81C31C85F00D283E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAA99D7D1C41E10A00CF3246 /* Build configuration list for PBXNativeTarget "GameEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAA99D7E1C41E10A00CF3246 /* Debug */,
+				EAA99D7F1C41E10A00CF3246 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EA0363B11C31C85E00D283E3 /* Project object */;
+}
