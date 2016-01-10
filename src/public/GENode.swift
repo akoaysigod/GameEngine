@@ -13,7 +13,7 @@ import QuartzCore
 
 typealias GENodes = [GENode]
 
-public class GENode {
+public class GENode: TreeNode {
   public var name: String?
 
   var device: MTLDevice!
@@ -82,9 +82,16 @@ public class GENode {
 
   private var sharedUniformBuffer: MTLBuffer!
 
-  var camera: GECamera!
+  public var camera: GECamera!
 
   private var uniformBufferQueue: BufferQueue!
+  
+  var tree = DrawTree()
+  var isVisible = true
+  var visible: Bool {
+    return self.isVisible
+  }
+  let uniqueID = NSUUID().UUIDString
 
   init() {}
   init(vertices: Vertices, size: CGSize) {
@@ -100,21 +107,21 @@ public class GENode {
 
     self.uniformBufferQueue = BufferQueue(device: self.device, dataSize: FloatSize * self.modelMatrix.data.count)
   }
-
+  
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
     renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
-
+    
     let offset = self.uniformBufferQueue.next(commandBuffer, data: camera.multiplyMatrices(self.modelMatrix).data)
     renderEncoder.setVertexBuffer(self.uniformBufferQueue.buffer, offset: offset, atIndex: 1)
-
+    
     if let texture = self.texture, sampler = sampler {
       renderEncoder.setFragmentTexture(texture, atIndex: 0)
       renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
     }
-
+    
     renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: self.vertexCount)
   }
-
+  
   var time: CFTimeInterval = 0.0
   func updateWithDelta(delta: CFTimeInterval) {
     self.time += delta

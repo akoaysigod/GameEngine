@@ -54,10 +54,9 @@
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EAE75E371C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
 		EAE75E381C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
-		EAE75E3E1C42D14B001EB176 /* ChildProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E3D1C42D14B001EB176 /* ChildProtocol.swift */; };
-		EAE75E3F1C42D14B001EB176 /* ChildProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E3D1C42D14B001EB176 /* ChildProtocol.swift */; };
 		EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
 		EAE75E801C42FE68001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
+		EAE75E821C42FEBD001EB176 /* DrawTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E811C42FEBD001EB176 /* DrawTree.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,8 +102,8 @@
 		EAA99E371C41E80E00CF3246 /* ColorShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ColorShaders.metal; path = src/shaders/ColorShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAE75E361C42D091001EB176 /* GEScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEScene.swift; path = src/public/GEScene.swift; sourceTree = SOURCE_ROOT; };
-		EAE75E3D1C42D14B001EB176 /* ChildProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChildProtocol.swift; path = src/private/ChildProtocol.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEView.swift; path = src/public/GEView.swift; sourceTree = SOURCE_ROOT; };
+		EAE75E811C42FEBD001EB176 /* DrawTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawTree.swift; path = src/private/DrawTree.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +223,7 @@
 		EAC6405A1C346D6B00B6AE68 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				EAE75E3D1C42D14B001EB176 /* ChildProtocol.swift */,
+				EAE75E811C42FEBD001EB176 /* DrawTree.swift */,
 				EA4A58571C38823D00D39F17 /* Animation */,
 				EAC640A11C34B60E00B6AE68 /* DataStructures */,
 				EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */,
@@ -423,7 +422,6 @@
 			files = (
 				EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */,
 				EAA99DDC1C41E51C00CF3246 /* GEAction.swift in Sources */,
-				EAE75E3E1C42D14B001EB176 /* ChildProtocol.swift in Sources */,
 				EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */,
 				EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */,
 				EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
@@ -436,6 +434,7 @@
 				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */,
 				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
+				EAE75E821C42FEBD001EB176 /* DrawTree.swift in Sources */,
 				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
@@ -461,7 +460,6 @@
 			files = (
 				EAA99DF01C41E57300CF3246 /* GEViewController.swift in Sources */,
 				EAA99DE21C41E52700CF3246 /* GEColorRect.swift in Sources */,
-				EAE75E3F1C42D14B001EB176 /* ChildProtocol.swift in Sources */,
 				EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,

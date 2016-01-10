@@ -41,7 +41,6 @@ public class GEView: MTKView {
     }
 
     var elapsedTime = displayLink.timestamp - self.timestamp
-    print(elapsedTime)
     //not sure how to deal with this if you hit a break point the timer gets off making it difficult to figure out what's going on
     #if DEBUG
     if elapsedTime >= 0.02 {

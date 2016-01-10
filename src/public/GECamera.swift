@@ -44,8 +44,8 @@ public class GECamera {
   private var fan: Float { return far + near }
   private var fsn: Float { return far - near }
 
-  var x: Float = 0.0
-  var y: Float = 0.0
+  public var x: Float = 0.0
+  public var y: Float = 0.0
   var zoom: Float = 1.0
 
   init(size: CGSize) {

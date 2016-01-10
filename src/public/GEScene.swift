@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 import Metal
 
-public class GEScene: ParentChild {
+public class GEScene: TreeNode {
   public var size: CGSize
   public var camera: GECamera
   
@@ -20,6 +20,10 @@ public class GEScene: ParentChild {
   var timer: CADisplayLink!
   
   var drawables = [GENode]()
+  
+  var tree: DrawTree = DrawTree()
+  var visible = false
+  var uniqueID = "1"
   
   init(size: CGSize) {
     self.size = size
@@ -43,21 +47,18 @@ public class GEScene: ParentChild {
   
   public func addChild(node: GENode) {
     node.device = self.device
-    node.camera = self.camera
+    if node.camera == nil {
+      node.camera = self.camera
+    }
     
     if let sprite = node as? GESprite {
       sprite.loadTexture(self.device)
     }
     
+    self.tree.addNode(node)
+    
     node.setupBuffers()
     self.drawables.append(node)
   }
   
-  public func addChild(child: ParentChild) {
-    
-  }
-  
-  public func removeChild(child: ParentChild) {
-    
-  }
 }
