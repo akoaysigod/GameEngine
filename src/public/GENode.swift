@@ -16,10 +16,11 @@ typealias GENodes = [GENode]
 public class GENode {
   public var name: String?
 
-  private var device: MTLDevice
-  private var vertexCount: Int
+  var device: MTLDevice!
+  var vertices: Vertices!
+  var vertexCount: Int = 1
   private var vertexBuffer: MTLBuffer!
-  private var size: CGSize
+  var size = CGSizeZero
   public var width: Float {
     return Float(self.size.width) * self.xScale
   }
@@ -81,24 +82,19 @@ public class GENode {
 
   private var sharedUniformBuffer: MTLBuffer!
 
-  private let camera: GECamera
+  var camera: GECamera!
 
   private var uniformBufferQueue: BufferQueue!
 
-  init(device: MTLDevice, camera: GECamera, vertices: [Vertex], size: CGSize) {
-    self.device = device
-
+  init() {}
+  init(vertices: Vertices, size: CGSize) {
+    self.vertices = vertices
     self.vertexCount = vertices.count
-
-    self.camera = camera
-
     self.size = size
-
-    self.setupBuffers(vertices)
   }
-
-  func setupBuffers(vertices: [Vertex]) {
-    let vertexData = vertices.flatMap { $0.data }
+  
+  func setupBuffers() {
+    let vertexData = self.vertices.flatMap { $0.data }
     let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
     self.vertexBuffer = self.device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
 

@@ -11,7 +11,7 @@ import GLKit
 import Metal
 
 class GEColorRect: GENode {
-  init(device: MTLDevice, camera: GECamera, size: CGSize, color: UIColor) {
+  init(size: CGSize, color: UIColor) {
     let vertices = Vertex.rectVertices(size)
     vertices.forEach { (vertex) -> () in
       let fColors = color.rgb
@@ -21,11 +21,11 @@ class GEColorRect: GENode {
       vertex.a = fColors.a
     }
 
-    super.init(device: device, camera: camera, vertices: vertices, size: size)
+    super.init(vertices: vertices, size: size)
   }
 
-  convenience init(device: MTLDevice, camera: GECamera, width: Double, height: Double, color: UIColor) {
-    self.init(device: device, camera: camera, size: CGSize(width: width, height: height), color: color)
+  convenience init(width: Double, height: Double, color: UIColor) {
+    self.init(size: CGSize(width: width, height: height), color: color)
   }
 
   override func updateWithDelta(delta: CFTimeInterval) {

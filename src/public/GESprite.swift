@@ -11,14 +11,21 @@ import Metal
 import MetalKit
 
 class GESprite: GENode {
-  init(device: MTLDevice, camera: GECamera, imageName: String) {
+  let imageName: String!
+  
+  init(imageName: String) {
+    self.imageName = imageName
+    
+    super.init()
+  }
+  
+  func loadTexture(device: MTLDevice) {
     let textureLoader = MTKTextureLoader(device: device)
 
     let (imageData, size) = GESprite.imageLoader(imageName)
 
-    let vertices = SpriteVertex.rectVertices(size)
-
-    super.init(device: device, camera: camera, vertices: vertices, size: size)
+    self.vertices = SpriteVertex.rectVertices(size)
+    self.setupBuffers()
 
     //image.CGImage is discolored for some reason
     //self.texture = try! textureLoader.newTextureWithCGImage(image.CGImage!, options: nil)

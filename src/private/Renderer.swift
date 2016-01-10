@@ -17,11 +17,9 @@ final class Renderer {
     static let SpriteFragment = "spriteFragment"
   }
 
-  private let view: MTKView
   private let device: MTLDevice
   private let commandQueue: MTLCommandQueue
 
-  private let inflightSemaphore: dispatch_semaphore_t
   private let MaxBuffers = 3
   private var bufferIndex = 0
 
@@ -30,13 +28,11 @@ final class Renderer {
   private var colorPipeline: ColorPipeline!
   private var spritePipeline: SpritePipeline!
 
-  init(device: MTLDevice, view: MTKView) {
-    self.device = device
-    self.view = view
+  init(view: GEView) {
+    self.device = view.device!
     self.commandQueue = self.device.newCommandQueue()
     self.commandQueue.label = "main command queue"
 
-    self.inflightSemaphore = dispatch_semaphore_create(self.MaxBuffers)
 
     self.descriptorQueue = RenderPassQueue(view: view)
 
@@ -50,17 +46,8 @@ final class Renderer {
   }
 
   func draw(nodes: GENodes) {
-    //this stuff isn't currently doing anything, maybe move to GENode?
-    dispatch_semaphore_wait(self.inflightSemaphore, DISPATCH_TIME_FOREVER)
-
     let commandBuffer = self.commandQueue.commandBuffer()
     commandBuffer.label = "Frame command buffer"
-    commandBuffer.addCompletedHandler{ [weak self] commandBuffer in
-      if let strongSelf = self {
-        dispatch_semaphore_signal(strongSelf.inflightSemaphore)
-      }
-      return
-    }
 
     if let drawable = self.descriptorQueue.currentDrawable {
       var renderPassDescriptor = self.descriptorQueue.next()
@@ -71,7 +58,9 @@ final class Renderer {
 
       renderPassDescriptor = self.descriptorQueue.next()
       let spriteNodes = nodes.filter { $0.texture != nil }
-      self.spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
+      if spriteNodes.count > 0 {
+        self.spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
+      }
 
       commandBuffer.presentDrawable(drawable)
     }

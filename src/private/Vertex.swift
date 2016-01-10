@@ -9,6 +9,8 @@
 import Foundation
 import GLKit
 
+typealias Vertices = [Vertex]
+
 class Vertex {
   var x: Float = 0.0
   var y: Float = 0.0
@@ -40,7 +42,7 @@ class Vertex {
     return FloatSize * self.data.count
   }
 
-  class func rectVertices(size: CGSize) -> [Vertex] {
+  class func rectVertices(size: CGSize) -> Vertices {
     let width = Float(size.width)
     let height = Float(size.height)
 
@@ -71,7 +73,7 @@ final class SpriteVertex: Vertex {
     self.y = y
   }
 
-  override static func rectVertices(size: CGSize) -> [Vertex] {
+  override static func rectVertices(size: CGSize) -> Vertices {
     let width = Float(size.width)
     let height = Float(size.height)
 

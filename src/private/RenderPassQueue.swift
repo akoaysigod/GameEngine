@@ -11,7 +11,7 @@ import Metal
 import MetalKit
 
 class RenderPassQueue {
-  private let view: MTKView
+  private let view: GEView
   var queue: [MTLRenderPassDescriptor]
 
   var currentDrawable: CAMetalDrawable? {
@@ -20,7 +20,7 @@ class RenderPassQueue {
 
   private var currentDescriptorIndex = 0
 
-  init(view: MTKView, queueSize: Int = 2) {
+  init(view: GEView, queueSize: Int = 2) {
     self.view = view
     self.queue = [MTLRenderPassDescriptor]()
 
