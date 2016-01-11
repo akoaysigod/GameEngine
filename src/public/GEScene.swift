@@ -55,7 +55,7 @@ public class GEScene: TreeNode {
       sprite.loadTexture(self.device)
     }
     
-    self.tree.addNode(node)
+    self.tree.addNode(nil, node: node)
     
     node.setupBuffers()
     self.drawables.append(node)

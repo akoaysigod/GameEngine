@@ -65,7 +65,7 @@ public class GENode: TreeNode {
   }
   private var pAnchorPoint: (x: Float, y: Float) = (0.0, 0.0)
 
-  private var modelMatrix: GLKMatrix4 {
+  var modelMatrix: GLKMatrix4 {
     let x = self.x - (self.width * self.pAnchorPoint.x)
     let y = self.y - (self.height * self.pAnchorPoint.y)
 
@@ -88,9 +88,6 @@ public class GENode: TreeNode {
   
   var tree = DrawTree()
   var isVisible = true
-  var visible: Bool {
-    return self.isVisible
-  }
   let uniqueID = NSUUID().UUIDString
 
   init() {}
@@ -111,7 +108,15 @@ public class GENode: TreeNode {
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
     renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
     
-    let offset = self.uniformBufferQueue.next(commandBuffer, data: camera.multiplyMatrices(self.modelMatrix).data)
+    var parentMatrix = GLKMatrix4Identity
+    if case let .Node(_, parentNode, _) = self.tree.tree,
+      let parent = parentNode
+    {
+      parentMatrix = parent.modelMatrix
+    }
+    let testMatrix = parentMatrix * self.modelMatrix
+    
+    let offset = self.uniformBufferQueue.next(commandBuffer, data: camera.multiplyMatrices(testMatrix).data)
     renderEncoder.setVertexBuffer(self.uniformBufferQueue.buffer, offset: offset, atIndex: 1)
     
     if let texture = self.texture, sampler = sampler {
@@ -142,5 +147,9 @@ public class GENode: TreeNode {
 
   func runAction(action: GEAction) {
     self.action = action
+  }
+  
+  func addChild(node: GENode) {
+    self.tree.addNode(self, node: node)
   }
 }

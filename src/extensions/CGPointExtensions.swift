@@ -12,4 +12,9 @@ extension CGPoint {
   var float: (x: Float, y: Float) {
     return (Float(self.x), Float(self.y))
   }
+  
+  init(x: Float, y: Float) {
+    self.x = CGFloat(x)
+    self.y = CGFloat(y)
+  }
 }
