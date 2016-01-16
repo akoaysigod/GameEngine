@@ -13,6 +13,55 @@ import QuartzCore
 
 typealias GENodes = [GENode]
 
+protocol Node {
+  var name: String? { get set }
+  
+  var x: Float { get set }
+  var y: Float { get set }
+  var position: (x: Float, y: Float) { get set }
+  
+  var rotation: Float { get set }
+
+  var scale: Float { get set }
+  var xScale: Float { get set }
+  var yScale: Float { get set }
+
+  var anchorPoint: (x: Float, y: Float) { get set }
+
+  var time: CFTimeInterval
+  func updateWithDelta(delta: CFTimeInterval)
+
+  var action: GEAction? { get set }
+  var hasAction: Bool { get }
+  func runAction(action: GEAction)
+
+  func addChild(node: Node)
+}
+
+protocol Renderable: Node {
+  var device: MTLDevice! { get }
+
+  var texture: MTLTexture? { get set }
+  
+  var vertices: Vertices! { get }
+  var vertexCount: Int { get }
+
+  var camera: GECamera! { get set }
+
+  var size: CGSize { get set }
+  var width: Float { get }
+  var height: Float { get }
+
+  var modelMatrix: GLKMatrix4 { get }
+
+  var sharedUniformBuffer: MTLBuffer! { get }
+  var uniformBufferQueue: MTLBuffer! { get }
+
+  var isVisible: Bool { get set }
+
+  func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
+}
+
 public class GENode: TreeNode {
   public var name: String?
 
