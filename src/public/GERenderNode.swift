@@ -27,9 +27,6 @@ public class GERenderNode: GENode {
   private var vertexCount: Int = 0
   private var vertexBuffer: MTLBuffer!
   
-  //maybe just intenal
-  public var camera: GECamera!
-  
   private var sharedUniformBuffer: MTLBuffer!
   private var uniformBufferQueue: BufferQueue!
   

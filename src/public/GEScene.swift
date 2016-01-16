@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 import Metal
 
-public class GEScene: TreeNode {
+public class GEScene {
   public var size: CGSize
   public var camera: GECamera
   

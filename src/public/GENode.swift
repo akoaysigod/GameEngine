@@ -52,6 +52,8 @@ public class GENode {
   public var yScale: Float = 1.0
 
   public var anchorPoint: (x: Float, y: Float) = (x: 0.0, y: 0.0)
+  
+  var camera: GECamera!
 
   var modelMatrix: GLKMatrix4 {
     let x = self.x - (self.width * self.anchorPoint.x)
