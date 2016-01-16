@@ -13,41 +13,7 @@ import QuartzCore
 
 typealias GENodes = [GENode]
 
-protocol Node: class {
-  var name: String? { get set }
-  
-  var size: CGSize { get set }
-  var width: Float { get }
-  var height: Float { get }
-  
-  var x: Float { get set }
-  var y: Float { get set }
-  var position: (x: Float, y: Float) { get set }
-  
-  var zPosition: Int { get set }
-  
-  var rotation: Float { get set }
-
-  var scale: Float { get set }
-  var xScale: Float { get set }
-  var yScale: Float { get set }
-
-  var anchorPoint: (x: Float, y: Float) { get set }
-  
-  var modelMatrix: GLKMatrix4 { get }
-
-  var time: CFTimeInterval { get set }
-  var updater: ((delta: CFTimeInterval)->())? { get }
-  func updateWithDelta(delta: CFTimeInterval)
-
-  var action: GEAction? { get set }
-  var hasAction: Bool { get }
-  func runAction(action: GEAction)
-
-  func addChild(node: Node)
-}
-
-public class GENode: TreeNode {
+public class GENode {
   public var name: String?
 
   var size = CGSizeZero
@@ -102,8 +68,9 @@ public class GENode: TreeNode {
     return worldTranslate * rotation * rotationTranslate * scale
   }
 
-  var tree = DrawTree()
   let uniqueID = NSUUID().UUIDString
+  
+  var nodes = GENodes()
   
   //updating
   var time: CFTimeInterval = 0.0
@@ -130,7 +97,7 @@ public class GENode: TreeNode {
   }
   
   //tree stuff
-  func addChild(node: GENode) {
-    self.tree.addNode(self, node: node)
+  func addNode(node: GENode) {
+    self.nodes.append(node)
   }
 }

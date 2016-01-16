@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-public class GECamera {
+public class GECamera: GENode {
   private var cameraMatrix: GLKMatrix4 {
     return GLKMatrix4Translate(GLKMatrix4Identity, self.x, self.y, 0.0)
   }
@@ -44,9 +44,12 @@ public class GECamera {
   private var fan: Float { return far + near }
   private var fsn: Float { return far - near }
 
-  public var x: Float = 0.0
-  public var y: Float = 0.0
   var zoom: Float = 1.0
+  override public var scale: Float {
+    didSet {
+      self.zoom = self.scale
+    }
+  }
 
   init(size: CGSize) {
     self.right = Float(size.width)

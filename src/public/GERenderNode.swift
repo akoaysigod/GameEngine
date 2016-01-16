@@ -38,6 +38,7 @@ public class GERenderNode: GENode {
   override init() {}
   init(vertices: Vertices) {
     self.vertices = vertices
+    self.vertexCount = self.vertices.count
   }
   
   func setupBuffers() {
@@ -51,15 +52,16 @@ public class GERenderNode: GENode {
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
     renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
     
-    var parentMatrix = GLKMatrix4Identity
-    if case let .Node(_, parentNode, _) = self.tree.tree,
-      let parent = parentNode
-    {
-      parentMatrix = parent.modelMatrix
-    }
-    let testMatrix = parentMatrix * self.modelMatrix
+//    var parentMatrix = GLKMatrix4Identity
+//    if case let .Node(_, parentNode, _) = self.tree.tree,
+//      let parent = parentNode
+//    {
+//      parentMatrix = parent.modelMatrix
+//    }
+//    let testMatrix = parentMatrix * self.modelMatrix
     
-    let offset = self.uniformBufferQueue.next(commandBuffer, data: camera.multiplyMatrices(testMatrix).data)
+    let uniformData = camera.multiplyMatrices(self.modelMatrix).data
+    let offset = self.uniformBufferQueue.next(commandBuffer, data: uniformData)
     renderEncoder.setVertexBuffer(self.uniformBufferQueue.buffer, offset: offset, atIndex: 1)
     
     if let texture = self.texture, sampler = sampler {

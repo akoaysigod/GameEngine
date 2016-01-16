@@ -32,12 +32,13 @@ public class GEViewController: UIViewController {
     let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
     colorRect.x = 100
     colorRect.y = 100
-    scene.addChild(colorRect)
+    scene.addNode(colorRect)
     
-    let colorRect2 = GEColorRect(width: 50, height: 50, color: UIColor.redColor())
-    colorRect.zPosition = 1
-    colorRect.addChild(colorRect2)
-    scene.addChild(colorRect2)
+//    let colorRect2 = GEColorRect(width: 50, height: 50, color: UIColor.redColor())
+//    colorRect.zPosition = 1
+//    colorRect.addChild(colorRect2)
+//    scene.addChild(colorRect2)
+    
 //    if let device = MTLCreateSystemDefaultDevice() {
 //      let view = self.view as! MTKView
 //      view.device = device

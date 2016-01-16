@@ -20,6 +20,7 @@ public class GEScene: TreeNode {
   var timer: CADisplayLink!
   
   var drawables = GERenderNodes()
+  var nodes = GENodes()
   
   var tree: DrawTree = DrawTree()
   var visible = false
@@ -45,7 +46,7 @@ public class GEScene: TreeNode {
     }
   }
   
-  public func addChild(node: GENode) {
+  public func addNode(node: GENode) {
     if let sprite = node as? GESprite {
       sprite.loadTexture(self.device)
     }
@@ -59,7 +60,6 @@ public class GEScene: TreeNode {
       self.drawables.append(renderNode)
     }
     
-    self.tree.addNode(nil, node: node)
+    self.nodes.append(node)
   }
-  
 }
