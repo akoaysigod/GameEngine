@@ -10,7 +10,7 @@ import Foundation
 import Metal
 import MetalKit
 
-class GESprite: GENode {
+class GESprite: GERenderNode {
   let imageName: String!
   
   init(imageName: String) {
@@ -25,8 +25,7 @@ class GESprite: GENode {
     let (imageData, size) = GESprite.imageLoader(imageName)
 
     self.vertices = SpriteVertex.rectVertices(size)
-    self.setupBuffers()
-
+    
     //image.CGImage is discolored for some reason
     //self.texture = try! textureLoader.newTextureWithCGImage(image.CGImage!, options: nil)
 

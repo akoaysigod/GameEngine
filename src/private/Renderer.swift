@@ -45,7 +45,7 @@ final class Renderer {
     self.spritePipeline = factory.provideSpritePipeline(ShaderPrograms.SpriteVertex, fragmentProgram: ShaderPrograms.SpriteFragment)
   }
 
-  func draw(nodes: GENodes) {
+  func draw(nodes: GERenderNodes) {
     let commandBuffer = self.commandQueue.commandBuffer()
     commandBuffer.label = "Frame command buffer"
 

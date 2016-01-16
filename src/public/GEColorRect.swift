@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 import Metal
 
-class GEColorRect: GENode {
+class GEColorRect: GERenderNode {
   init(size: CGSize, color: UIColor) {
     let vertices = Vertex.rectVertices(size)
     vertices.forEach { (vertex) -> () in
@@ -20,15 +20,11 @@ class GEColorRect: GENode {
       vertex.b = fColors.b
       vertex.a = fColors.a
     }
-
-    super.init(vertices: vertices, size: size)
+    
+    super.init(vertices: vertices)
   }
 
   convenience init(width: Double, height: Double, color: UIColor) {
     self.init(size: CGSize(width: width, height: height), color: color)
-  }
-
-  override func updateWithDelta(delta: CFTimeInterval) {
-    super.updateWithDelta(delta)
   }
 }

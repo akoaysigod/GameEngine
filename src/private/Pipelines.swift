@@ -77,8 +77,13 @@ final class ColorPipeline: Pipeline {
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
     let renderEncoder = createRenderEncoder(commandBuffer, label: "color encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState)
 
-    nodes.forEach { (node) -> () in
-      node.draw(commandBuffer, renderEncoder: renderEncoder)
+    nodes.flatMap { (node) -> [GERenderNode] in
+      if let renderNode = node as? GERenderNode {
+        return [renderNode]
+      }
+      return []
+    }.forEach {
+      $0.draw(commandBuffer, renderEncoder: renderEncoder)
     }
 
     renderEncoder.endEncoding()
@@ -112,9 +117,14 @@ final class SpritePipeline: Pipeline {
 
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
     let renderEncoder = createRenderEncoder(commandBuffer, label: "sprite encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState)
-
-    nodes.forEach { (node) -> () in
-      node.draw(commandBuffer, renderEncoder: renderEncoder, sampler: self.sampler)
+    
+    nodes.flatMap { (node) -> [GERenderNode] in
+      if let renderNode = node as? GERenderNode {
+        return [renderNode]
+      }
+      return []
+    }.forEach {
+      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: self.sampler)
     }
 
     renderEncoder.endEncoding()
