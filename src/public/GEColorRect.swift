@@ -22,6 +22,8 @@ class GEColorRect: GERenderNode {
     }
     
     super.init(vertices: vertices)
+    
+    self.size = size
   }
 
   convenience init(width: Double, height: Double, color: UIColor) {

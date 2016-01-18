@@ -51,7 +51,7 @@ public class GECamera: GENode {
     }
   }
 
-  init(size: CGSize) {
+  public init(size: CGSize) {
     self.right = Float(size.width)
     self.top = Float(size.height)
   }
@@ -60,7 +60,7 @@ public class GECamera: GENode {
     return self.projectionMatrix * self.cameraMatrix * modelViewMatrix
   }
   
-  override func addNode(node: GENode) {
+  override public func addNode(node: GENode) {
     node.camera = self
     self.nodes.append(node)
   }

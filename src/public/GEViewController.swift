@@ -31,14 +31,19 @@ public class GEViewController: UIViewController {
     
     let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
     colorRect.anchorPoint = (0.5, 0.5)
-    colorRect.rotation = 45
+    //colorRect.rotation = 45
     colorRect.x = 100
     colorRect.y = 300
+    colorRect.zPosition = 1
+    
+    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
+    let forever = GEAction.repeatForever(action)
+    colorRect.runAction(forever)
+    
     scene.addNode(colorRect)
     
-    let colorRect2 = GEColorRect(width: 50, height: 50, color: UIColor.redColor())
-    colorRect.zPosition = 1
-    colorRect2.x = 100
+    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
+    colorRect2.anchorPoint = (0.5, 0.5)
     colorRect.addNode(colorRect2)
     scene.addNode(colorRect2)
     

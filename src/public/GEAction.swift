@@ -175,4 +175,8 @@ extension GEAction {
     }.maxElement() ?? 0.0
     return GEAction(actionType: .Group(actions: group), duration: maxDuration, completion: completion)
   }
+  
+  public static func repeatForever(action: GEAction) -> GEAction {
+    return GEAction(actionType: action.actionType, duration: Double.infinity, completion: nil)
+  }
 }

@@ -25,6 +25,7 @@ class GESprite: GERenderNode {
     let (imageData, size) = GESprite.imageLoader(imageName)
 
     self.vertices = SpriteVertex.rectVertices(size)
+    self.size = size
     
     //image.CGImage is discolored for some reason
     //self.texture = try! textureLoader.newTextureWithCGImage(image.CGImage!, options: nil)

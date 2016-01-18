@@ -92,16 +92,29 @@ public class GENode {
   //action related
   private var action: GEAction? = nil
   public var hasAction: Bool {
-    return self.action != nil
+    let parentHasAction = self.getSuperParent()?.hasAction ?? false
+    return self.action != nil || parentHasAction
   }
 
-  func runAction(action: GEAction) {
+  public func runAction(action: GEAction) {
     self.action = action
   }
   
   //tree stuff
-  func addNode(node: GENode) {
+  public func addNode(node: GENode) {
     node.parent = self
     self.nodes.append(node)
+  }
+  
+  func getSuperParent() -> GENode? {
+    var parent = self.parent
+    while true {
+      if let root = parent?.parent {
+        parent = root
+      }
+      else {
+        return parent
+      }
+    }
   }
 }
