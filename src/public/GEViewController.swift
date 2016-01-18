@@ -30,23 +30,36 @@ public class GEViewController: UIViewController {
     view.presentScene(scene)
     
     let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
+    colorRect.zPosition = 1001
     colorRect.anchorPoint = (0.5, 0.5)
     //colorRect.rotation = 45
     colorRect.x = 100
     colorRect.y = 300
-    colorRect.zPosition = 1
     
     let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
     let forever = GEAction.repeatForever(action)
-    colorRect.runAction(forever)
+    //colorRect.runAction(forever)
     
-    scene.addNode(colorRect)
+    //scene.addNode(colorRect)
     
     let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
+    colorRect2.position = (50, 300)
     colorRect2.anchorPoint = (0.5, 0.5)
-    colorRect.addNode(colorRect2)
-    scene.addNode(colorRect2)
+    //colorRect2.zPosition = 0
+    //colorRect.addNode(colorRect2)
+    //scene.addNode(colorRect2)
     
+    let sp = GESprite(imageName: "Test2")
+    sp.scale = 10
+    sp.position = (300, 300)
+    sp.zPosition = 100
+    
+    let sp2 = GESprite(imageName: "Test2")
+    sp2.scale = 10
+    sp2.position = (300, 356)
+    scene.addNode(sp2)
+    
+    scene.addNode(sp)
 //    if let device = MTLCreateSystemDefaultDevice() {
 //      let view = self.view as! MTKView
 //      view.device = device

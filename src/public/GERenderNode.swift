@@ -46,6 +46,23 @@ public class GERenderNode: GENode {
     self.uniformBufferQueue = BufferQueue(device: self.device, dataSize: FloatSize * self.modelMatrix.data.count)
   }
   
+  private func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
+    let parentRotScale = GLKMatrix4GetMatrix3(matrix)
+    let selfRotScale = GLKMatrix4GetMatrix3(self.modelMatrix)
+    let rotScale = parentRotScale * selfRotScale
+    
+    let parentTranslate = GLKMatrix4GetColumn(matrix, 3)
+    let selfTranslate = GLKMatrix4GetColumn(self.modelMatrix, 3)
+    let translate = parentTranslate + selfTranslate
+   
+    let firstColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 0), translate.x)
+    let secondColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 1), translate.y)
+    let thirdColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 2), self.z)
+    let fourthColumn = GLKVector4(v: (0.0, 0.0, 0.0, 1.0))
+    //DLog(self.modelMatrix)
+    return GLKMatrix4MakeWithRows(firstColumn, secondColumn, thirdColumn, fourthColumn)
+  }
+  
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
     renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
     
@@ -54,9 +71,8 @@ public class GERenderNode: GENode {
       parentMatrix = parent.modelMatrix
     }
     
-
-    let uniformData = self.camera.multiplyMatrices(parentMatrix * self.modelMatrix).data
-    let offset = self.uniformBufferQueue.next(commandBuffer, data: uniformData)
+    let uniformMatrix = self.camera.multiplyMatrices(self.decompose(parentMatrix))
+    let offset = self.uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)
     renderEncoder.setVertexBuffer(self.uniformBufferQueue.buffer, offset: offset, atIndex: 1)
     
     if let texture = self.texture, sampler = sampler {

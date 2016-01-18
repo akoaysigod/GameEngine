@@ -18,8 +18,8 @@
 		EAA99DC01C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */; };
 		EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
 		EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
-		EAA99DC41C41E48900CF3246 /* GLKMatrix4Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLKMatrix4Extensions.swift */; };
-		EAA99DC51C41E48900CF3246 /* GLKMatrix4Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLKMatrix4Extensions.swift */; };
+		EAA99DC41C41E48900CF3246 /* GLKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */; };
+		EAA99DC51C41E48900CF3246 /* GLKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */; };
 		EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC61C41E4B900CF3246 /* Globals.swift */; };
 		EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC61C41E4B900CF3246 /* Globals.swift */; };
 		EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC91C41E4F100CF3246 /* Pipelines.swift */; };
@@ -81,7 +81,7 @@
 		EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGPointExtensions.swift; path = src/extensions/CGPointExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGSizeExtensions.swift; path = src/extensions/CGSizeExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = src/extensions/UIColorExtensions.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DC31C41E48900CF3246 /* GLKMatrix4Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GLKMatrix4Extensions.swift; path = src/extensions/GLKMatrix4Extensions.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GLKExtensions.swift; path = src/extensions/GLKExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DC61C41E4B900CF3246 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = src/private/Globals.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DC91C41E4F100CF3246 /* Pipelines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipelines.swift; path = src/private/Pipelines.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DCA1C41E4F100CF3246 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = src/private/Renderer.swift; sourceTree = SOURCE_ROOT; };
@@ -251,7 +251,7 @@
 				EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */,
 				EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */,
 				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
-				EAA99DC31C41E48900CF3246 /* GLKMatrix4Extensions.swift */,
+				EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -438,7 +438,7 @@
 				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
-				EAA99DC41C41E48900CF3246 /* GLKMatrix4Extensions.swift in Sources */,
+				EAA99DC41C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EAA99DBF1C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */,
 				EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */,
@@ -474,7 +474,7 @@
 				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */,
-				EAA99DC51C41E48900CF3246 /* GLKMatrix4Extensions.swift in Sources */,
+				EAA99DC51C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DE61C41E52700CF3246 /* GESprite.swift in Sources */,

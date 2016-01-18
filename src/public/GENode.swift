@@ -34,8 +34,8 @@ public class GENode {
     }
   }
   public var zPosition: Int = 0
-  private var z: Float {
-    return -1.0 * Float(self.zPosition) / 10000.0
+  var z: Float {
+    return -1.0 * Float(self.zPosition) / Float(Int.max)
   }
 
   public var rotation: Float = 0.0
