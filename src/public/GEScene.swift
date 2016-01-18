@@ -22,13 +22,13 @@ public class GEScene {
   var drawables = GERenderNodes()
   var nodes = GENodes()
   
-  var tree: DrawTree = DrawTree()
   var visible = false
   var uniqueID = "1"
   
   init(size: CGSize) {
     self.size = size
     self.camera = GECamera(size: size)
+    
   }
   
   func setupRenderer(view: GEView) {
@@ -61,5 +61,9 @@ public class GEScene {
     }
     
     self.nodes.append(node)
+  }
+  
+  func traverseTree(nodes: GENodes) {
+
   }
 }

@@ -72,6 +72,7 @@ public class GENode {
 
   let uniqueID = NSUUID().UUIDString
   
+  var parent: GENode?
   var nodes = GENodes()
   
   //updating
@@ -100,6 +101,7 @@ public class GENode {
   
   //tree stuff
   func addNode(node: GENode) {
+    node.parent = self
     self.nodes.append(node)
   }
 }

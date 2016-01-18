@@ -57,7 +57,6 @@
 		EAE75E381C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
 		EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
 		EAE75E801C42FE68001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
-		EAE75E821C42FEBD001EB176 /* DrawTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E811C42FEBD001EB176 /* DrawTree.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,7 +104,6 @@
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAE75E361C42D091001EB176 /* GEScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEScene.swift; path = src/public/GEScene.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEView.swift; path = src/public/GEView.swift; sourceTree = SOURCE_ROOT; };
-		EAE75E811C42FEBD001EB176 /* DrawTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawTree.swift; path = src/private/DrawTree.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +223,6 @@
 		EAC6405A1C346D6B00B6AE68 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				EAE75E811C42FEBD001EB176 /* DrawTree.swift */,
 				EA4A58571C38823D00D39F17 /* Animation */,
 				EAC640A11C34B60E00B6AE68 /* DataStructures */,
 				EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */,
@@ -438,7 +435,6 @@
 				EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */,
 				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EA7C9AF61C4AF01600A64CB9 /* GERenderNode.swift in Sources */,
-				EAE75E821C42FEBD001EB176 /* DrawTree.swift in Sources */,
 				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
