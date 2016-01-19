@@ -59,7 +59,7 @@ public class GERenderNode: GENode {
     let secondColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 1), translate.y)
     let thirdColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 2), self.z)
     let fourthColumn = GLKVector4(v: (0.0, 0.0, 0.0, 1.0))
-    //DLog(self.modelMatrix)
+    
     return GLKMatrix4MakeWithRows(firstColumn, secondColumn, thirdColumn, fourthColumn)
   }
   

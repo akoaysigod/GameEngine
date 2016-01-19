@@ -28,14 +28,17 @@ final class Renderer {
   private var colorPipeline: ColorPipeline!
   private var spritePipeline: SpritePipeline!
 
+  //TODO: pass a UIColor in here somehow to pass to the RenderPassQueue for background color
   init(view: GEView) {
     self.device = view.device!
     self.commandQueue = self.device.newCommandQueue()
     self.commandQueue.label = "main command queue"
 
-
     self.descriptorQueue = RenderPassQueue(view: view)
-
+    
+    //tmp
+    TempStencilTest(device: self.device)
+    
     self.setupPipelines()
   }
 

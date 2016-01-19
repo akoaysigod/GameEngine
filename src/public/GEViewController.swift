@@ -15,10 +15,7 @@ public class GEViewController: UIViewController {
   var camera: GECamera!
   
   override public func loadView() {
-    guard let device = MTLCreateSystemDefaultDevice() else {
-      fatalError("This device does not support metal.")
-    }
-    
+    let device = MTLCreateSystemDefaultDevice()!
     self.view = GEView(frame: UIScreen.mainScreen().bounds, device: device)
   }
 
@@ -52,14 +49,14 @@ public class GEViewController: UIViewController {
     let sp = GESprite(imageName: "Test2")
     sp.scale = 10
     sp.position = (300, 300)
-    sp.zPosition = 100
+    scene.addNode(sp)
     
     let sp2 = GESprite(imageName: "Test2")
     sp2.scale = 10
     sp2.position = (300, 356)
+    sp2.zPosition = 1000
     scene.addNode(sp2)
     
-    scene.addNode(sp)
 //    if let device = MTLCreateSystemDefaultDevice() {
 //      let view = self.view as! MTKView
 //      view.device = device

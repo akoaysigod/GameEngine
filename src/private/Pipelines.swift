@@ -31,6 +31,8 @@ private func getPipelineStateDescriptor(device: MTLDevice, vertexProgram: String
   pipelineStateDescriptor.vertexFunction = vertexProgram
   pipelineStateDescriptor.fragmentFunction = fragmentProgram
   pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
+  pipelineStateDescriptor.depthAttachmentPixelFormat = .Depth32Float
+  
   return pipelineStateDescriptor
 }
 
@@ -38,7 +40,22 @@ private func createRenderEncoder(commandBuffer: MTLCommandBuffer, label: String,
   let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
   renderEncoder.label = label
   renderEncoder.setRenderPipelineState(pipelineState)
+  renderEncoder.setDepthStencilState(TempStencilTest.stencilState)
+  
   return renderEncoder
+}
+
+//tmp too lazy to refactor everything again just to test if this is what I need
+final class TempStencilTest {
+  static var stencilState: MTLDepthStencilState!
+  
+  init(device: MTLDevice) {
+    let depthStencilDescriptor = MTLDepthStencilDescriptor()
+    depthStencilDescriptor.depthCompareFunction = .GreaterEqual
+    depthStencilDescriptor.depthWriteEnabled = true
+    
+    TempStencilTest.stencilState = device.newDepthStencilStateWithDescriptor(depthStencilDescriptor)
+  }
 }
 
 final class PipelineFactory {
