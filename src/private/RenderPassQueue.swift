@@ -27,9 +27,11 @@ class RenderPassQueue {
 
     assert(queueSize >= 1)
     
-    //TODO: find out a better way to do this, not sure how it arrives at these values but it's 1080x1920 
-    let width = self.currentDrawable!.texture.width
-    let height = self.currentDrawable!.texture.height
+    let scale = UIScreen.mainScreen().nativeScale
+    let size = UIScreen.mainScreen().bounds.size
+    
+    let width = Int(scale * size.width)
+    let height = Int(scale * size.height)
     let depthTextDesc = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.Depth32Float, width: width, height: height, mipmapped: false)
     self.depthTex = self.view.device?.newTextureWithDescriptor(depthTextDesc)
     
