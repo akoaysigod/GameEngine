@@ -12,10 +12,8 @@
 		EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */; };
 		EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
 		EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
-		EAA99DBD1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */; };
-		EAA99DBE1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */; };
-		EAA99DBF1C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */; };
-		EAA99DC01C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */; };
+		EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */; };
+		EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */; };
 		EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
 		EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
 		EAA99DC41C41E48900CF3246 /* GLKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */; };
@@ -78,8 +76,7 @@
 		EAA99D781C41E10900CF3246 /* GameEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GameEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFTimeIntervalExtensions.swift; path = src/extensions/CFTimeIntervalExtensions.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGPointExtensions.swift; path = src/extensions/CGPointExtensions.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGSizeExtensions.swift; path = src/extensions/CGSizeExtensions.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGExtensions.swift; path = src/extensions/CGExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = src/extensions/UIColorExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GLKExtensions.swift; path = src/extensions/GLKExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DC61C41E4B900CF3246 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = src/private/Globals.swift; sourceTree = SOURCE_ROOT; };
@@ -248,8 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */,
-				EAA99DB81C41E47D00CF3246 /* CGPointExtensions.swift */,
-				EAA99DB91C41E47D00CF3246 /* CGSizeExtensions.swift */,
+				EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */,
 				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
 				EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */,
 			);
@@ -427,7 +423,7 @@
 				EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
 				EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
-				EAA99DBD1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */,
+				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* GEScene.swift in Sources */,
 				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
@@ -439,7 +435,6 @@
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EAA99DC41C41E48900CF3246 /* GLKExtensions.swift in Sources */,
-				EAA99DBF1C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */,
 				EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EAA99DE31C41E52700CF3246 /* GENode.swift in Sources */,
@@ -466,8 +461,7 @@
 				EAE75E801C42FE68001EB176 /* GEView.swift in Sources */,
 				EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
-				EAA99DC01C41E47D00CF3246 /* CGSizeExtensions.swift in Sources */,
-				EAA99DBE1C41E47D00CF3246 /* CGPointExtensions.swift in Sources */,
+				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAA99DD51C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EAE75E381C42D091001EB176 /* GEScene.swift in Sources */,
 				EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,

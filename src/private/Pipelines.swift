@@ -46,7 +46,9 @@ private func createRenderEncoder(commandBuffer: MTLCommandBuffer, label: String,
 }
 
 //tmp too lazy to refactor everything again just to test if this is what I need
+//TODO: stop being lazy this actually works!
 final class TempStencilTest {
+  let x = 1
   static var stencilState: MTLDepthStencilState!
   
   init(device: MTLDevice) {

@@ -12,7 +12,7 @@ import MetalKit
 import UIKit
 
 public class GEViewController: UIViewController {
-  var camera: GECamera!
+  var scene: GEScene!
   
   override public func loadView() {
     let device = MTLCreateSystemDefaultDevice()!
@@ -23,7 +23,7 @@ public class GEViewController: UIViewController {
     super.viewDidLoad()
     
     let view = self.view as! GEView
-    let scene = GEScene(size: view.bounds.size)
+    self.scene = GEScene(size: view.bounds.size)
     view.presentScene(scene)
     
     let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
@@ -49,13 +49,13 @@ public class GEViewController: UIViewController {
     let sp = GESprite(imageName: "Test2")
     sp.scale = 10
     sp.position = (300, 300)
-    scene.addNode(sp)
+    self.scene.addNode(sp)
     
     let sp2 = GESprite(imageName: "Test2")
     sp2.scale = 10
     sp2.position = (300, 356)
     sp2.zPosition = 1000
-    scene.addNode(sp2)
+    self.scene.addNode(sp2)
     
 //    if let device = MTLCreateSystemDefaultDevice() {
 //      let view = self.view as! MTKView
@@ -122,7 +122,7 @@ public class GEViewController: UIViewController {
 //      return
 //    }
 
-//    self.addGestures()
+    self.addGestures()
   }
 }
 
@@ -130,32 +130,31 @@ public class GEViewController: UIViewController {
 
 //tmp
 extension GEViewController {
-//  func addGestures() {
-//    let pan = UIPanGestureRecognizer(target: self, action: "panCamera:")
-//    self.view.addGestureRecognizer(pan)
-//
-//    let pinch = UIPinchGestureRecognizer(target: self, action: "zoomCamera:")
-//    self.view.addGestureRecognizer(pinch)
-//  }
-//
-//  func panCamera(p: UIPanGestureRecognizer) {
-//    let t = p.translationInView(self.view)
-//    if t.x > 0.0 {
-//      self.camera.x -= 1
-//    }
-//    else {
-//      self.camera.x += 1
-//    }
-//
-//    if t.y > 0.0 {
-//      self.camera.y += 1
-//    }
-//    else {
-//      self.camera.y -= 1
-//    }
-//  }
-//
-//  func zoomCamera(p: UIPinchGestureRecognizer) {
-//    self.camera.zoom = Float(p.scale)
-//  }
+  func addGestures() {
+    let pan = UIPanGestureRecognizer(target: self, action: "panCamera:")
+    self.view.addGestureRecognizer(pan)
+
+    let pinch = UIPinchGestureRecognizer(target: self, action: "zoomCamera:")
+    self.view.addGestureRecognizer(pinch)
+  }
+
+  func panCamera(p: UIPanGestureRecognizer) {
+    let t = p.translationInView(self.view)
+    
+    let tMax: CGFloat = 3.0
+    let tMin: CGFloat = -3.0
+    
+    let xMin = t.x > 0 ? tMax : tMin
+    let yMin = t.y > 0 ? tMax : tMin
+   
+    self.scene.camera.x += t.x > 0 ? Float(min(t.x, xMin)) : Float(max(t.x, xMin))
+    self.scene.camera.y += t.y > 0 ? Float(min(t.y, yMin)) : Float(max(t.y, yMin))
+  }
+
+  func zoomCamera(p: UIPinchGestureRecognizer) {
+    let scale = self.scene.camera.scale * Float(p.scale)
+    let realScale = max(0.5, min(scale, 5.0));
+    self.scene.camera.scale = realScale
+    p.scale = 1.0
+  }
 }
