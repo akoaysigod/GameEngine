@@ -55,6 +55,8 @@
 		EAE75E381C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
 		EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
 		EAE75E801C42FE68001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
+		EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
+		EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,7 @@
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAE75E361C42D091001EB176 /* GEScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEScene.swift; path = src/public/GEScene.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEView.swift; path = src/public/GEView.swift; sourceTree = SOURCE_ROOT; };
+		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +249,7 @@
 			children = (
 				EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */,
 				EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */,
+				EAEAAC661C66995000BFB938 /* FontAtlas.swift */,
 				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
 				EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */,
 			);
@@ -437,6 +441,7 @@
 				EAA99DC41C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */,
 				EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */,
+				EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EAA99DE31C41E52700CF3246 /* GENode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,6 +464,7 @@
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAE75E801C42FE68001EB176 /* GEView.swift in Sources */,
+				EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
@@ -573,6 +579,7 @@
 		EA0363E41C31C85F00D283E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";
@@ -587,6 +594,7 @@
 		EA0363E51C31C85F00D283E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";

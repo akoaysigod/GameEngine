@@ -22,41 +22,46 @@ public class GEViewController: UIViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
     
+    let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
+    
     let view = self.view as! GEView
-    self.scene = GEScene(size: view.bounds.size)
-    view.presentScene(scene)
+    let imageView = UIImageView(image: fontTest.debugImage!)
+    self.view.addSubview(imageView)
+    //self.scene = GEScene(size: view.bounds.size)
+    //view.presentScene(scene)
     
-    let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
-    colorRect.zPosition = 1001
-    colorRect.anchorPoint = (0.5, 0.5)
-    //colorRect.rotation = 45
-    colorRect.x = 100
-    colorRect.y = 300
     
-    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
-    let forever = GEAction.repeatForever(action)
-    //colorRect.runAction(forever)
     
-    //scene.addNode(colorRect)
-    
-    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
-    colorRect2.position = (50, 300)
-    colorRect2.anchorPoint = (0.5, 0.5)
-    //colorRect2.zPosition = 0
-    //colorRect.addNode(colorRect2)
-    //scene.addNode(colorRect2)
-    
-    let sp = GESprite(imageName: "Test2")
-    sp.scale = 10
-    sp.position = (300, 300)
-    self.scene.addNode(sp)
-    
-    let sp2 = GESprite(imageName: "Test2")
-    sp2.scale = 10
-    sp2.position = (300, 356)
-    sp2.zPosition = 1000
-    self.scene.addNode(sp2)
-    
+//    let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
+//    colorRect.zPosition = 1001
+//    colorRect.anchorPoint = (0.5, 0.5)
+//    //colorRect.rotation = 45
+//    colorRect.x = 100
+//    colorRect.y = 300
+//    
+//    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
+//    let forever = GEAction.repeatForever(action)
+//    //colorRect.runAction(forever)
+//    
+//    //scene.addNode(colorRect)
+//    
+//    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
+//    colorRect2.position = (50, 300)
+//    colorRect2.anchorPoint = (0.5, 0.5)
+//    //colorRect2.zPosition = 0
+//    //colorRect.addNode(colorRect2)
+//    //scene.addNode(colorRect2)
+//    
+//    let sp = GESprite(imageName: "Test2")
+//    sp.scale = 10
+//    sp.position = (300, 300)
+//    self.scene.addNode(sp)
+//    
+//    let sp2 = GESprite(imageName: "Test2")
+//    sp2.scale = 10
+//    sp2.position = (300, 356)
+//    sp2.zPosition = 1000
+//    self.scene.addNode(sp2)
 //    if let device = MTLCreateSystemDefaultDevice() {
 //      let view = self.view as! MTKView
 //      view.device = device

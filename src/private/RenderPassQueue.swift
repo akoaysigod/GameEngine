@@ -25,7 +25,7 @@ class RenderPassQueue {
     self.view = view
     self.queue = [MTLRenderPassDescriptor]()
 
-    assert(queueSize >= 1)
+    assert(queueSize >= 1, "Need at least 1 MTLRenderPassDescriptor.")
     
     let scale = UIScreen.mainScreen().nativeScale
     let size = UIScreen.mainScreen().bounds.size
