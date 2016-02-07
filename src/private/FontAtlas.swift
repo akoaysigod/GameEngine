@@ -10,6 +10,13 @@ import CoreText
 import Foundation
 import UIKit
 
+//maybe private
+struct GlyphDescriptor {
+  let glyphIndex: CGGlyph
+  let topLeftTexCoord: CGPoint
+  let bottomRightTexCoord: CGPoint
+}
+
 class FontAtlas {
   private struct Constants {
     static let AtlasSize = 4096
@@ -24,6 +31,7 @@ class FontAtlas {
     self.font = font
     
     let test = self.createAtlasForFont(font)
+    let x = 1
   }
 
   func estimateGlyphSize(font: UIFont) -> CGSize {
@@ -49,7 +57,7 @@ class FontAtlas {
     let averageSize = self.estimateGlyphSize(testFont)
 
     let estimatedTotalArea = (averageSize.width + margin) * (averageSize.height + margin) * CGFloat(fontCount)
-    //CFRelease(testFont)???
+    
     return estimatedTotalArea < textureArea
   }
 
@@ -67,11 +75,13 @@ class FontAtlas {
     return fittedSize
   }
   
+  //TODO: figure out how to just get ASCII characters I don't really care about all this other shit
   func createAtlasForFont(font: UIFont) -> UnsafeMutablePointer<UInt8> {
     let width = CGFloat(Constants.AtlasSize)
     let height = CGFloat(Constants.AtlasSize)
     
-    let imageData = UnsafeMutablePointer<UInt8>()
+    //TODO: do we destroy this here? I think so but I'm not sure
+    let imageData = UnsafeMutablePointer<UInt8>.alloc(Constants.AtlasSize * Constants.AtlasSize)
     
     let colorSpace = CGColorSpaceCreateDeviceGray()
     let bitmapInfo = CGBitmapInfo.AlphaInfoMask.rawValue & CGImageAlphaInfo.None.rawValue
@@ -90,11 +100,12 @@ class FontAtlas {
     let ctFont = CTFontCreateWithName(font.fontName, fontPointSize, nil)
     let parentFont = UIFont(name: font.fontName, size: fontPointSize) //property
 
-    let fontCount = CTFontGetGlyphCount(ctFont)
+    let fontCount = UInt16(CTFontGetGlyphCount(ctFont)) as CGGlyph
     let margin = self.estimateLineWidth(font)
 
     CGContextSetRGBFillColor(context, 1, 1, 1, 1)
 
+    //can probably just return this maybe
     self.glyphDescriptors.removeAll()
 
     let fontAscent = CTFontGetAscent(ctFont)
@@ -103,11 +114,14 @@ class FontAtlas {
     var origin = CGPoint(x: 0, y: fontAscent)
     var maxYCoordForLine: CGFloat = -1.0
     
-    var glyph: CGGlyph = 0
-    for _ in (0..<fontCount) { //look into this bug in swift-mode need parens around this for smie
-      let rect = UnsafeMutablePointer<CGRect>.alloc(1)
-      rect[0] = CGRectZero
-      CTFontGetBoundingRectsForGlyphs(ctFont, .Horizontal, &glyph, rect, 1)
+    for glyph: CGGlyph in (0..<fontCount) { //look into this bug in swift-mode need parens around this for smie, .forEach is worse
+      var rect = UnsafeMutablePointer<CGRect>.alloc(1)
+      defer { unsafeGlyph.destroy(); unsafeGlyph.dealloc(1) }
+      
+      let unsafeGlyph = UnsafeMutablePointer<CGGlyph>.alloc(1)
+      unsafeGlyph[0] = glyph
+      defer { unsafeGlyph.destroy(); unsafeGlyph.dealloc(1) }
+      CTFontGetBoundingRectsForGlyphs(ctFont, .Horizontal, unsafeGlyph, rect, 1)
 
       if origin.x + CGRectGetMaxX(rect.memory) + margin > width {
         origin.x = 0
@@ -122,52 +136,40 @@ class FontAtlas {
       let glyphOriginY = origin.y + (margin * 0.5)
 
       var transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: glyphOriginX, ty: glyphOriginY)
-
-      var pathBoundingRect = CGRectZero
-      //there's probably a nicer way to do this
-      let _ = withUnsafeMutablePointer(&transform) { transform in
-        let path = CTFontCreatePathForGlyph(ctFont, glyph, transform)
-        CGContextAddPath(context, path)
-        CGContextFillPath(context)
-        
-        pathBoundingRect = CGPathGetPathBoundingBox(path)
-        if CGRectEqualToRect(pathBoundingRect, CGRectNull) {
-          pathBoundingRect = CGRectZero
-        }
+      var unsafeTransform = UnsafeMutablePointer<CGAffineTransform>.alloc(1)
+      unsafeTransform[0] = transform
+      defer { unsafeTransform.destroy(); unsafeTransform.dealloc(1) }
+      
+      let path = CTFontCreatePathForGlyph(ctFont, glyph, unsafeTransform)
+      CGContextAddPath(context, path)
+      CGContextFillPath(context)
+      
+      var pathBoundingRect = CGPathGetPathBoundingBox(path)
+      if CGRectEqualToRect(pathBoundingRect, CGRectNull) {
+        pathBoundingRect = CGRectZero
       }
       
       let texCoordLeft = pathBoundingRect.origin.x / width
       let texCoordRight = pathBoundingRect.origin.x + pathBoundingRect.size.width / width
       let texCoordTop = pathBoundingRect.origin.y / height
       let texCoordBottom = pathBoundingRect.origin.y + pathBoundingRect.size.height / height
-
+      
       let topLeftTexCoord = CGPoint(x: texCoordLeft, y: texCoordTop)
       let bottomRightTexCoord = CGPoint(x: texCoordRight, y: texCoordBottom)
       let descriptor = GlyphDescriptor(glyphIndex: glyph, topLeftTexCoord: topLeftTexCoord, bottomRightTexCoord: bottomRightTexCoord)
       self.glyphDescriptors.append(descriptor)
 
-      //CGPathRelease(path)
-
       origin.x += CGRectGetWidth(rect.memory) + margin
-
-      glyph += 1
     }
     
     //debug testing stuff
-    let contextImage = CGBitmapContextCreateImage(context)
-    self.debugImage = UIImage(CGImage: contextImage!)
-    
-
-    //CFRelease(ctFont)
-    //CGContextRelease(context)
-    //CGColorSpaceRelease(colorSpace)
+    #if DEBUG
+      let contextImage = CGBitmapContextCreateImage(context)
+      self.debugImage = UIImage(CGImage: contextImage!)
+    #endif
     
     return imageData
   }
 }
 
-struct GlyphDescriptor {
-  let glyphIndex: CGGlyph
-  let topLeftTexCoord: CGPoint
-  let bottomRightTexCoord: CGPoint
-}
+

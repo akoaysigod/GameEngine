@@ -174,6 +174,14 @@
 			path = MKTestTests;
 			sourceTree = "<group>";
 		};
+		EA0DDB9F1C66E1E4002DD5B7 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				EAEAAC661C66995000BFB938 /* FontAtlas.swift */,
+			);
+			name = Font;
+			sourceTree = "<group>";
+		};
 		EA4A58571C38823D00D39F17 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,7 +257,6 @@
 			children = (
 				EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */,
 				EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */,
-				EAEAAC661C66995000BFB938 /* FontAtlas.swift */,
 				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
 				EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */,
 			);
@@ -269,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA99DE71C41E53800CF3246 /* Shaders */,
+				EA0DDB9F1C66E1E4002DD5B7 /* Font */,
 				EAC6405B1C34708700B6AE68 /* RenderPipelines */,
 				EAA99DEE1C41E57300CF3246 /* GEViewController.swift */,
 				EAE75E7E1C42FE62001EB176 /* GEView.swift */,
