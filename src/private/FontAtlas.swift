@@ -114,6 +114,7 @@ class FontAtlas {
     var origin = CGPoint(x: 0, y: fontAscent)
     var maxYCoordForLine: CGFloat = -1.0
     
+    //TODO: refactor this
     for glyph: CGGlyph in (0..<fontCount) { //look into this bug in swift-mode need parens around this for smie, .forEach is worse
       var rect = UnsafeMutablePointer<CGRect>.alloc(1)
       defer { unsafeGlyph.destroy(); unsafeGlyph.dealloc(1) }
