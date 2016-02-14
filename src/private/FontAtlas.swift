@@ -228,7 +228,7 @@ class FontAtlas {
         }
       }
     }
-    
+
     let distDiag: Float = sqrt(2.0)
     (1..<height - 2).forEach { y in
       (1..<width - 2).forEach { x in
@@ -254,8 +254,8 @@ class FontAtlas {
       }
     }
     
-    (height - 2).stride(through: 1, by: -1).forEach { y in
-      (width - 2).stride(through: 1, by: -1).forEach { x in
+    (1..<height - 2).reverse().forEach { y in
+      (1..<width - 2).reverse().forEach { x in
         let newDistance = ihypot(x - boundaryPoints[x, y].x, y - boundaryPoints[x, y].y)
         if distances[x + 1, y] + 1.0 < distances[x, y] {
           boundaryPoints[x, y] = boundaryPoints[x + 1, y]
@@ -286,12 +286,12 @@ class FontAtlas {
         }
       }
     }
-    
+
     return distances.arr
   }
 }
 
-private class FlatArray<T> {
+private final class FlatArray<T> {
   var arr: [T]
   let width: Int
   
