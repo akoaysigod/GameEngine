@@ -27,6 +27,8 @@ class FontAtlas {
   
   var debugImage: UIImage?
   
+  var asciiOnly = true
+  
   init(font: UIFont) {
     self.font = font
     
@@ -75,7 +77,30 @@ class FontAtlas {
     return fittedSize
   }
   
-  //TODO: figure out how to just get ASCII characters I don't really care about all this other shit
+  func glyphIndices(ctFont: CTFont) -> [UInt16] {
+    if !asciiOnly {
+      let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
+      return Array(0..<fontCount)
+    }
+    
+    let asciiGlyphs = UnsafeMutablePointer<UniChar>.alloc(128)
+    defer { asciiGlyphs.destroy(); asciiGlyphs.dealloc(128) }
+    
+    for i in (0...127) {
+      asciiGlyphs[i] = UniChar(i)
+    }
+    
+    var glyphIndices = UnsafeMutablePointer<CGGlyph>.alloc(128)
+    defer { glyphIndices.destroy(); glyphIndices.dealloc(128) }
+    CTFontGetGlyphsForCharacters(ctFont, asciiGlyphs, glyphIndices, 128)
+    
+    return (0...127).map {
+      glyphIndices[$0]
+    }.filter {
+      $0 != 0
+    }
+  }
+  
   func createAtlasForFont(font: UIFont) -> UnsafeMutablePointer<UInt8> {
     let width = CGFloat(Constants.AtlasSize)
     let height = CGFloat(Constants.AtlasSize)
@@ -100,28 +125,29 @@ class FontAtlas {
     let ctFont = CTFontCreateWithName(font.fontName, fontPointSize, nil)
     let parentFont = UIFont(name: font.fontName, size: fontPointSize) //property
 
-    let fontCount = UInt16(CTFontGetGlyphCount(ctFont)) as CGGlyph
+    let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
     let margin = self.estimateLineWidth(font)
 
     CGContextSetRGBFillColor(context, 1, 1, 1, 1)
 
     //can probably just return this maybe
-    self.glyphDescriptors.removeAll()
-
+    glyphDescriptors.removeAll()
+    
     let fontAscent = CTFontGetAscent(ctFont)
     let fontDescent = CTFontGetDescent(ctFont)
 
     var origin = CGPoint(x: 0, y: fontAscent)
     var maxYCoordForLine: CGFloat = -1.0
-    
+   
     //TODO: refactor this
-    for glyph: CGGlyph in (0..<fontCount) { //look into this bug in swift-mode need parens around this for smie, .forEach is worse
+    glyphIndices(ctFont).forEach { glyph in //look into this bug in swift-mode need parens around this for smie, .forEach is worse
       var rect = UnsafeMutablePointer<CGRect>.alloc(1)
-      defer { unsafeGlyph.destroy(); unsafeGlyph.dealloc(1) }
+      defer { rect.destroy(); rect.dealloc(1) }
       
       let unsafeGlyph = UnsafeMutablePointer<CGGlyph>.alloc(1)
-      unsafeGlyph[0] = glyph
       defer { unsafeGlyph.destroy(); unsafeGlyph.dealloc(1) }
+      unsafeGlyph[0] = glyph
+      
       CTFontGetBoundingRectsForGlyphs(ctFont, .Horizontal, unsafeGlyph, rect, 1)
 
       if origin.x + CGRectGetMaxX(rect.memory) + margin > width {
@@ -138,8 +164,8 @@ class FontAtlas {
 
       var transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: glyphOriginX, ty: glyphOriginY)
       var unsafeTransform = UnsafeMutablePointer<CGAffineTransform>.alloc(1)
-      unsafeTransform[0] = transform
       defer { unsafeTransform.destroy(); unsafeTransform.dealloc(1) }
+      unsafeTransform[0] = transform
       
       let path = CTFontCreatePathForGlyph(ctFont, glyph, unsafeTransform)
       CGContextAddPath(context, path)
@@ -158,7 +184,7 @@ class FontAtlas {
       let topLeftTexCoord = CGPoint(x: texCoordLeft, y: texCoordTop)
       let bottomRightTexCoord = CGPoint(x: texCoordRight, y: texCoordBottom)
       let descriptor = GlyphDescriptor(glyphIndex: glyph, topLeftTexCoord: topLeftTexCoord, bottomRightTexCoord: bottomRightTexCoord)
-      self.glyphDescriptors.append(descriptor)
+      glyphDescriptors.append(descriptor)
 
       origin.x += CGRectGetWidth(rect.memory) + margin
     }
@@ -166,7 +192,7 @@ class FontAtlas {
     //debug testing stuff
     #if DEBUG
       let contextImage = CGBitmapContextCreateImage(context)
-      self.debugImage = UIImage(CGImage: contextImage!)
+      debugImage = UIImage(CGImage: contextImage!)
     #endif
     
     return imageData
