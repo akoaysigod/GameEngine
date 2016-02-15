@@ -11,13 +11,67 @@ import Foundation
 import UIKit
 
 //maybe private
-struct GlyphDescriptor {
+class GlyphDescriptor: NSObject, NSCoding {
   let glyphIndex: CGGlyph
   let topLeftTexCoord: CGPoint
   let bottomRightTexCoord: CGPoint
+
+  init(glyphIndex: CGGlyph, topLeftTexCoord: CGPoint, bottomRightTexCoord: CGPoint) {
+    self.glyphIndex = glyphIndex
+    self.topLeftTexCoord = topLeftTexCoord
+    self.bottomRightTexCoord = bottomRightTexCoord
+  }
+
+  private struct Keys {
+    static let GlyphIndex = "glyphindex"
+    static let XLeftTex = "xlefttex"
+    static let YLeftTex = "ylefttex"
+    static let XRightTex = "xrighttex"
+    static let YRightTex = "yrighttex"
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    self.glyphIndex = UInt16(aDecoder.decodeIntForKey(Keys.GlyphIndex))
+
+    let lx = aDecoder.decodeFloatForKey(Keys.XLeftTex)
+    let ly = aDecoder.decodeFloatForKey(Keys.YLeftTex)
+    self.topLeftTexCoord = CGPoint(x: lx, y: ly)
+
+    let rx = aDecoder.decodeFloatForKey(Keys.XRightTex)
+    let ry = aDecoder.decodeFloatForKey(Keys.YRightTex)
+    self.bottomRightTexCoord = CGPoint(x: rx, y: ry)
+  }
+
+  func encodeWithCoder(coder: NSCoder) {
+    coder.encodeInt(Int32(glyphIndex), forKey: Keys.GlyphIndex)
+    coder.encodeFloat(Float(topLeftTexCoord.x), forKey: Keys.XLeftTex)
+    coder.encodeFloat(Float(topLeftTexCoord.y), forKey: Keys.YLeftTex)
+    coder.encodeFloat(Float(bottomRightTexCoord.x), forKey: Keys.XRightTex)
+    coder.encodeFloat(Float(bottomRightTexCoord.y), forKey: Keys.YRightTex)
+  }
 }
 
-class FontAtlas {
+//2d array helper used in computing distance fields below
+private final class FlatArray<T> {
+  var arr: [T]
+  let width: Int
+  
+  init(count: Int, repeatedValue: T, width: Int) {
+    self.arr = [T](count: count, repeatedValue: repeatedValue)
+    self.width = width
+  }
+  
+  subscript(x: Int, y: Int) -> T {
+    get {
+      return self.arr[y * width + x]
+    }
+    set {
+      arr[y * width + x] = newValue
+    }
+  }
+}
+
+class FontAtlas: NSObject, NSCoding {
   private struct Constants {
     static let AtlasSizeHeightMax = 4096
     static let AtlasSizeWidthMax = 4096
@@ -34,6 +88,8 @@ class FontAtlas {
   
   init(font: UIFont) {
     self.font = font
+
+    super.init()
     
     let width = asciiOnly ? Constants.AsciiHeight : Constants.AtlasSizeHeightMax
     let height = asciiOnly ? Constants.AsciiWidth : Constants.AtlasSizeHeightMax
@@ -42,6 +98,29 @@ class FontAtlas {
     let x = 1
     
     computeSignedDistanceFields(test, width: width, height: height)
+  }
+
+  //MARK: NSCODING
+  private struct Keys {
+    static let Font = "font"
+    static let Size = "size"
+    static let Spread = "spread"
+    static let Width = "width"
+    static let Height = "height"
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    let fontName = aDecoder.decodeObjectForKey(Keys.Font) as! String
+    let fontSize = aDecoder.decodeFloatForKey(Keys.Size) 
+    let fontSpread = aDecoder.decodeFloatForKey(Keys.Spread)
+
+    self.font = UIFont(name: fontName, size: CGFloat(fontSize))!
+
+    super.init()
+  }
+
+  func encodeWithCoder(coder: NSCoder) {
+    coder.encodeObject(font.fontName, forKey: Keys.Font)
   }
   
   private func estimateGlyphSize(font: UIFont) -> CGSize {
@@ -203,7 +282,7 @@ class FontAtlas {
     return imageData
   }
 
-  func computeSignedDistanceFields(imageData: UnsafeMutablePointer<UInt8>, width: Int, height: Int) -> [Float] {
+  private func computeSignedDistanceFields(imageData: UnsafeMutablePointer<UInt8>, width: Int, height: Int) -> FlatArray<Float> {
     let ihypot = { (x: Int,  y: Int) -> Float in
       return hypot(Float(x), Float(y))
     }
@@ -287,25 +366,45 @@ class FontAtlas {
       }
     }
 
-    return distances.arr
+    return distances
   }
-}
 
-private final class FlatArray<T> {
-  var arr: [T]
-  let width: Int
-  
-  init(count: Int, repeatedValue: T, width: Int) {
-    self.arr = [T](count: count, repeatedValue: repeatedValue)
-    self.width = width
+  private func createResampledData(distances: FlatArray<Float>, width: Int, height: Int, scaleFactor: Int) {
+    assert(width % scaleFactor == 0 && height % scaleFactor == 0)
+
+    let scaledWidth = width / scaleFactor
+    let scaledHeight = height / scaleFactor
+
+    let scaledData: FlatArray<Float> = FlatArray(count: scaledWidth * scaledHeight, repeatedValue: 0.0, width: scaledWidth)
+
+    0.stride(to: height, by: scaleFactor).forEach { y in
+      0.stride(to: width, by: scaleFactor).forEach { x in
+        var accum: Float = 0.0
+        (0..<scaleFactor).forEach { yy in
+          (0..<scaleFactor).forEach { xx in
+            accum += distances[x + xx, y + yy]
+          }
+        }
+
+        accum /= Float(scaleFactor * scaleFactor)
+
+        scaledData[x / scaleFactor, y / scaleFactor] = accum
+      }
+    }
   }
-  
-  subscript(x: Int, y: Int) -> T {
-    get {
-      return self.arr[y * width + x]
+
+  private func createQuantizedDistanceField(distances: FlatArray<Float>, width: Int, height: Int, normalizationFactor: Float) -> FlatArray<UInt8> {
+    let quanitized: FlatArray<UInt8> = FlatArray(count: width * height, repeatedValue: 0, width: width)
+
+    (0..<height).forEach { y in
+      (0..<width).forEach { x in
+        let dist = distances[x, y]
+        let clampDist = max(-1 * normalizationFactor, min(dist, normalizationFactor))
+        let scaledDist = clampDist / normalizationFactor
+        quanitized[x, y] = UInt8(((scaledDist + 1) / 2) * Float(UInt8.max))
+      }
     }
-    set {
-      arr[y * width + x] = newValue
-    }
+
+    return quanitized
   }
 }

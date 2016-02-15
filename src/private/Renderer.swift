@@ -15,6 +15,8 @@ final class Renderer {
     static let ColorFragment = "colorFragment"
     static let SpriteVertex = "spriteVertex"
     static let SpriteFragment = "spriteFragment"
+    static let TextVertex = "textVertex"
+    static let TextFragment = "textFragment"
   }
 
   private let device: MTLDevice
@@ -27,6 +29,7 @@ final class Renderer {
 
   private var colorPipeline: ColorPipeline!
   private var spritePipeline: SpritePipeline!
+  private var textPipeline: TextPipeline!
 
   //TODO: pass a UIColor in here somehow to pass to the RenderPassQueue for background color
   init(view: GEView) {
@@ -44,8 +47,9 @@ final class Renderer {
 
   func setupPipelines() {
     let factory = PipelineFactory(device: self.device)
-    self.colorPipeline = factory.provideColorPipeline(ShaderPrograms.ColorVertex, fragmentProgram: ShaderPrograms.ColorFragment)
-    self.spritePipeline = factory.provideSpritePipeline(ShaderPrograms.SpriteVertex, fragmentProgram: ShaderPrograms.SpriteFragment)
+    colorPipeline = factory.provideColorPipeline(ShaderPrograms.ColorVertex, fragmentProgram: ShaderPrograms.ColorFragment)
+    spritePipeline = factory.provideSpritePipeline(ShaderPrograms.SpriteVertex, fragmentProgram: ShaderPrograms.SpriteFragment)
+    textPipeline = factory.provideTextPipeline(ShaderPrograms.TextVertex, fragmentProgram: ShaderPrograms.TextFragment)
   }
 
   func draw(nodes: GERenderNodes) {

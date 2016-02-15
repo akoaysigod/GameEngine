@@ -9,7 +9,7 @@
 import Foundation
 import MetalKit
 
-
+//TODO: rethink this
 
 protocol Pipeline {
   var pipelineState: MTLRenderPipelineState! { get }
@@ -70,11 +70,15 @@ final class PipelineFactory {
   //TODO: look up below
   //not sure what happens if there is an error I haven't seen one
   func provideColorPipeline(vertexProgram: String, fragmentProgram: String) -> ColorPipeline {
-    return ColorPipeline(device: self.device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
+    return ColorPipeline(device: device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
   }
 
   func provideSpritePipeline(vertexProgram: String, fragmentProgram: String) -> SpritePipeline {
-    return SpritePipeline(device: self.device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
+    return SpritePipeline(device: device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
+  }
+
+  func provideTextPipeline(vertexProgram: String, fragmentProgram: String) -> TextPipeline {
+    return TextPipeline(device: device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
   }
 }
 
@@ -137,6 +141,66 @@ final class SpritePipeline: Pipeline {
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
     let renderEncoder = createRenderEncoder(commandBuffer, label: "sprite encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState)
     
+    nodes.flatMap { (node) -> [GERenderNode] in
+      if let renderNode = node as? GERenderNode {
+        return [renderNode]
+      }
+      return []
+    }.forEach {
+      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: self.sampler)
+    }
+
+    renderEncoder.endEncoding()
+  }
+}
+
+final class TextPipeline: Pipeline {
+  var pipelineState: MTLRenderPipelineState!
+  var sampler: MTLSamplerState
+
+  init?(device: MTLDevice, vertexProgram: String, fragmentProgram: String) {
+    let samplerDescriptor = MTLSamplerDescriptor()
+    samplerDescriptor.minFilter = .Nearest
+    samplerDescriptor.magFilter = .Linear
+    samplerDescriptor.sAddressMode = .ClampToZero
+    samplerDescriptor.tAddressMode = .ClampToZero
+    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
+ 
+    let pipelineDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    pipelineDescriptor.colorAttachments[0].blendingEnabled = true
+    pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .SourceAlpha
+    pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .OneMinusSourceAlpha
+    pipelineDescriptor.colorAttachments[0].rgbBlendOperation = .Add
+    pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
+    pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
+
+    //not sure about this one maybe just do this manually
+    let x = 1
+    let vertexDescriptor = MTLVertexDescriptor()
+    vertexDescriptor.attributes[0].format = .Float4
+    vertexDescriptor.attributes[0].offset = 0
+    vertexDescriptor.attributes[0].bufferIndex = 0
+    //texture stuff
+    vertexDescriptor.attributes[1].format = .Float2
+    vertexDescriptor.attributes[1].offset = sizeof(vector_float4)
+    vertexDescriptor.attributes[1].bufferIndex = 0
+    vertexDescriptor.layouts[0].stepFunction = .PerVertex
+    vertexDescriptor.layouts[0].stride = sizeof(Vertex)
+
+    //pipelineDescriptor.vertexDescriptor = vertexDescriptor
+
+    do {
+      self.pipelineState = try device.newRenderPipelineStateWithDescriptor(pipelineDescriptor)
+    }
+    catch let error {
+      fatalError("\(error) text pipeline creation")
+      return nil
+    }
+  }
+
+  func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
+    let renderEncoder = createRenderEncoder(commandBuffer, label: "sprite encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState)
+
     nodes.flatMap { (node) -> [GERenderNode] in
       if let renderNode = node as? GERenderNode {
         return [renderNode]

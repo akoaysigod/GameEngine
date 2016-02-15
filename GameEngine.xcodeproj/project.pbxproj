@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
 		EA7C9AF61C4AF01600A64CB9 /* GERenderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */; };
+		EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
+		EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
+		EA9B1E7E1C725EDE000FFDF7 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */; };
+		EA9B1E7F1C725EDE000FFDF7 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */; };
 		EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */; };
 		EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
 		EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
@@ -75,6 +79,8 @@
 		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GERenderNode.swift; path = src/public/GERenderNode.swift; sourceTree = SOURCE_ROOT; };
+		EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TextShader.metal; path = src/shaders/TextShader.metal; sourceTree = SOURCE_ROOT; };
+		EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontManager.swift; path = src/private/FontManager.swift; sourceTree = SOURCE_ROOT; };
 		EAA99D781C41E10900CF3246 /* GameEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GameEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFTimeIntervalExtensions.swift; path = src/extensions/CFTimeIntervalExtensions.swift; sourceTree = SOURCE_ROOT; };
@@ -177,6 +183,7 @@
 		EA0DDB9F1C66E1E4002DD5B7 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */,
 				EAEAAC661C66995000BFB938 /* FontAtlas.swift */,
 			);
 			name = Font;
@@ -193,6 +200,7 @@
 		EAA99DE71C41E53800CF3246 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */,
 				EAA99E371C41E80E00CF3246 /* ColorShaders.metal */,
 				EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */,
 			);
@@ -433,6 +441,8 @@
 				EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */,
 				EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */,
 				EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
+				EA9B1E7E1C725EDE000FFDF7 /* FontManager.swift in Sources */,
+				EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */,
 				EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
@@ -467,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA99DF01C41E57300CF3246 /* GEViewController.swift in Sources */,
+				EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */,
 				EAA99DE21C41E52700CF3246 /* GEColorRect.swift in Sources */,
 				EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
@@ -481,6 +492,7 @@
 				EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
 				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */,
+				EA9B1E7F1C725EDE000FFDF7 /* FontManager.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */,
 				EAA99DC51C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
