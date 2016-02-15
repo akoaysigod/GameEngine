@@ -16,6 +16,6 @@ func DLog(messages: Any..., filename: NSString = __FILE__, function: String = __
     let message = messages.reduce("") {
       "\($1) " + "\($0)\n"
     }
-    print("[\(filename.lastPathComponent):\(line)] \(function)\n\(message)")
+    print("\(NSDate()) [\(filename.lastPathComponent):\(line)] \(function)\n\(message)")
   #endif
 }

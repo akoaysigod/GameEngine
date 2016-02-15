@@ -21,8 +21,8 @@ class FontAtlas {
   private struct Constants {
     static let AtlasSizeHeightMax = 4096
     static let AtlasSizeWidthMax = 4096
-    static let AsciiHeight = 4096
-    static let AsciiWidth = 4096
+    static let AsciiHeight = 1024
+    static let AsciiWidth = 1024
   }
   
   let font: UIFont
@@ -61,7 +61,7 @@ class FontAtlas {
     let textureArea = rect.size.width * rect.size.height
     let testFont = UIFont(name: font.fontName, size: size)!
     let testCTFont = CTFontCreateWithName(font.fontName, size, nil)
-    let fontCount = CTFontGetGlyphCount(testCTFont)
+    let fontCount = glyphIndices(testCTFont).count//CTFontGetGlyphCount(testCTFont)
     
     let margin = self.estimateLineWidth(testFont)
     let averageSize = self.estimateGlyphSize(testFont)
@@ -129,7 +129,7 @@ class FontAtlas {
     let ctFont = CTFontCreateWithName(font.fontName, fontPointSize, nil)
     let parentFont = UIFont(name: font.fontName, size: fontPointSize) //property
     
-    let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
+    //let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
     let margin = self.estimateLineWidth(font)
     
     CGContextSetRGBFillColor(context, 1, 1, 1, 1)
@@ -202,26 +202,26 @@ class FontAtlas {
     //requires another transform but might not be a big deal?
     return imageData
   }
-  
+
   func computeSignedDistanceFields(imageData: UnsafeMutablePointer<UInt8>, width: Int, height: Int) -> [Float] {
-    func ihypot(x: Int, _ y: Int) -> Float {
+    let ihypot = { (x: Int,  y: Int) -> Float in
       return hypot(Float(x), Float(y))
     }
     
-    var distances = FlatArray(count: width * height, repeatedValue: ihypot(width, height), width: width)
-    var boundaryPoints = FlatArray(count: width * height, repeatedValue: (x: 0, y: 0), width: width)
+    let distances = FlatArray(count: width * height, repeatedValue: ihypot(width, height), width: width)
+    let boundaryPoints = FlatArray(count: width * height, repeatedValue: (x: 0, y: 0), width: width)
     
-    func inside(x: Int, _ y: Int) -> Bool {
+    let inside = { (x: Int, y: Int) -> Bool in
       return imageData[y * width + x] > UInt8(Int8.max)
     }
-    
+
     (1..<height - 1).forEach { y in
       (1..<width - 1).forEach { x in
         let isInside = inside(x, y)
         if inside(x - 1, y) != isInside ||
-          inside(x + 1, y) != isInside ||
-          inside(x, y + 1) != isInside ||
-          inside(x, y - 1) != isInside
+           inside(x + 1, y) != isInside ||
+           inside(x, y + 1) != isInside ||
+           inside(x, y - 1) != isInside
         {
           distances[x, y] = 0
           boundaryPoints[x, y] = (x, y)
