@@ -22,14 +22,15 @@ public class GEViewController: UIViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
     
-    let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
+    //let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
     
     let view = self.view as! GEView
-    let imageView = UIImageView(image: fontTest.debugImage!)
-    self.view.addSubview(imageView)
-    //self.scene = GEScene(size: view.bounds.size)
-    //view.presentScene(scene)
-    
+    self.scene = GEScene(size: view.bounds.size)
+    view.presentScene(scene)
+
+
+    let testText = GETextLabel(text: "test", font: UIFont.systemFontOfSize(72))
+    scene.addNode(testText)
     
     
 //    let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())

@@ -72,6 +72,7 @@ private final class FlatArray<T> {
 }
 
 class FontAtlas: NSObject, NSCoding {
+  //these probably have to be the same right now
   private struct Constants {
     static let AtlasSizeHeightMax = 4096
     static let AtlasSizeWidthMax = 4096
@@ -80,24 +81,26 @@ class FontAtlas: NSObject, NSCoding {
   }
   
   let font: UIFont
+  let textureSize: Int
+  var textureData: NSData!
   var glyphDescriptors = [GlyphDescriptor]()
   
   var debugImage: UIImage?
   
   var asciiOnly = true
   
-  init(font: UIFont) {
+  init(font: UIFont, textureSize: Int) {
     self.font = font
+    self.textureSize = textureSize
 
     super.init()
-    
-    let width = asciiOnly ? Constants.AsciiHeight : Constants.AtlasSizeHeightMax
-    let height = asciiOnly ? Constants.AsciiWidth : Constants.AtlasSizeHeightMax
-    
-    let test = createAtlasForFont(font, width: width, height: height)
-    let x = 1
-    
-    computeSignedDistanceFields(test, width: width, height: height)
+
+    createTextureData()
+  }
+
+  //not sure yet
+  convenience init(font: UIFont) {
+    self.init(font: font, textureSize: Constants.AsciiWidth / 2)
   }
 
   //MARK: NSCODING
@@ -107,6 +110,8 @@ class FontAtlas: NSObject, NSCoding {
     static let Spread = "spread"
     static let Width = "width"
     static let Height = "height"
+    static let TextureSize = "texturesize" //this is just height or width really...
+    static let TextureData = "texturedata"
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -116,11 +121,17 @@ class FontAtlas: NSObject, NSCoding {
 
     self.font = UIFont(name: fontName, size: CGFloat(fontSize))!
 
+    self.textureSize = Int(aDecoder.decodeIntForKey(Keys.TextureSize))
+
+    self.textureData = aDecoder.decodeObjectForKey(Keys.TextureData) as! NSData
+    
     super.init()
   }
 
   func encodeWithCoder(coder: NSCoder) {
     coder.encodeObject(font.fontName, forKey: Keys.Font)
+    coder.encodeInt(Int32(textureSize), forKey: Keys.TextureSize)
+    coder.encodeObject(textureData, forKey: Keys.TextureData)
   }
   
   private func estimateGlyphSize(font: UIFont) -> CGSize {
@@ -188,8 +199,9 @@ class FontAtlas: NSObject, NSCoding {
     }
   }
   
-  func createAtlasForFont(font: UIFont, width: Int, height: Int) -> UnsafeMutablePointer<UInt8> {
-    let imageData = UnsafeMutablePointer<UInt8>.alloc(Int(width) * Int(height))
+  func createAtlasForFont(font: UIFont, _ width: Int, _ height: Int) -> (UnsafeMutablePointer<UInt8>, dataSize: Int) {
+    let dataSize = width * height
+    let imageData = UnsafeMutablePointer<UInt8>.alloc(dataSize)
     
     let colorSpace = CGColorSpaceCreateDeviceGray()
     let bitmapInfo = CGBitmapInfo.AlphaInfoMask.rawValue & CGImageAlphaInfo.None.rawValue
@@ -260,9 +272,9 @@ class FontAtlas: NSObject, NSCoding {
       }
       
       let texCoordLeft = pathBoundingRect.origin.x / CGFloat(width)
-      let texCoordRight = pathBoundingRect.origin.x + pathBoundingRect.size.width / CGFloat(width)
+      let texCoordRight = (pathBoundingRect.origin.x + pathBoundingRect.size.width) / CGFloat(width)
       let texCoordTop = pathBoundingRect.origin.y / CGFloat(height)
-      let texCoordBottom = pathBoundingRect.origin.y + pathBoundingRect.size.height / CGFloat(height)
+      let texCoordBottom = (pathBoundingRect.origin.y + pathBoundingRect.size.height) / CGFloat(height)
       
       let topLeftTexCoord = CGPoint(x: texCoordLeft, y: texCoordTop)
       let bottomRightTexCoord = CGPoint(x: texCoordRight, y: texCoordBottom)
@@ -279,10 +291,10 @@ class FontAtlas: NSObject, NSCoding {
     
     //maybe return [Int] instead of this pointer
     //requires another transform but might not be a big deal?
-    return imageData
+    return (imageData, dataSize)
   }
 
-  private func computeSignedDistanceFields(imageData: UnsafeMutablePointer<UInt8>, width: Int, height: Int) -> FlatArray<Float> {
+  private func computeSignedDistanceFields(imageData: UnsafeMutablePointer<UInt8>, _ width: Int, _ height: Int) -> FlatArray<Float> {
     let ihypot = { (x: Int,  y: Int) -> Float in
       return hypot(Float(x), Float(y))
     }
@@ -369,7 +381,7 @@ class FontAtlas: NSObject, NSCoding {
     return distances
   }
 
-  private func createResampledData(distances: FlatArray<Float>, width: Int, height: Int, scaleFactor: Int) {
+  private func createResampledData(distances: FlatArray<Float>, _ width: Int, _ height: Int, scaleFactor: Int) -> FlatArray<Float> {
     assert(width % scaleFactor == 0 && height % scaleFactor == 0)
 
     let scaledWidth = width / scaleFactor
@@ -391,20 +403,40 @@ class FontAtlas: NSObject, NSCoding {
         scaledData[x / scaleFactor, y / scaleFactor] = accum
       }
     }
+    return scaledData
   }
 
-  private func createQuantizedDistanceField(distances: FlatArray<Float>, width: Int, height: Int, normalizationFactor: Float) -> FlatArray<UInt8> {
-    let quanitized: FlatArray<UInt8> = FlatArray(count: width * height, repeatedValue: 0, width: width)
+  private func createQuantizedDistanceField(distances: FlatArray<Float>, _ width: Int, _ height: Int, normalizationFactor: Float) -> UnsafeMutablePointer<UInt8> {
+    let quanitized = UnsafeMutablePointer<UInt8>.alloc(width * height)
 
     (0..<height).forEach { y in
       (0..<width).forEach { x in
         let dist = distances[x, y]
         let clampDist = max(-1 * normalizationFactor, min(dist, normalizationFactor))
         let scaledDist = clampDist / normalizationFactor
-        quanitized[x, y] = UInt8(((scaledDist + 1) / 2) * Float(UInt8.max))
+        quanitized[y * width + x] = UInt8(((scaledDist + 1) / 2) * Float(UInt8.max))
       }
     }
 
     return quanitized
+  }
+
+  private func createTextureData() {
+    let width = asciiOnly ? Constants.AsciiHeight : Constants.AtlasSizeHeightMax
+    let height = asciiOnly ? Constants.AsciiWidth : Constants.AtlasSizeHeightMax
+
+    let (atlasData, dataSize) = createAtlasForFont(font, width, height)
+    defer { atlasData.destroy(); atlasData.dealloc(dataSize) }
+
+    let distanceFields = computeSignedDistanceFields(atlasData, width, height)
+
+    let scaleFactor = width / textureSize
+    let scaledFields = createResampledData(distanceFields, width, height, scaleFactor: scaleFactor)
+
+    let spread = Float(estimateLineWidth(font) * 0.5)
+    let textureArray = createQuantizedDistanceField(scaledFields, textureSize, textureSize, normalizationFactor: spread)
+
+    let byteCount = textureSize * textureSize
+    textureData = NSData(bytesNoCopy: textureArray, length: byteCount, freeWhenDone: true)
   }
 }

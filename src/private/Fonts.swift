@@ -1,5 +1,5 @@
 //
-//  FontManager.swift
+//  Fonts.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 2/15/16.
@@ -7,10 +7,14 @@
 //
 
 import Foundation
+import Metal
 import UIKit
 
 final class Fonts {
+  //maybe add this to GEFonts at run time but need to preload somehow
   static let cache = Fonts()
+
+  var device: MTLDevice!
 
   private var fontDict: [String: FontAtlas] = [:]
 
@@ -51,8 +55,9 @@ final class Fonts {
     
     if let fontPath = fontDir.URLByAppendingPathComponent(font.fontName).path {
       let fontAtlas: FontAtlas
-      if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? FontAtlas {
-        fontAtlas = archive
+      if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? GETextLabel {
+        //TODO: don't forget to turn this back FontAtlas once this shit is working
+        fontAtlas = archive as! FontAtlas
       }
       else {
         fontAtlas = FontAtlas(font: font)

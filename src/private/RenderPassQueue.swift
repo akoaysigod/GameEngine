@@ -21,7 +21,7 @@ class RenderPassQueue {
 
   private var currentDescriptorIndex = 0
 
-  init(view: GEView, queueSize: Int = 2) {
+  init(view: GEView, queueSize: Int = 3) {
     self.view = view
     self.queue = [MTLRenderPassDescriptor]()
 

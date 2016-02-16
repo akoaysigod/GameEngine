@@ -46,7 +46,7 @@ public class GERenderNode: GENode {
     self.uniformBufferQueue = BufferQueue(device: self.device, dataSize: FloatSize * self.modelMatrix.data.count)
   }
   
-  private func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
+  func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
     let parentRotScale = GLKMatrix4GetMatrix3(matrix)
     let selfRotScale = GLKMatrix4GetMatrix3(self.modelMatrix)
     let rotScale = parentRotScale * selfRotScale

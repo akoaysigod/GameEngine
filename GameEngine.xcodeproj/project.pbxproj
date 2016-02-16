@@ -11,8 +11,10 @@
 		EA7C9AF61C4AF01600A64CB9 /* GERenderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */; };
 		EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
 		EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
-		EA9B1E7E1C725EDE000FFDF7 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */; };
-		EA9B1E7F1C725EDE000FFDF7 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */; };
+		EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */; };
+		EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */; };
+		EA9B1E811C727625000FFDF7 /* GETextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E801C727625000FFDF7 /* GETextLabel.swift */; };
+		EA9B1E821C727625000FFDF7 /* GETextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E801C727625000FFDF7 /* GETextLabel.swift */; };
 		EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */; };
 		EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
 		EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
@@ -80,7 +82,8 @@
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GERenderNode.swift; path = src/public/GERenderNode.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TextShader.metal; path = src/shaders/TextShader.metal; sourceTree = SOURCE_ROOT; };
-		EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontManager.swift; path = src/private/FontManager.swift; sourceTree = SOURCE_ROOT; };
+		EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = src/private/Fonts.swift; sourceTree = SOURCE_ROOT; };
+		EA9B1E801C727625000FFDF7 /* GETextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETextLabel.swift; path = src/public/GETextLabel.swift; sourceTree = SOURCE_ROOT; };
 		EAA99D781C41E10900CF3246 /* GameEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GameEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFTimeIntervalExtensions.swift; path = src/extensions/CFTimeIntervalExtensions.swift; sourceTree = SOURCE_ROOT; };
@@ -183,7 +186,7 @@
 		EA0DDB9F1C66E1E4002DD5B7 /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				EA9B1E7D1C725EDE000FFDF7 /* FontManager.swift */,
+				EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */,
 				EAEAAC661C66995000BFB938 /* FontAtlas.swift */,
 			);
 			name = Font;
@@ -243,6 +246,7 @@
 				EAC640A11C34B60E00B6AE68 /* DataStructures */,
 				EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */,
 				EAA99DDF1C41E52700CF3246 /* GENode.swift */,
+				EA9B1E801C727625000FFDF7 /* GETextLabel.swift */,
 				EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */,
 				EAA99DE01C41E52700CF3246 /* GESprite.swift */,
 				EAA99DF11C41E57C00CF3246 /* GECamera.swift */,
@@ -441,13 +445,14 @@
 				EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */,
 				EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */,
 				EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
-				EA9B1E7E1C725EDE000FFDF7 /* FontManager.swift in Sources */,
+				EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */,
 				EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* GEScene.swift in Sources */,
 				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
+				EA9B1E811C727625000FFDF7 /* GETextLabel.swift in Sources */,
 				EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */,
@@ -492,8 +497,9 @@
 				EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
 				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */,
-				EA9B1E7F1C725EDE000FFDF7 /* FontManager.swift in Sources */,
+				EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */,
+				EA9B1E821C727625000FFDF7 /* GETextLabel.swift in Sources */,
 				EAA99DC51C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,

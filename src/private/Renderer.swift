@@ -69,6 +69,12 @@ final class Renderer {
         self.spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
       }
 
+      renderPassDescriptor = self.descriptorQueue.next()
+      let textNodes = nodes.filter { $0 is GETextLabel }
+      if textNodes.count > 0 {
+        textPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: textNodes)
+      }
+
       commandBuffer.presentDrawable(drawable)
     }
 

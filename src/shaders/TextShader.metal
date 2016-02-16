@@ -9,41 +9,41 @@
 #include <metal_stdlib>
 using namespace metal;
 
-struct Vertex
-{
-  packed_float4 position;
+struct VertexIn {
+  packed_float3 position;
+  packed_float4 color;
   packed_float2 texCoords;
 };
 
-struct TransformedVertex
-{
+struct TransformedVertex {
   float4 position [[position]];
   float2 texCoords;
 };
 
-struct Uniforms
-{
-  float4x4 modelMatrix;
-  float4x4 viewProjectionMatrix;
-  float4 foregroundColor;
+struct Uniforms {
+  float4x4 mvp;
+  //  float4x4 viewProjectionMatrix;
+  //  float4 foregroundColor;
 };
 
-vertex TransformedVertex textVertex(constant Vertex *vertices [[buffer(0)]],
-                                      constant Uniforms &uniforms [[buffer(1)]],
-                                      uint vid [[vertex_id]])
+vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
+                                    constant Uniforms &uniforms [[buffer(1)]],
+                                    uint vid [[vertex_id]])
 {
+  VertexIn vertIn = vertices[vid];
+
   TransformedVertex outVert;
-  outVert.position = uniforms.viewProjectionMatrix * uniforms.modelMatrix * float4(vertices[vid].position);
-  outVert.texCoords = vertices[vid].texCoords;
+  outVert.position = uniforms.mvp * float4(vertIn.position, 1.0);
+  outVert.texCoords = vertIn.texCoords;
   return outVert;
 }
 
 fragment half4 textFragment(TransformedVertex vert [[stage_in]],
-                              constant Uniforms &uniforms [[buffer(0)]],
-                              sampler samplr [[sampler(0)]],
-                              texture2d<float, access::sample> texture [[texture(0)]])
+                            constant Uniforms &uniforms [[buffer(0)]],
+                            sampler samplr [[sampler(0)]],
+                            texture2d<float, access::sample> texture [[texture(0)]])
 {
-  float4 color = uniforms.foregroundColor;
+  float4 color = float4(1.0, 1.0, 1.0, 1.0); //uniforms.foregroundColor;
   // Outline of glyph is the isocontour with value 50%
   float edgeDistance = 0.5;
   // Sample the signed-distance field to find distance from this fragment to the glyph outline
