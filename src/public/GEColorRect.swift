@@ -2,8 +2,8 @@
 //  Rect.swift
 //  MKTest
 //
-//  Created by Tony Green on 12/30/15.
-//  Copyright © 2015 Tony Green. All rights reserved.
+//  Created by Anthony Green on 12/30/15.
+//  Copyright © 2015 Anthony Green. All rights reserved.
 //
 
 import Foundation

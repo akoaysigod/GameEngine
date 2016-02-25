@@ -2,8 +2,8 @@
 //  GEAnimation.swift
 //  MKTest
 //
-//  Created by Tony Green on 1/2/16.
-//  Copyright © 2016 Tony Green. All rights reserved.
+//  Created by Anthony Green on 1/2/16.
+//  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
 import Foundation

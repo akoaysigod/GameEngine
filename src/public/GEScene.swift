@@ -3,7 +3,7 @@
 //  GameEngine
 //
 //  Created by Anthony Green on 1/10/16.
-//  Copyright © 2016 Tony Green. All rights reserved.
+//  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
 import Foundation

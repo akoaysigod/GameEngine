@@ -2,8 +2,8 @@
 //  GameEngine.h
 //  GameEngine
 //
-//  Created by Tony Green on 1/9/16.
-//  Copyright © 2016 Tony Green. All rights reserved.
+//  Created by Anthony Green on 1/9/16.
+//  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

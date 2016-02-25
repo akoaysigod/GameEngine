@@ -3,7 +3,7 @@
 //  GameEngine
 //
 //  Created by Anthony Green on 2/15/16.
-//  Copyright © 2016 Tony Green. All rights reserved.
+//  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
 //TODO: check if those casts ever get fixed
