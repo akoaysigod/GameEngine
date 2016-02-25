@@ -29,7 +29,7 @@ public class GEViewController: UIViewController {
     view.presentScene(scene)
 
 
-    let testText = GETextLabel(text: "test", font: UIFont.systemFontOfSize(72))
+    let testText = GETextLabel(text: "test test test", font: UIFont.systemFontOfSize(72))
     scene.addNode(testText)
     
     

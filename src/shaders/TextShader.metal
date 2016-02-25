@@ -52,5 +52,6 @@ fragment half4 textFragment(TransformedVertex vert [[stage_in]],
   float edgeWidth = 0.75 * length(float2(dfdx(sampleDistance), dfdy(sampleDistance)));
   // Smooth the glyph edge by interpolating across the boundary in a band with the width determined above
   float insideness = smoothstep(edgeDistance - edgeWidth, edgeDistance + edgeWidth, sampleDistance);
+  
   return half4(color.r, color.g, color.b, insideness);
 }

@@ -42,16 +42,16 @@ class GETextLabel: GERenderNode {
     let framesetter = CTFramesetterCreateWithAttributedString(attrStr)
     let frame = CTFramesetterCreateFrame(framesetter, strRng, rectPath, nil)
 
-    let lines = CTFrameGetLines(frame) as [AnyObject] as! [CTLine] //lol
-    let frameGlyphCount = lines.reduce(0) {
-      $0 + CTLineGetGlyphCount($1)
-    }
+//    let lines = CTFrameGetLines(frame) as [AnyObject] as! [CTLine] //lol
+//    let frameGlyphCount = lines.reduce(0) {
+//      $0 + CTLineGetGlyphCount($1)
+//    }
 
-    let vertexCount = frameGlyphCount * 4
-    let indexCount = frameGlyphCount * 6
-
+//    I don't know how to use these I think it's to save space on vertices
+//    let indexCount = frameGlyphCount * 6
+//    var indices = [UInt16]() //???
+    
     var vertices = Vertices()
-    var indices = [UInt16]() //???
     enumerateGlyphsInFrame(frame) { glyph, glyphIndex, glyphBounds in
       //TODO: this probably needs to change to a dictionary because I'm not pulling out all the values
       //let glyphInfo = self.fontAtlas.glyphDescriptors[Int(glyph)]
@@ -68,16 +68,23 @@ class GETextLabel: GERenderNode {
       let maxS = Float(glyphInfo.bottomRightTexCoord.x)
       let minT = Float(glyphInfo.topLeftTexCoord.y)
       let maxT = Float(glyphInfo.bottomRightTexCoord.y)
-      vertices += [SpriteVertex(s: minS, t: maxT, x: minX, y: maxY)]
-      vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: minY)]
-      vertices += [SpriteVertex(s: maxS, t: minT, x: maxX, y: minY)]
-      vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: maxY)]
+      
+      //bottom left triangle
+      vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
+      vertices += [SpriteVertex(s: minS, t: maxT, x: minX, y: minY)]
+      vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)]
+      
+      //upper right triangle
+      vertices += [SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)]
+      vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)]
+      vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
     }
 
     self.vertices = vertices
 
     let x = 1
     //TODO: omg fix everything
+    //also leave better comments I have no idea what this means
     let texDesc = MTLTextureDescriptor()
     texDesc.pixelFormat = .R8Unorm
     texDesc.width = 512
@@ -99,10 +106,11 @@ class GETextLabel: GERenderNode {
     CTFrameGetLineOrigins(frame, entire, originBuffer)
 
     var glyphIndexInFrame = 0
+    
+    UIGraphicsBeginImageContext(CGSize(width: 0.0, height: 0.0))
     var context = UIGraphicsGetCurrentContext()
-
-    (0..<lines.count).forEach { i in
-      let line = lines[i]                                              
+    
+    for (i, line) in lines.enumerate() {
       let lineOrigin = originBuffer[i]
 
       let runs = CTLineGetGlyphRuns(line) as [AnyObject] as! [CTRun] //lol
@@ -113,18 +121,15 @@ class GETextLabel: GERenderNode {
         defer { glyphBuffer.destroy(); glyphBuffer.dealloc(glyphCount) }
         CTRunGetGlyphs(run, entire, glyphBuffer)
 
+        //TODO: probably don't need this anymore
         let positionBuffer = UnsafeMutablePointer<CGPoint>.alloc(glyphCount)
         defer { positionBuffer.destroy(); positionBuffer.dealloc(glyphCount) }
         CTRunGetPositions(run, entire, positionBuffer)
 
         (0..<glyphCount).forEach { j in
           let glyph = glyphBuffer[j]
-          let glyphOrigin = positionBuffer[j]
-          var glyphRect = CTRunGetImageBounds(run, context, CFRangeMake(j, 1))
-          let boundsTransX = frameBoundingRect.origin.x + lineOrigin.x
-          let boundsTransY = CGRectGetHeight(frameBoundingRect) + frameBoundingRect.origin.y - lineOrigin.y + glyphOrigin.y
-          let pathTransform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: boundsTransX, ty: boundsTransY)
-          glyphRect = CGRectApplyAffineTransform(glyphRect, pathTransform)
+          let glyphRect = CTRunGetImageBounds(run, context, CFRangeMake(j, 1))
+
           closure(glyph: glyph, glyphIndex: glyphIndexInFrame, bounds: glyphRect)
 
           glyphIndexInFrame += 1

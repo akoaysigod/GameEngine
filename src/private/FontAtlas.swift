@@ -323,31 +323,35 @@ class FontAtlas: NSObject, NSCoding {
     let distDiag: Float = sqrt(2.0)
     (1..<height - 2).forEach { y in
       (1..<width - 2).forEach { x in
-        if distances[y - 1, x - 1] + distDiag < distances[x, y] {
+        let distance = distances[x, y]
+        let newDistance = ihypot(x - boundaryPoints[x, y].x, y - boundaryPoints[x, y].y)
+        
+        if distances[y - 1, x - 1] + distDiag < distance {
           boundaryPoints[x, y] = boundaryPoints[x - 1, y - 1]
-          distances[x, y] = ihypot(x - boundaryPoints[x, y].x, boundaryPoints[x, y].y)
+          distances[x, y] = newDistance
         }
         
-        if distances[x, y - 1] + 1.0 < distances[x, y] {
+        if distances[x, y - 1] + 1.0 < distance {
           boundaryPoints[x, y] = boundaryPoints[x, y - 1]
-          distances[x, y] = ihypot(x - boundaryPoints[x, y].x, y - boundaryPoints[x, y].y)
+          distances[x, y] = newDistance
         }
         
-        if distances[x + 1, y - 1] + distDiag < distances[x, y] {
+        if distances[x + 1, y - 1] + distDiag < distance {
           boundaryPoints[x, y] = boundaryPoints[x + 1, y - 1]
-          distances[x, y] = ihypot(x - boundaryPoints[x, y].x, boundaryPoints[x, y].y)
+          distances[x, y] = newDistance
         }
         
-        if distances[x - 1, y] + 1.0 < distances[x, y] {
+        if distances[x - 1, y] + 1.0 < distance {
           boundaryPoints[x, y] = boundaryPoints[x - 1, y]
-          distances[x, y] = ihypot(x - boundaryPoints[x, y].x, y - boundaryPoints[x, y].y)
+          distances[x, y] = newDistance
         }
       }
     }
     
-    (1..<height - 2).reverse().forEach { y in
-      (1..<width - 2).reverse().forEach { x in
+    (1...height - 2).reverse().forEach { y in
+      (1...width - 2).reverse().forEach { x in
         let newDistance = ihypot(x - boundaryPoints[x, y].x, y - boundaryPoints[x, y].y)
+        
         if distances[x + 1, y] + 1.0 < distances[x, y] {
           boundaryPoints[x, y] = boundaryPoints[x + 1, y]
           distances[x, y] = newDistance
@@ -403,6 +407,7 @@ class FontAtlas: NSObject, NSCoding {
         scaledData[x / scaleFactor, y / scaleFactor] = accum
       }
     }
+
     return scaledData
   }
 
