@@ -41,14 +41,11 @@ fragment half4 textFragment(TransformedVertex vert [[stage_in]],
                             sampler samplr [[sampler(0)]],
                             texture2d<float, access::sample> texture [[texture(0)]])
 {
-  float4 color = float4(1.0, 1.0, 1.0, 1.0);
+  half3 color = half3(1.0, 1.0, 1.0);
   float edgeDistance = 0.5;
   float sampleDistance = texture.sample(samplr, vert.texCoords).r;
   float edgeWidth = 0.75 * length(float2(dfdx(sampleDistance), dfdy(sampleDistance)));
   float opacity = smoothstep(edgeDistance - edgeWidth, edgeDistance + edgeWidth, sampleDistance);
 
-  if (sampleDistance < 0.3){
-    return half4(1.0, 0.0, 0.0, 1.0);
-  }
-  return half4(color.r, color.g, color.b, opacity);
+  return half4(color, opacity);
 }

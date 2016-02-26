@@ -54,10 +54,10 @@ public class GEViewController: UIViewController {
 //    //colorRect.addNode(colorRect2)
 //    //scene.addNode(colorRect2)
 //    
-//    let sp = GESprite(imageName: "Test2")
-//    sp.scale = 10
-//    sp.position = (300, 300)
-//    self.scene.addNode(sp)
+    let sp = GESprite(imageName: "Test2")
+    sp.scale = 10
+    sp.position = (300, 300)
+    self.scene.addNode(sp)
 //    
 //    let sp2 = GESprite(imageName: "Test2")
 //    sp2.scale = 10

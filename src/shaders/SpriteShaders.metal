@@ -45,9 +45,6 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
                                sampler sampler2D [[sampler(0)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
-  if (color.a < 1.0) {
-      discard_fragment();
-  }
   return color;
 }
 

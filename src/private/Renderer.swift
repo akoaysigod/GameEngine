@@ -60,11 +60,13 @@ final class Renderer {
       var renderPassDescriptor = self.descriptorQueue.next()
 
       //this will work for now :( not sure of a better way to break this stuff up
-      let colorNodes = nodes.filter { $0.texture == nil }
+      //holy fuck there was god dammit debugging shaders because of this stupid filter shit
+      //refactor this to just pass the whole array to each pipeline they're already filtering nodes out
+      let colorNodes = nodes.filter { $0 is GEColorRect }
       self.colorPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: colorNodes)
 
       renderPassDescriptor = self.descriptorQueue.next()
-      let spriteNodes = nodes.filter { $0.texture != nil }
+      let spriteNodes = nodes.filter { $0 is GESprite }
       if spriteNodes.count > 0 {
         self.spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
       }

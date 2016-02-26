@@ -118,8 +118,15 @@ final class SpritePipeline: Pipeline {
   var sampler: MTLSamplerState
 
   init?(device: MTLDevice, vertexProgram: String, fragmentProgram: String) {
-    let pipelineStateDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    let pipelineDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     //pipelineStateDescriptor.sampleCount = view.sampleCount
+    pipelineDescriptor.colorAttachments[0].blendingEnabled = true
+    pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .SourceAlpha
+    pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .OneMinusSourceAlpha
+    pipelineDescriptor.colorAttachments[0].rgbBlendOperation = .Add
+    pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .SourceAlpha
+    pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
+    pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
 
     let samplerDescriptor = MTLSamplerDescriptor()
     samplerDescriptor.minFilter = .Nearest
@@ -130,7 +137,7 @@ final class SpritePipeline: Pipeline {
     self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     do {
-      self.pipelineState = try device.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
+      self.pipelineState = try device.newRenderPipelineStateWithDescriptor(pipelineDescriptor)
     }
     catch let error {
       print("OH NO! Failed to create pipeline state, error \(error)")
@@ -159,13 +166,6 @@ final class TextPipeline: Pipeline {
   var sampler: MTLSamplerState
 
   init?(device: MTLDevice, vertexProgram: String, fragmentProgram: String) {
-    let samplerDescriptor = MTLSamplerDescriptor()
-    samplerDescriptor.minFilter = .Nearest
-    samplerDescriptor.magFilter = .Linear
-    samplerDescriptor.sAddressMode = .ClampToZero
-    samplerDescriptor.tAddressMode = .ClampToZero
-    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
- 
     let pipelineDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     pipelineDescriptor.colorAttachments[0].blendingEnabled = true
     pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .SourceAlpha
@@ -174,6 +174,13 @@ final class TextPipeline: Pipeline {
     pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .SourceAlpha
     pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
     pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
+
+    let samplerDescriptor = MTLSamplerDescriptor()
+    samplerDescriptor.minFilter = .Nearest
+    samplerDescriptor.magFilter = .Linear
+    samplerDescriptor.sAddressMode = .ClampToZero
+    samplerDescriptor.tAddressMode = .ClampToZero
+    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     //TODO: add index buffers to everything!
     let x = 1
@@ -200,7 +207,7 @@ final class TextPipeline: Pipeline {
   }
 
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: "sprite encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState)
+    let renderEncoder = createRenderEncoder(commandBuffer, label: "text encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState)
 
     nodes.flatMap { (node) -> [GERenderNode] in
       if let renderNode = node as? GERenderNode {
