@@ -19,13 +19,14 @@ class GETextLabel: GERenderNode {
 
   let text: String
   let fontAtlas: FontAtlas
+  let color: UIColor
 
   let displaySize = 72 //arbitrary right now for testing
 
-  init(text: String, font: UIFont) {
+  init(text: String, font: UIFont, color: UIColor) {
     self.text = text
-
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
+    self.color = color
 
     super.init()
   }
@@ -82,17 +83,15 @@ class GETextLabel: GERenderNode {
 
     self.vertices = vertices
 
-    let x = 1
-    //TODO: omg fix everything
-    //also leave better comments I have no idea what this means
     let texDesc = MTLTextureDescriptor()
+    let textureSize = fontAtlas.textureSize
     texDesc.pixelFormat = .R8Unorm
-    texDesc.width = 512
-    texDesc.height = 512
+    texDesc.width = textureSize
+    texDesc.height = textureSize
     texture = device.newTextureWithDescriptor(texDesc)
 
-    let region = MTLRegionMake2D(0, 0, 512, 512)
-    texture!.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: 512)
+    let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
+    texture!.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
   }
 
   private func enumerateGlyphsInFrame(frame: CTFrameRef, closure: GlyphClosure) {
@@ -103,11 +102,12 @@ class GETextLabel: GERenderNode {
 
     let lines = CTFrameGetLines(frame) as [AnyObject] as! [CTLine] //lol
     let originBuffer = UnsafeMutablePointer<CGPoint>.alloc(lines.count)
+    defer { originBuffer.destroy(lines.count); originBuffer.dealloc(lines.count) }
     CTFrameGetLineOrigins(frame, entire, originBuffer)
 
     var glyphIndexInFrame = 0
     
-    UIGraphicsBeginImageContext(CGSize(width: 0.0, height: 0.0))
+    UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
     var context = UIGraphicsGetCurrentContext()
     
     for (i, line) in lines.enumerate() {
@@ -118,7 +118,7 @@ class GETextLabel: GERenderNode {
         let glyphCount = CTRunGetGlyphCount(run)
 
         let glyphBuffer = UnsafeMutablePointer<CGGlyph>.alloc(glyphCount)
-        defer { glyphBuffer.destroy(); glyphBuffer.dealloc(glyphCount) }
+        defer { glyphBuffer.destroy(glyphCount); glyphBuffer.dealloc(glyphCount) }
         CTRunGetGlyphs(run, entire, glyphBuffer)
 
         //TODO: probably don't need this anymore

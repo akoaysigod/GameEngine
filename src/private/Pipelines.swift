@@ -171,10 +171,11 @@ final class TextPipeline: Pipeline {
     pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .SourceAlpha
     pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .OneMinusSourceAlpha
     pipelineDescriptor.colorAttachments[0].rgbBlendOperation = .Add
+    pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .SourceAlpha
     pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
     pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
 
-    //not sure about this one maybe just do this manually
+    //TODO: add index buffers to everything!
     let x = 1
     let vertexDescriptor = MTLVertexDescriptor()
     vertexDescriptor.attributes[0].format = .Float4

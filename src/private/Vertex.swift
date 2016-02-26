@@ -11,6 +11,7 @@ import GLKit
 
 typealias Vertices = [Vertex]
 
+//TODO: add indexes and buffer index stuff
 class Vertex {
   var x: Float = 0.0
   var y: Float = 0.0

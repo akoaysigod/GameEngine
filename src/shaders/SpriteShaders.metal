@@ -21,14 +21,14 @@ struct Uniforms {
 };
 
 struct VertexOut {
-  float4  position [[position]];
-  float4  color;
+  float4 position [[position]];
+  float4 color;
   float2 texCoord;
 };
 
 vertex VertexOut spriteVertex(uint vid [[vertex_id]],
-                                   const device VertexIn* vert [[buffer(0)]],
-                                   const device Uniforms& uniforms [[buffer(1)]])
+                              const device VertexIn* vert [[buffer(0)]],
+                              const device Uniforms& uniforms [[buffer(1)]])
 {
   VertexIn vertIn = vert[vid];
 
@@ -41,8 +41,8 @@ vertex VertexOut spriteVertex(uint vid [[vertex_id]],
 }
 
 fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
-                                   texture2d<float> tex2D [[texture(0)]],
-                                   sampler sampler2D [[sampler(0)]])
+                               texture2d<float> tex2D [[texture(0)]],
+                               sampler sampler2D [[sampler(0)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   if (color.a < 1.0) {

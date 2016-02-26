@@ -25,11 +25,12 @@ public class GEViewController: UIViewController {
     //let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
     
     let view = self.view as! GEView
+   //let imgView = UIImageView(image: fontTest.debugImage)
+    //view.addSubview(imgView)
     self.scene = GEScene(size: view.bounds.size)
     view.presentScene(scene)
 
-
-    let testText = GETextLabel(text: "test test test", font: UIFont.systemFontOfSize(72))
+    let testText = GETextLabel(text: "test test test", font: UIFont.systemFontOfSize(72), color: UIColor.whiteColor())
     scene.addNode(testText)
     
     

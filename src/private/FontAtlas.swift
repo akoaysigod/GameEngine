@@ -51,10 +51,9 @@ class GlyphDescriptor: NSObject, NSCoding {
   }
 }
 
-//2d array helper used in computing distance fields below
 private final class FlatArray<T> {
   var arr: [T]
-  let width: Int
+  private let width: Int
   
   init(count: Int, repeatedValue: T, width: Int) {
     self.arr = [T](count: count, repeatedValue: repeatedValue)
@@ -63,7 +62,7 @@ private final class FlatArray<T> {
   
   subscript(x: Int, y: Int) -> T {
     get {
-      return self.arr[y * width + x]
+      return arr[y * width + x]
     }
     set {
       arr[y * width + x] = newValue
@@ -76,8 +75,8 @@ class FontAtlas: NSObject, NSCoding {
   private struct Constants {
     static let AtlasSizeHeightMax = 4096
     static let AtlasSizeWidthMax = 4096
-    static let AsciiHeight = 1024
-    static let AsciiWidth = 1024
+    static let AsciiHeight = 4096
+    static let AsciiWidth = 4096
   }
   
   let font: UIFont
@@ -134,6 +133,7 @@ class FontAtlas: NSObject, NSCoding {
     coder.encodeObject(textureData, forKey: Keys.TextureData)
   }
   
+  //TODO: rewrite these estimates
   private func estimateGlyphSize(font: UIFont) -> CGSize {
     let exampleStr: NSString = "123ABC"
     let exampleStrSize = exampleStr.sizeWithAttributes([NSFontAttributeName: font])
@@ -182,20 +182,20 @@ class FontAtlas: NSObject, NSCoding {
     }
     
     let asciiGlyphs = UnsafeMutablePointer<UniChar>.alloc(128)
-    defer { asciiGlyphs.destroy(); asciiGlyphs.dealloc(128) }
+    defer { asciiGlyphs.destroy(128); asciiGlyphs.dealloc(128) }
     
     for i in (0...127) {
       asciiGlyphs[i] = UniChar(i)
     }
     
     var glyphIndices = UnsafeMutablePointer<CGGlyph>.alloc(128)
-    defer { glyphIndices.destroy(); glyphIndices.dealloc(128) }
+    defer { glyphIndices.destroy(128); glyphIndices.dealloc(128) }
     CTFontGetGlyphsForCharacters(ctFont, asciiGlyphs, glyphIndices, 128)
     
     return (0...127).map {
       glyphIndices[$0]
-      }.filter {
-        $0 != 0
+    }.filter {
+      $0 != 0
     }
   }
   
@@ -222,9 +222,9 @@ class FontAtlas: NSObject, NSCoding {
     
     //let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
     let margin = self.estimateLineWidth(font)
-    
+
     CGContextSetRGBFillColor(context, 1, 1, 1, 1)
-    
+
     //can probably just return this maybe
     glyphDescriptors.removeAll()
     
@@ -431,7 +431,7 @@ class FontAtlas: NSObject, NSCoding {
     let height = asciiOnly ? Constants.AsciiWidth : Constants.AtlasSizeHeightMax
 
     let (atlasData, dataSize) = createAtlasForFont(font, width, height)
-    defer { atlasData.destroy(); atlasData.dealloc(dataSize) }
+    defer { atlasData.destroy(dataSize); atlasData.dealloc(dataSize) }
 
     let distanceFields = computeSignedDistanceFields(atlasData, width, height)
 
@@ -442,6 +442,14 @@ class FontAtlas: NSObject, NSCoding {
     let textureArray = createQuantizedDistanceField(scaledFields, textureSize, textureSize, normalizationFactor: spread)
 
     let byteCount = textureSize * textureSize
-    textureData = NSData(bytesNoCopy: textureArray, length: byteCount, freeWhenDone: true)
+    textureData = NSData(bytesNoCopy: textureArray, length: byteCount, freeWhenDone: true) //do I free textureArray?
+
+    #if DEBUG
+    let colorSpace = CGColorSpaceCreateDeviceGray()
+    let bitmapInfo = CGBitmapInfo.AlphaInfoMask.rawValue & CGImageAlphaInfo.None.rawValue
+    let context = CGBitmapContextCreate(textureArray, Int(textureSize), Int(textureSize), 8, Int(textureSize), colorSpace, bitmapInfo)
+    let contextImage = CGBitmapContextCreateImage(context)
+    debugImage = UIImage(CGImage: contextImage!)
+    #endif
   }
 }

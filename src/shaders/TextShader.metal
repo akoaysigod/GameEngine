@@ -22,8 +22,6 @@ struct TransformedVertex {
 
 struct Uniforms {
   float4x4 mvp;
-  //  float4x4 viewProjectionMatrix;
-  //  float4 foregroundColor;
 };
 
 vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
@@ -35,23 +33,22 @@ vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
   TransformedVertex outVert;
   outVert.position = uniforms.mvp * float4(vertIn.position, 1.0);
   outVert.texCoords = vertIn.texCoords;
+
   return outVert;
 }
 
 fragment half4 textFragment(TransformedVertex vert [[stage_in]],
-                            constant Uniforms &uniforms [[buffer(0)]],
                             sampler samplr [[sampler(0)]],
                             texture2d<float, access::sample> texture [[texture(0)]])
 {
-  float4 color = float4(1.0, 1.0, 1.0, 1.0); //uniforms.foregroundColor;
-  // Outline of glyph is the isocontour with value 50%
+  float4 color = float4(1.0, 1.0, 1.0, 1.0);
   float edgeDistance = 0.5;
-  // Sample the signed-distance field to find distance from this fragment to the glyph outline
   float sampleDistance = texture.sample(samplr, vert.texCoords).r;
-  // Use local automatic gradients to find anti-aliased anisotropic edge width, cf. Gustavson 2012
   float edgeWidth = 0.75 * length(float2(dfdx(sampleDistance), dfdy(sampleDistance)));
-  // Smooth the glyph edge by interpolating across the boundary in a band with the width determined above
-  float insideness = smoothstep(edgeDistance - edgeWidth, edgeDistance + edgeWidth, sampleDistance);
-  
-  return half4(color.r, color.g, color.b, insideness);
+  float opacity = smoothstep(edgeDistance - edgeWidth, edgeDistance + edgeWidth, sampleDistance);
+
+  if (sampleDistance < 0.3){
+    return half4(1.0, 0.0, 0.0, 1.0);
+  }
+  return half4(color.r, color.g, color.b, opacity);
 }
