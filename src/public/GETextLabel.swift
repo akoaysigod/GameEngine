@@ -129,7 +129,6 @@ class GETextLabel: GERenderNode {
         (0..<glyphCount).forEach { j in
           let glyph = glyphBuffer[j]
           let glyphRect = CTRunGetImageBounds(run, context, CFRangeMake(j, 1))
-
           closure(glyph: glyph, glyphIndex: glyphIndexInFrame, bounds: glyphRect)
 
           glyphIndexInFrame += 1

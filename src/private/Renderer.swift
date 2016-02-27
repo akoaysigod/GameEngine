@@ -39,9 +39,6 @@ final class Renderer {
 
     self.descriptorQueue = RenderPassQueue(view: view)
     
-    //tmp
-    TempStencilTest(device: self.device)
-    
     self.setupPipelines()
   }
 

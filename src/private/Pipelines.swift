@@ -13,79 +13,88 @@ import MetalKit
 
 protocol Pipeline {
   var pipelineState: MTLRenderPipelineState! { get }
-  init?(device: MTLDevice, vertexProgram: String, fragmentProgram: String)
+  init?(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String, fragmentProgram: String)
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes)
 }
 
-private func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
-  let defaultLibrary = device.newDefaultLibrary()!
-  let vertexProgram = defaultLibrary.newFunctionWithName(vertexProgram)!
-  let fragmentProgram = defaultLibrary.newFunctionWithName(fragmentProgram)!
-  return (vertexProgram, fragmentProgram)
-}
+extension Pipeline {
+  private func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
+    let defaultLibrary = device.newDefaultLibrary()!
+    let vertexProgram = defaultLibrary.newFunctionWithName(vertexProgram)!
+    let fragmentProgram = defaultLibrary.newFunctionWithName(fragmentProgram)!
+    return (vertexProgram, fragmentProgram)
+  }
 
-private func getPipelineStateDescriptor(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> MTLRenderPipelineDescriptor {
-  let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+  private func getPipelineStateDescriptor(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> MTLRenderPipelineDescriptor {
+    let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
-  let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
-  pipelineStateDescriptor.vertexFunction = vertexProgram
-  pipelineStateDescriptor.fragmentFunction = fragmentProgram
-  pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
-  pipelineStateDescriptor.depthAttachmentPixelFormat = .Depth32Float
-  
-  return pipelineStateDescriptor
-}
-
-private func createRenderEncoder(commandBuffer: MTLCommandBuffer, label: String, renderPassDescriptor: MTLRenderPassDescriptor, pipelineState: MTLRenderPipelineState) -> MTLRenderCommandEncoder {
-  let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
-  renderEncoder.label = label
-  renderEncoder.setRenderPipelineState(pipelineState)
-  renderEncoder.setDepthStencilState(TempStencilTest.stencilState)
-  
-  return renderEncoder
-}
-
-//tmp too lazy to refactor everything again just to test if this is what I need
-//TODO: stop being lazy this actually works!
-final class TempStencilTest {
-  let x = 1
-  static var stencilState: MTLDepthStencilState!
-  
-  init(device: MTLDevice) {
-    let depthStencilDescriptor = MTLDepthStencilDescriptor()
-    depthStencilDescriptor.depthCompareFunction = .GreaterEqual
-    depthStencilDescriptor.depthWriteEnabled = true
+    let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
+    pipelineStateDescriptor.vertexFunction = vertexProgram
+    pipelineStateDescriptor.fragmentFunction = fragmentProgram
+    pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
+    pipelineStateDescriptor.depthAttachmentPixelFormat = .Depth32Float
     
-    TempStencilTest.stencilState = device.newDepthStencilStateWithDescriptor(depthStencilDescriptor)
+    return pipelineStateDescriptor
+  }
+
+  private func createRenderEncoder(commandBuffer: MTLCommandBuffer, label: String, renderPassDescriptor: MTLRenderPassDescriptor, pipelineState: MTLRenderPipelineState, depthState: MTLDepthStencilState) -> MTLRenderCommandEncoder {
+    let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
+    renderEncoder.label = label
+    renderEncoder.setRenderPipelineState(pipelineState)
+    renderEncoder.setDepthStencilState(depthState)
+    
+    return renderEncoder
   }
 }
 
 final class PipelineFactory {
+  struct ShaderPrograms {
+    static let ColorVertex = "colorVertex"
+    static let ColorFragment = "colorFragment"
+    static let SpriteVertex = "spriteVertex"
+    static let SpriteFragment = "spriteFragment"
+    static let TextVertex = "textVertex"
+    static let TextFragment = "textFragment"
+  }
+
   let device: MTLDevice
+  let depthState: MTLDepthStencilState
 
   init(device: MTLDevice) {
     self.device = device
+    self.depthState = PipelineFactory.createDepthStencil(device)
+  }
+
+  private static func createDepthStencil(device: MTLDevice) -> MTLDepthStencilState {
+    let depthStateDescriptor = MTLDepthStencilDescriptor()
+    depthStateDescriptor.depthCompareFunction = .GreaterEqual
+    depthStateDescriptor.depthWriteEnabled = true
+    
+    return device.newDepthStencilStateWithDescriptor(depthStateDescriptor)
   }
 
   //TODO: look up below
   //not sure what happens if there is an error I haven't seen one
   func provideColorPipeline(vertexProgram: String, fragmentProgram: String) -> ColorPipeline {
-    return ColorPipeline(device: device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
+    return ColorPipeline(device: device, depthState: depthState, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
   }
 
   func provideSpritePipeline(vertexProgram: String, fragmentProgram: String) -> SpritePipeline {
-    return SpritePipeline(device: device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
+    return SpritePipeline(device: device, depthState: depthState, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
   }
 
   func provideTextPipeline(vertexProgram: String, fragmentProgram: String) -> TextPipeline {
-    return TextPipeline(device: device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
+    return TextPipeline(device: device, depthState: depthState, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)!
   }
 }
 
 final class ColorPipeline: Pipeline {
   var pipelineState: MTLRenderPipelineState!
+  let depthState: MTLDepthStencilState
 
-  init?(device: MTLDevice, vertexProgram: String, fragmentProgram: String) {
+  init?(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String, fragmentProgram: String) {
+    self.depthState = depthState
+    
     let pipelineStateDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
     do {
@@ -98,7 +107,7 @@ final class ColorPipeline: Pipeline {
   }
 
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: "color encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState)
+    let renderEncoder = createRenderEncoder(commandBuffer, label: "color encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState, depthState: depthState)
 
     nodes.flatMap { (node) -> [GERenderNode] in
       if let renderNode = node as? GERenderNode {
@@ -115,9 +124,20 @@ final class ColorPipeline: Pipeline {
 
 final class SpritePipeline: Pipeline {
   var pipelineState: MTLRenderPipelineState!
-  var sampler: MTLSamplerState
+  let sampler: MTLSamplerState
+  let depthState: MTLDepthStencilState
 
-  init?(device: MTLDevice, vertexProgram: String, fragmentProgram: String) {
+  init?(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String, fragmentProgram: String) {
+    self.depthState = depthState
+
+    let samplerDescriptor = MTLSamplerDescriptor()
+    samplerDescriptor.minFilter = .Nearest
+    samplerDescriptor.magFilter = .Nearest
+    samplerDescriptor.sAddressMode = .ClampToEdge
+    samplerDescriptor.tAddressMode = .ClampToEdge
+    samplerDescriptor.normalizedCoordinates = true
+    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
+
     let pipelineDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     //pipelineStateDescriptor.sampleCount = view.sampleCount
     pipelineDescriptor.colorAttachments[0].blendingEnabled = true
@@ -127,14 +147,6 @@ final class SpritePipeline: Pipeline {
     pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .SourceAlpha
     pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
     pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
-
-    let samplerDescriptor = MTLSamplerDescriptor()
-    samplerDescriptor.minFilter = .Nearest
-    samplerDescriptor.magFilter = .Nearest
-    samplerDescriptor.sAddressMode = .ClampToEdge
-    samplerDescriptor.tAddressMode = .ClampToEdge
-    samplerDescriptor.normalizedCoordinates = true
-    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     do {
       self.pipelineState = try device.newRenderPipelineStateWithDescriptor(pipelineDescriptor)
@@ -146,7 +158,7 @@ final class SpritePipeline: Pipeline {
   }
 
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: "sprite encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState)
+    let renderEncoder = createRenderEncoder(commandBuffer, label: "sprite encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState, depthState: depthState)
     
     nodes.flatMap { (node) -> [GERenderNode] in
       if let renderNode = node as? GERenderNode {
@@ -154,7 +166,7 @@ final class SpritePipeline: Pipeline {
       }
       return []
     }.forEach {
-      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: self.sampler)
+      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: sampler)
     }
 
     renderEncoder.endEncoding()
@@ -163,9 +175,19 @@ final class SpritePipeline: Pipeline {
 
 final class TextPipeline: Pipeline {
   var pipelineState: MTLRenderPipelineState!
-  var sampler: MTLSamplerState
+  let sampler: MTLSamplerState
+  let depthState: MTLDepthStencilState
 
-  init?(device: MTLDevice, vertexProgram: String, fragmentProgram: String) {
+  init?(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String, fragmentProgram: String) {
+    self.depthState = depthState
+
+    let samplerDescriptor = MTLSamplerDescriptor()
+    samplerDescriptor.minFilter = .Nearest
+    samplerDescriptor.magFilter = .Linear
+    samplerDescriptor.sAddressMode = .ClampToZero
+    samplerDescriptor.tAddressMode = .ClampToZero
+    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
+
     let pipelineDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     pipelineDescriptor.colorAttachments[0].blendingEnabled = true
     pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .SourceAlpha
@@ -175,14 +197,7 @@ final class TextPipeline: Pipeline {
     pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
     pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
 
-    let samplerDescriptor = MTLSamplerDescriptor()
-    samplerDescriptor.minFilter = .Nearest
-    samplerDescriptor.magFilter = .Linear
-    samplerDescriptor.sAddressMode = .ClampToZero
-    samplerDescriptor.tAddressMode = .ClampToZero
-    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
-
-    //TODO: add index buffers to everything!
+        //TODO: add index buffers to everything!
     let x = 1
     let vertexDescriptor = MTLVertexDescriptor()
     vertexDescriptor.attributes[0].format = .Float4
@@ -207,7 +222,7 @@ final class TextPipeline: Pipeline {
   }
 
   func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: GENodes) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: "text encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState)
+    let renderEncoder = createRenderEncoder(commandBuffer, label: "text encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState, depthState: depthState)
 
     nodes.flatMap { (node) -> [GERenderNode] in
       if let renderNode = node as? GERenderNode {
@@ -215,7 +230,7 @@ final class TextPipeline: Pipeline {
       }
       return []
     }.forEach {
-      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: self.sampler)
+      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: sampler)
     }
 
     renderEncoder.endEncoding()
