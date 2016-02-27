@@ -72,8 +72,7 @@ final class Renderer {
       
       renderPassDescriptor = self.descriptorQueue.next()
 
-      let textNodes = nodes.filter { $0 is GETextLabel }
-      if textNodes.count > 0 {
+      if let textNodes: [GETextLabel] = textPipeline.filterRenderables(nodes) {
         textPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: textNodes)
       }
 

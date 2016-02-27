@@ -19,7 +19,7 @@ public class GEScene {
   var renderer: Renderer!
   var timer: CADisplayLink!
   
-  var drawables = GERenderNodes()
+  var drawables: Renderables = Renderables()
   var nodes = GENodes()
   
   var visible = false
@@ -37,7 +37,7 @@ public class GEScene {
   }
   
   public func update(timeSinceLastUpdate: CFTimeInterval) {
-    drawables.forEach { (node) -> () in
+    nodes.forEach { (node) -> () in
       node.updateWithDelta(timeSinceLastUpdate)
     }
 

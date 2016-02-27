@@ -9,13 +9,13 @@
 import Foundation
 import MetalKit
 
-//TODO: rethink this
-
 protocol Pipeline {
   var pipelineState: MTLRenderPipelineState! { get }
+  var depthState: MTLDepthStencilState { get }
+  var sampler: MTLSamplerState? { get }
 
   init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String, fragmentProgram: String)
-  func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: Renderables)
+  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: [T])
 }
 
 extension Pipeline {
@@ -52,17 +52,6 @@ extension Pipeline {
     pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
   }
 
-  func filterRenderables<T: Renderable>(renderable: Renderables) -> [T]? {
-    guard renderable.count > 0 else { return nil } 
-
-    return renderable.flatMap { (r: Renderable) -> [T] in
-      if let t = r as? T {
-        return [t]
-      }         
-      return []
-    }
-  }
-
   //TODO: look up below
   //not sure what happens if there is an error I haven't seen one
   private func createPipeline(device: MTLDevice, stateDescriptor: MTLRenderPipelineDescriptor) -> MTLRenderPipelineState? {
@@ -81,6 +70,27 @@ extension Pipeline {
     renderEncoder.setDepthStencilState(depthState)
     
     return renderEncoder
+  }
+
+  func filterRenderables<T: Renderable>(renderable: Renderables) -> [T]? {
+    guard renderable.count > 0 else { return nil } 
+
+    return renderable.flatMap { (r: Renderable) -> [T] in
+      if let t = r as? T {
+        return [t]
+      }         
+      return []
+    }
+  }
+
+  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: [T]) {
+    let renderEncoder = createRenderEncoder(commandBuffer, label: label, renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState, depthState: depthState)
+
+    nodes.forEach {
+      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: sampler)
+    }
+
+    renderEncoder.endEncoding()
   }
 }
 
@@ -117,6 +127,7 @@ final class PipelineFactory {
 final class ColorPipeline: Pipeline {
   var pipelineState: MTLRenderPipelineState!
   let depthState: MTLDepthStencilState
+  let sampler: MTLSamplerState? = nil
 
   private struct Programs {
     static let Vertex = "colorVertex"
@@ -130,21 +141,11 @@ final class ColorPipeline: Pipeline {
 
     self.pipelineState = createPipeline(device, stateDescriptor: pipelineStateDescriptor)
   }
-
-  func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: Renderables) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: "color encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState, depthState: depthState)
-
-    nodes.forEach {
-      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: nil)
-    }
-
-    renderEncoder.endEncoding()
-  }
 }
 
 final class SpritePipeline: Pipeline {
   var pipelineState: MTLRenderPipelineState!
-  let sampler: MTLSamplerState
+  let sampler: MTLSamplerState?
   let depthState: MTLDepthStencilState
 
   private struct Programs {
@@ -168,40 +169,19 @@ final class SpritePipeline: Pipeline {
 
     self.pipelineState = createPipeline(device, stateDescriptor: pipelineDescriptor)
   }
-
-  func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: Renderables) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: "sprite encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: self.pipelineState, depthState: depthState)
-    
-    nodes.flatMap { (node) -> [GERenderNode] in
-      if let renderNode = node as? GERenderNode {
-        return [renderNode]
-      }
-      return []
-    }.forEach {
-      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: sampler)
-    }
-
-    renderEncoder.endEncoding()
-  }
-}
-
-private struct TextPrograms {
-  static var Vertex = "textVertex"
-  static let Fragment = "textFragment"
-}
-
-extension Pipeline {
-  func encodeTwo(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: [Renderable]) {
-    let z = nodes.filter { $0 is Self }
-  }
 }
 
 final class TextPipeline: Pipeline {
   var pipelineState: MTLRenderPipelineState!
-  let sampler: MTLSamplerState
+  let sampler: MTLSamplerState?
   let depthState: MTLDepthStencilState
 
-  init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String = TextPrograms.Vertex, fragmentProgram: String = TextPrograms.Fragment) {
+  private struct Programs {
+    static var Vertex = "textVertex"
+    static let Fragment = "textFragment"
+  }
+
+  init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String = Programs.Vertex, fragmentProgram: String = Programs.Fragment) {
     self.depthState = depthState
 
     let samplerDescriptor = MTLSamplerDescriptor()
@@ -230,20 +210,5 @@ final class TextPipeline: Pipeline {
     //pipelineDescriptor.vertexDescriptor = vertexDescriptor
 
     self.pipelineState = createPipeline(device, stateDescriptor: pipelineDescriptor)
-  }
-
-  func encode(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: Renderables) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: "text encoder", renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState, depthState: depthState)
-
-    nodes.flatMap { (node) -> [GERenderNode] in
-      if let renderNode = node as? GERenderNode {
-        return [renderNode]
-      }
-      return []
-    }.forEach {
-      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: sampler)
-    }
-
-    renderEncoder.endEncoding()
   }
 }
