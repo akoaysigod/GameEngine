@@ -11,9 +11,6 @@ import Metal
 import MetalKit
 
 public class GEView: MTKView {
-  //var device: MTLDevice!
-  var metalLayer: CAMetalLayer!
-  
   private var currentScene: GEScene!
   var timer: CADisplayLink!
   
