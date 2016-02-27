@@ -17,6 +17,7 @@ public class GEViewController: UIViewController {
   override public func loadView() {
     let device = MTLCreateSystemDefaultDevice()!
     self.view = GEView(frame: UIScreen.mainScreen().bounds, device: device)
+    self.view.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
   }
 
   override public func viewDidLoad() {

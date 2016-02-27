@@ -10,7 +10,7 @@ import Foundation
 import MetalKit
 
 protocol Pipeline {
-  var pipelineState: MTLRenderPipelineState! { get }
+  var pipelineState: MTLRenderPipelineState { get }
   var depthState: MTLDepthStencilState { get }
   var sampler: MTLSamplerState? { get }
 
@@ -129,7 +129,7 @@ final class PipelineFactory {
 }
 
 final class ColorPipeline: Pipeline {
-  let pipelineState: MTLRenderPipelineState!
+  let pipelineState: MTLRenderPipelineState
   let depthState: MTLDepthStencilState
   let sampler: MTLSamplerState? = nil
 
@@ -142,12 +142,12 @@ final class ColorPipeline: Pipeline {
     self.depthState = depthState
     
     let pipelineDescriptor = ColorPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-    self.pipelineState = ColorPipeline.createPipelineState(device, descriptor: pipelineDescriptor)
+    self.pipelineState = ColorPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
 }
 
 final class SpritePipeline: Pipeline {
-  let pipelineState: MTLRenderPipelineState!
+  let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
   let depthState: MTLDepthStencilState
 
@@ -174,7 +174,7 @@ final class SpritePipeline: Pipeline {
 }
 
 final class TextPipeline: Pipeline {
-  let pipelineState: MTLRenderPipelineState!
+  let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
   let depthState: MTLDepthStencilState
 

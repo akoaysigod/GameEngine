@@ -18,7 +18,6 @@ final class Renderer {
   private var spritePipeline: SpritePipeline!
   private var textPipeline: TextPipeline!
 
-  //TODO: pass a UIColor in here somehow to pass to the RenderPassQueue for background color
   init(view: GEView) {
     guard let device = view.device else {
       fatalError("Probably can't run metal on this device")

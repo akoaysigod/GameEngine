@@ -37,7 +37,12 @@ class RenderPassQueue {
     
     let firstPass = MTLRenderPassDescriptor()
     firstPass.colorAttachments[0].loadAction = .Clear
-    firstPass.colorAttachments[0].clearColor = MTLClearColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
+    if let backgroundColor = view.backgroundColor {
+      firstPass.colorAttachments[0].clearColor = backgroundColor.clearColor
+    }
+    else {
+      firstPass.colorAttachments[0].clearColor = MTLClearColor(red: 0.5, green: 0.5, blue: 0.0, alpha: 1.0)
+    }
     firstPass.colorAttachments[0].storeAction = .Store
     
     firstPass.depthAttachment.loadAction = .Clear

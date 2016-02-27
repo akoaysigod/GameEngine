@@ -6,6 +6,7 @@
 //  Copyright © 2015 Anthony Green. All rights reserved.
 //
 
+import MetalKit
 import UIKit
 
 extension UIColor {
@@ -19,5 +20,10 @@ extension UIColor {
       return (Float(red), Float(green), Float(blue), Float(alpha))
     }
     return (0.0, 0.0, 0.0, 1.0) //just return white on error
+  }
+
+  var clearColor: MTLClearColor {
+    let color = rgb
+    return MTLClearColor(red: Double(color.r), green: Double(color.g), blue: Double(color.b), alpha: Double(color.a))
   }
 }
