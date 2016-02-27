@@ -23,26 +23,28 @@ extension Pipeline {
     return "\(Self.self)"
   }
   
-  private func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
-    let defaultLibrary = device.newDefaultLibrary()!
-    let vertexProgram = defaultLibrary.newFunctionWithName(vertexProgram)!
-    let fragmentProgram = defaultLibrary.newFunctionWithName(fragmentProgram)!
-    return (vertexProgram, fragmentProgram)
+  private static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
+    //default library can't be found? probably will fatalError before this as I think this means metal can't be used (or there are no metal files?)
+    let defaultLibrary = device.newDefaultLibrary()! 
+    guard let vProgram = defaultLibrary.newFunctionWithName(vertexProgram) else {
+      assert(false, "no vertex program for name: \(vertexProgram)")
+    }
+    guard let fProgram = defaultLibrary.newFunctionWithName(fragmentProgram) else {
+      assert(false, "no fragment program for name: \(fragmentProgram)")
+    }
+    return (vProgram, fProgram)
   }
 
-  private func getPipelineStateDescriptor(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> MTLRenderPipelineDescriptor {
+  private static func createPipelineDescriptor(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> MTLRenderPipelineDescriptor {
     let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
-    let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
-    pipelineStateDescriptor.vertexFunction = vertexProgram
-    pipelineStateDescriptor.fragmentFunction = fragmentProgram
-    pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
-    pipelineStateDescriptor.depthAttachmentPixelFormat = .Depth32Float
-    
-    return pipelineStateDescriptor
-  }
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexProgram
+    pipelineDescriptor.fragmentFunction = fragmentProgram
+    pipelineDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
+    pipelineDescriptor.depthAttachmentPixelFormat = .Depth32Float
 
-  private func addAlphaBlendingToDescriptor(pipelineDescriptor: MTLRenderPipelineDescriptor) {
+    //alpha testing
     pipelineDescriptor.colorAttachments[0].blendingEnabled = true
     pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .SourceAlpha
     pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .OneMinusSourceAlpha
@@ -50,16 +52,18 @@ extension Pipeline {
     pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .SourceAlpha
     pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
     pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
+    
+    return pipelineDescriptor
   }
 
   //TODO: look up below
   //not sure what happens if there is an error I haven't seen one
-  private func createPipeline(device: MTLDevice, stateDescriptor: MTLRenderPipelineDescriptor) -> MTLRenderPipelineState? {
+  private static func createPipelineState(device: MTLDevice, descriptor: MTLRenderPipelineDescriptor) -> MTLRenderPipelineState? {
     do {
-      return try device.newRenderPipelineStateWithDescriptor(stateDescriptor)
+      return try device.newRenderPipelineStateWithDescriptor(descriptor)
     }
     catch let error {
-      fatalError(label + ": Failed to create pipeline state, error \(error)")
+      fatalError("\(Self.self): Failed to create pipeline state, error \(error)")
     }
   }
 
@@ -111,21 +115,21 @@ final class PipelineFactory {
     return device.newDepthStencilStateWithDescriptor(depthStateDescriptor)
   }
 
-  func provideColorPipeline(vertexProgram: String, fragmentProgram: String) -> ColorPipeline {
+  func provideColorPipeline() -> ColorPipeline {
     return ColorPipeline(device: device, depthState: depthState)
   }
 
-  func provideSpritePipeline(vertexProgram: String, fragmentProgram: String) -> SpritePipeline {
+  func provideSpritePipeline() -> SpritePipeline {
     return SpritePipeline(device: device, depthState: depthState)
   }
 
-  func provideTextPipeline(vertexProgram: String, fragmentProgram: String) -> TextPipeline {
+  func provideTextPipeline() -> TextPipeline {
     return TextPipeline(device: device, depthState: depthState)
   }
 }
 
 final class ColorPipeline: Pipeline {
-  var pipelineState: MTLRenderPipelineState!
+  let pipelineState: MTLRenderPipelineState!
   let depthState: MTLDepthStencilState
   let sampler: MTLSamplerState? = nil
 
@@ -137,14 +141,13 @@ final class ColorPipeline: Pipeline {
   init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String = Programs.Vertex, fragmentProgram: String = Programs.Fragment) {
     self.depthState = depthState
     
-    let pipelineStateDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-
-    self.pipelineState = createPipeline(device, stateDescriptor: pipelineStateDescriptor)
+    let pipelineDescriptor = ColorPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    self.pipelineState = ColorPipeline.createPipelineState(device, descriptor: pipelineDescriptor)
   }
 }
 
 final class SpritePipeline: Pipeline {
-  var pipelineState: MTLRenderPipelineState!
+  let pipelineState: MTLRenderPipelineState!
   let sampler: MTLSamplerState?
   let depthState: MTLDepthStencilState
 
@@ -163,16 +166,15 @@ final class SpritePipeline: Pipeline {
     samplerDescriptor.tAddressMode = .ClampToEdge
     self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
-    let pipelineDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-    addAlphaBlendingToDescriptor(pipelineDescriptor)
+    let pipelineDescriptor = SpritePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     //pipelineStateDescriptor.sampleCount = view.sampleCount
 
-    self.pipelineState = createPipeline(device, stateDescriptor: pipelineDescriptor)
+    self.pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
 }
 
 final class TextPipeline: Pipeline {
-  var pipelineState: MTLRenderPipelineState!
+  let pipelineState: MTLRenderPipelineState!
   let sampler: MTLSamplerState?
   let depthState: MTLDepthStencilState
 
@@ -191,8 +193,7 @@ final class TextPipeline: Pipeline {
     samplerDescriptor.tAddressMode = .ClampToZero
     self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
-    let pipelineDescriptor = getPipelineStateDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-    addAlphaBlendingToDescriptor(pipelineDescriptor)
+    let pipelineDescriptor = TextPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
     //TODO: add index buffers to everything!
     let x = 1
@@ -209,6 +210,6 @@ final class TextPipeline: Pipeline {
 
     //pipelineDescriptor.vertexDescriptor = vertexDescriptor
 
-    self.pipelineState = createPipeline(device, stateDescriptor: pipelineDescriptor)
+    self.pipelineState = TextPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
 }
