@@ -13,7 +13,9 @@ import MetalKit
 public class GEView: MTKView {
   private var currentScene: GEScene!
   var timer: CADisplayLink!
-  
+
+  //In case you forget device creation causes a fatal error so just implicitly unwrap it everywhere because it does exist 
+  //or we wouldn't have gotten that far in the execution of this program
   override init(frame frameRect: CGRect, device: MTLDevice?) {
     super.init(frame: frameRect, device: device)
   }

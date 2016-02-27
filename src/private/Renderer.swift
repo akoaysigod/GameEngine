@@ -19,9 +19,7 @@ final class Renderer {
   private var textPipeline: TextPipeline!
 
   init(view: GEView) {
-    guard let device = view.device else {
-      fatalError("Probably can't run metal on this device")
-    }
+    let device = view.device!
 
     self.commandQueue = device.newCommandQueue()
     self.commandQueue.label = "main command queue"

@@ -13,10 +13,10 @@ import MetalKit
 class RenderPassQueue {
   private let view: GEView
   var queue: [MTLRenderPassDescriptor]
-  var depthTex: MTLTexture?
+  let depthTex: MTLTexture
 
   var currentDrawable: CAMetalDrawable? {
-    return self.view.currentDrawable
+    return view.currentDrawable
   }
 
   private var currentDescriptorIndex = 0
@@ -33,7 +33,7 @@ class RenderPassQueue {
     let width = Int(scale * size.width)
     let height = Int(scale * size.height)
     let depthTextDesc = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.Depth32Float, width: width, height: height, mipmapped: false)
-    self.depthTex = self.view.device?.newTextureWithDescriptor(depthTextDesc)
+    self.depthTex = self.view.device!.newTextureWithDescriptor(depthTextDesc)
     
     let firstPass = MTLRenderPassDescriptor()
     firstPass.colorAttachments[0].loadAction = .Clear
