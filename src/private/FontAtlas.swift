@@ -83,8 +83,10 @@ class FontAtlas: NSObject, NSCoding {
   let textureSize: Int
   var textureData: NSData!
   var glyphDescriptors = [GlyphDescriptor]()
-  
+
+  #if DEBUG
   var debugImage: UIImage?
+  #endif
   
   var asciiOnly = true
   

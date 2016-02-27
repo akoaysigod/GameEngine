@@ -25,13 +25,11 @@ public class GEViewController: UIViewController {
     //let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
     
     let view = self.view as! GEView
-   //let imgView = UIImageView(image: fontTest.debugImage)
-    //view.addSubview(imgView)
     self.scene = GEScene(size: view.bounds.size)
     view.presentScene(scene)
 
-    let testText = GETextLabel(text: "test test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
-    scene.addNode(testText)
+//    let testText = GETextLabel(text: "test test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
+//    scene.addNode(testText)
     
     
 //    let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
@@ -58,12 +56,12 @@ public class GEViewController: UIViewController {
     sp.scale = 10
     sp.position = (300, 300)
     self.scene.addNode(sp)
-//    
-//    let sp2 = GESprite(imageName: "Test2")
-//    sp2.scale = 10
-//    sp2.position = (300, 356)
-//    sp2.zPosition = 1000
-//    self.scene.addNode(sp2)
+
+    let sp2 = GESprite(imageName: "Test2")
+    sp2.scale = 10
+    sp2.position = (300, 356)
+    sp2.zPosition = 1000
+    self.scene.addNode(sp2)
 //    if let device = MTLCreateSystemDefaultDevice() {
 //      let view = self.view as! MTKView
 //      view.device = device

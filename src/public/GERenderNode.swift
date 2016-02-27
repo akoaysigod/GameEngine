@@ -11,9 +11,14 @@ import GLKit
 import Metal
 import QuartzCore
 
+typealias Renderables = [Renderable]
+protocol Renderable {
+  func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
+}
+
 typealias GERenderNodes = [GERenderNode]
 
-public class GERenderNode: GENode {
+public class GERenderNode: GENode, Renderable {
   var device: MTLDevice!
   
   //not sure might create a texture class to handle this stuff

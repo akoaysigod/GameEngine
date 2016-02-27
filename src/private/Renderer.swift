@@ -49,7 +49,7 @@ final class Renderer {
     textPipeline = factory.provideTextPipeline(ShaderPrograms.TextVertex, fragmentProgram: ShaderPrograms.TextFragment)
   }
 
-  func draw(nodes: GERenderNodes) {
+  func draw(nodes: Renderables) {
     let commandBuffer = self.commandQueue.commandBuffer()
     commandBuffer.label = "Frame command buffer"
 
@@ -59,16 +59,19 @@ final class Renderer {
       //this will work for now :( not sure of a better way to break this stuff up
       //holy fuck there was god dammit debugging shaders because of this stupid filter shit
       //refactor this to just pass the whole array to each pipeline they're already filtering nodes out
-      let colorNodes = nodes.filter { $0 is GEColorRect }
-      self.colorPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: colorNodes)
 
-      renderPassDescriptor = self.descriptorQueue.next()
-      let spriteNodes = nodes.filter { $0 is GESprite }
-      if spriteNodes.count > 0 {
-        self.spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
+      if let colorNodes: [GEColorRect] = colorPipeline.filterRenderables(nodes) {
+        colorPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: colorNodes)
       }
-
+      
       renderPassDescriptor = self.descriptorQueue.next()
+
+      if let spriteNodes: [GESprite] = spritePipeline.filterRenderables(nodes) {
+        spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
+      }
+      
+      renderPassDescriptor = self.descriptorQueue.next()
+
       let textNodes = nodes.filter { $0 is GETextLabel }
       if textNodes.count > 0 {
         textPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: textNodes)
