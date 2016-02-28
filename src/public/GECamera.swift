@@ -8,10 +8,11 @@
 
 import Foundation
 import GLKit
+import UIKit
 
 public class GECamera: GENode {
   private var cameraMatrix: GLKMatrix4 {
-    return GLKMatrix4Translate(GLKMatrix4Identity, self.x, self.y, 0.0)
+    return GLKMatrix4Translate(GLKMatrix4Identity, x, y, 0.0)
   }
 
   private var projectionMatrix: GLKMatrix4 {
@@ -23,19 +24,19 @@ public class GECamera: GENode {
   }
 
   var data: [Float] {
-    return self.cameraMatrix.data + self.projectionMatrix.data
+    return cameraMatrix.data + projectionMatrix.data
   }
 
   var dataSize: Int {
-    return self.data.count * FloatSize
+    return data.count * FloatSize
   }
 
-  private let left: Float = 0.0
-  private let right: Float
-  private let bottom: Float = 0.0
-  private let top: Float
-  private let near: Float = -1.0
-  private let far: Float = 1.0
+  private var left: Float = 0.0
+  private var right: Float
+  private var bottom: Float = 0.0
+  private var top: Float
+  private var near: Float = -1.0
+  private var far: Float = 1.0
 
   private var ral: Float { return right + left }
   private var rsl: Float { return right - left }
@@ -44,10 +45,10 @@ public class GECamera: GENode {
   private var fan: Float { return far + near }
   private var fsn: Float { return far - near }
 
-  var zoom: Float = 1.0
+  public var zoom: Float = 1.0
   public var scale: Float {
     didSet {
-      self.zoom = self.scale
+      zoom = scale
     }
   }
 
@@ -56,6 +57,10 @@ public class GECamera: GENode {
 
     self.right = Float(size.width)
     self.top = Float(size.height)
+
+    super.init()
+
+    self.size = size
   }
 
   func multiplyMatrices(modelViewMatrix: GLKMatrix4) -> GLKMatrix4 {

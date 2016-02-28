@@ -11,11 +11,9 @@ import GLKit
 import Metal
 import QuartzCore
 
-
-
 typealias GENodes = [GENode]
 
-public class GENode: GENodeGeometry {
+public class GENode: GENodeGeometry, TreeUpdateable, Updateable {
   public var name: String? = nil
   
   public var size = CGSizeZero

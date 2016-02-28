@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TreeUpdateable: class {
-  var nodeTree: NodeTree { get }
+  var nodeTree: NodeTree! { get }
 
   var parent: GENode? { get }
   var nodes: [GENode] { get }

@@ -27,18 +27,18 @@ extension Updateable {
     }
   }
 
-  public var hasAction: Bool {
+  var hasAction: Bool {
     var performingAction = false
     while let parent = nodeTree.parent?.root {
-//      if parent.hasAction {
-//        performingAction = true
-//        break
-//      }
+      if (parent as Updateable).hasAction {
+        performingAction = true
+        break
+      }
     }
     return action != nil || performingAction
   }
 
-  public func runAction(action: GEAction) {
+  func runAction(action: GEAction) {
     self.action = action
   }
 }
