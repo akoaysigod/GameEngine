@@ -36,9 +36,7 @@ protocol Node: class {
 
   var modelMatrix: GLKMatrix4 { get }
 
-  typealias T
-  var parent: T? { get set }
-  var nodes: [T] { get set }
+  var nodeTree: NodeTree { get }
 
   var time: CFTimeInterval { get set }
   func updateWithDelta(delta: CFTimeInterval)
@@ -46,6 +44,12 @@ protocol Node: class {
   var action: GEAction? { get set }
   var hasAction: Bool { get }
   func runAction(action: GEAction)
+
+  var parent: Node? { get }
+  var nodes: Nodes { get }
+  func addNode<T: Node>(node: T)
+  func removeNode<T: Node>(node: T) -> T?
+  func removeFromParent()
 }
 
 extension Node {
@@ -102,32 +106,40 @@ extension Node {
   }
 
   var hasAction: Bool {
-    return false
-    //let parentHasAction = getSuperParent()?.hasAction ?? false
-    //return self.action != nil || parentHasAction
+    let parentHasAction = nodeTree.superParent?.root?.hasAction ?? false
+    return self.action != nil || parentHasAction
   }
 
   func runAction(action: GEAction) {
     self.action = action
   }
 
-//    //tree stuff
-//  func addNode<T: Node>(node: T) {
-//    //node.parent = self
-//    //self.nodes.append(node)
-//  }
-//  
-//  func getSuperParent<T: Node>() -> T? {
-//    var parent = self.parent
-//    while true {
-//      if let root = parent?.parent {
-//        parent = root
-//      }
-//      else {
-//        return parent
-//      }
-//    }
-//  }
+  //tree stuff
+  var parent: Node? {
+    return nodeTree.parent?.root
+  }
+
+  var nodes: Nodes {
+    return Array(nodeTree.nodes).flatMap { nodeTree -> Nodes in
+      if let node = nodeTree.root {
+        return [node]
+      }
+      return []
+    }
+  }
+  
+  func addNode<T: Node>(node: T) {
+    nodeTree.addNode(node.nodeTree)
+  }
+
+  func removeNode<T: Node>(node: T) -> T? {
+    return nodeTree.removeNode(node.nodeTree)?.root as? T
+  }
+
+  func removeFromParent() {
+    nodeTree.parent?.removeNode(nodeTree)
+    nodeTree.parent = nil
+  }
 }
 
 typealias GENodes = [GENode]
