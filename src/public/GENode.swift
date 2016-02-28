@@ -13,7 +13,7 @@ import QuartzCore
 
 typealias GENodes = [GENode]
 
-public class GENode: GENodeGeometry, TreeUpdateable, Updateable {
+public class GENode: GENodeGeometry, TreeUpdateable {
   public var name: String? = nil
   
   public var size = CGSizeZero
@@ -39,10 +39,9 @@ public class GENode: GENodeGeometry, TreeUpdateable, Updateable {
   }
   
   //updating
-  public var time: CFTimeInterval = 0.0
-  //tmp
-  public func updateWithDelta(delta: CFTimeInterval) {
-    self.time += delta
+  private(set) var time: CFTimeInterval = 0.0
+  func updateWithDelta(delta: CFTimeInterval) {
+    time += delta
 
     guard let action = self.action else { return }
     if !action.completed {
@@ -53,6 +52,21 @@ public class GENode: GENodeGeometry, TreeUpdateable, Updateable {
     }
   }
 
-  //action related
+  //actions
   public var action: GEAction? = nil
+  var hasAction: Bool {
+    var performingAction = false
+    while let parent = nodeTree.parent?.root {
+      if parent.hasAction {
+        performingAction = true
+        break
+      }
+    }
+    return action != nil || performingAction
+  }
+
+  func runAction(action: GEAction) {
+    self.action = action
+  }
 }
+

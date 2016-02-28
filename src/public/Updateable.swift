@@ -9,36 +9,10 @@
 import Foundation
 
 protocol Updateable: class, TreeUpdateable {
-  var time: CFTimeInterval { get set }
+  var time: CFTimeInterval { get }
   var action: GEAction? { get set }
   var hasAction: Bool { get }
 
   func updateWithDelta(delta: CFTimeInterval)
   func runAction(action: GEAction)
-}
-
-extension Updateable {
-  func updateWithDeltaTime(delta: CFTimeInterval) {
-    time += delta
-
-    guard let action = self.action else { return }
-    if !action.completed {
-      //action.run(self, delta: delta)
-    }
-  }
-
-  var hasAction: Bool {
-    var performingAction = false
-    while let parent = nodeTree.parent?.root {
-      if (parent as Updateable).hasAction {
-        performingAction = true
-        break
-      }
-    }
-    return action != nil || performingAction
-  }
-
-  func runAction(action: GEAction) {
-    self.action = action
-  }
 }
