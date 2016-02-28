@@ -66,9 +66,9 @@ public class GECamera: GENode {
   func multiplyMatrices(modelViewMatrix: GLKMatrix4) -> GLKMatrix4 {
     return self.projectionMatrix * self.cameraMatrix * modelViewMatrix
   }
-  
-  public func addNode(node: GENode) {
+
+  public override func addNode(node: GENode) {
     node.camera = self
-    //nodeTree.addNode(node.nodeTree)
+    nodeTree.addNode(node.nodeTree)
   }
 }

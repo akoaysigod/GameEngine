@@ -11,6 +11,10 @@ import GLKit
 import Metal
 import QuartzCore
 
+
+//TODO: turn this class into a protocol
+//it's not necessary to have another class between GENode and display type nodes
+
 typealias Renderables = [Renderable]
 protocol Renderable {
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
@@ -91,9 +95,11 @@ public class GERenderNode: GENode, Renderable {
     renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
     
     var parentMatrix = GLKMatrix4Identity
-//    if let parent = self.getSuperParent() {
-//      parentMatrix = parent.modelMatrix
-//    }
+    if let parent = nodeTree.superParent,
+       let root = parent.root
+    {
+      parentMatrix = root.modelMatrix
+    }
 
     let uniformMatrix = self.camera.multiplyMatrices(self.decompose(parentMatrix))
     let offset = self.uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)

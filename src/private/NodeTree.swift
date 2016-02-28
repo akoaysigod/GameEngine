@@ -8,42 +8,12 @@
 
 import Foundation
 
-protocol TreeUpdateable: class {
-  var nodeTree: NodeTree! { get }
-
+public protocol TreeUpdateable: class {
   var parent: GENode? { get }
   var nodes: [GENode] { get }
-  func addNode<T: GENode>(node: T)
+  func addNode(node: GENode)
   func removeNode<T: GENode>(node: T) -> T?
   func removeFromParent()
-}
-
-extension TreeUpdateable {
-  var parent: GENode? {
-    return nodeTree.parent?.root
-  }
-  
-  var nodes: GENodes {
-    return Array(nodeTree.nodes).flatMap { nodeTree -> GENodes in
-      if let node = nodeTree.root {
-        return [node]
-      }
-      return []
-    }
-  }
-  
-  func addNode<T: TreeUpdateable>(node: T) {
-    nodeTree.addNode(node.nodeTree)
-  }
-  
-  func removeNode<T: TreeUpdateable>(node: T) -> T? {
-    return nodeTree.removeNode(node.nodeTree)?.root as? T
-  }
-  
-  func removeFromParent() {
-    nodeTree.parent?.removeNode(nodeTree)
-    nodeTree.parent = nil
-  }
 }
 
 func ==(rhs: NodeTree, lhs: NodeTree) -> Bool {

@@ -46,12 +46,14 @@ public class GEViewController: UIViewController {
 
     scene.addNode(colorRect)
 
-//    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
-//    colorRect2.position = (50, 300)
-//    colorRect2.anchorPoint = (0.5, 0.5)
-//    //colorRect2.zPosition = 0
-//    //colorRect.addNode(colorRect2)
-//    //scene.addNode(colorRect2)
+    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
+    colorRect2.position = (50, 300)
+    colorRect2.anchorPoint = (0.5, 0.5)
+    colorRect2.zPosition = 0
+let fixthisnext = 1 //this shouldn't need to be added twice, I don't know if it's always been this way or since I refactored the node tree stuff
+                //the node tree needs to be addeed to the scene anyway
+    colorRect.addNode(colorRect2) 
+    scene.addNode(colorRect2)
 
     let sp = GESprite(imageName: "Test2")
     sp.scale = (10, 10)

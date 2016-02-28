@@ -11,7 +11,7 @@ import GLKit
 import Metal
 import QuartzCore
 
-typealias GENodes = [GENode]
+public typealias GENodes = [GENode]
 
 public class GENode: GENodeGeometry, TreeUpdateable {
   public var name: String? = nil
@@ -31,8 +31,6 @@ public class GENode: GENodeGeometry, TreeUpdateable {
   public var yScale: Float = 1.0
   
   public var camera: GECamera!
-
-  var nodeTree: NodeTree!
 
   init() {
     self.nodeTree = NodeTree(root: self)
@@ -68,5 +66,33 @@ public class GENode: GENodeGeometry, TreeUpdateable {
   func runAction(action: GEAction) {
     self.action = action
   }
-}
 
+  //node tree
+  var nodeTree: NodeTree!
+
+  public var parent: GENode? {
+    return nodeTree.parent?.root
+  }
+  
+  public var nodes: GENodes {
+    return Array(nodeTree.nodes).flatMap { nodeTree -> GENodes in
+      if let node = nodeTree.root {
+        return [node]
+      }
+      return []
+    }
+  }
+  
+  public func addNode(node: GENode) {
+    nodeTree.addNode(node.nodeTree)
+  }
+  
+  public func removeNode<T: GENode>(node: T) -> T? {
+    return nodeTree.removeNode(node.nodeTree)?.root as? T
+  }
+  
+  public func removeFromParent() {
+    nodeTree.parent?.removeNode(nodeTree)
+    nodeTree.parent = nil
+  }
+}
