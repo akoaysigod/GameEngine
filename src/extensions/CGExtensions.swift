@@ -20,6 +20,14 @@ extension CGPoint {
 }
 
 extension CGSize {
+  var w: Float {
+    return Float(width)
+  }
+
+  var h: Float {
+    return Float(height)
+  }
+
   init(width: Float, height: Float) {
     self.init(width: Double(width), height: Double(height))
   }

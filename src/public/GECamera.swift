@@ -45,7 +45,7 @@ public class GECamera: GENode {
   private var fsn: Float { return far - near }
 
   var zoom: Float = 1.0
-  override public var scale: Float {
+  public var scale: Float {
     didSet {
       self.zoom = self.scale
     }
@@ -60,8 +60,8 @@ public class GECamera: GENode {
     return self.projectionMatrix * self.cameraMatrix * modelViewMatrix
   }
   
-  override public func addNode(node: GENode) {
+  public func addNode(node: Node) {
     node.camera = self
-    self.nodes.append(node)
+    //nodeTree.addNode(node.nodeTree)
   }
 }
