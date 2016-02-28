@@ -63,8 +63,12 @@
 		EAE75E801C42FE68001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
 		EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
 		EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
-		EAFD768A1C827CF500ABDC50 /* NodeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76891C827CF500ABDC50 /* NodeTree.swift */; };
-		EAFD768B1C827CF500ABDC50 /* NodeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76891C827CF500ABDC50 /* NodeTree.swift */; };
+		EAFD76971C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */; };
+		EAFD76981C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */; };
+		EAFD769B1C836C0500ABDC50 /* NodeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76991C836C0500ABDC50 /* NodeTree.swift */; };
+		EAFD769C1C836C0500ABDC50 /* NodeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76991C836C0500ABDC50 /* NodeTree.swift */; };
+		EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD769A1C836C0500ABDC50 /* Updateable.swift */; };
+		EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD769A1C836C0500ABDC50 /* Updateable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,7 +119,9 @@
 		EAE75E361C42D091001EB176 /* GEScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEScene.swift; path = src/public/GEScene.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEView.swift; path = src/public/GEView.swift; sourceTree = SOURCE_ROOT; };
 		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
-		EAFD76891C827CF500ABDC50 /* NodeTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NodeTree.swift; path = src/private/NodeTree.swift; sourceTree = SOURCE_ROOT; };
+		EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GENodeGeomtry.swift; path = src/public/GENodeGeomtry.swift; sourceTree = SOURCE_ROOT; };
+		EAFD76991C836C0500ABDC50 /* NodeTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NodeTree.swift; path = src/public/NodeTree.swift; sourceTree = SOURCE_ROOT; };
+		EAFD769A1C836C0500ABDC50 /* Updateable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updateable.swift; path = src/public/Updateable.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,9 +251,9 @@
 		EAC6405A1C346D6B00B6AE68 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				EAFD76951C836BB200ABDC50 /* Protocols */,
 				EA4A58571C38823D00D39F17 /* Animation */,
 				EAC640A11C34B60E00B6AE68 /* DataStructures */,
-				EAFD76891C827CF500ABDC50 /* NodeTree.swift */,
 				EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */,
 				EAA99DDF1C41E52700CF3246 /* GENode.swift */,
 				EA9B1E801C727625000FFDF7 /* GETextLabel.swift */,
@@ -299,6 +305,16 @@
 				EAE75E361C42D091001EB176 /* GEScene.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		EAFD76951C836BB200ABDC50 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EAFD76991C836C0500ABDC50 /* NodeTree.swift */,
+				EAFD769A1C836C0500ABDC50 /* Updateable.swift */,
+				EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -445,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */,
+				EAFD769B1C836C0500ABDC50 /* NodeTree.swift in Sources */,
 				EAA99DDC1C41E51C00CF3246 /* GEAction.swift in Sources */,
 				EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */,
 				EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */,
@@ -452,15 +469,16 @@
 				EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */,
 				EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */,
+				EAFD76971C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* GEScene.swift in Sources */,
+				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
 				EA9B1E811C727625000FFDF7 /* GETextLabel.swift in Sources */,
 				EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */,
-				EAFD768A1C827CF500ABDC50 /* NodeTree.swift in Sources */,
 				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EA7C9AF61C4AF01600A64CB9 /* GERenderNode.swift in Sources */,
 				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
@@ -493,6 +511,7 @@
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAE75E801C42FE68001EB176 /* GEView.swift in Sources */,
+				EAFD769C1C836C0500ABDC50 /* NodeTree.swift in Sources */,
 				EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
@@ -502,10 +521,11 @@
 				EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
 				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */,
-				EAFD768B1C827CF500ABDC50 /* NodeTree.swift in Sources */,
+				EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */,
 				EA9B1E821C727625000FFDF7 /* GETextLabel.swift in Sources */,
+				EAFD76981C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */,
 				EAA99DC51C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,

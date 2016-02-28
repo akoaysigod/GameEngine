@@ -99,7 +99,8 @@ public final class GEAction {
   }
 
   private func scaleBy(node: GENode, _ delta: Double, _ scale: Float) {
-    node.scale += Float(delta) * scale
+    node.xScale += Float(delta) * scale
+    node.yScale += Float(delta) * scale
   }
 
   private func scaleByXY(node: GENode, _ delta: Double, _ x: Float, _ y: Float) {

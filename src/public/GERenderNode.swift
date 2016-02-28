@@ -91,10 +91,10 @@ public class GERenderNode: GENode, Renderable {
     renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
     
     var parentMatrix = GLKMatrix4Identity
-    if let parent = self.getSuperParent() {
-      parentMatrix = parent.modelMatrix
-    }
-    
+//    if let parent = self.getSuperParent() {
+//      parentMatrix = parent.modelMatrix
+//    }
+
     let uniformMatrix = self.camera.multiplyMatrices(self.decompose(parentMatrix))
     let offset = self.uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)
     renderEncoder.setVertexBuffer(self.uniformBufferQueue.buffer, offset: offset, atIndex: 1)

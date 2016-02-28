@@ -8,25 +8,23 @@
 
 import Foundation
 
-protocol Tree {
+protocol TreeUpdateable: class {
   var nodeTree: NodeTree { get }
-}
 
-public protocol TreeUpdateable: Tree {
-  var parent: Node? { get }
-  var nodes: [Node] { get }
-  func addNode<T: Node>(node: T)
-  func removeNode<T: Node>(node: T) -> T?
+  var parent: GENode? { get }
+  var nodes: [GENode] { get }
+  func addNode<T: GENode>(node: T)
+  func removeNode<T: GENode>(node: T) -> T?
   func removeFromParent()
 }
 
-public extension TreeUpdateable {
-  public var parent: Node? {
+extension TreeUpdateable {
+  var parent: GENode? {
     return nodeTree.parent?.root
   }
-
-  public var nodes: Nodes {
-    return Array(nodeTree.nodes).flatMap { nodeTree -> Nodes in
+  
+  var nodes: GENodes {
+    return Array(nodeTree.nodes).flatMap { nodeTree -> GENodes in
       if let node = nodeTree.root {
         return [node]
       }
@@ -34,15 +32,15 @@ public extension TreeUpdateable {
     }
   }
   
-  public func addNode<T: Tree>(node: T) {
+  func addNode<T: TreeUpdateable>(node: T) {
     nodeTree.addNode(node.nodeTree)
   }
-
-  public func removeNode<T: Tree>(node: T) -> T? {
+  
+  func removeNode<T: TreeUpdateable>(node: T) -> T? {
     return nodeTree.removeNode(node.nodeTree)?.root as? T
   }
-
-  public func removeFromParent() {
+  
+  func removeFromParent() {
     nodeTree.parent?.removeNode(nodeTree)
     nodeTree.parent = nil
   }
@@ -55,13 +53,13 @@ func ==(rhs: NodeTree, lhs: NodeTree) -> Bool {
 final class NodeTree: Equatable, Hashable {
   var parent: NodeTree? = nil
   //if root == nil it's dead or the scene
-  weak var root: Node?
-
+  weak var root: GENode?
+  
   //I think using a set will be fine
   var nodes: Set<NodeTree> = Set<NodeTree>()
-
-  var hashValue = NSUUID().UUIDString.hashValue
-
+  
+  var hashValue: Int { return NSUUID().UUIDString.hashValue }
+  
   var superParent: NodeTree? {
     var parent = self.parent
     while let root = parent?.parent {
@@ -69,16 +67,16 @@ final class NodeTree: Equatable, Hashable {
     }
     return parent
   }
-
-  init(root: Node?) {
+  
+  init(root: GENode?) {
     self.root = root
   }
-
+  
   func addNode(node: NodeTree) {
     node.parent = self
     nodes.insert(node)
   }
-
+  
   func removeNode(node: NodeTree) -> NodeTree? {
     return nodes.remove(node)
   }

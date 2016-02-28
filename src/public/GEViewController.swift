@@ -42,7 +42,7 @@ public class GEViewController: UIViewController {
     
     let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
     let forever = GEAction.repeatForever(action)
-    colorRect.runAction(forever)
+    //colorRect.runAction(forever)
 
     scene.addNode(colorRect)
 
@@ -54,17 +54,21 @@ public class GEViewController: UIViewController {
 //    //scene.addNode(colorRect2)
 
     let sp = GESprite(imageName: "Test2")
-    sp.scale = 10
+    sp.scale = (10, 10)
     sp.position = (300, 300)
     self.scene.addNode(sp)
 
     let sp2 = GESprite(imageName: "Test2")
-    sp2.scale = 10
+    sp2.scale = (10, 10)
     sp2.position = (300, 356)
     sp2.zPosition = 1000
     self.scene.addNode(sp2)
 
     self.addGestures()
+  }
+
+  override public func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+
   }
 }
 
