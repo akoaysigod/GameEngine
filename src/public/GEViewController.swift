@@ -13,7 +13,7 @@ import UIKit
 
 public class GEViewController: UIViewController {
   var scene: GEScene!
-  
+
   override public func loadView() {
     guard let device = MTLCreateSystemDefaultDevice() else {
       fatalError("This device probably doesn't support Metal or I don't know why this failed")

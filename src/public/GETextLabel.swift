@@ -17,7 +17,7 @@ import UIKit
 class GETextLabel: GERenderNode {
   private typealias GlyphClosure = (glyph: CGGlyph, glyphIndex: Int, bounds: CGRect) -> ()
 
-  let text: String
+  var text: String
   let fontAtlas: FontAtlas
   let color: UIColor
 

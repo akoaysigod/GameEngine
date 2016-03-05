@@ -13,6 +13,11 @@ import Metal
 public class GEScene {
   public var size: CGSize
   public var camera: GECamera
+
+  #if DEBUG
+  var debugCamera: GECamera
+  var fpsText: GETextLabel
+  #endif
   
   var device: MTLDevice!
   var metalLayer: CAMetalLayer!
@@ -28,6 +33,13 @@ public class GEScene {
   init(size: CGSize) {
     self.size = size
     self.camera = GECamera(size: size)
+
+    #if DEBUG
+      self.debugCamera = GECamera(size: size)
+      self.fpsText = GETextLabel(text: "0.0", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
+      debugCamera.addNode(fpsText)
+      camera.addNode(debugCamera)
+    #endif
   }
   
   func setupRenderer(view: GEView) {
@@ -42,13 +54,13 @@ public class GEScene {
     }
 
     autoreleasepool { () -> () in
-      renderer.draw(self.drawables)
+      renderer.draw(drawables)
     }
   }
   
   public func addNode(node: GENode) {
     if let sprite = node as? GESprite {
-      sprite.loadTexture(self.device)
+      sprite.loadTexture(device)
     }
 
     //TODO: tmp
@@ -57,9 +69,9 @@ public class GEScene {
     }
     
     if let renderNode = node as? GERenderNode {
-      renderNode.device = self.device
+      renderNode.device = device
       if renderNode.camera == nil {
-        renderNode.camera = self.camera
+        renderNode.camera = camera
       }
       renderNode.setupBuffers()
       self.drawables.append(renderNode)
