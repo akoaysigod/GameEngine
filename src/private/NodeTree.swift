@@ -8,7 +8,9 @@
 
 import Foundation
 
+//fuck rethink this again
 public protocol TreeUpdateable: class {
+  var nodeTree: NodeTree { get }
   var parent: GENode? { get }
   var nodes: [GENode] { get }
   func addNode(node: GENode)
@@ -16,11 +18,11 @@ public protocol TreeUpdateable: class {
   func removeFromParent()
 }
 
-func ==(rhs: NodeTree, lhs: NodeTree) -> Bool {
+public func ==(rhs: NodeTree, lhs: NodeTree) -> Bool {
   return rhs.hashValue == lhs.hashValue
 }
 
-final class NodeTree: Equatable, Hashable {
+public final class NodeTree: Equatable, Hashable {
   var parent: NodeTree? = nil
   //if root == nil it's dead or the scene
   weak var root: GENode?
@@ -29,7 +31,7 @@ final class NodeTree: Equatable, Hashable {
   var nodes: Set<NodeTree> = Set<NodeTree>()
   
   var uuid = NSUUID().UUIDString
-  var hashValue: Int { return uuid.hashValue }
+  public var hashValue: Int { return uuid.hashValue }
   
   var superParent: NodeTree? {
     var parent = self.parent

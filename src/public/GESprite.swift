@@ -10,13 +10,21 @@ import Foundation
 import Metal
 import MetalKit
 
-class GESprite: GERenderNode {
+class GESprite: GENode, Renderable {
   let imageName: String!
-  
+
+  var vertices: Vertices
+  var texture: MTLTexture? = nil
+  var vertexBuffer: MTLBuffer!
+  var sharedUniformBuffer: MTLBuffer!
+  var uniformBufferQueue: BufferQueue!
+
+  public var isVisible = true
+
   init(imageName: String) {
     self.imageName = imageName
-    
-    super.init()
+
+    self.vertices = Vertices()
   }
   
   func loadTexture(device: MTLDevice) {

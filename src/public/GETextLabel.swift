@@ -23,12 +23,15 @@ class GETextLabel: GERenderNode {
 
   let displaySize = 72 //arbitrary right now for testing
 
+  //var vertices = Vertices()
+  //var texture: MTLTexture? = nil
+
   init(text: String, font: UIFont, color: UIColor) {
     self.text = text
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
 
-    super.init()
+    super.init(vertices: Vertices())
   }
 
   //need a size that fits rect sort of thing for the text
@@ -137,57 +140,4 @@ class GETextLabel: GERenderNode {
     }
     UIGraphicsEndImageContext()
   }
-
-  //tmp
-  override func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
-    let parentRotScale = GLKMatrix4GetMatrix3(matrix)
-    let selfRotScale = GLKMatrix4GetMatrix3(self.modelMatrix)
-    let rotScale = parentRotScale * selfRotScale
-    
-    let parentTranslate = GLKMatrix4GetColumn(matrix, 3)
-    let selfTranslate = GLKMatrix4GetColumn(self.modelMatrix, 3)
-    let translate = parentTranslate + selfTranslate
-   
-    let firstColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 0), translate.x)
-    let secondColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 1), translate.y)
-    let thirdColumn = GLKVector4MakeWithVector3(GLKMatrix3GetColumn(rotScale, 2), self.z)
-    let fourthColumn = GLKVector4(v: (0.0, 0.0, 0.0, 1.0))
-    
-    return GLKMatrix4MakeWithRows(firstColumn, secondColumn, thirdColumn, fourthColumn)
-  }
-  
-//tmp
-  var vertexBuffer: MTLBuffer!
-  var uniformBufferQueue: BufferQueue!
-  var vertexCount = 0
-  override func setupBuffers() {
-    let vertexData = vertices.flatMap { $0.data }
-    let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
-    vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
-    vertexCount = vertices.count
-
-    uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * modelMatrix.data.count)
-  }
-  
-  override func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
-    renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
-    
-    var parentMatrix = GLKMatrix4Identity
-    if let parent = nodeTree.superParent,
-       let root = parent.root
-    {
-      parentMatrix = root.modelMatrix
-    }
-
-    let uniformMatrix = self.camera.multiplyMatrices(self.decompose(parentMatrix))
-    let offset = self.uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)
-    renderEncoder.setVertexBuffer(self.uniformBufferQueue.buffer, offset: offset, atIndex: 1)
-    
-    if let texture = self.texture, sampler = sampler {
-      renderEncoder.setFragmentTexture(texture, atIndex: 0)
-      renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
-    }
-    
-    renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: self.vertexCount)   
-  }
-} 
+}

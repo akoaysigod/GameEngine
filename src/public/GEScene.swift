@@ -31,7 +31,7 @@ public class GEScene: TreeUpdateable {
   var visible = false
   var uniqueID = "1"
 
-  private var nodeTree = NodeTree(root: nil)
+  public var nodeTree = NodeTree(root: nil)
   public var parent: GENode? = nil
 
   init(size: CGSize) {
@@ -56,8 +56,9 @@ let testThisLater = 1
   public func update(timeSinceLastUpdate: CFTimeInterval) {
     let nodes1 = nodeTree.getAllNodes()
     for node in nodes1 {
-      print(node)
+      //print(node)
     }
+
     nodes1.forEach { (node) -> () in
       node.updateWithDelta(timeSinceLastUpdate)
     }
@@ -77,16 +78,14 @@ let testThisLater = 1
       textNode.buildMesh(device)
     }
     
-    if let renderNode = node as? GERenderNode {
-      renderNode.device = device
+    if let renderNode = node as? Renderable {
       if renderNode.camera == nil {
         renderNode.camera = camera
       }
-      renderNode.setupBuffers()
+      renderNode.setupBuffers(device)
       drawables.append(renderNode)
     }
     
-    //nodes.append(node)
     nodeTree.addNode(node.nodeTree)
   }
 
