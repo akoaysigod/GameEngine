@@ -13,7 +13,11 @@ import QuartzCore
 
 public typealias GENodes = [GENode]
 
-public class GENode: GENodeGeometry, TreeUpdateable {
+public func ==(rhs: GENode, lhs: GENode) -> Bool {
+   return rhs.hashValue == lhs.hashValue
+}
+
+public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   public var name: String? = nil
   
   public var size = CGSizeZero
@@ -31,6 +35,15 @@ public class GENode: GENodeGeometry, TreeUpdateable {
   public var yScale: Float = 1.0
   
   public var camera: GECamera!
+
+  //tree related
+  private var uuid = NSUUID().UUIDString
+  public var hashValue: Int { return uuid.hashValue }
+  private var nodeSet = Set<GENode>()
+  public var nodes: GENodes {
+    return Array(nodeSet)
+  }
+  public private(set) var parent: GENode? = nil
 
   init() {
     self.nodeTree = NodeTree(root: self)
@@ -70,31 +83,18 @@ public class GENode: GENodeGeometry, TreeUpdateable {
   //node tree
   public var nodeTree: NodeTree!
 
-  public var parent: GENode? {
-    return nodeTree.parent?.root
-  }
-  
-  public var nodes: GENodes {
-    return Array(nodeTree.nodes).flatMap { nodeTree -> GENodes in
-      if let node = nodeTree.root {
-        return [node]
-      }
-      return []
-    }
-  }
-  
+
   public func addNode(node: GENode) {
     node.camera = camera
-    nodeTree.addNode(node.nodeTree)
+    node.parent = self
+    nodeSet.insert(node)
   }
   
-  public func removeNode<T: GENode>(node: T) -> T? {
-    return nodeTree.removeNode(node.nodeTree)?.root as? T
-  }
-  
-  public func removeFromParent() {
-    nodeTree.parent?.removeNode(nodeTree)
-    nodeTree.parent = nil
+  public func removeNode<T: GENode>(node: T?) -> T? {
+    guard let node = node else { return nil }
+    let optNode = nodeSet.remove(node) as? T
+    optNode?.parent = nil
+    return optNode
   }
 }
 

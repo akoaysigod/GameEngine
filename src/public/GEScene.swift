@@ -12,7 +12,7 @@ import Metal
 
 //TODO: refactor this, can probably make it a node type also
 
-public class GEScene: TreeUpdateable {
+public class GEScene: GETree {
   public var size: CGSize
   public var camera: GECamera
 
@@ -25,13 +25,16 @@ public class GEScene: TreeUpdateable {
   private var metalLayer: CAMetalLayer!
   private var renderer: Renderer!
 
-  public var nodes = GENodes()
+  private var nodeSet = Set<GENode>()
+  public var nodes: GENodes {
+     return Array(nodeSet)
+   }
 
   var visible = false
   var uniqueID = "1"
 
   public var nodeTree: NodeTree! = NodeTree(root: nil)
-  public var parent: GENode? = nil
+  public private(set) var parent: GENode? = nil
 
   init(size: CGSize) {
     self.size = size
@@ -53,7 +56,7 @@ let testThisLater = 1
   }
   
   public func update(timeSinceLastUpdate: CFTimeInterval) {
-    let nodes1 = nodeTree.getAllNodes()
+    let nodes1 = getAllNodes()
 
     nodes1.forEach { (node) -> () in
       node.updateWithDelta(timeSinceLastUpdate)
@@ -66,7 +69,7 @@ let testThisLater = 1
       }
       return []
     }
-    
+
     autoreleasepool { () -> () in
       renderer.draw(drawables)
     }
@@ -86,15 +89,14 @@ let testThisLater = 1
       if renderNode.camera == nil {
         renderNode.camera = camera
       }
-      renderNode.setupBuffers(device)
     }
-    
-    nodeTree.addNode(node.nodeTree)
+
+    //nodes.append(node)
+    nodeSet.insert(node)
   }
 
-  public func removeNode<T: GENode>(node: T) -> T? {
-    return nil//nodeTree.removeNode(node.nodeTree)
+  public func removeNode<T: GENode>(node: T?) -> T? {
+    guard let node = node else { return nil }
+    return nodeSet.remove(node) as? T
   }
-
-  public func removeFromParent() {}
 }

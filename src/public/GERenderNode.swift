@@ -11,24 +11,20 @@ import GLKit
 import Metal
 import QuartzCore
 
-
-//TODO: turn this class into a protocol
-//it's not necessary to have another class between GENode and display type nodes
-
 typealias Renderables = [Renderable]
-protocol Renderable: GENodeGeometry, TreeUpdateable {
+
+protocol Renderable: GENodeGeometry, GETree {
   var vertices: Vertices { get set }
 
   var vertexBuffer: MTLBuffer! { get set }
   var sharedUniformBuffer: MTLBuffer! { get set }
   var uniformBufferQueue: BufferQueue! { get set }
-  //probably change this to it's own public class
+
+  //TODO: probably change this to it's own public class
   var texture: MTLTexture? { get set }
 
   func setupBuffers(device: MTLDevice)
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
-
-  
 }
 
 extension Renderable {
@@ -42,7 +38,7 @@ extension Renderable {
     uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * self.modelMatrix.data.count)
   }
 
-  func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
+  private func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
     let parentRotScale = GLKMatrix4GetMatrix3(matrix)
     let selfRotScale = GLKMatrix4GetMatrix3(self.modelMatrix)
     let rotScale = parentRotScale * selfRotScale
@@ -60,14 +56,9 @@ extension Renderable {
   }
   
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
-    renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, atIndex: 0)
+    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
     
-    var parentMatrix = GLKMatrix4Identity
-    if let parent = nodeTree.superParent,
-       let root = parent.root
-    {
-      parentMatrix = root.modelMatrix
-    }
+    let parentMatrix = superParent?.modelMatrix ?? GLKMatrix4Identity
 
     let uniformMatrix = camera.multiplyMatrices(decompose(parentMatrix))
     let offset = uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)
@@ -91,7 +82,6 @@ public class GERenderNode: GENode, Renderable {
   var texture: MTLTexture?
   
   var vertices: Vertices 
-  var vertexCount: Int = 0
   var vertexBuffer: MTLBuffer!
   
   var sharedUniformBuffer: MTLBuffer!
@@ -101,10 +91,5 @@ public class GERenderNode: GENode, Renderable {
   
   init(vertices: Vertices) {
     self.vertices = vertices
-    self.vertexCount = self.vertices.count
   }
-  
-  
-
-  
 }

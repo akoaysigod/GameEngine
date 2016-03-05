@@ -25,7 +25,7 @@ public func ==(rhs: NodeTree, lhs: NodeTree) -> Bool {
 public final class NodeTree: Equatable, Hashable {
   var parent: NodeTree? = nil
   //if root == nil it's dead or the scene
-  var root: GENode?
+  weak var root: GENode?
   
   //I think using a set will be fine
   var nodes: Set<NodeTree> = Set<NodeTree>()
@@ -63,5 +63,9 @@ public final class NodeTree: Equatable, Hashable {
       retNodes += node.getAllNodes()
     }
     return retNodes
+  }
+
+  deinit {
+    DLog("\(parent)")
   }
 }

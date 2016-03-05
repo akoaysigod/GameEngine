@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
+		EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
+		EA3236291C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA7C9AF61C4AF01600A64CB9 /* GERenderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */; };
 		EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
 		EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
@@ -86,6 +88,7 @@
 		EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameEngine.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA3236271C8B85A500DA7FCF /* GETree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETree.swift; path = src/public/GETree.swift; sourceTree = SOURCE_ROOT; };
 		EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GERenderNode.swift; path = src/public/GERenderNode.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TextShader.metal; path = src/shaders/TextShader.metal; sourceTree = SOURCE_ROOT; };
 		EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = src/private/Fonts.swift; sourceTree = SOURCE_ROOT; };
@@ -310,6 +313,7 @@
 		EAFD76951C836BB200ABDC50 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				EA3236271C8B85A500DA7FCF /* GETree.swift */,
 				EAFD769F1C8376C500ABDC50 /* NodeTree.swift */,
 				EAFD769A1C836C0500ABDC50 /* Updateable.swift */,
 				EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */,
@@ -475,6 +479,7 @@
 				EAE75E371C42D091001EB176 /* GEScene.swift in Sources */,
 				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
+				EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */,
 				EA9B1E811C727625000FFDF7 /* GETextLabel.swift in Sources */,
 				EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
@@ -507,6 +512,7 @@
 				EAA99DF01C41E57300CF3246 /* GEViewController.swift in Sources */,
 				EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */,
 				EAA99DE21C41E52700CF3246 /* GEColorRect.swift in Sources */,
+				EA3236291C8B85A500DA7FCF /* GETree.swift in Sources */,
 				EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
