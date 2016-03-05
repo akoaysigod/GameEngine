@@ -25,12 +25,13 @@ extension Pipeline {
   
   private static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
     //default library can't be found? probably will fatalError before this as I think this means metal can't be used (or there are no metal files?)
-    let defaultLibrary = device.newDefaultLibrary()! 
+    //either way this probably won't happen if everything else is correct
+    let defaultLibrary = device.newDefaultLibrary()!
     guard let vProgram = defaultLibrary.newFunctionWithName(vertexProgram) else {
-      assert(false, "no vertex program for name: \(vertexProgram)")
+      fatalError("no vertex program for name: \(vertexProgram)")
     }
     guard let fProgram = defaultLibrary.newFunctionWithName(fragmentProgram) else {
-      assert(false, "no fragment program for name: \(fragmentProgram)")
+      fatalError("no fragment program for name: \(fragmentProgram)")
     }
     return (vProgram, fProgram)
   }
