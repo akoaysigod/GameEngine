@@ -10,7 +10,7 @@ import Foundation
 
 //fuck rethink this again
 public protocol TreeUpdateable: class {
-  var nodeTree: NodeTree { get }
+  var nodeTree: NodeTree! { get }
   var parent: GENode? { get }
   var nodes: [GENode] { get }
   func addNode(node: GENode)
@@ -25,7 +25,7 @@ public func ==(rhs: NodeTree, lhs: NodeTree) -> Bool {
 public final class NodeTree: Equatable, Hashable {
   var parent: NodeTree? = nil
   //if root == nil it's dead or the scene
-  weak var root: GENode?
+  var root: GENode?
   
   //I think using a set will be fine
   var nodes: Set<NodeTree> = Set<NodeTree>()

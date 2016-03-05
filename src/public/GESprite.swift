@@ -10,7 +10,7 @@ import Foundation
 import Metal
 import MetalKit
 
-class GESprite: GENode, Renderable {
+public class GESprite: GENode, Renderable {
   let imageName: String!
 
   var vertices: Vertices
@@ -25,6 +25,8 @@ class GESprite: GENode, Renderable {
     self.imageName = imageName
 
     self.vertices = Vertices()
+
+    super.init()
   }
   
   func loadTexture(device: MTLDevice) {

@@ -33,6 +33,8 @@ protocol Renderable: GENodeGeometry, TreeUpdateable {
 
 extension Renderable {
   func setupBuffers(device: MTLDevice) {
+    guard vertexBuffer == nil else { return }
+    
     let vertexData = self.vertices.flatMap { $0.data }
     let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
     vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
@@ -67,11 +69,11 @@ extension Renderable {
       parentMatrix = root.modelMatrix
     }
 
-    let uniformMatrix = self.camera.multiplyMatrices(self.decompose(parentMatrix))
-    let offset = self.uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)
-    renderEncoder.setVertexBuffer(self.uniformBufferQueue.buffer, offset: offset, atIndex: 1)
+    let uniformMatrix = camera.multiplyMatrices(decompose(parentMatrix))
+    let offset = uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
     
-    if let texture = self.texture, sampler = sampler {
+    if let texture = texture, sampler = sampler {
       renderEncoder.setFragmentTexture(texture, atIndex: 0)
       renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
     }

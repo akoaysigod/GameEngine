@@ -25,13 +25,12 @@ public class GEScene: TreeUpdateable {
   private var metalLayer: CAMetalLayer!
   private var renderer: Renderer!
 
-  private var drawables: Renderables = Renderables()
   public var nodes = GENodes()
 
   var visible = false
   var uniqueID = "1"
 
-  public var nodeTree = NodeTree(root: nil)
+  public var nodeTree: NodeTree! = NodeTree(root: nil)
   public var parent: GENode? = nil
 
   init(size: CGSize) {
@@ -55,14 +54,19 @@ let testThisLater = 1
   
   public func update(timeSinceLastUpdate: CFTimeInterval) {
     let nodes1 = nodeTree.getAllNodes()
-    for node in nodes1 {
-      //print(node)
-    }
 
     nodes1.forEach { (node) -> () in
       node.updateWithDelta(timeSinceLastUpdate)
     }
 
+    let drawables = nodes1.flatMap { node -> Renderables in
+      if let renderable = node as? Renderable {
+        renderable.setupBuffers(self.device)
+        return [renderable]
+      }
+      return []
+    }
+    
     autoreleasepool { () -> () in
       renderer.draw(drawables)
     }
@@ -83,7 +87,6 @@ let testThisLater = 1
         renderNode.camera = camera
       }
       renderNode.setupBuffers(device)
-      drawables.append(renderNode)
     }
     
     nodeTree.addNode(node.nodeTree)

@@ -33,8 +33,7 @@ public class GENode: GENodeGeometry, TreeUpdateable {
   public var camera: GECamera!
 
   init() {
-    self.nodeTree = NodeTree(root: nil)
-    self.nodeTree.root = self
+    self.nodeTree = NodeTree(root: self)
   }
   
   //updating
@@ -69,7 +68,7 @@ public class GENode: GENodeGeometry, TreeUpdateable {
   }
 
   //node tree
-  public var nodeTree: NodeTree
+  public var nodeTree: NodeTree!
 
   public var parent: GENode? {
     return nodeTree.parent?.root
@@ -85,6 +84,7 @@ public class GENode: GENodeGeometry, TreeUpdateable {
   }
   
   public func addNode(node: GENode) {
+    node.camera = camera
     nodeTree.addNode(node.nodeTree)
   }
   
