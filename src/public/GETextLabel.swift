@@ -14,7 +14,7 @@ import GLKit
 import Metal
 import UIKit
 
-class GETextLabel: GERenderNode {
+class GETextLabel: GENode, Renderable {
   private typealias GlyphClosure = (glyph: CGGlyph, glyphIndex: Int, bounds: CGRect) -> ()
 
   var text: String
@@ -23,15 +23,16 @@ class GETextLabel: GERenderNode {
 
   let displaySize = 72 //arbitrary right now for testing
 
-  //var vertices = Vertices()
-  //var texture: MTLTexture? = nil
+  var vertices = Vertices()
+  var texture: MTLTexture? = nil
+  var vertexBuffer: MTLBuffer!
+  var sharedUniformBuffer: MTLBuffer!
+  var uniformBufferQueue: BufferQueue!
 
   init(text: String, font: UIFont, color: UIColor) {
     self.text = text
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
-
-    super.init(vertices: Vertices())
   }
 
   //need a size that fits rect sort of thing for the text
@@ -72,7 +73,7 @@ class GETextLabel: GERenderNode {
       let maxS = Float(glyphInfo.bottomRightTexCoord.x)
       let minT = Float(glyphInfo.topLeftTexCoord.y)
       let maxT = Float(glyphInfo.bottomRightTexCoord.y)
-      
+
       //bottom left triangle
       vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
       vertices += [SpriteVertex(s: minS, t: maxT, x: minX, y: minY)]

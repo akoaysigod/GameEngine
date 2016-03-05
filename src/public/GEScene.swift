@@ -18,7 +18,7 @@ public class GEScene: GETree {
 
   #if DEBUG
   var debugCamera: GECamera
-  //var fpsText: GETextLabel
+  var fpsText: GETextLabel
   #endif
   
   private var device: MTLDevice!
@@ -41,11 +41,13 @@ public class GEScene: GETree {
 
     #if DEBUG
       self.debugCamera = GECamera(size: size)
-      //self.fpsText = GETextLabel(text: "0.0", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
+      self.fpsText = GETextLabel(text: "0.0", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
 let testThisLater = 1
-      //debugCamera.addNode(fpsText)
-      //camera.addNode(debugCamera)
+      debugCamera.addNode(fpsText)
+      camera.addNode(debugCamera)
     #endif
+
+    //nodeSet.insert(camera)
   }
   
   func setupRenderer(view: GEView) {
@@ -55,13 +57,13 @@ let testThisLater = 1
   }
   
   public func update(timeSinceLastUpdate: CFTimeInterval) {
-    let nodes1 = getAllNodes()
+    let nodes = getAllNodes()
 
-    nodes1.forEach { (node) -> () in
+    nodes.forEach { (node) -> () in
       node.updateWithDelta(timeSinceLastUpdate)
     }
 
-    let drawables = nodes1.flatMap { node -> Renderables in
+    let drawables = nodes.flatMap { node -> Renderables in
       if let renderable = node as? Renderable {
         renderable.setupBuffers(self.device)
         return [renderable]
@@ -90,7 +92,6 @@ let testThisLater = 1
       }
     }
 
-    //nodes.append(node)
     nodeSet.insert(node)
   }
 

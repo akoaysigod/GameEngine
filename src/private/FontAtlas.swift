@@ -107,32 +107,34 @@ class FontAtlas: NSObject, NSCoding {
   //MARK: NSCODING
   private struct Keys {
     static let Font = "font"
-    static let Size = "size"
+    static let FontSize = "size"
     static let Spread = "spread"
     static let Width = "width"
     static let Height = "height"
     static let TextureSize = "texturesize" //this is just height or width really...
     static let TextureData = "texturedata"
+    static let GlyphDescriptors = "glyphdescriptors"
   }
 
   required init?(coder aDecoder: NSCoder) {
     let fontName = aDecoder.decodeObjectForKey(Keys.Font) as! String
-    let fontSize = aDecoder.decodeFloatForKey(Keys.Size) 
-    let fontSpread = aDecoder.decodeFloatForKey(Keys.Spread)
+    let fontSize = aDecoder.decodeFloatForKey(Keys.FontSize)
+    //let fontSpread = aDecoder.decodeFloatForKey(Keys.Spread)
 
     self.font = UIFont(name: fontName, size: CGFloat(fontSize))!
-
     self.textureSize = Int(aDecoder.decodeIntForKey(Keys.TextureSize))
-
     self.textureData = aDecoder.decodeObjectForKey(Keys.TextureData) as! NSData
+    self.glyphDescriptors = aDecoder.decodeObjectForKey(Keys.GlyphDescriptors) as! [GlyphDescriptor]
     
     super.init()
   }
 
   func encodeWithCoder(coder: NSCoder) {
     coder.encodeObject(font.fontName, forKey: Keys.Font)
+    coder.encodeFloat(Float(font.pointSize), forKey: Keys.FontSize)
     coder.encodeInt(Int32(textureSize), forKey: Keys.TextureSize)
     coder.encodeObject(textureData, forKey: Keys.TextureData)
+    coder.encodeObject(glyphDescriptors, forKey: Keys.GlyphDescriptors)
   }
   
   //TODO: rewrite these estimates

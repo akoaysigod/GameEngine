@@ -35,7 +35,7 @@ extension Renderable {
     let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
     vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
 
-    uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * self.modelMatrix.data.count)
+    uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * modelMatrix.data.count)
   }
 
   private func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {

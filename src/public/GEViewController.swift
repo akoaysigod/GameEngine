@@ -31,8 +31,8 @@ public class GEViewController: UIViewController {
     self.scene = GEScene(size: view.bounds.size)
     view.presentScene(scene)
 
-    //let testText = GETextLabel(text: "test test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
-    //scene.addNode(testText)
+    let testText = GETextLabel(text: "test test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
+    scene.addNode(testText)
     
     let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
     colorRect.name = "Gray rect"
