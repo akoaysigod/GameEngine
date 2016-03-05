@@ -31,10 +31,11 @@ public class GEViewController: UIViewController {
     self.scene = GEScene(size: view.bounds.size)
     view.presentScene(scene)
 
-    let testText = GETextLabel(text: "test test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
-    scene.addNode(testText)
+    //let testText = GETextLabel(text: "test test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
+    //scene.addNode(testText)
     
     let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
+    colorRect.name = "Gray rect"
     colorRect.zPosition = 1001
     colorRect.anchorPoint = (0.5, 0.5)
     colorRect.x = 100
@@ -43,24 +44,25 @@ public class GEViewController: UIViewController {
     let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
     let forever = GEAction.repeatForever(action)
     colorRect.runAction(forever)
-
     scene.addNode(colorRect)
 
     let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
+    colorRect2.name = "Red rect"
     colorRect2.position = (50, 300)
     colorRect2.anchorPoint = (0.5, 0.5)
     colorRect2.zPosition = 0
 let fixthisnext = 1 //this shouldn't need to be added twice, I don't know if it's always been this way or since I refactored the node tree stuff
                 //the node tree needs to be addeed to the scene anyway
     colorRect.addNode(colorRect2) 
-    scene.addNode(colorRect2)
 
     let sp = GESprite(imageName: "Test2")
+    sp.name = "bottom sprite"
     sp.scale = (10, 10)
     sp.position = (300, 300)
     self.scene.addNode(sp)
 
     let sp2 = GESprite(imageName: "Test2")
+    sp2.name = "top sprite"
     sp2.scale = (10, 10)
     sp2.position = (300, 356)
     sp2.zPosition = 1000

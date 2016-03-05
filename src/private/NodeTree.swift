@@ -28,7 +28,8 @@ final class NodeTree: Equatable, Hashable {
   //I think using a set will be fine
   var nodes: Set<NodeTree> = Set<NodeTree>()
   
-  var hashValue: Int { return NSUUID().UUIDString.hashValue }
+  var uuid = NSUUID().UUIDString
+  var hashValue: Int { return uuid.hashValue }
   
   var superParent: NodeTree? {
     var parent = self.parent
@@ -49,5 +50,16 @@ final class NodeTree: Equatable, Hashable {
   
   func removeNode(node: NodeTree) -> NodeTree? {
     return nodes.remove(node)
+  }
+
+  func getAllNodes() -> GENodes  {
+    var retNodes = GENodes()
+    Array(nodes).forEach { node in
+      if let root = node.root {
+        retNodes.append(root)
+      }
+      retNodes += node.getAllNodes()
+    }
+    return retNodes
   }
 }

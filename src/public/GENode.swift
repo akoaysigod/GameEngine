@@ -96,3 +96,10 @@ public class GENode: GENodeGeometry, TreeUpdateable {
     nodeTree.parent = nil
   }
 }
+
+extension GENode: CustomDebugStringConvertible {
+  public var debugDescription: String {
+    let name = self.name ?? "\(self.dynamicType)"
+    return name
+  }
+}

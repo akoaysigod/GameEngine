@@ -10,25 +10,29 @@ import Foundation
 import GLKit
 import Metal
 
-public class GEScene {
+//TODO: refactor this, can probably make it a node type also
+
+public class GEScene: TreeUpdateable {
   public var size: CGSize
   public var camera: GECamera
 
   #if DEBUG
   var debugCamera: GECamera
-  var fpsText: GETextLabel
+  //var fpsText: GETextLabel
   #endif
   
-  var device: MTLDevice!
-  var metalLayer: CAMetalLayer!
-  var renderer: Renderer!
-  var timer: CADisplayLink!
-  
-  var drawables: Renderables = Renderables()
-  var nodes = GENodes()
-  
+  private var device: MTLDevice!
+  private var metalLayer: CAMetalLayer!
+  private var renderer: Renderer!
+
+  private var drawables: Renderables = Renderables()
+  public var nodes = GENodes()
+
   var visible = false
   var uniqueID = "1"
+
+  private var nodeTree = NodeTree(root: nil)
+  public var parent: GENode? = nil
 
   init(size: CGSize) {
     self.size = size
@@ -36,9 +40,10 @@ public class GEScene {
 
     #if DEBUG
       self.debugCamera = GECamera(size: size)
-      self.fpsText = GETextLabel(text: "0.0", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
-      debugCamera.addNode(fpsText)
-      camera.addNode(debugCamera)
+      //self.fpsText = GETextLabel(text: "0.0", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
+let testThisLater = 1
+      //debugCamera.addNode(fpsText)
+      //camera.addNode(debugCamera)
     #endif
   }
   
@@ -49,7 +54,11 @@ public class GEScene {
   }
   
   public func update(timeSinceLastUpdate: CFTimeInterval) {
-    nodes.forEach { (node) -> () in
+    let nodes1 = nodeTree.getAllNodes()
+    for node in nodes1 {
+      print(node)
+    }
+    nodes1.forEach { (node) -> () in
       node.updateWithDelta(timeSinceLastUpdate)
     }
 
@@ -74,13 +83,16 @@ public class GEScene {
         renderNode.camera = camera
       }
       renderNode.setupBuffers()
-      self.drawables.append(renderNode)
+      drawables.append(renderNode)
     }
     
-    self.nodes.append(node)
+    //nodes.append(node)
+    nodeTree.addNode(node.nodeTree)
   }
-  
-  func traverseTree(nodes: GENodes) {
 
+  public func removeNode<T: GENode>(node: T) -> T? {
+    return nil//nodeTree.removeNode(node.nodeTree)
   }
+
+  public func removeFromParent() {}
 }
