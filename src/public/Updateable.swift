@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Updateable: class, TreeUpdateable {
+protocol Updateable: class, GETree {
   var time: CFTimeInterval { get }
   var action: GEAction? { get set }
   var hasAction: Bool { get }

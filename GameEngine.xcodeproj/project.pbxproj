@@ -69,8 +69,6 @@
 		EAFD76981C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */; };
 		EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD769A1C836C0500ABDC50 /* Updateable.swift */; };
 		EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD769A1C836C0500ABDC50 /* Updateable.swift */; };
-		EAFD76A01C8376C500ABDC50 /* NodeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD769F1C8376C500ABDC50 /* NodeTree.swift */; };
-		EAFD76A11C8376C500ABDC50 /* NodeTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD769F1C8376C500ABDC50 /* NodeTree.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,7 +122,6 @@
 		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
 		EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GENodeGeomtry.swift; path = src/public/GENodeGeomtry.swift; sourceTree = SOURCE_ROOT; };
 		EAFD769A1C836C0500ABDC50 /* Updateable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updateable.swift; path = src/public/Updateable.swift; sourceTree = SOURCE_ROOT; };
-		EAFD769F1C8376C500ABDC50 /* NodeTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NodeTree.swift; path = src/private/NodeTree.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				EA3236271C8B85A500DA7FCF /* GETree.swift */,
-				EAFD769F1C8376C500ABDC50 /* NodeTree.swift */,
 				EAFD769A1C836C0500ABDC50 /* Updateable.swift */,
 				EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */,
 			);
@@ -465,7 +461,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */,
-				EAFD76A01C8376C500ABDC50 /* NodeTree.swift in Sources */,
 				EAA99DDC1C41E51C00CF3246 /* GEAction.swift in Sources */,
 				EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */,
 				EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */,
@@ -517,7 +512,6 @@
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAE75E801C42FE68001EB176 /* GEView.swift in Sources */,
-				EAFD76A11C8376C500ABDC50 /* NodeTree.swift in Sources */,
 				EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,

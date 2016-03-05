@@ -68,7 +68,8 @@ public class GECamera: GENode {
   }
 
   public override func addNode(node: GENode) {
+    super.addNode(node)
+
     node.camera = self
-    nodeTree.addNode(node.nodeTree)
   }
 }

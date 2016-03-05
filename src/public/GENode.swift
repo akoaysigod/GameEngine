@@ -46,7 +46,6 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   public private(set) var parent: GENode? = nil
 
   init() {
-    self.nodeTree = NodeTree(root: self)
   }
   
   //updating
@@ -66,12 +65,10 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   //actions
   public var action: GEAction? = nil
   var hasAction: Bool {
-    var performingAction = false
-    while let parent = nodeTree.parent?.root {
-      if parent.hasAction {
-        performingAction = true
-        break
-      }
+    var performingAction = parent?.hasAction ?? false
+    while let parent = parent?.parent where !performingAction {
+      guard parent.hasAction else { continue }
+      performingAction = true
     }
     return action != nil || performingAction
   }
@@ -80,10 +77,7 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
     self.action = action
   }
 
-  //node tree
-  public var nodeTree: NodeTree!
-
-
+  //tree stuff
   public func addNode(node: GENode) {
     node.camera = camera
     node.parent = self

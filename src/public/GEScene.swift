@@ -33,7 +33,6 @@ public class GEScene: GETree {
   var visible = false
   var uniqueID = "1"
 
-  public var nodeTree: NodeTree! = NodeTree(root: nil)
   public private(set) var parent: GENode? = nil
 
   init(size: CGSize) {
