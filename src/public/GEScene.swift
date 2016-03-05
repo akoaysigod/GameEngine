@@ -41,10 +41,10 @@ public class GEScene: GETree {
 
     #if DEBUG
       self.debugCamera = GECamera(size: size)
-      self.fpsText = GETextLabel(text: "0.0", font: UIFont.boldSystemFontOfSize(32), color: UIColor.whiteColor())
-let testThisLater = 1
-      debugCamera.addNode(fpsText)
-      camera.addNode(debugCamera)
+      self.fpsText = GETextLabel(text: "00", font: UIFont.systemFontOfSize(16), color: UIColor.whiteColor())
+      fpsText.name = "FPS Debug text"
+      //fpsText.position = (300, 0)
+      fpsText.camera = debugCamera
     #endif
 
     //nodeSet.insert(camera)
@@ -54,6 +54,8 @@ let testThisLater = 1
     self.device = view.device!
     self.renderer = Renderer(view: view)
     Fonts.cache.device = self.device
+
+    addNode(fpsText)
   }
   
   public func update(timeSinceLastUpdate: CFTimeInterval) {
@@ -75,7 +77,12 @@ let testThisLater = 1
       renderer.draw(drawables)
     }
   }
-  
+
+  //need to figure out a nicer way to do this
+  //the camera system is currently working but not in a very nice way but that might be ok? it needs to be manually added as a property setter 
+  //adding things to a camera node works kind of weird
+  //also since the relevant methods loadtexture, buildmesh, etc need to happen once they're added 
+  //and since not everything gets added to the scene this doesn't make a lot of sense
   public func addNode(node: GENode) {
     if let sprite = node as? GESprite {
       sprite.loadTexture(device)

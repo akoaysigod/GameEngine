@@ -35,6 +35,12 @@ class GETextLabel: GENode, Renderable {
     self.color = color
   }
 
+  func updateVertices(device: MTLDevice) {
+    let vertexData = self.vertices.flatMap { $0.data }
+    let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
+    vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
+  }
+
   //need a size that fits rect sort of thing for the text
   func buildMesh(device: MTLDevice) {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)

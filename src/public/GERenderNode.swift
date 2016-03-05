@@ -30,7 +30,7 @@ protocol Renderable: GENodeGeometry, GETree {
 extension Renderable {
   func setupBuffers(device: MTLDevice) {
     guard vertexBuffer == nil else { return }
-    
+
     let vertexData = self.vertices.flatMap { $0.data }
     let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
     vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
