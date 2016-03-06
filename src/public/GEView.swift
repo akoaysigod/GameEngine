@@ -15,7 +15,7 @@ public class GEView: MTKView {
   private var timer: CADisplayLink!
 
   #if DEBUG
-  public var showFPS = true
+  public var showFPS = false
   #endif
 
   //In case you forget device creation causes a fatal error so just unwrap it everywhere because it does exist

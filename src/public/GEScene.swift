@@ -10,16 +10,7 @@ import Foundation
 import GLKit
 import Metal
 
-//TODO: refactor this, can probably make it a node type also
-
 public class GEScene: GENode {
-
-
-  #if DEBUG
-  var debugCamera: GECamera
-  var fpsText: GETextLabel
-  #endif
-  
   private var metalLayer: CAMetalLayer!
   private var renderer: Renderer!
 
@@ -29,6 +20,11 @@ public class GEScene: GENode {
   var uniqueID = "1"
 
   private var device: MTLDevice!
+
+  #if DEBUG
+  var debugCamera: GECamera
+  var fpsText: GETextLabel
+  #endif
 
   override public var parent: GENode? {
     return nil
@@ -61,7 +57,7 @@ public class GEScene: GENode {
     Fonts.cache.device = self.device
 
     #if DEBUG
-    addNode(fpsText)
+    //addNode(fpsText)
     #endif
   }
   

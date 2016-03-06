@@ -16,27 +16,15 @@ class Vertex {
   var x: Float = 0.0
   var y: Float = 0.0
   var z: Float = 0.0
-  var r: Float = 1.0
-  var g: Float = 1.0
-  var b: Float = 1.0
-  var a: Float = 1.0
-
-  init(x: Float, y: Float, r: Float, g: Float, b: Float) {
-    self.x = x
-    self.y = y
-    self.r = r
-    self.g = g
-    self.b = b
-  }
-
+  var w: Float = 1.0
+  
   init(x: Float = 0.0, y: Float = 0.0) {
     self.x = x
     self.y = y
   }
 
-
   var data: [Float] {
-    return [x, y, z, r, g, b, a]
+    return [x, y, z, w]
   }
 
   var dataSize: Int {

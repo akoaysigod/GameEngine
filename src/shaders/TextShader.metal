@@ -10,8 +10,7 @@
 using namespace metal;
 
 struct VertexIn {
-  packed_float3 position;
-  packed_float4 color;
+  packed_float4 position;
   packed_float2 texCoords;
 };
 
@@ -31,7 +30,7 @@ vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
   VertexIn vertIn = vertices[vid];
   
   TransformedVertex outVert;
-  outVert.position = uniforms.mvp * float4(vertIn.position, 1.0);
+  outVert.position = uniforms.mvp * float4(vertIn.position);
   outVert.texCoords = vertIn.texCoords;
   
   return outVert;

@@ -11,8 +11,7 @@
 using namespace metal;
 
 struct VertexIn {
-  packed_float3 position;
-  packed_float4 color;
+  packed_float4 position;
   packed_float2 texCoord;
 };
 
@@ -22,7 +21,6 @@ struct Uniforms {
 
 struct VertexOut {
   float4 position [[position]];
-  float4 color;
   float2 texCoord;
 };
 
@@ -33,8 +31,7 @@ vertex VertexOut spriteVertex(uint vid [[vertex_id]],
   VertexIn vertIn = vert[vid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.mvp * float4(vertIn.position, 1.0);
-  outVertex.color    = vertIn.color;
+  outVertex.position = uniforms.mvp * float4(vertIn.position);
   outVertex.texCoord = vertIn.texCoord;
 
   return outVertex;

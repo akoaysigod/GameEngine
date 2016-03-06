@@ -15,10 +15,7 @@ class GEColorRect: GERenderNode {
     let vertices = Vertex.rectVertices(size)
     vertices.forEach { (vertex) -> () in
       let fColors = color.rgb
-      vertex.r = fColors.r
-      vertex.g = fColors.g
-      vertex.b = fColors.b
-      vertex.a = fColors.a
+
     }
     
     super.init(vertices: vertices)

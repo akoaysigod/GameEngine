@@ -34,11 +34,17 @@ extension Renderable {
 
     loadTexture(device)
 
-    let vertexData = self.vertices.flatMap { $0.data }
-    let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
-    vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
-
     uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * modelMatrix.data.count)
+
+    if let test = self as? GETextLabel {
+      test.indexBuffer = device.newBufferWithBytes(test.rects.indicesData, length: test.rects.indicesSize, options: [])
+      vertexBuffer = device.newBufferWithBytes(test.rects.vertexData, length: test.rects.vertexSize, options: [])
+    }
+    else {
+      let vertexData = self.vertices.flatMap { $0.data }
+      let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
+      vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
+    }
   }
 
   private func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
@@ -71,8 +77,13 @@ extension Renderable {
       renderEncoder.setFragmentTexture(texture, atIndex: 0)
       renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
     }
-    
-    renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: vertices.count)   
+
+    if let x = self as? GETextLabel {
+      renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: x.indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: x.indexBuffer, indexBufferOffset: 0)
+    }
+    else {
+      renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: vertices.count)   
+    }
   }
 }
 

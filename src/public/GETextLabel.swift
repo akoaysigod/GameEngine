@@ -26,8 +26,11 @@ class GETextLabel: GENode, Renderable {
   var vertices = Vertices()
   var texture: MTLTexture? = nil
   var vertexBuffer: MTLBuffer!
+  var indexBuffer: MTLBuffer!
   var sharedUniformBuffer: MTLBuffer!
   var uniformBufferQueue: BufferQueue!
+
+  var rects = Rects()
 
   init(text: String, font: UIFont, color: UIColor) {
     self.text = text
@@ -81,14 +84,23 @@ class GETextLabel: GENode, Renderable {
       let maxT = Float(glyphInfo.bottomRightTexCoord.y)
 
       //bottom left triangle
+      let ll = SpriteVertex(s: minS, t: maxT, x: minX, y: minY)
+      let ul = SpriteVertex(s: minS, t: minT, x: minX, y: maxY)
+      let ur = SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)
+      let lr = SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)
+      self.rects += [Rect(ll: ll, ul: ul, ur: ur, lr: lr)]
+
       vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
       vertices += [SpriteVertex(s: minS, t: maxT, x: minX, y: minY)]
       vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)]
+//      vertices += [SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)]
+
+
       
       //upper right triangle
-      vertices += [SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)]
-      vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)]
-      vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
+//      vertices += [SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)]
+//      vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)]
+//      vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
     }
 
     self.vertices = vertices

@@ -11,8 +11,7 @@
 using namespace metal;
 
 struct VertexIn {
-  packed_float3 position;
-  packed_float4 color;
+  packed_float4 position;
 };
 
 struct Uniforms {
@@ -31,12 +30,11 @@ vertex VertexOut colorVertex(uint vid [[vertex_id]],
   VertexIn vertIn = vert[vid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.mvp * float4(vertIn.position, 1.0);
-  outVertex.color    = vertIn.color;
+  outVertex.position = uniforms.mvp * float4(vertIn.position);
+  outVertex.color    = float4(1.0, 1.0, 1.0, 1.0);
 
   return outVertex;
 }
-
 
 fragment float4 colorFragment(VertexOut interpolated [[stage_in]]) {
   return interpolated.color;
