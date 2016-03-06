@@ -55,10 +55,11 @@ final class Fonts {
     
     if let fontPath = fontDir.URLByAppendingPathComponent(font.fontName).path {
       let fontAtlas: FontAtlas
-      if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? GETextLabel {
-        fontAtlas = archive as! FontAtlas
-      }
-      else if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? FontAtlas {
+     // if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? GETextLabel {
+     //   fontAtlas = archive as! FontAtlas
+     // }
+     // else
+      if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? FontAtlas {
         fontAtlas = archive
       }
       else {

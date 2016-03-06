@@ -22,7 +22,9 @@ public protocol GETree: class {
 extension GETree {
   public var superParent: GENode? {
     var ret = self.parent
-    while let parent = parent?.parent {
+    //hmmm, since I changed this everythings super parent is a Scene so just ignore it
+    //or think of a better way to handle this
+    while let parent = ret?.parent where !(parent is GEScene) {
       ret = parent
     }
     return ret

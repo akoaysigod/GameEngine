@@ -23,6 +23,7 @@ protocol Renderable: GENodeGeometry, GETree {
   //TODO: probably change this to it's own public class
   var texture: MTLTexture? { get set }
 
+  func loadTexture(device: MTLDevice)
   func setupBuffers(device: MTLDevice)
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
 }
@@ -30,6 +31,8 @@ protocol Renderable: GENodeGeometry, GETree {
 extension Renderable {
   func setupBuffers(device: MTLDevice) {
     guard vertexBuffer == nil else { return }
+
+    loadTexture(device)
 
     let vertexData = self.vertices.flatMap { $0.data }
     let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
@@ -76,8 +79,6 @@ extension Renderable {
 typealias GERenderNodes = [GERenderNode]
 
 public class GERenderNode: GENode, Renderable {
-  var device: MTLDevice!
-  
   //not sure might create a texture class to handle this stuff
   var texture: MTLTexture?
   
@@ -91,5 +92,9 @@ public class GERenderNode: GENode, Renderable {
   
   init(vertices: Vertices) {
     self.vertices = vertices
+  }
+  
+  func loadTexture(device: MTLDevice) {
+
   }
 }

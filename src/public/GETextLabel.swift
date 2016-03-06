@@ -42,7 +42,7 @@ class GETextLabel: GENode, Renderable {
   }
 
   //need a size that fits rect sort of thing for the text
-  func buildMesh(device: MTLDevice) {
+  func loadTexture(device: MTLDevice) {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)
 
     let attr = [NSFontAttributeName: fontAtlas.font]
