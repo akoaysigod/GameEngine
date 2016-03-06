@@ -15,12 +15,13 @@ class GEColorRect: GERenderNode {
     let vertices = Vertex.rectVertices(size)
     vertices.forEach { (vertex) -> () in
       let fColors = color.rgb
-
     }
     
     super.init(vertices: vertices)
     
     self.size = size
+
+    self.rects = [Rect(size: size)]
   }
 
   convenience init(width: Double, height: Double, color: UIColor) {

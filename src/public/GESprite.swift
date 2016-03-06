@@ -14,9 +14,11 @@ public class GESprite: GENode, Renderable {
   let imageName: String!
 
   var vertices: Vertices
+  var rects: Rects!
   var texture: MTLTexture? = nil
   var vertexBuffer: MTLBuffer!
   var sharedUniformBuffer: MTLBuffer!
+  var indexBuffer: MTLBuffer!
   var uniformBufferQueue: BufferQueue!
 
   public var isVisible = true
@@ -35,6 +37,7 @@ public class GESprite: GENode, Renderable {
     let (imageData, size) = GESprite.imageLoader(imageName)
 
     self.vertices = SpriteVertex.rectVertices(size)
+    self.rects = [Rect(ll: vertices[0], ul: vertices[2], ur: vertices[5], lr: vertices[1])]
     self.size = size
     
     //image.CGImage is discolored for some reason

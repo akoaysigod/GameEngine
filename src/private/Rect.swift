@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GLKit
 
 typealias Rects = [Rect]
 
@@ -19,11 +20,23 @@ struct Rect {
 
     self.indices = [
       0, 1, 2, //upper left triangle
-      0, 3, 2  //lower right triangle
+      2, 3, 0  //lower right triangle
     ]
   }
 
   init(ll: Vertex, ul: Vertex, ur: Vertex, lr: Vertex) {
+    self.init(vertices: [ll, ul, ur, lr])
+  }
+
+  init(size: CGSize) {
+    let width = Float(size.width)
+    let height = Float(size.height)
+
+    let ll = Vertex()
+    let ul = Vertex(y: height)
+    let ur = Vertex(x: width, y: height)
+    let lr = Vertex(x: width)
+
     self.init(vertices: [ll, ul, ur, lr])
   }
 }

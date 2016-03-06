@@ -15,9 +15,11 @@ typealias Renderables = [Renderable]
 
 protocol Renderable: GENodeGeometry, GETree {
   var vertices: Vertices { get set }
+  var rects: Rects! { get set }
 
   var vertexBuffer: MTLBuffer! { get set }
   var sharedUniformBuffer: MTLBuffer! { get set }
+  var indexBuffer: MTLBuffer! { get set }
   var uniformBufferQueue: BufferQueue! { get set }
 
   //TODO: probably change this to it's own public class
@@ -34,17 +36,10 @@ extension Renderable {
 
     loadTexture(device)
 
-    uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * modelMatrix.data.count)
+    indexBuffer = device.newBufferWithBytes(rects.indicesData, length: rects.indicesSize, options: [])
+    vertexBuffer = device.newBufferWithBytes(rects.vertexData, length: rects.vertexSize, options: [])
 
-    if let test = self as? GETextLabel {
-      test.indexBuffer = device.newBufferWithBytes(test.rects.indicesData, length: test.rects.indicesSize, options: [])
-      vertexBuffer = device.newBufferWithBytes(test.rects.vertexData, length: test.rects.vertexSize, options: [])
-    }
-    else {
-      let vertexData = self.vertices.flatMap { $0.data }
-      let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
-      vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
-    }
+    uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * modelMatrix.data.count)
   }
 
   private func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {
@@ -78,12 +73,7 @@ extension Renderable {
       renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
     }
 
-    if let x = self as? GETextLabel {
-      renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: x.indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: x.indexBuffer, indexBufferOffset: 0)
-    }
-    else {
-      renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: vertices.count)   
-    }
+    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
   }
 }
 
@@ -92,11 +82,13 @@ typealias GERenderNodes = [GERenderNode]
 public class GERenderNode: GENode, Renderable {
   //not sure might create a texture class to handle this stuff
   var texture: MTLTexture?
-  
+
+  var rects: Rects!
   var vertices: Vertices 
   var vertexBuffer: MTLBuffer!
   
   var sharedUniformBuffer: MTLBuffer!
+  var indexBuffer: MTLBuffer!
   var uniformBufferQueue: BufferQueue!
   
   public var isVisible = true
