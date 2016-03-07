@@ -15,10 +15,7 @@ public class GEViewController: UIViewController {
   var scene: GEScene!
 
   override public func loadView() {
-    guard let device = MTLCreateSystemDefaultDevice() else {
-      fatalError("This device probably doesn't support Metal or I don't know why this failed")
-    }
-    self.view = GEView(frame: UIScreen.mainScreen().bounds, device: device)
+    self.view = GEView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
     self.view.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
   }
 

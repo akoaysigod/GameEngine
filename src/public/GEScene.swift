@@ -70,7 +70,6 @@ public class GEScene: GENode {
 
     let drawables = nodes.flatMap { node -> Renderables in
       if let renderable = node as? Renderable {
-        renderable.setupBuffers(self.device)
         return [renderable]
       }
       return []

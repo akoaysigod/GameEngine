@@ -14,34 +14,23 @@ import QuartzCore
 typealias Renderables = [Renderable]
 
 protocol Renderable: GENodeGeometry, GETree {
-  var vertices: Vertices { get set }
-  var rects: Quads! { get set }
-
-  var vertexBuffer: MTLBuffer! { get set }
-  var sharedUniformBuffer: MTLBuffer! { get set }
-  var indexBuffer: MTLBuffer! { get set }
-  var uniformBufferQueue: BufferQueue! { get set }
+  var vertexBuffer: MTLBuffer { get }
+  var indexBuffer: MTLBuffer { get }
+  var uniformBufferQueue: BufferQueue { get }
 
   //TODO: probably change this to it's own public class
   var texture: MTLTexture? { get set }
 
-  func loadTexture(device: MTLDevice)
-  func setupBuffers(device: MTLDevice)
+  static func setupBuffers(quads: Quads, device: MTLDevice) -> (vertexBuffer: MTLBuffer, indexBuffer: MTLBuffer)
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
 }
 
 extension Renderable {
-  func loadTexture(device: MTLDevice) {}
+  static func setupBuffers(quads: Quads, device: MTLDevice) -> (vertexBuffer: MTLBuffer, indexBuffer: MTLBuffer) {
+    let vertexBuffer = device.newBufferWithBytes(quads.vertexData, length: quads.vertexSize, options: [])
+    let indexBuffer = device.newBufferWithBytes(quads.indicesData, length: quads.indicesSize, options: [])
 
-  func setupBuffers(device: MTLDevice) {
-    guard vertexBuffer == nil else { return }
-
-    loadTexture(device)
-
-    indexBuffer = device.newBufferWithBytes(rects.indicesData, length: rects.indicesSize, options: [])
-    vertexBuffer = device.newBufferWithBytes(rects.vertexData, length: rects.vertexSize, options: [])
-
-    uniformBufferQueue = BufferQueue(device: device, dataSize: FloatSize * modelMatrix.data.count)
+    return (vertexBuffer, indexBuffer)
   }
 
   private func decompose(matrix: GLKMatrix4) -> GLKMatrix4 {

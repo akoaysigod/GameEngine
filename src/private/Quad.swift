@@ -32,16 +32,22 @@ struct Quad {
     self.init(vertices: [ll, ul, ur, lr])
   }
 
-  init(size: CGSize) {
-    let width = Float(size.width)
-    let height = Float(size.height)
-
+  static func rect(width: Float, _ height: Float) -> Quad {
     let ll = Vertex()
     let ul = Vertex(y: height)
     let ur = Vertex(x: width, y: height)
     let lr = Vertex(x: width)
 
-    self.init(vertices: [ll, ul, ur, lr])
+    return Quad(vertices: [ll, ul, ur, lr])
+  }
+
+  static func spriteRect(width: Float, _ height: Float) -> Quad {
+    let ll = SpriteVertex(s: 0.0, t: 0.0)
+    let ul = SpriteVertex(s: 0.0, t: 1.0, y: height)
+    let ur = SpriteVertex(s: 1.0, t: 1.0, x: width, y: height)
+    let lr = SpriteVertex(s: 1.0, t: 0.0, x: width)
+
+    return Quad(vertices: [ll, ul, ur, lr])
   }
 }
 

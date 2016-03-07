@@ -23,29 +23,30 @@ class GETextLabel: GENode, Renderable {
 
   let displaySize = 72 //arbitrary right now for testing
 
-  var vertices = Vertices()
-  var texture: MTLTexture? = nil
-  var vertexBuffer: MTLBuffer!
-  var indexBuffer: MTLBuffer!
-  var sharedUniformBuffer: MTLBuffer!
-  var uniformBufferQueue: BufferQueue!
-
-  var rects: Quads!
+  var texture: MTLTexture?
+  let vertexBuffer: MTLBuffer
+  let indexBuffer: MTLBuffer
+  let uniformBufferQueue: BufferQueue
 
   init(text: String, font: UIFont, color: UIColor) {
     self.text = text
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
-  }
 
-  func updateVertices(device: MTLDevice) {
-    let vertexData = self.vertices.flatMap { $0.data }
-    let vertexDataSize = vertexData.count * sizeofValue(vertexData[0])
-    vertexBuffer = device.newBufferWithBytes(vertexData, length: vertexDataSize, options: [])
+    let (quads, texture) = GETextLabel.loadTexture(text, fontAtlas: fontAtlas, device: Device.shared.device)
+    self.texture = texture
+
+    let (vertexBuffer, indexBuffer) = GETextLabel.setupBuffers(quads, device: Device.shared.device)
+    self.vertexBuffer = vertexBuffer
+    self.indexBuffer = indexBuffer
+
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: FloatSize * GENode().modelMatrix.data.count)
+
+    super.init()
   }
 
   //need a size that fits rect sort of thing for the text
-  func loadTexture(device: MTLDevice) {
+  static func loadTexture(text: String, fontAtlas: FontAtlas, device: MTLDevice) -> (Quads, MTLTexture) {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)
 
     let attr = [NSFontAttributeName: fontAtlas.font]
@@ -61,12 +62,11 @@ class GETextLabel: GENode, Renderable {
 //      $0 + CTLineGetGlyphCount($1)
 //    }
 
-    //var vertices = Vertices()
     var rects = Quads()
     enumerateGlyphsInFrame(frame) { glyph, glyphBounds in
       //TODO: this probably needs to change to a dictionary because I'm not pulling out all the values
       //let glyphInfo = self.fontAtlas.glyphDescriptors[Int(glyph)]
-      let tmpGlyphs = self.fontAtlas.glyphDescriptors.filter {
+      let tmpGlyphs = fontAtlas.glyphDescriptors.filter {
         return glyph == $0.glyphIndex
       }
       guard let glyphInfo = tmpGlyphs.first else { return }
@@ -87,20 +87,20 @@ class GETextLabel: GENode, Renderable {
       rects += [Quad(ll: ll, ul: ul, ur: ur, lr: lr)]
     }
 
-    self.rects = rects
-
     let texDesc = MTLTextureDescriptor()
     let textureSize = fontAtlas.textureSize
     texDesc.pixelFormat = .R8Unorm
     texDesc.width = textureSize
     texDesc.height = textureSize
-    texture = device.newTextureWithDescriptor(texDesc)
+    let texture = device.newTextureWithDescriptor(texDesc)
 
     let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
-    texture!.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
+    texture.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
+
+    return (rects, texture)
   }
 
-  private func enumerateGlyphsInFrame(frame: CTFrameRef, closure: GlyphClosure) {
+  private static func enumerateGlyphsInFrame(frame: CTFrameRef, closure: GlyphClosure) {
     let entire = CFRangeMake(0, 0)
 
     let framePath = CTFrameGetPath(frame)

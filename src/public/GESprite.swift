@@ -11,40 +11,33 @@ import Metal
 import MetalKit
 
 public class GESprite: GENode, Renderable {
-  let imageName: String!
+  var texture: MTLTexture?
 
-  var vertices: Vertices
-  var rects: Quads!
-  var texture: MTLTexture? = nil
-  var vertexBuffer: MTLBuffer!
-  var sharedUniformBuffer: MTLBuffer!
-  var indexBuffer: MTLBuffer!
-  var uniformBufferQueue: BufferQueue!
+  let vertexBuffer: MTLBuffer
+  let indexBuffer: MTLBuffer
+  let uniformBufferQueue: BufferQueue
 
   public var isVisible = true
 
   init(imageName: String) {
-    self.imageName = imageName
+    let (imageData, size) = GESprite.imageLoader(imageName)
 
-    self.vertices = Vertices()
+    self.texture = GESprite.loadTexture(imageData, device: Device.shared.device)
+
+    let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(size.w, size.h)], device: Device.shared.device)
+
+    self.vertexBuffer = vertexBuffer
+    self.indexBuffer = indexBuffer
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize:  FloatSize * GENode().modelMatrix.data.count)
 
     super.init()
   }
   
-  func loadTexture(device: MTLDevice) {
+  private static func loadTexture(imageData: NSData, device: MTLDevice) -> MTLTexture {
     let textureLoader = MTKTextureLoader(device: device)
 
-    let (imageData, size) = GESprite.imageLoader(imageName)
-
-    self.vertices = SpriteVertex.rectVertices(size)
-    self.rects = [Quad(ll: vertices[0], ul: vertices[2], ur: vertices[5], lr: vertices[1])]
-    self.size = size
-    
-    //image.CGImage is discolored for some reason
-    //self.texture = try! textureLoader.newTextureWithCGImage(image.CGImage!, options: nil)
-
     //don't load anything weird I guess
-    self.texture = try! textureLoader.newTextureWithData(imageData, options: nil)
+    return try! textureLoader.newTextureWithData(imageData, options: nil)
   }
 
   //TODO: allow setting size in node class

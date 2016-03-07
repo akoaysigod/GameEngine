@@ -10,28 +10,28 @@ import Foundation
 import GLKit
 import Metal
 
-class GEColorRect: GENode, Renderable {
-  var vertices: Vertices
-  var rects: Quads!
-  var texture: MTLTexture? = nil
-  var vertexBuffer: MTLBuffer!
-  var sharedUniformBuffer: MTLBuffer!
-  var indexBuffer: MTLBuffer!
-  var uniformBufferQueue: BufferQueue!
+public class GEColorRect: GENode, Renderable {
+  public var color: UIColor
+  
+  var texture: MTLTexture? = nil 
+
+  let vertexBuffer: MTLBuffer
+  let indexBuffer: MTLBuffer
+  let uniformBufferQueue: BufferQueue
 
   init(size: CGSize, color: UIColor) {
-    let vertices = Vertex.rectVertices(size)
-    vertices.forEach { (vertex) -> () in
-      //let fColors = color.rgb
-    }
+    self.color = color
 
-    self.vertices = vertices
+    let (vertexBuffer, indexBuffer) = GEColorRect.setupBuffers([Quad.rect(size.w, size.h)], device: Device.shared.device)
+    self.vertexBuffer = vertexBuffer
+    self.indexBuffer = indexBuffer
+
+    //TODO: have to add color to the uniform buffer
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: FloatSize * GENode().modelMatrix.data.count)
 
     super.init()
 
     self.size = size
-
-    self.rects = [Quad(size: size)]
   }
 
   convenience init(width: Double, height: Double, color: UIColor) {
