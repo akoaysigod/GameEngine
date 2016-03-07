@@ -10,15 +10,25 @@ import Foundation
 import GLKit
 import Metal
 
-class GEColorRect: GERenderNode {
+class GEColorRect: GENode, Renderable {
+  var vertices: Vertices
+  var rects: Rects!
+  var texture: MTLTexture? = nil
+  var vertexBuffer: MTLBuffer!
+  var sharedUniformBuffer: MTLBuffer!
+  var indexBuffer: MTLBuffer!
+  var uniformBufferQueue: BufferQueue!
+
   init(size: CGSize, color: UIColor) {
     let vertices = Vertex.rectVertices(size)
     vertices.forEach { (vertex) -> () in
-      let fColors = color.rgb
+      //let fColors = color.rgb
     }
-    
-    super.init(vertices: vertices)
-    
+
+    self.vertices = vertices
+
+    super.init()
+
     self.size = size
 
     self.rects = [Rect(size: size)]

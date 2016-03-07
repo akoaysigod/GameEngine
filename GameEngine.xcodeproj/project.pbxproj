@@ -10,7 +10,9 @@
 		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
 		EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA3236291C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
-		EA7C9AF61C4AF01600A64CB9 /* GERenderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */; };
+		EA72451C1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
+		EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
+		EA7C9AF61C4AF01600A64CB9 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C9AF51C4AF01600A64CB9 /* Renderable.swift */; };
 		EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
 		EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */; };
 		EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */; };
@@ -89,7 +91,8 @@
 		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA3236271C8B85A500DA7FCF /* GETree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETree.swift; path = src/public/GETree.swift; sourceTree = SOURCE_ROOT; };
-		EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GERenderNode.swift; path = src/public/GERenderNode.swift; sourceTree = SOURCE_ROOT; };
+		EA72451B1C8CFF6E0059B068 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = src/private/Device.swift; sourceTree = SOURCE_ROOT; };
+		EA7C9AF51C4AF01600A64CB9 /* Renderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderable.swift; path = src/public/Renderable.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E7A1C724C3D000FFDF7 /* TextShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TextShader.metal; path = src/shaders/TextShader.metal; sourceTree = SOURCE_ROOT; };
 		EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = src/private/Fonts.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E801C727625000FFDF7 /* GETextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETextLabel.swift; path = src/public/GETextLabel.swift; sourceTree = SOURCE_ROOT; };
@@ -260,7 +263,6 @@
 				EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */,
 				EAA99DDF1C41E52700CF3246 /* GENode.swift */,
 				EA9B1E801C727625000FFDF7 /* GETextLabel.swift */,
-				EA7C9AF51C4AF01600A64CB9 /* GERenderNode.swift */,
 				EAA99DE01C41E52700CF3246 /* GESprite.swift */,
 				EAA99DF11C41E57C00CF3246 /* GECamera.swift */,
 			);
@@ -270,6 +272,7 @@
 		EAC6405B1C34708700B6AE68 /* RenderPipelines */ = {
 			isa = PBXGroup;
 			children = (
+				EA72451B1C8CFF6E0059B068 /* Device.swift */,
 				EAA99DC91C41E4F100CF3246 /* Pipelines.swift */,
 				EAA99DCA1C41E4F100CF3246 /* Renderer.swift */,
 				EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */,
@@ -314,6 +317,7 @@
 		EAFD76951C836BB200ABDC50 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				EA7C9AF51C4AF01600A64CB9 /* Renderable.swift */,
 				EA3236271C8B85A500DA7FCF /* GETree.swift */,
 				EAFD769A1C836C0500ABDC50 /* Updateable.swift */,
 				EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */,
@@ -481,11 +485,12 @@
 				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
 				EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */,
 				EA9B1E811C727625000FFDF7 /* GETextLabel.swift in Sources */,
+				EA72451C1C8CFF6E0059B068 /* Device.swift in Sources */,
 				EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */,
 				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
-				EA7C9AF61C4AF01600A64CB9 /* GERenderNode.swift in Sources */,
+				EA7C9AF61C4AF01600A64CB9 /* Renderable.swift in Sources */,
 				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
@@ -519,6 +524,7 @@
 				EAF7BB021C8CC85700258C37 /* Rect.swift in Sources */,
 				EAE75E801C42FE68001EB176 /* GEView.swift in Sources */,
 				EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */,
+				EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */,
 				EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,

@@ -78,24 +78,3 @@ extension Renderable {
     renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
   }
 }
-
-typealias GERenderNodes = [GERenderNode]
-
-public class GERenderNode: GENode, Renderable {
-  //not sure might create a texture class to handle this stuff
-  var texture: MTLTexture?
-
-  var rects: Rects!
-  var vertices: Vertices 
-  var vertexBuffer: MTLBuffer!
-  
-  var sharedUniformBuffer: MTLBuffer!
-  var indexBuffer: MTLBuffer!
-  var uniformBufferQueue: BufferQueue!
-  
-  public var isVisible = true
-  
-  init(vertices: Vertices) {
-    self.vertices = vertices
-  }
-}
