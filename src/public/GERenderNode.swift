@@ -31,6 +31,8 @@ protocol Renderable: GENodeGeometry, GETree {
 }
 
 extension Renderable {
+  func loadTexture(device: MTLDevice) {}
+
   func setupBuffers(device: MTLDevice) {
     guard vertexBuffer == nil else { return }
 
@@ -95,9 +97,5 @@ public class GERenderNode: GENode, Renderable {
   
   init(vertices: Vertices) {
     self.vertices = vertices
-  }
-  
-  func loadTexture(device: MTLDevice) {
-
   }
 }

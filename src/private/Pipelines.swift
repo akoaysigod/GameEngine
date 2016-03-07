@@ -57,13 +57,12 @@ extension Pipeline {
     return pipelineDescriptor
   }
 
-  //TODO: look up below
-  //not sure what happens if there is an error I haven't seen one
   private static func createPipelineState(device: MTLDevice, descriptor: MTLRenderPipelineDescriptor) -> MTLRenderPipelineState? {
     do {
       return try device.newRenderPipelineStateWithDescriptor(descriptor)
     }
     catch let error {
+      //this seems to fail only on trying to pass it poorly formatted descriptors
       fatalError("\(Self.self): Failed to create pipeline state, error \(error)")
     }
   }
@@ -207,7 +206,7 @@ final class TextPipeline: Pipeline {
     vertexDescriptor.attributes[1].bufferIndex = 0
 
     vertexDescriptor.layouts[0].stepFunction = .PerVertex
-    vertexDescriptor.layouts[0].stride = sizeof(vector_float2) * sizeof(vector_float4)
+    vertexDescriptor.layouts[0].stride = Rect.size
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
 

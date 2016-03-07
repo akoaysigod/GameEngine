@@ -15,7 +15,7 @@ import Metal
 import UIKit
 
 class GETextLabel: GENode, Renderable {
-  private typealias GlyphClosure = (glyph: CGGlyph, glyphIndex: Int, bounds: CGRect) -> ()
+  private typealias GlyphClosure = (glyph: CGGlyph, bounds: CGRect) -> ()
 
   var text: String
   let fontAtlas: FontAtlas
@@ -63,7 +63,7 @@ class GETextLabel: GENode, Renderable {
 
     //var vertices = Vertices()
     var rects = Rects()
-    enumerateGlyphsInFrame(frame) { glyph, glyphIndex, glyphBounds in
+    enumerateGlyphsInFrame(frame) { glyph, glyphBounds in
       //TODO: this probably needs to change to a dictionary because I'm not pulling out all the values
       //let glyphInfo = self.fontAtlas.glyphDescriptors[Int(glyph)]
       let tmpGlyphs = self.fontAtlas.glyphDescriptors.filter {
@@ -85,16 +85,6 @@ class GETextLabel: GENode, Renderable {
       let ur = SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)
       let lr = SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)
       rects += [Rect(ll: ll, ul: ul, ur: ur, lr: lr)]
-
-      //bottom left triangle
-//      vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
-//      vertices += [SpriteVertex(s: minS, t: maxT, x: minX, y: minY)]
-//      vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)]
-
-      //upper right triangle
-//      vertices += [SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)]
-//      vertices += [SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)]
-//      vertices += [SpriteVertex(s: minS, t: minT, x: minX, y: maxY)]
     }
 
     self.rects = rects
@@ -121,8 +111,6 @@ class GETextLabel: GENode, Renderable {
     defer { originBuffer.destroy(lines.count); originBuffer.dealloc(lines.count) }
     CTFrameGetLineOrigins(frame, entire, originBuffer)
 
-    var glyphIndexInFrame = 0
-    
     UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
     var context = UIGraphicsGetCurrentContext()
     
@@ -145,9 +133,7 @@ class GETextLabel: GENode, Renderable {
         (0..<glyphCount).forEach { j in
           let glyph = glyphBuffer[j]
           let glyphRect = CTRunGetImageBounds(run, context, CFRangeMake(j, 1))
-          closure(glyph: glyph, glyphIndex: glyphIndexInFrame, bounds: glyphRect)
-
-          glyphIndexInFrame += 1
+          closure(glyph: glyph, bounds: glyphRect)
         }
       }
     }

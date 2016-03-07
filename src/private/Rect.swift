@@ -12,6 +12,10 @@ import GLKit
 typealias Rects = [Rect]
 
 struct Rect {
+  static var size: Int {
+    return sizeof(vector_float2) + sizeof(vector_float4)
+  }
+  
   let vertices: Vertices
   let indices: [UInt16]
 
@@ -51,7 +55,12 @@ extension CollectionType where Generator.Element == Rect {
   }
 
   var indicesData: [UInt16] {
-    return flatMap { $0.indices }
+    let unindexed = map { $0.indices }
+    let mIndices = (0..<unindexed.count).map { UInt16(4 * $0) } //4 == number vertices
+
+    return zip(mIndices, unindexed).flatMap { index, indices -> [UInt16] in
+      indices.map { index + $0 }
+    }
   }
 
   var indicesSize: Int {
