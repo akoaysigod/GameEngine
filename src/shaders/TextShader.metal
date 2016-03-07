@@ -21,6 +21,7 @@ struct TransformedVertex {
 
 struct Uniforms {
   float4x4 mvp;
+  float4 color;
 };
 
 vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
@@ -50,10 +51,11 @@ vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
 //}
 
 fragment float4 textFragment(TransformedVertex vert [[stage_in]],
-                            sampler samplr [[sampler(0)]],
-                            texture2d<float, access::sample> texture [[texture(0)]])
+                             constant Uniforms &uniforms [[buffer(0)]],
+                             sampler samplr [[sampler(0)]],
+                             texture2d<float, access::sample> texture [[texture(0)]])
 {
-  float4 color = float4(1.0, 1.0, 1.0, 1.0);
+  float4 color = uniforms.color;
   float edgeDistance = 0.5;
   float dist = texture.sample(samplr, vert.texCoords).r;
   float edgeWidth = 0.75 * length(float2(dfdx(dist), dfdy(dist)));

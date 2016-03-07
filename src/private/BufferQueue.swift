@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GLKit
 import Metal
 
 final class BufferQueue {
@@ -18,9 +19,11 @@ final class BufferQueue {
 
   var inflightSemaphore: dispatch_semaphore_t
 
-  init(device: MTLDevice, dataSize: Int) {
-    self.dataSize = dataSize
-    let bufferSize = dataSize * self.size
+  init(device: MTLDevice, dataSize: Int = 0) {
+    //kind of a weird way to handle this but since everything has a matrix just add to whatever else the type might have
+    self.dataSize = dataSize + GLKMatrix4().size
+
+    let bufferSize = self.dataSize * self.size
     self.buffer = device.newBufferWithLength(bufferSize, options: [])
 
     self.inflightSemaphore = dispatch_semaphore_create(self.size)

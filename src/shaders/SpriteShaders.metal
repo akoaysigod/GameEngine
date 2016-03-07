@@ -17,6 +17,7 @@ struct VertexIn {
 
 struct Uniforms {
   float4x4 mvp;
+  float4 color;
 };
 
 struct VertexOut {
@@ -38,11 +39,12 @@ vertex VertexOut spriteVertex(uint vid [[vertex_id]],
 }
 
 fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
+                               constant Uniforms &uniforms [[buffer(0)]],
                                texture2d<float> tex2D [[texture(0)]],
                                sampler sampler2D [[sampler(0)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
-  return color;
+  return color * uniforms.color;
 }
 
 //fragment float4 passThroughFragment(VertexOut interpolated [[stage_in]]) {

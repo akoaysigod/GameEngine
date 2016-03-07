@@ -11,7 +11,7 @@ import GLKit
 import Metal
 
 public class GEColorRect: GENode, Renderable {
-  public var color: UIColor
+  public var color = UIColor.whiteColor()
   
   var texture: MTLTexture? = nil 
 
@@ -27,7 +27,7 @@ public class GEColorRect: GENode, Renderable {
     self.indexBuffer = indexBuffer
 
     //TODO: have to add color to the uniform buffer
-    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: FloatSize * GENode().modelMatrix.data.count)
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
     super.init()
 

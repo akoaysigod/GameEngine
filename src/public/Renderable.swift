@@ -20,6 +20,7 @@ protocol Renderable: GENodeGeometry, GETree {
 
   //TODO: probably change this to it's own public class
   var texture: MTLTexture? { get set }
+  var color: UIColor { get set }
 
   static func setupBuffers(quads: Quads, device: MTLDevice) -> (vertexBuffer: MTLBuffer, indexBuffer: MTLBuffer)
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
@@ -56,8 +57,11 @@ extension Renderable {
     let parentMatrix = superParent?.modelMatrix ?? GLKMatrix4Identity
 
     let uniformMatrix = camera.multiplyMatrices(decompose(parentMatrix))
-    let offset = uniformBufferQueue.next(commandBuffer, data: uniformMatrix.data)
+    let uniformData = uniformMatrix.data + color.data
+
+    let offset = uniformBufferQueue.next(commandBuffer, data: uniformData)
     renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
+    renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
     
     if let texture = texture, sampler = sampler {
       renderEncoder.setFragmentTexture(texture, atIndex: 0)

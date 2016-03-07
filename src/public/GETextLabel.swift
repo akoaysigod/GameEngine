@@ -14,12 +14,12 @@ import GLKit
 import Metal
 import UIKit
 
-class GETextLabel: GENode, Renderable {
+public class GETextLabel: GENode, Renderable {
   private typealias GlyphClosure = (glyph: CGGlyph, bounds: CGRect) -> ()
 
   var text: String
   let fontAtlas: FontAtlas
-  let color: UIColor
+  public var color = UIColor.whiteColor()
 
   let displaySize = 72 //arbitrary right now for testing
 
@@ -40,7 +40,7 @@ class GETextLabel: GENode, Renderable {
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 
-    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: FloatSize * GENode().modelMatrix.data.count)
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
     super.init()
   }

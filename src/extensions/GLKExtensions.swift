@@ -40,6 +40,10 @@ func *(lhs: GLKMatrix4, rhs: GLKMatrix4) -> GLKMatrix4 {
 }
 
 extension GLKMatrix4 {
+  var size: Int {
+    return FloatSize * data.count
+  }
+  
   var data: [Float] {
     return [
       m00, m01, m02, m03,

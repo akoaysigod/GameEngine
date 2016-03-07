@@ -11,6 +11,8 @@ import Metal
 import MetalKit
 
 public class GESprite: GENode, Renderable {
+  public var color = UIColor.whiteColor()
+  
   var texture: MTLTexture?
 
   let vertexBuffer: MTLBuffer
@@ -28,7 +30,7 @@ public class GESprite: GENode, Renderable {
 
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
-    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize:  FloatSize * GENode().modelMatrix.data.count)
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
     super.init()
   }

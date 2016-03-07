@@ -16,11 +16,11 @@ struct VertexIn {
 
 struct Uniforms {
   float4x4 mvp;
+  float4 color;
 };
 
 struct VertexOut {
-  float4  position [[position]];
-  float4  color;
+  float4 position [[position]];
 };
 
 vertex VertexOut colorVertex(uint vid [[vertex_id]],
@@ -31,11 +31,11 @@ vertex VertexOut colorVertex(uint vid [[vertex_id]],
 
   VertexOut outVertex;
   outVertex.position = uniforms.mvp * float4(vertIn.position);
-  outVertex.color    = float4(1.0, 1.0, 1.0, 1.0);
 
   return outVertex;
 }
 
-fragment float4 colorFragment(VertexOut interpolated [[stage_in]]) {
-  return interpolated.color;
+fragment float4 colorFragment(VertexOut interpolated [[stage_in]],
+                              constant Uniforms &uniforms [[buffer(0)]]) {
+  return uniforms.color;
 }

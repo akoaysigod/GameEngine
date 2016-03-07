@@ -9,7 +9,17 @@
 import MetalKit
 import UIKit
 
-extension UIColor {
+public typealias GEColor = (r: Float, g: Float, b: Float, a: Float)
+
+public extension UIColor {
+  var size: Int {
+    return FloatSize * data.count
+  }
+
+  var data: [Float] {
+    return [rgb.r, rgb.g, rgb.b, rgb.a]
+  }
+
   var rgb: (r: Float, g: Float, b: Float, a: Float) {
     var red: CGFloat = 0.0
     var green: CGFloat = 0.0
@@ -19,7 +29,7 @@ extension UIColor {
     if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
       return (Float(red), Float(green), Float(blue), Float(alpha))
     }
-    return (0.0, 0.0, 0.0, 1.0) //just return white on error
+    return (1.0, 1.0, 1.0, 1.0) //just return white on error
   }
 
   var clearColor: MTLClearColor {
