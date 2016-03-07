@@ -15,7 +15,7 @@ typealias Renderables = [Renderable]
 
 protocol Renderable: GENodeGeometry, GETree {
   var vertices: Vertices { get set }
-  var rects: Rects! { get set }
+  var rects: Quads! { get set }
 
   var vertexBuffer: MTLBuffer! { get set }
   var sharedUniformBuffer: MTLBuffer! { get set }

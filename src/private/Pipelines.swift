@@ -206,7 +206,7 @@ final class TextPipeline: Pipeline {
     vertexDescriptor.attributes[1].bufferIndex = 0
 
     vertexDescriptor.layouts[0].stepFunction = .PerVertex
-    vertexDescriptor.layouts[0].stride = Rect.size
+    vertexDescriptor.layouts[0].stride = Quad.size
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
 

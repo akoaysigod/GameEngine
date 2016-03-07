@@ -30,7 +30,7 @@ class GETextLabel: GENode, Renderable {
   var sharedUniformBuffer: MTLBuffer!
   var uniformBufferQueue: BufferQueue!
 
-  var rects: Rects!
+  var rects: Quads!
 
   init(text: String, font: UIFont, color: UIColor) {
     self.text = text
@@ -62,7 +62,7 @@ class GETextLabel: GENode, Renderable {
 //    }
 
     //var vertices = Vertices()
-    var rects = Rects()
+    var rects = Quads()
     enumerateGlyphsInFrame(frame) { glyph, glyphBounds in
       //TODO: this probably needs to change to a dictionary because I'm not pulling out all the values
       //let glyphInfo = self.fontAtlas.glyphDescriptors[Int(glyph)]
@@ -84,7 +84,7 @@ class GETextLabel: GENode, Renderable {
       let ul = SpriteVertex(s: minS, t: minT, x: minX, y: maxY)
       let ur = SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)
       let lr = SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)
-      rects += [Rect(ll: ll, ul: ul, ur: ur, lr: lr)]
+      rects += [Quad(ll: ll, ul: ul, ur: ur, lr: lr)]
     }
 
     self.rects = rects

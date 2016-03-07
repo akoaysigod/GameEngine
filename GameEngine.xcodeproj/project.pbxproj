@@ -67,8 +67,8 @@
 		EAE75E801C42FE68001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
 		EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
 		EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
-		EAF7BB011C8CC85700258C37 /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7BB001C8CC85700258C37 /* Rect.swift */; };
-		EAF7BB021C8CC85700258C37 /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7BB001C8CC85700258C37 /* Rect.swift */; };
+		EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7BB001C8CC85700258C37 /* Quad.swift */; };
+		EAF7BB021C8CC85700258C37 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7BB001C8CC85700258C37 /* Quad.swift */; };
 		EAFD76971C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */; };
 		EAFD76981C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */; };
 		EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD769A1C836C0500ABDC50 /* Updateable.swift */; };
@@ -125,7 +125,7 @@
 		EAE75E361C42D091001EB176 /* GEScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEScene.swift; path = src/public/GEScene.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEView.swift; path = src/public/GEView.swift; sourceTree = SOURCE_ROOT; };
 		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
-		EAF7BB001C8CC85700258C37 /* Rect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Rect.swift; path = src/private/Rect.swift; sourceTree = SOURCE_ROOT; };
+		EAF7BB001C8CC85700258C37 /* Quad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Quad.swift; path = src/private/Quad.swift; sourceTree = SOURCE_ROOT; };
 		EAFD76961C836BF100ABDC50 /* GENodeGeomtry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GENodeGeomtry.swift; path = src/public/GENodeGeomtry.swift; sourceTree = SOURCE_ROOT; };
 		EAFD769A1C836C0500ABDC50 /* Updateable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updateable.swift; path = src/public/Updateable.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -294,7 +294,7 @@
 		EAC640A11C34B60E00B6AE68 /* DataStructures */ = {
 			isa = PBXGroup;
 			children = (
-				EAF7BB001C8CC85700258C37 /* Rect.swift */,
+				EAF7BB001C8CC85700258C37 /* Quad.swift */,
 				EAA99DD21C41E50200CF3246 /* BufferQueue.swift */,
 				EAA99DD31C41E50200CF3246 /* Vertex.swift */,
 			);
@@ -481,7 +481,7 @@
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* GEScene.swift in Sources */,
 				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
-				EAF7BB011C8CC85700258C37 /* Rect.swift in Sources */,
+				EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */,
 				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
 				EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */,
 				EA9B1E811C727625000FFDF7 /* GETextLabel.swift in Sources */,
@@ -521,7 +521,7 @@
 				EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
-				EAF7BB021C8CC85700258C37 /* Rect.swift in Sources */,
+				EAF7BB021C8CC85700258C37 /* Quad.swift in Sources */,
 				EAE75E801C42FE68001EB176 /* GEView.swift in Sources */,
 				EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */,

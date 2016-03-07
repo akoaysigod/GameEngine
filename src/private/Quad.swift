@@ -1,5 +1,5 @@
 //
-//  Rect.swift
+//  Quad.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 3/6/16.
@@ -9,9 +9,9 @@
 import Foundation
 import GLKit
 
-typealias Rects = [Rect]
+typealias Quads = [Quad]
 
-struct Rect {
+struct Quad {
   static var size: Int {
     return sizeof(vector_float2) + sizeof(vector_float4)
   }
@@ -45,7 +45,7 @@ struct Rect {
   }
 }
 
-extension CollectionType where Generator.Element == Rect {
+extension CollectionType where Generator.Element == Quad {
   var vertexData: [Float] {
     return flatMap { $0.vertices.flatMap { $0.data } }
   }

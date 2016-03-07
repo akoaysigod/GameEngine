@@ -12,7 +12,7 @@ import Metal
 
 class GEColorRect: GENode, Renderable {
   var vertices: Vertices
-  var rects: Rects!
+  var rects: Quads!
   var texture: MTLTexture? = nil
   var vertexBuffer: MTLBuffer!
   var sharedUniformBuffer: MTLBuffer!
@@ -31,7 +31,7 @@ class GEColorRect: GENode, Renderable {
 
     self.size = size
 
-    self.rects = [Rect(size: size)]
+    self.rects = [Quad(size: size)]
   }
 
   convenience init(width: Double, height: Double, color: UIColor) {
