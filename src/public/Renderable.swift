@@ -18,8 +18,7 @@ protocol Renderable: GENodeGeometry, GETree {
   var indexBuffer: MTLBuffer { get }
   var uniformBufferQueue: BufferQueue { get }
 
-  //TODO: probably change this to it's own public class
-  var texture: MTLTexture? { get set }
+  var texture: GETexture? { get set }
   var color: UIColor { get set }
 
   static func setupBuffers(quads: Quads, device: MTLDevice) -> (vertexBuffer: MTLBuffer, indexBuffer: MTLBuffer)
@@ -54,7 +53,7 @@ extension Renderable {
   func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
     
-    let parentMatrix = superParent?.modelMatrix ?? GLKMatrix4Identity
+    let parentMatrix = parent?.modelMatrix ?? GLKMatrix4Identity
 
     let uniformMatrix = camera.multiplyMatrices(decompose(parentMatrix))
     let uniformData = uniformMatrix.data + color.data
@@ -63,11 +62,28 @@ extension Renderable {
     renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
     renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
     
-    if let texture = texture, sampler = sampler {
+    if let texture = texture?.texture, sampler = sampler {
       renderEncoder.setFragmentTexture(texture, atIndex: 0)
       renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
     }
 
     renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
+  }
+}
+
+extension GENodeGeometry {
+  public func updateSize() {
+    guard let renderable = self as? Renderable else { return }
+
+    let quad: Quad
+    if renderable.texture == nil {
+      quad = .rect(size)
+    }
+    else {
+      quad = .spriteRect(size)
+    }
+
+    let p = renderable.vertexBuffer.contents()
+    memcpy(p, [quad].vertexData, [quad].vertexSize)
   }
 }

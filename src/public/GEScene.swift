@@ -26,11 +26,11 @@ public class GEScene: GENode {
   var fpsText: GETextLabel
   #endif
 
-  override public var parent: GENode? {
+  public override var parent: GENode? {
     return nil
   }
 
-  init(size: CGSize) {
+  public override init(size: CGSize) {
 
     #if DEBUG
       self.debugCamera = GECamera(size: size)
@@ -42,10 +42,9 @@ public class GEScene: GENode {
 
     //nodeSet.insert(camera)
     
-    super.init()
+    super.init(size: size)
 
     self.name = "scene"
-    self.size = size
     self.camera = GECamera(size: size)
   }
 

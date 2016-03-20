@@ -13,28 +13,43 @@ import MetalKit
 public class GETexture {
   let texture: MTLTexture
 
+  public let width: Int
+  public let height: Int
+
   //for asynch loading
+  //there's a different method on MTKTextureLoader for doing asynch stuff
   let callback: MTKTextureLoaderCallback?
 
   private static var errorTexture: MTLTexture {
-    let path = NSBundle.mainBundle().URLForResource("error", withExtension: "png")!
-    return try! Device.shared.textureLoader.newTextureWithContentsOfURL(path, options: nil)
+    let url = NSBundle.mainBundle().URLForResource("error", withExtension: "png")!
+    return try! Device.shared.textureLoader.newTextureWithContentsOfURL(url, options: nil)
   }
 
-  private init(texture: MTLTexture, callback: MTKTextureLoaderCallback? = nil) {
+  init(texture: MTLTexture, callback: MTKTextureLoaderCallback? = nil) {
     self.texture = texture
     self.callback = callback
+
+    self.width = texture.width
+    self.height = texture.height
   }
 
   convenience init(imageName: String) {
     let texture: MTLTexture
+
+    guard let url = NSBundle.mainBundle().URLForResource(imageName, withExtension: "png") else {
+      DLog("\(imageName) not found")
+      self.init(texture: GETexture.errorTexture)
+      return
+    }
+
     do {
-      texture = try Device.shared.textureLoader.newTextureWithContentsOfURL(NSURL(string: "")!, options: nil)
+      texture = try Device.shared.textureLoader.newTextureWithContentsOfURL(url, options: nil)
     }
     catch let error {
       DLog("Error loading image named \(imageName): \(error)")
       texture = GETexture.errorTexture
     }
+
     self.init(texture: texture)
   }
 }

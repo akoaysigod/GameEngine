@@ -30,6 +30,8 @@ public protocol GENodeGeometry: class {
   var yScale: Float { get set }
 
   var modelMatrix: GLKMatrix4 { get }
+
+  func updateSize()
 }
 
 public extension GENodeGeometry {

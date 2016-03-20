@@ -24,32 +24,32 @@ final class BufferQueue {
     self.dataSize = dataSize + GLKMatrix4().size
 
     let bufferSize = self.dataSize * self.size
-    self.buffer = device.newBufferWithLength(bufferSize, options: [])
+    buffer = device.newBufferWithLength(bufferSize, options: [])
 
-    self.inflightSemaphore = dispatch_semaphore_create(self.size)
+    inflightSemaphore = dispatch_semaphore_create(size)
   }
 
   private func updateBuffer(data: Data) {
-    let offset = self.currentBuffer * self.dataSize
-    let contents = self.buffer.contents()
+    let offset = currentBuffer * dataSize
+    let contents = buffer.contents()
     let pointer = UnsafeMutablePointer<Float>(contents + offset)
-    memcpy(pointer, data, self.dataSize)
+    memcpy(pointer, data, dataSize)
   }
 
   func next(commandBuffer: MTLCommandBuffer, data: Data) -> Int {
-    dispatch_semaphore_wait(self.inflightSemaphore, DISPATCH_TIME_FOREVER)
+    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
     commandBuffer.addCompletedHandler { [weak self] (_) -> Void in
       guard let strongSelf = self else { return }
       dispatch_semaphore_signal(strongSelf.inflightSemaphore)
     }
-    self.updateBuffer(data)
-    self.currentBuffer = (currentBuffer + 1) % self.size
-    return self.currentBuffer * self.dataSize
+    updateBuffer(data)
+    currentBuffer = (currentBuffer + 1) % size
+    return currentBuffer * dataSize
   }
 
   deinit {
-    for _ in 0...self.size {
-      dispatch_semaphore_signal(self.inflightSemaphore)
+    (0...size).forEach { _ in
+      dispatch_semaphore_signal(inflightSemaphore)
     }
   }
 }

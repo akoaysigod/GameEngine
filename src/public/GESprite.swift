@@ -12,8 +12,8 @@ import MetalKit
 
 public class GESprite: GENode, Renderable {
   public var color = UIColor.whiteColor()
-  
-  var texture: MTLTexture?
+
+  public var texture: GETexture?
 
   let vertexBuffer: MTLBuffer
   let indexBuffer: MTLBuffer
@@ -21,42 +21,19 @@ public class GESprite: GENode, Renderable {
 
   public var isVisible = true
 
-  init(imageName: String) {
-    let (imageData, size) = GESprite.imageLoader(imageName)
-
-    self.texture = GESprite.loadTexture(imageData, device: Device.shared.device)
-
-    let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(size.w, size.h)], device: Device.shared.device)
+  public init(texture: GETexture) {
+    let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(texture.width, texture.height)], device: Device.shared.device)
 
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
     self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
-    super.init()
-  }
-  
-  private static func loadTexture(imageData: NSData, device: MTLDevice) -> MTLTexture {
-    let textureLoader = MTKTextureLoader(device: device)
+    self.texture = texture
 
-    //don't load anything weird I guess
-    return try! textureLoader.newTextureWithData(imageData, options: nil)
+    super.init(size: CGSize(width: texture.width, height: texture.height))
   }
 
-  //TODO: allow setting size in node class
-  private static let errorImageName = "Test2"
-  private static func imageLoader(imageName: String) -> (imageData: NSData, size: CGSize) {
-    if let image = UIImage(named: imageName),
-    let imageData = UIImagePNGRepresentation(image)
-    {
-      return (imageData, image.size)
-    }
-
-    let path = NSBundle.mainBundle().URLForResource(self.errorImageName, withExtension: "png")!
-    let image = UIImage(data: NSData(contentsOfURL: path)!)!
-    return (UIImagePNGRepresentation(image)!, image.size)
-  }
-
-  override func updateWithDelta(delta: CFTimeInterval) {
-    super.updateWithDelta(delta)
+  convenience init(imageName: String) {
+    self.init(texture: GETexture(imageName: imageName))
   }
 }

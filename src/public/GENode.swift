@@ -20,7 +20,11 @@ public func ==(rhs: GENode, lhs: GENode) -> Bool {
 public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   public var name: String? = nil
   
-  public var size = CGSizeZero
+  public var size: CGSize {
+    didSet {
+      updateSize()
+    }
+  }
 
   public var anchorPoint: (x: Float, y: Float) = (x: 0.0, y: 0.0)
 
@@ -45,7 +49,8 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   }
   public private(set) var parent: GENode? = nil
 
-  init() {
+  init(size: CGSize = .zero) {
+    self.size = size
   }
   
   //updating

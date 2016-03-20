@@ -13,7 +13,7 @@ import Metal
 public class GEColorRect: GENode, Renderable {
   public var color = UIColor.whiteColor()
   
-  var texture: MTLTexture? = nil 
+  var texture: GETexture? = nil
 
   let vertexBuffer: MTLBuffer
   let indexBuffer: MTLBuffer
@@ -26,12 +26,9 @@ public class GEColorRect: GENode, Renderable {
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 
-    //TODO: have to add color to the uniform buffer
     self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
-    super.init()
-
-    self.size = size
+    super.init(size: size)
   }
 
   convenience init(width: Double, height: Double, color: UIColor) {

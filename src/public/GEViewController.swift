@@ -50,20 +50,23 @@ public class GEViewController: UIViewController {
     colorRect2.zPosition = 0
     colorRect.addNode(colorRect2)
 
-    let sp = GESprite(imageName: "Test2")
+    let texture = GETexture(imageName: "Test2")
+    let sp = GESprite(texture: texture)
     sp.name = "bottom sprite"
     sp.scale = (10, 10)
     sp.position = (300, 300)
     scene.addNode(sp)
 
-    let sp2 = GESprite(imageName: "Test2")
+    let texture2 = GETexture(imageName: "error")
+    let sp2 = GESprite(texture: texture2)
+    sp2.size = CGSize(width: 10, height: 10)
     sp2.name = "top sprite"
     sp2.scale = (10, 10)
     sp2.position = (300, 356)
     sp2.zPosition = 1000
     scene.addNode(sp2)
 
-    scene.removeNode(sp2)
+    //scene.removeNode(sp2)
 
     self.addGestures()
   }

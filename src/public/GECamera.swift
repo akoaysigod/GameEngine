@@ -52,15 +52,13 @@ public class GECamera: GENode {
     }
   }
 
-  public init(size: CGSize) {
+  public override init(size: CGSize) {
     self.scale = 1.0
 
     self.right = Float(size.width)
     self.top = Float(size.height)
 
-    super.init()
-
-    self.size = size
+    super.init(size: size)
   }
 
   func multiplyMatrices(modelViewMatrix: GLKMatrix4) -> GLKMatrix4 {

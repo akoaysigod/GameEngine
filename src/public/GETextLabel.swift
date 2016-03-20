@@ -23,7 +23,7 @@ public class GETextLabel: GENode, Renderable {
 
   let displaySize = 72 //arbitrary right now for testing
 
-  var texture: MTLTexture?
+  var texture: GETexture?
   let vertexBuffer: MTLBuffer
   let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
@@ -34,7 +34,7 @@ public class GETextLabel: GENode, Renderable {
     self.color = color
 
     let (quads, texture) = GETextLabel.loadTexture(text, fontAtlas: fontAtlas, device: Device.shared.device)
-    self.texture = texture
+    self.texture = GETexture(texture: texture)
 
     let (vertexBuffer, indexBuffer) = GETextLabel.setupBuffers(quads, device: Device.shared.device)
     self.vertexBuffer = vertexBuffer
@@ -42,7 +42,7 @@ public class GETextLabel: GENode, Renderable {
 
     self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
-    super.init()
+    super.init(size: CGSize(width: Float(texture.width), height: Float(texture.height)))
   }
 
   //need a size that fits rect sort of thing for the text
