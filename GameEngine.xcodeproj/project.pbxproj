@@ -67,6 +67,8 @@
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EACA166E1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
 		EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
+		EACA16711C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
+		EACA16721C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
 		EAE75E371C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
 		EAE75E381C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
 		EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
@@ -131,6 +133,7 @@
 		EAA99E371C41E80E00CF3246 /* ColorShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ColorShaders.metal; path = src/shaders/ColorShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EACA166D1C9F1A8C00C9119A /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Test.xcassets; path = resources/Test.xcassets; sourceTree = "<group>"; };
+		EACA16701C9F391000C9119A /* Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey.png; path = resources/Grey.png; sourceTree = "<group>"; };
 		EAE75E361C42D091001EB176 /* GEScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEScene.swift; path = src/public/GEScene.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEView.swift; path = src/public/GEView.swift; sourceTree = SOURCE_ROOT; };
 		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
@@ -240,6 +243,7 @@
 				EACA166D1C9F1A8C00C9119A /* Test.xcassets */,
 				EAA99E241C41E65700CF3246 /* Assets.xcassets */,
 				EAA99E271C41E65700CF3246 /* Test2.png */,
+				EACA16701C9F391000C9119A /* Grey.png */,
 				EA1ACBF21C9E5D7000878EE6 /* error.png */,
 				EAA99E2B1C41E68D00CF3246 /* Test */,
 				EAA99E2A1C41E68800CF3246 /* GEFramework */,
@@ -452,6 +456,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EACA16711C9F391000C9119A /* Grey.png in Resources */,
 				EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */,
 				EACA166E1C9F1A8C00C9119A /* Test.xcassets in Resources */,
 				EA1ACBF31C9E5D7000878EE6 /* error.png in Resources */,
@@ -473,6 +478,7 @@
 			files = (
 				EAA99E281C41E66B00CF3246 /* Test2.png in Resources */,
 				EA1ACBF41C9E5D7000878EE6 /* error.png in Resources */,
+				EACA16721C9F391000C9119A /* Grey.png in Resources */,
 				EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
