@@ -7,11 +7,13 @@
 //
 
 import Metal
+import MetalKit
 
 class Device {
   static let shared = Device()
 
   let device: MTLDevice
+  let textureLoader: MTKTextureLoader
 
   init() {
     //hmmm maybe I can just call this wherever I need a MTLDevice?
@@ -19,5 +21,6 @@ class Device {
       fatalError("This device probably doesn't support Metal or I don't know why this failed")
     }
     self.device = device
+    self.textureLoader = MTKTextureLoader(device: device)
   }
 }

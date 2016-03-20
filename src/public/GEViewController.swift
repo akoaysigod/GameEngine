@@ -34,7 +34,6 @@ public class GEViewController: UIViewController {
     
     let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
     colorRect.name = "Gray rect"
-    colorRect.zPosition = 1001
     colorRect.anchorPoint = (0.5, 0.5)
     colorRect.x = 100
     colorRect.y = 300

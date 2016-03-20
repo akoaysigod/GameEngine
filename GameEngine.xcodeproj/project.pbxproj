@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
+		EA1ACBED1C9E53A800878EE6 /* GETexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACBEC1C9E53A800878EE6 /* GETexture.swift */; };
+		EA1ACBEE1C9E53A800878EE6 /* GETexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACBEC1C9E53A800878EE6 /* GETexture.swift */; };
+		EA1ACBF01C9E582C00878EE6 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBEF1C9E582C00878EE6 /* error.png */; };
+		EA1ACBF11C9E582C00878EE6 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBEF1C9E582C00878EE6 /* error.png */; };
 		EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA3236291C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA72451C1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
@@ -90,6 +94,8 @@
 		EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameEngine.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA1ACBEC1C9E53A800878EE6 /* GETexture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETexture.swift; path = src/public/GETexture.swift; sourceTree = SOURCE_ROOT; };
+		EA1ACBEF1C9E582C00878EE6 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		EA3236271C8B85A500DA7FCF /* GETree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETree.swift; path = src/public/GETree.swift; sourceTree = SOURCE_ROOT; };
 		EA72451B1C8CFF6E0059B068 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = src/private/Device.swift; sourceTree = SOURCE_ROOT; };
 		EA7C9AF51C4AF01600A64CB9 /* Renderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderable.swift; path = src/public/Renderable.swift; sourceTree = SOURCE_ROOT; };
@@ -230,6 +236,7 @@
 			children = (
 				EAA99E241C41E65700CF3246 /* Assets.xcassets */,
 				EAA99E271C41E65700CF3246 /* Test2.png */,
+				EA1ACBEF1C9E582C00878EE6 /* error.png */,
 				EAA99E2B1C41E68D00CF3246 /* Test */,
 				EAA99E2A1C41E68800CF3246 /* GEFramework */,
 			);
@@ -294,6 +301,7 @@
 		EAC640A11C34B60E00B6AE68 /* DataStructures */ = {
 			isa = PBXGroup;
 			children = (
+				EA1ACBEC1C9E53A800878EE6 /* GETexture.swift */,
 				EAF7BB001C8CC85700258C37 /* Quad.swift */,
 				EAA99DD21C41E50200CF3246 /* BufferQueue.swift */,
 				EAA99DD31C41E50200CF3246 /* Vertex.swift */,
@@ -441,6 +449,7 @@
 			files = (
 				EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */,
 				EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */,
+				EA1ACBF01C9E582C00878EE6 /* error.png in Resources */,
 				EAA99E291C41E66C00CF3246 /* Test2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,6 +467,7 @@
 			files = (
 				EAA99E341C41E6EB00CF3246 /* Assets.xcassets in Resources */,
 				EAA99E281C41E66B00CF3246 /* Test2.png in Resources */,
+				EA1ACBF11C9E582C00878EE6 /* error.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +485,7 @@
 				EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
 				EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */,
+				EA1ACBED1C9E53A800878EE6 /* GETexture.swift in Sources */,
 				EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */,
 				EAFD76971C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
@@ -535,6 +546,7 @@
 				EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */,
 				EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */,
+				EA1ACBEE1C9E53A800878EE6 /* GETexture.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */,
 				EA9B1E821C727625000FFDF7 /* GETextLabel.swift in Sources */,
 				EAFD76981C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */,
