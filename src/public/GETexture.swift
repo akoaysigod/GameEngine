@@ -33,6 +33,7 @@ public class GETexture {
     self.height = texture.height
   }
 
+  //TODO: not sure why but if you pass in an empty string it uses the last value used somehow
   convenience init(imageName: String) {
     let texture: MTLTexture
 

@@ -57,7 +57,7 @@ public class GEViewController: UIViewController {
     sp.position = (300, 300)
     scene.addNode(sp)
 
-    let texture2 = GETexture(imageName: "error")
+    let texture2 = GETexture(imageName: "e")
     let sp2 = GESprite(texture: texture2)
     sp2.size = CGSize(width: 10, height: 10)
     sp2.name = "top sprite"
