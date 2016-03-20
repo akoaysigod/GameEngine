@@ -61,11 +61,12 @@
 		EAA99E291C41E66C00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
 		EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */; };
 		EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
-		EAA99E341C41E6EB00CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
 		EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ColorShaders.metal */; };
 		EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ColorShaders.metal */; };
 		EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
+		EACA166E1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
+		EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
 		EAE75E371C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
 		EAE75E381C42D091001EB176 /* GEScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* GEScene.swift */; };
 		EAE75E7F1C42FE62001EB176 /* GEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GEView.swift */; };
@@ -129,6 +130,7 @@
 		EAA99E301C41E6BC00CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/GEFramework/Info.plist; sourceTree = "<group>"; };
 		EAA99E371C41E80E00CF3246 /* ColorShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ColorShaders.metal; path = src/shaders/ColorShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
+		EACA166D1C9F1A8C00C9119A /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Test.xcassets; path = resources/Test.xcassets; sourceTree = "<group>"; };
 		EAE75E361C42D091001EB176 /* GEScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEScene.swift; path = src/public/GEScene.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEView.swift; path = src/public/GEView.swift; sourceTree = SOURCE_ROOT; };
 		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
@@ -235,6 +237,7 @@
 		EAA99E231C41E64700CF3246 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				EACA166D1C9F1A8C00C9119A /* Test.xcassets */,
 				EAA99E241C41E65700CF3246 /* Assets.xcassets */,
 				EAA99E271C41E65700CF3246 /* Test2.png */,
 				EA1ACBF21C9E5D7000878EE6 /* error.png */,
@@ -389,6 +392,7 @@
 				EAA99D731C41E10900CF3246 /* Sources */,
 				EAA99D741C41E10900CF3246 /* Frameworks */,
 				EAA99D751C41E10900CF3246 /* Headers */,
+				EACA166C1C9F1A1400C9119A /* ShellScript */,
 				EAA99D761C41E10900CF3246 /* Resources */,
 			);
 			buildRules = (
@@ -449,6 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */,
+				EACA166E1C9F1A8C00C9119A /* Test.xcassets in Resources */,
 				EA1ACBF31C9E5D7000878EE6 /* error.png in Resources */,
 				EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */,
 				EAA99E291C41E66C00CF3246 /* Test2.png in Resources */,
@@ -466,13 +471,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAA99E341C41E6EB00CF3246 /* Assets.xcassets in Resources */,
 				EAA99E281C41E66B00CF3246 /* Test2.png in Resources */,
 				EA1ACBF41C9E5D7000878EE6 /* error.png in Resources */,
+				EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EACA166C1C9F1A1400C9119A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EA0363B51C31C85E00D283E3 /* Sources */ = {

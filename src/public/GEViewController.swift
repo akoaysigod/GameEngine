@@ -68,6 +68,10 @@ public class GEViewController: UIViewController {
 
     //scene.removeNode(sp2)
 
+    if let asset = NSDataAsset(name: "Test") {
+      DLog(asset)
+    }
+
     addGestures()
   }
 }

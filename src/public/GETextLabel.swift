@@ -21,8 +21,6 @@ public class GETextLabel: GENode, Renderable {
   let fontAtlas: FontAtlas
   public var color = UIColor.whiteColor()
 
-  let displaySize = 72 //arbitrary right now for testing
-
   var texture: GETexture?
   let vertexBuffer: MTLBuffer
   let indexBuffer: MTLBuffer
@@ -101,17 +99,7 @@ public class GETextLabel: GENode, Renderable {
       rects += [Quad(ll: ll, ul: ul, ur: ur, lr: lr)]
     }
 
-    let texDesc = MTLTextureDescriptor()
-    let textureSize = fontAtlas.textureSize
-    texDesc.pixelFormat = .R8Unorm
-    texDesc.width = textureSize
-    texDesc.height = textureSize
-    let texture = device.newTextureWithDescriptor(texDesc)
-
-    let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
-    texture.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
-
-    return (rects, texture)
+    return rects
   }
 
   private static func enumerateGlyphsInFrame(frame: CTFrameRef, closure: GlyphClosure) {
