@@ -33,8 +33,8 @@ public class GETextLabel: GENode, Renderable {
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
 
-    let (quads, texture) = GETextLabel.loadTexture(text, fontAtlas: fontAtlas, device: Device.shared.device)
-    self.texture = GETexture(texture: texture)
+    let quads = GETextLabel.makeTextQuads(text, fontAtlas: fontAtlas)
+    self.texture = GETextLabel.loadTexture(fontAtlas, device: Device.shared.device)
 
     let (vertexBuffer, indexBuffer) = GETextLabel.setupBuffers(quads, device: Device.shared.device)
     self.vertexBuffer = vertexBuffer
@@ -42,11 +42,25 @@ public class GETextLabel: GENode, Renderable {
 
     self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
-    super.init(size: CGSize(width: Float(texture.width), height: Float(texture.height)))
+    super.init(size: texture!.size)
+  }
+
+  static func loadTexture(fontAtlas: FontAtlas, device: MTLDevice) -> GETexture {
+    let texDesc = MTLTextureDescriptor()
+    let textureSize = fontAtlas.textureSize
+    texDesc.pixelFormat = .R8Unorm
+    texDesc.width = textureSize
+    texDesc.height = textureSize
+    let texture = device.newTextureWithDescriptor(texDesc)
+
+    let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
+    texture.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
+
+    return GETexture(texture: texture)
   }
 
   //need a size that fits rect sort of thing for the text
-  static func loadTexture(text: String, fontAtlas: FontAtlas, device: MTLDevice) -> (Quads, MTLTexture) {
+  static func makeTextQuads(text: String, fontAtlas: FontAtlas) -> Quads {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)
 
     let attr = [NSFontAttributeName: fontAtlas.font]

@@ -15,6 +15,9 @@ public class GETexture {
 
   public let width: Int
   public let height: Int
+  var size: CGSize {
+    return CGSize(width: width, height: height)
+  }
 
   //for asynch loading
   //there's a different method on MTKTextureLoader for doing asynch stuff

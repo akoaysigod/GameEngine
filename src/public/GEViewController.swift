@@ -15,8 +15,8 @@ public class GEViewController: UIViewController {
   var scene: GEScene!
 
   override public func loadView() {
-    self.view = GEView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
-    self.view.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
+    view = GEView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
+    view.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
   }
 
   override public func viewDidLoad() {
@@ -25,7 +25,7 @@ public class GEViewController: UIViewController {
     //let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
     
     let view = self.view as! GEView
-    self.scene = GEScene(size: view.bounds.size)
+    scene = GEScene(size: view.bounds.size)
     view.presentScene(scene)
 
     let testText = GETextLabel(text: "wtf test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.orangeColor())
@@ -68,7 +68,7 @@ public class GEViewController: UIViewController {
 
     //scene.removeNode(sp2)
 
-    self.addGestures()
+    addGestures()
   }
 }
 
