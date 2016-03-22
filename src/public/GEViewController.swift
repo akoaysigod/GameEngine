@@ -81,10 +81,10 @@ public class GEViewController: UIViewController {
 //tmp
 extension GEViewController {
   func addGestures() {
-    let pan = UIPanGestureRecognizer(target: self, action: "panCamera:")
+    let pan = UIPanGestureRecognizer(target: self, action: #selector(panCamera(_:)))
     self.view.addGestureRecognizer(pan)
 
-    let pinch = UIPinchGestureRecognizer(target: self, action: "zoomCamera:")
+    let pinch = UIPinchGestureRecognizer(target: self, action: #selector(zoomCamera(_:)))
     self.view.addGestureRecognizer(pinch)
   }
 

@@ -11,7 +11,7 @@ import Foundation
 typealias Data = [Float]
 let FloatSize = sizeof(Float)
 
-func DLog(messages: Any..., filename: NSString = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
+func DLog(messages: Any..., filename: NSString = #file, function: String = #function, line: Int = #line) {
   #if DEBUG
     let message = messages.reduce("") {
       "\($1) " + "\($0)\n"

@@ -33,7 +33,7 @@ public class GEView: MTKView {
     
     scene.setupRenderer(self)
     
-    self.timer = CADisplayLink(target: self, selector: "newFrame:")
+    self.timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
     self.timer.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
   }
   
