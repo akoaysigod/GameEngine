@@ -23,6 +23,8 @@ public class GESprite: GENode, Renderable {
 
   public init(texture: GETexture) {
     let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(texture.width, texture.height)], device: Device.shared.device)
+    //let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(64, 64)], device: Device.shared.device)
+    DLog(texture.width, texture.height)
 
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer

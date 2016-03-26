@@ -40,14 +40,21 @@ public class GETexture {
   convenience init(imageName: String) {
     let texture: MTLTexture
 
-    guard let url = NSBundle.mainBundle().URLForResource(imageName, withExtension: "png") else {
+    //need to think of a way around using UIImage
+    guard let image = UIImage(named: imageName) else {
       DLog("\(imageName) not found")
       self.init(texture: GETexture.errorTexture)
       return
     }
 
+    guard let data = UIImagePNGRepresentation(image) else {
+      DLog("\(imageName) could not be turned into NSData")
+      self.init(texture: GETexture.errorTexture)
+      return
+    }
+
     do {
-      texture = try Device.shared.textureLoader.newTextureWithContentsOfURL(url, options: nil)
+      texture = try Device.shared.textureLoader.newTextureWithData(data, options: nil)
     }
     catch let error {
       DLog("Error loading image named \(imageName): \(error)")

@@ -13,6 +13,7 @@
 		EA1ACBF31C9E5D7000878EE6 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBF21C9E5D7000878EE6 /* error.png */; };
 		EA1ACBF41C9E5D7000878EE6 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBF21C9E5D7000878EE6 /* error.png */; };
 		EA1ACBF51C9E74F000878EE6 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C9AF51C4AF01600A64CB9 /* Renderable.swift */; };
+		EA2569FB1CA731A6008F720B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
 		EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA3236291C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA72451C1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
@@ -360,6 +361,7 @@
 			buildPhases = (
 				EA0363B51C31C85E00D283E3 /* Sources */,
 				EA0363B61C31C85E00D283E3 /* Frameworks */,
+				EA2569FC1CA73A6C008F720B /* Create Atlas */,
 				EA0363B71C31C85E00D283E3 /* Resources */,
 			);
 			buildRules = (
@@ -396,8 +398,9 @@
 				EAA99D731C41E10900CF3246 /* Sources */,
 				EAA99D741C41E10900CF3246 /* Frameworks */,
 				EAA99D751C41E10900CF3246 /* Headers */,
-				EACA166C1C9F1A1400C9119A /* ShellScript */,
+				EACA166C1C9F1A1400C9119A /* Create Atlas */,
 				EAA99D761C41E10900CF3246 /* Resources */,
+				EA2569FA1CA7302C008F720B /* Build Number */,
 			);
 			buildRules = (
 			);
@@ -476,6 +479,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA2569FB1CA731A6008F720B /* Assets.xcassets in Resources */,
 				EAA99E281C41E66B00CF3246 /* Test2.png in Resources */,
 				EA1ACBF41C9E5D7000878EE6 /* error.png in Resources */,
 				EACA16721C9F391000C9119A /* Grey.png in Resources */,
@@ -486,18 +490,47 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		EACA166C1C9F1A1400C9119A /* ShellScript */ = {
+		EA2569FA1CA7302C008F720B /* Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Build Number";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "buildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		EA2569FC1CA73A6C008F720B /* Create Atlas */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Create Atlas";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PROJECT_DIR}/resources/AtlasGen.py Assets.xcassets Test.xcassets";
+		};
+		EACA166C1C9F1A1400C9119A /* Create Atlas */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Create Atlas";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PROJECT_DIR}/resources/AtlasGen.py Assets.xcassets Test.xcassets";
 		};
 /* End PBXShellScriptBuildPhase section */
 
