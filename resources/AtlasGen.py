@@ -19,6 +19,7 @@ class FileManager:
       ospath = os.getcwd() + '/'
     self.inPath = ospath + inPath
     self.outPath = ospath + outPath
+    self.jsonOutPath = ospath + outPath[:-len('.xcassets')] + '.atlasData/'
     self.twoImages = []
     self.thrImages = []
 
@@ -35,10 +36,12 @@ class FileManager:
   def deleteOldData(self):
     try:
       shutil.rmtree(self.outPath)
+      shutil.rmtree(self.jsonOutPath)
     except:
       pass
     try:
       os.mkdir(self.outPath)
+      os.mkdir(self.jsonOutPath)
     except:
       pass
     shutil.copyfile(self.inPath + '/Contents.json', self.outPath + '/Contents.json')
@@ -143,6 +146,11 @@ class FileManager:
     f.write(jsonEncoded)
     f.close()
 
+  def saveJSONData(self, jsonName, jsonData, scale):
+    with open(self.jsonOutPath + jsonName + '@' + scale + '.json', 'w') as f:
+      j = json.dumps(jsonData)
+      f.write(j)
+
 class AtlasGen:
   def getSize(self, data):
     try:
@@ -163,6 +171,12 @@ class AtlasGen:
     if size * d > 4096:
       raise Exception('Atlas will be too large for Metal probably.')
     return (size * d, size * d)
+
+  def getImageName(self, imagePath):
+    folders = imagePath.split('/')
+    for i in folders:
+      if i.endswith('imageset'):
+        return i[:-len('.imageset')]
   
   def makeAtlas(self, data):
     size = self.getSize(data[0])
@@ -180,6 +194,7 @@ class AtlasGen:
 
     x = 0
     y = 0
+    atlas = {}
     for i in data:
       image = Image.open(i)
 
@@ -189,8 +204,14 @@ class AtlasGen:
        
       cat.paste(image, (x * s, y * s))
 
+      imageName = self.getImageName(i)
+      atlas[imageName] = {
+        'size': {'width': s, 'height': s},
+        'frame': {'x': x * s, 'y': y * s, 'width': s, 'height': s}
+      }
+
       x += 1
-    return cat
+    return (cat, atlas)
 
 def main():
   if len(sys.argv) <= 2:
@@ -219,10 +240,11 @@ def main():
   fm.deleteOldData()
 
   for (k, v) in images2.iteritems():
-    fm.saveImageData(k, v, '2x')
+    fm.saveImageData(k, v[0], '2x')
+    fm.saveJSONData(k, v[1], '2x')
   for (k, v) in images3.iteritems():
-    fm.saveImageData(k, v, '3x')
-
+    fm.saveImageData(k, v[0], '3x')
+    fm.saveJSONData(k, v[1], '3x')
 
 if __name__ == '__main__':
   main()

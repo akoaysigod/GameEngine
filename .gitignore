@@ -16,3 +16,4 @@ DerivedData
 *.ipa
 *.xcuserstate
 resources/Test.xcassets
+resources/Test.atlasData
