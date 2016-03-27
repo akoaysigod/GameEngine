@@ -22,7 +22,8 @@ public class GESprite: GENode, Renderable {
   public var isVisible = true
 
   public required init(texture: GETexture, color: UIColor, size: CGSize) {
-    let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(size.w, size.h)], device: Device.shared.device)
+    //let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(size.w, size.h)], device: Device.shared.device)
+    let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(texture.frame)], device: Device.shared.device)
 
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
@@ -42,7 +43,7 @@ public class GESprite: GENode, Renderable {
     self.init(texture: texture, color: .whiteColor(), size: texture.size)
   }
 
-  public convenience init(imageName: String) {
-    self.init(texture: GETexture(imageName: imageName))
+  public convenience init(named: String) {
+    self.init(texture: GETexture(named: named))
   }
 }

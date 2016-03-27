@@ -15,6 +15,8 @@
 		EA1ACBF51C9E74F000878EE6 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C9AF51C4AF01600A64CB9 /* Renderable.swift */; };
 		EA2569FB1CA731A6008F720B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
 		EA256A0A1CA865C7008F720B /* AtlasData.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA256A091CA865C7008F720B /* AtlasData.xcassets */; };
+		EA256A0C1CA86A30008F720B /* GETextureAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA256A0B1CA86A30008F720B /* GETextureAtlas.swift */; };
+		EA256A0D1CA86A30008F720B /* GETextureAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA256A0B1CA86A30008F720B /* GETextureAtlas.swift */; };
 		EA3236281C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA3236291C8B85A500DA7FCF /* GETree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* GETree.swift */; };
 		EA72451C1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
@@ -103,6 +105,7 @@
 		EA1ACBEC1C9E53A800878EE6 /* GETexture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETexture.swift; path = src/public/GETexture.swift; sourceTree = SOURCE_ROOT; };
 		EA1ACBF21C9E5D7000878EE6 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = resources/error.png; sourceTree = "<group>"; };
 		EA256A091CA865C7008F720B /* AtlasData.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AtlasData.xcassets; path = resources/AtlasData.xcassets; sourceTree = "<group>"; };
+		EA256A0B1CA86A30008F720B /* GETextureAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETextureAtlas.swift; path = src/public/GETextureAtlas.swift; sourceTree = "<group>"; };
 		EA3236271C8B85A500DA7FCF /* GETree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GETree.swift; path = src/public/GETree.swift; sourceTree = SOURCE_ROOT; };
 		EA72451B1C8CFF6E0059B068 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = src/private/Device.swift; sourceTree = SOURCE_ROOT; };
 		EA7C9AF51C4AF01600A64CB9 /* Renderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderable.swift; path = src/public/Renderable.swift; sourceTree = SOURCE_ROOT; };
@@ -173,6 +176,7 @@
 		EA0363B01C31C85E00D283E3 = {
 			isa = PBXGroup;
 			children = (
+				EA256A0B1CA86A30008F720B /* GETextureAtlas.swift */,
 				EA0363BB1C31C85E00D283E3 /* GameEngine */,
 				EAA99E231C41E64700CF3246 /* resources */,
 				EA0363D21C31C85F00D283E3 /* GameEngineTests */,
@@ -554,6 +558,7 @@
 				EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */,
 				EAFD76971C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
+				EA256A0C1CA86A30008F720B /* GETextureAtlas.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* GEScene.swift in Sources */,
 				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
@@ -591,6 +596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA99DF01C41E57300CF3246 /* GEViewController.swift in Sources */,
+				EA256A0D1CA86A30008F720B /* GETextureAtlas.swift in Sources */,
 				EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */,
 				EAA99DE21C41E52700CF3246 /* GEColorRect.swift in Sources */,
 				EA3236291C8B85A500DA7FCF /* GETree.swift in Sources */,

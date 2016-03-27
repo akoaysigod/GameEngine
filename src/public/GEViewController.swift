@@ -23,13 +23,20 @@ public class GEViewController: UIViewController {
     super.viewDidLoad()
     
     //let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
-    
+
+
     let view = self.view as! GEView
     scene = GEScene(size: view.bounds.size)
     view.presentScene(scene)
 
+    if let environmentAtlas = GETextureAtlas(named: "Environment"),
+       let texture = environmentAtlas.textureNamed("Wall") {
+      let sp = GESprite(texture: texture)
+      sp.position = (0.0, 0.0)
+      scene.addNode(sp)
+    }
+
 //    let texture = GETexture(imageName: "Knight")
-//    let size = CGSize(width: 10.0, height: 10.0)
 //    let sp = GESprite(texture: texture, size: size)
 //    sp.position = (0.0, 0.0)
 //    let sp2 = GESprite(texture: texture, size: size)
@@ -79,10 +86,6 @@ public class GEViewController: UIViewController {
 //    scene.addNode(sp2)
 
     //scene.removeNode(sp2)
-
-    if let asset = NSDataAsset(name: "Test") {
-      DLog(asset)
-    }
 
     addGestures()
   }

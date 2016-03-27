@@ -61,6 +61,22 @@ struct Quad {
   static func spriteRect(width: Int, _ height: Int) -> Quad {
     return spriteRect(Float(width), Float(height))
   }
+
+  static func spriteRect(frame: TextureFrame) -> Quad {
+    let x = frame.x
+    let y = frame.y
+    let sWidth = frame.sWidth
+    let sHeight = frame.sHeight
+    let tWidth = frame.tWidth
+    let tHeight = frame.tHeight
+
+    let ll = SpriteVertex(s: x / tWidth, t: y / tHeight)
+    let ul = SpriteVertex(s: x / tWidth, t: (y + sHeight) / tHeight, y: sHeight)
+    let ur = SpriteVertex(s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, x: sWidth, y: sHeight)
+    let lr = SpriteVertex(s: (x + sWidth) / tWidth, t: y / tHeight, x: sWidth)
+
+    return Quad(vertices: [ll, ul, ur, lr])
+  }
 }
 
 extension CollectionType where Generator.Element == Quad {
