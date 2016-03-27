@@ -30,10 +30,30 @@ public class GEViewController: UIViewController {
     view.presentScene(scene)
 
     if let environmentAtlas = GETextureAtlas(named: "Environment"),
-       let texture = environmentAtlas.textureNamed("Wall") {
-      let sp = GESprite(texture: texture)
+       let wall = environmentAtlas.textureNamed("Wall"),
+       let floor = environmentAtlas.textureNamed("Floor"),
+       let openDoor = environmentAtlas.textureNamed("OpenDoor"),
+       let stairsDown = environmentAtlas.textureNamed("StairsDown"),
+       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
+      let sp = GESprite(texture: wall)
       sp.position = (0.0, 0.0)
       scene.addNode(sp)
+
+      let sp2 = GESprite(texture: floor)
+      sp2.position = (Float(sp2.size.width), 0.0)
+      scene.addNode(sp2)
+
+      let sp3 = GESprite(texture: openDoor)
+      sp3.position = (Float(sp3.size.width * 2), 0.0)
+      scene.addNode(sp3)
+
+      let sp4 = GESprite(texture: stairsDown)
+      sp4.position = (Float(sp4.size.width * 3), 0.0)
+      scene.addNode(sp4)
+
+      let sp5 = GESprite(texture: stairsUp)
+      sp5.position = (Float(sp5.size.width * 4), 0.0)
+      scene.addNode(sp5)
     }
 
 //    let texture = GETexture(imageName: "Knight")

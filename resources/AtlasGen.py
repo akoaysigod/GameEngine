@@ -158,7 +158,7 @@ class FileManager:
       os.mkdir(outdir)
     except:
       pass
-    
+
     with open(outdir + jsonName + '.json', 'w+') as f:
       f.write(json.dumps(jsonData))
 
@@ -237,7 +237,8 @@ class AtlasGen:
       }
 
       x += 1
-    return (cat, atlas)
+    image = cat.transpose(Image.FLIP_TOP_BOTTOM)
+    return (image, atlas)
 
 def main():
   if len(sys.argv) <= 3:

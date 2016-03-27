@@ -10,23 +10,7 @@ import Foundation
 import Metal
 import MetalKit
 
-struct TextureFrame {
-  let x: Float
-  let y: Float
-  let sWidth: Float
-  let sHeight: Float
-  let tWidth: Float
-  let tHeight: Float
 
-  init(x: Int, y: Int, sWidth: Int, sHeight: Int, tWidth: Int, tHeight: Int) {
-    self.x = Float(x)
-    self.y = Float(y)
-    self.sWidth = Float(sWidth)
-    self.sHeight = Float(sHeight)
-    self.tWidth = Float(tWidth)
-    self.tHeight = Float(tHeight)
-  }
-}
 
 public class GETexture {
   let texture: MTLTexture
@@ -61,8 +45,8 @@ public class GETexture {
   //it basically makes a copy with the same refs but different frames for using a GETextureAtlas
   init(texture: MTLTexture, frame: TextureFrame) {
     self.texture = texture
-    self.width = Int(frame.tWidth)
-    self.height = Int(frame.tHeight)
+    self.width = Int(frame.sWidth)
+    self.height = Int(frame.sHeight)
     self.frame = frame
 
     self.callback = nil

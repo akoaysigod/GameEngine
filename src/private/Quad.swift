@@ -70,10 +70,12 @@ struct Quad {
     let tWidth = frame.tWidth
     let tHeight = frame.tHeight
 
-    let ll = SpriteVertex(s: x / tWidth, t: y / tHeight)
-    let ul = SpriteVertex(s: x / tWidth, t: (y + sHeight) / tHeight, y: sHeight)
-    let ur = SpriteVertex(s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, x: sWidth, y: sHeight)
-    let lr = SpriteVertex(s: (x + sWidth) / tWidth, t: y / tHeight, x: sWidth)
+    //lol everything is upside down and I don't understand it 
+    //should probably standardize this across every way of making sprites but who knows
+    let ll = SpriteVertex(s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, x: sWidth)
+    let ul = SpriteVertex(s: (x + sWidth) / tWidth, t: y / tHeight, x: sWidth, y: sHeight)
+    let ur = SpriteVertex(s: x / tWidth, t: y / tHeight, y: sHeight)
+    let lr = SpriteVertex(s: x / tWidth, t: (y + sHeight) / tHeight)
 
     return Quad(vertices: [ll, ul, ur, lr])
   }
