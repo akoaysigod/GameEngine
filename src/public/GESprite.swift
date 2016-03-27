@@ -11,7 +11,7 @@ import Metal
 import MetalKit
 
 public class GESprite: GENode, Renderable {
-  public var color = UIColor.whiteColor()
+  public var color: UIColor
 
   public var texture: GETexture?
 
@@ -21,21 +21,28 @@ public class GESprite: GENode, Renderable {
 
   public var isVisible = true
 
-  public init(texture: GETexture) {
-    let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(texture.width, texture.height)], device: Device.shared.device)
-    //let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(64, 64)], device: Device.shared.device)
-    DLog(texture.width, texture.height)
+  public required init(texture: GETexture, color: UIColor, size: CGSize) {
+    let (vertexBuffer, indexBuffer) = GESprite.setupBuffers([Quad.spriteRect(size.w, size.h)], device: Device.shared.device)
 
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
     self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
 
     self.texture = texture
+    self.color = color
 
-    super.init(size: CGSize(width: texture.width, height: texture.height))
+    super.init(size: texture.size)
   }
 
-  convenience init(imageName: String) {
+  public convenience init(texture: GETexture, size: CGSize) {
+    self.init(texture: texture, color: .whiteColor(), size: size)
+  }
+
+  public convenience init(texture: GETexture) {
+    self.init(texture: texture, color: .whiteColor(), size: texture.size)
+  }
+
+  public convenience init(imageName: String) {
     self.init(texture: GETexture(imageName: imageName))
   }
 }

@@ -44,8 +44,8 @@ class FileManager:
     shutil.copyfile(self.inPath + '/Contents.json', self.outPath + '/Contents.json')
       
   def getImageData(self):
-    imageDirs = [i for i in os.listdir(self.inPath) if i.endswith('imageset')] 
-    imageConts = [self.inPath + '/' + i + '/Contents.json' for i in imageDirs]
+    imageDirs = [i[0] for i in os.walk(self.inPath) if i[0].endswith('imageset')] 
+    imageConts = [i + '/Contents.json' for i in imageDirs]
 
     for c in imageConts:
       f = open(c, 'r')
@@ -65,6 +65,29 @@ class FileManager:
             print(c + ' no file for ' + i['scale'])
           pass
     return (self.twoImages, self.thrImages)
+
+  #only designing this to handle one extra depth I think for now anyway
+  #I'm pretty sure that's as big as I organize anything 
+  def filterByFolder(self, data):
+    pathNum = len(self.inPath.split('/'))
+    top = filter(lambda x: len(x.split('/')) == pathNum + 2, data)
+    deeper = filter(lambda x: len(x.split('/')) == pathNum + 3, data)
+
+    subfolders = {'Atlas': top}
+    for directory in deeper:
+      folder = self.getFolderName(directory)
+      try:
+        subfolders[folder].append(directory)
+      except:
+        subfolders[folder] = [directory]
+    return subfolders
+      
+  def getFolderName(self, directory):
+    folders = directory.split('/')
+    for (i, f) in enumerate(folders):
+      if f.endswith('imageset'):
+        return folders[i - 1]
+    return 'Atlas'
 
   def saveImageData(self, filename, imageData, scale):
     outdir = self.outPath + '/' + filename + '.imageset/'
@@ -128,24 +151,27 @@ class AtlasGen:
     except:
       return None
 
+  #this will always produce squares which may not be the most efficient
+  #for 7 images it'll create a 3x3 square leaving two "blank" spaces
+  #instead of a more efficient 4x2, I'll think of something someday
   def getDimensions(self, size, count):
-    d = 2
-    rows = 1
-    while d < count:
-      d *= 2
-      rows += 1
-    if size * d >= 4096:
+    d = 1
+    dim = 1
+    while dim < count:
+      d += 1
+      dim = d * d
+    if size * d > 4096:
       raise Exception('Atlas will be too large for Metal probably.')
-    return (size * d, size * rows)
+    return (size * d, size * d)
   
   def makeAtlas(self, data):
     size = self.getSize(data[0])
 
     if not size:
-      print('no image data')
+      raise Exception('no image data')
       return None
     elif size[0] != size[1]:
-      print('this probably will not work with non-square images')
+      raise Exception('this was only (poorly) designed for square images')
       return None
 
     s = size[0]
@@ -157,12 +183,12 @@ class AtlasGen:
     for i in data:
       image = Image.open(i)
 
-      if x * s > dimensions[0]:
+      if x * s >= dimensions[0]:
         y += 1
         x = 0
        
       cat.paste(image, (x * s, y * s))
-      
+
       x += 1
     return cat
 
@@ -176,14 +202,27 @@ def main():
     print('no update needed')
     return
   
-  data = fm.getImageData()
+  (size2data, size3data)= fm.getImageData()
+  size2folders = fm.filterByFolder(size2data)
+  size3folders = fm.filterByFolder(size3data)
+
   ag = AtlasGen()
-  size2 = ag.makeAtlas(data[0])
-  size3 = ag.makeAtlas(data[1])
+
+  images2 = {}
+  for (k, v) in size2folders.iteritems():
+    images2[k] = ag.makeAtlas(v)
+  
+  images3 = {}
+  for (k, v) in size3folders.iteritems():
+    images3[k] = ag.makeAtlas(v)
 
   fm.deleteOldData()
-  fm.saveImageData('Atlas', size2, '2x')
-  fm.saveImageData('Atlas', size3, '3x')
+
+  for (k, v) in images2.iteritems():
+    fm.saveImageData(k, v, '2x')
+  for (k, v) in images3.iteritems():
+    fm.saveImageData(k, v, '3x')
+
 
 if __name__ == '__main__':
   main()
