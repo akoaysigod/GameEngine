@@ -17,3 +17,4 @@ DerivedData
 *.xcuserstate
 resources/Test.xcassets
 resources/Test.atlasData
+resources/AtlasData.xcassets

@@ -12,14 +12,14 @@ import shutil
 import sys
 
 class FileManager:
-  def __init__(self, inPath, outPath):
+  def __init__(self, inPath, outPath, jsonOutPath):
     if not os.getcwd().endswith('/resources'):
       ospath = os.getcwd() + '/resources/'
     else:
       ospath = os.getcwd() + '/'
     self.inPath = ospath + inPath
     self.outPath = ospath + outPath
-    self.jsonOutPath = ospath + outPath[:-len('.xcassets')] + '.atlasData/'
+    self.jsonOutPath = ospath + jsonOutPath + '/'
     self.twoImages = []
     self.thrImages = []
 
@@ -45,7 +45,8 @@ class FileManager:
     except:
       pass
     shutil.copyfile(self.inPath + '/Contents.json', self.outPath + '/Contents.json')
-      
+    shutil.copyfile(self.inPath + '/Contents.json', self.jsonOutPath + '/Contents.json')
+ 
   def getImageData(self):
     imageDirs = [i[0] for i in os.walk(self.inPath) if i[0].endswith('imageset')] 
     imageConts = [i + '/Contents.json' for i in imageDirs]
@@ -147,9 +148,34 @@ class FileManager:
     f.close()
 
   def saveJSONData(self, jsonName, jsonData, scale):
-    with open(self.jsonOutPath + jsonName + '@' + scale + '.json', 'w') as f:
-      j = json.dumps(jsonData)
-      f.write(j)
+    try:
+      os.mkdir(self.jsonOutPath)
+    except:
+      pass
+
+    outdir = self.jsonOutPath + jsonName + '@' + scale + '.dataset/'
+    try:
+      os.mkdir(outdir)
+    except:
+      pass
+    
+    with open(outdir + jsonName + '.json', 'w+') as f:
+      f.write(json.dumps(jsonData))
+
+    with open(outdir + 'Contents.json', 'w+') as f:
+      j = {
+        'info': {
+          'version': 1,
+          'author': 'xcode'
+        },
+        'data': [
+          {
+            'idiom': 'universal',
+            'filename': jsonName + '.json'
+          }
+        ]
+      }
+      f.write(json.dumps(j))
 
 class AtlasGen:
   def getSize(self, data):
@@ -214,11 +240,11 @@ class AtlasGen:
     return (cat, atlas)
 
 def main():
-  if len(sys.argv) <= 2:
-    print(sys.argv[0] + " xcassetsIn xcassetsOut")
+  if len(sys.argv) <= 3:
+    print(sys.argv[0] + " xcassetsIn xcassetsOut xcassetDataOut")
     return
 
-  fm = FileManager(sys.argv[1], sys.argv[2])
+  fm = FileManager(sys.argv[1], sys.argv[2], sys.argv[3])
   if not fm.updateRequired():
     print('no update needed')
     return
