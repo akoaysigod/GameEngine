@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GLKit
+import UIKit
 
 public typealias ActionCompletion = () -> ()
 public typealias GEActions = [GEAction]

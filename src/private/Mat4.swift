@@ -23,23 +23,6 @@ extension Vec4 {
 }
 
 extension Mat4 {
-  var size: Int {
-    return FloatSize * data.count
-  }
-  
-  var data: [Float] {
-    return [
-      self[0].x, self[0].y, self[0].z, self[0].w,
-      self[1].x, self[1].y, self[1].z, self[1].w,
-      self[2].x, self[2].y, self[2].z, self[2].w,
-      self[3].x, self[3].y, self[3].z, self[3].w
-//      m00, m01, m02, m03,
-//      m10, m11, m12, m13,
-//      m20, m21, m22, m23,
-//      m30, m31, m32, m33
-    ]
-  }
-
   static var identity: Mat4 {
     return Mat4(1.0)
   }

@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import GLKit
 import Metal
+import UIKit
 
 public class GEColorRect: GENode, Renderable {
   public var color = UIColor.whiteColor()

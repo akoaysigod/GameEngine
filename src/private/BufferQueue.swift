@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import GLKit
 import Metal
 
 
@@ -29,26 +28,6 @@ final class BufferQueue {
 
     inflightSemaphore = dispatch_semaphore_create(size)
   }
-
-  //deprecate this at some point
-  private func updateBuffer(data: Data) {
-    let offset = currentBuffer * dataSize
-    let contents = buffer.contents()
-    let pointer = UnsafeMutablePointer<Float>(contents + offset)
-    memcpy(pointer, data, dataSize)
-  }
-
-  func next(commandBuffer: MTLCommandBuffer, data: Data) -> Int {
-    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
-    commandBuffer.addCompletedHandler { [weak self] (_) -> Void in
-      guard let strongSelf = self else { return }
-      dispatch_semaphore_signal(strongSelf.inflightSemaphore)
-    }
-    updateBuffer(data)
-    currentBuffer = (currentBuffer + 1) % size
-    return currentBuffer * dataSize
-  }
-  //---------
 
   private func updateBuffer(uniforms: Uniforms) {
     let offset = currentBuffer * dataSize

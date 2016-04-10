@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import GLKit
 import Metal
+import UIKit
 
 public class GEScene: GENode {
   private var metalLayer: CAMetalLayer!

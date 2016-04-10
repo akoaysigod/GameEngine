@@ -6,7 +6,6 @@
 //  Copyright © 2015 Anthony Green. All rights reserved.
 //
 
-import GLKit
 import Metal
 import MetalKit
 import UIKit

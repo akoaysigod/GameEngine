@@ -6,9 +6,8 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
-import GLKit
-import UIKit
 import simd
+import UIKit
 
 public protocol GENodeGeometry: class {
   var camera: GECamera! { get set }
@@ -75,25 +74,6 @@ public extension GENodeGeometry {
     let worldTranslate = Mat4.translate(x - xRot, y - yRot, z)
     let rotation = Mat4.rotate(-1 * self.rotation)
     let rotationTranslate = Mat4.translate(xRot, yRot, z)
-
-//    let scale = GLKMatrix4MakeScale(xScale, yScale, 1.0)
-//    let worldTranslate = GLKMatrix4MakeTranslation(x - xRot, y - yRot, z)
-//    let rotation = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-1 * self.rotation), 0.0, 0.0, 1.0)
-//    let rotationTranslate = GLKMatrix4MakeTranslation(xRot, yRot, z)
-
-    return worldTranslate * rotation * rotationTranslate * scale
-  }
-
-  var oldmatrix: GLKMatrix4 {
-    let x = self.x - (width * anchorPoint.x)
-    let y = self.y - (height * anchorPoint.y)
-
-    let xRot = 0.0 - (width * anchorPoint.x)
-    let yRot = 0.0 - (height * anchorPoint.y)
-        let scale = GLKMatrix4MakeScale(xScale, yScale, 1.0)
-    let worldTranslate = GLKMatrix4MakeTranslation(x - xRot, y - yRot, z)
-    let rotation = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-1 * self.rotation), 0.0, 0.0, 1.0)
-    let rotationTranslate = GLKMatrix4MakeTranslation(xRot, yRot, z)
 
     return worldTranslate * rotation * rotationTranslate * scale
   }

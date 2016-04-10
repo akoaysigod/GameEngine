@@ -49,8 +49,6 @@
 		EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */; };
 		EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
 		EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
-		EAA99DC41C41E48900CF3246 /* GLKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */; };
-		EAA99DC51C41E48900CF3246 /* GLKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */; };
 		EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC61C41E4B900CF3246 /* Globals.swift */; };
 		EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC61C41E4B900CF3246 /* Globals.swift */; };
 		EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DC91C41E4F100CF3246 /* Pipelines.swift */; };
@@ -138,7 +136,6 @@
 		EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFTimeIntervalExtensions.swift; path = src/extensions/CFTimeIntervalExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGExtensions.swift; path = src/extensions/CGExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = src/extensions/UIColorExtensions.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GLKExtensions.swift; path = src/extensions/GLKExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DC61C41E4B900CF3246 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = src/private/Globals.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DC91C41E4F100CF3246 /* Pipelines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipelines.swift; path = src/private/Pipelines.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DCA1C41E4F100CF3246 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = src/private/Renderer.swift; sourceTree = SOURCE_ROOT; };
@@ -219,7 +216,6 @@
 			children = (
 				EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */,
 				EAA99DC61C41E4B900CF3246 /* Globals.swift */,
-				EA0964BE1CBAEB0800C03BA9 /* Math */,
 				EAC6405A1C346D6B00B6AE68 /* Nodes */,
 				EAE75E391C42D096001EB176 /* Views */,
 				EAC640A01C34B17A00B6AE68 /* Extensions */,
@@ -348,10 +344,10 @@
 		EAC640A01C34B17A00B6AE68 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				EA0964BE1CBAEB0800C03BA9 /* Math */,
 				EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */,
 				EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */,
 				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
-				EAA99DC31C41E48900CF3246 /* GLKExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -624,7 +620,6 @@
 				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
-				EAA99DC41C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EA0964C01CBAEB1E00C03BA9 /* Mat3.swift in Sources */,
 				EA0964C31CBAEB3F00C03BA9 /* Mat2.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */,
@@ -679,7 +674,6 @@
 				EA256A101CA88057008F720B /* TextureFrame.swift in Sources */,
 				EA256A131CA88082008F720B /* GETextureAtlas.swift in Sources */,
 				EAFD76981C836BF100ABDC50 /* GENodeGeomtry.swift in Sources */,
-				EAA99DC51C41E48900CF3246 /* GLKExtensions.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DE61C41E52700CF3246 /* GESprite.swift in Sources */,

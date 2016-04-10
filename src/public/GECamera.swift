@@ -7,14 +7,12 @@
 //
 
 import Foundation
-import GLKit
 import simd
 import UIKit
 
 public class GECamera: GENode {
   private var cameraMatrix: Mat4 {
     return Mat4.translate(x, y)
-    //return GLKMatrix4Translate(GLKMatrix4Identity, x, y, 0.0)
   }
 
   private var projectionMatrix: Mat4 {
@@ -23,34 +21,8 @@ public class GECamera: GENode {
     let zRow = Vec4(x: 0.0, y: 0.0, z: -2.0 / fsn, w: 0.0)
     let wRow = Vec4(x: -ral / rsl, y: -tab / tsb, z: -fan / fsn, w: 1.0)
 
-//    let xRow = Vec4(x: 2.0 / rsl * zoom, y: 0.0, z: 0.0, w: -ral / rsl)
-//    let yRow = Vec4(x: 0.0, y: 2.0 / tsb * zoom, z: 0.0, w: -tab / tsb)
-//    let zRow = Vec4(x: 0.0, y: 0.0, z: -2.0 / fsn, w: -fan / fsn)
-//    let wRow = Vec4(x: 0.0, y: 0.0, z: 0.0, w: 1.0)
-
     return Mat4([xRow, yRow, zRow, wRow])
-//    let xRow = GLKVector4(v: (2.0 / rsl * zoom, 0.0, 0.0, -ral / rsl))
-//    let yRow = GLKVector4(v: (0.0, 2.0 / tsb * zoom, 0.0, -tab / tsb))
-//    let zRow = GLKVector4(v: (0.0, 0.0, -2.0 / fsn, -fan / fsn))
-//    let wRow = GLKVector4(v: (0.0, 0.0, 0.0, 1.0))
-//    return GLKMatrix4MakeWithRows(xRow, yRow, zRow, wRow)
   }
-
-  var old: GLKMatrix4 {
-    let xRow = GLKVector4(v: (2.0 / rsl * zoom, 0.0, 0.0, -ral / rsl))
-    let yRow = GLKVector4(v: (0.0, 2.0 / tsb * zoom, 0.0, -tab / tsb))
-    let zRow = GLKVector4(v: (0.0, 0.0, -2.0 / fsn, -fan / fsn))
-    let wRow = GLKVector4(v: (0.0, 0.0, 0.0, 1.0))
-    return GLKMatrix4MakeWithRows(xRow, yRow, zRow, wRow)
-  }
-
-//  var data: [Float] {
-//    return cameraMatrix.data + projectionMatrix.data
-//  }
-
-//  var dataSize: Int {
-//    return data.count * FloatSize
-//  }
 
   private var left: Float = 0.0
   private var right: Float
