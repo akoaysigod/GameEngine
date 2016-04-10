@@ -54,11 +54,10 @@ extension Mat4 {
 
     var m = Mat4.identity
 
+    m[0].x = c
+    m[0].y = -s
+    m[1].x = s
     m[1].y = c
-    m[1].z = -1 * s
-
-    m[2].y = s
-    m[2].z = c
 
     return m
   }

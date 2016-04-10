@@ -10,6 +10,6 @@ import Foundation
 
 final class Math {
   static func degreesToRadians(d: Float) -> Float {
-    return (180.0 / Float(M_PI)) * d
+    return (Float(M_PI) / 180.0) * d
   }
 }
