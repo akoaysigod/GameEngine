@@ -10,6 +10,7 @@ import Foundation
 import GLKit
 import Metal
 
+
 final class BufferQueue {
   let buffer: MTLBuffer
 
@@ -21,7 +22,7 @@ final class BufferQueue {
 
   init(device: MTLDevice, dataSize: Int = 0) {
     //kind of a weird way to handle this but since everything has a matrix just add to whatever else the type might have
-    self.dataSize = dataSize + GLKMatrix4().size
+    self.dataSize = dataSize
 
     let bufferSize = self.dataSize * self.size
     buffer = device.newBufferWithLength(bufferSize, options: [])
@@ -29,6 +30,7 @@ final class BufferQueue {
     inflightSemaphore = dispatch_semaphore_create(size)
   }
 
+  //deprecate this at some point
   private func updateBuffer(data: Data) {
     let offset = currentBuffer * dataSize
     let contents = buffer.contents()
@@ -43,6 +45,27 @@ final class BufferQueue {
       dispatch_semaphore_signal(strongSelf.inflightSemaphore)
     }
     updateBuffer(data)
+    currentBuffer = (currentBuffer + 1) % size
+    return currentBuffer * dataSize
+  }
+  //---------
+
+  private func updateBuffer(uniforms: Uniforms) {
+    let offset = currentBuffer * dataSize
+    let contents = buffer.contents()
+    let pointer = UnsafeMutablePointer<Uniforms>(contents + offset)
+
+    var uniforms = uniforms
+    memcpy(pointer, &uniforms, dataSize)
+  }
+
+  func next(commandBuffer: MTLCommandBuffer, uniforms: Uniforms) -> Int {
+    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
+    commandBuffer.addCompletedHandler { [weak self] (_) -> Void in
+      guard let strongSelf = self else { return }
+      dispatch_semaphore_signal(strongSelf.inflightSemaphore)
+    }
+    updateBuffer(uniforms)
     currentBuffer = (currentBuffer + 1) % size
     return currentBuffer * dataSize
   }

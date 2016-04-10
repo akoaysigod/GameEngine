@@ -14,8 +14,8 @@ class FileManager {
     self.inPath = inPath
     self.outPath = outPath
 
-    if updateRequired() {
-      do {
+    if do() {
+      updateRequired {
         try fm.createDirectoryAtPath(outPath, withIntermediateDirectories: false, attributes: nil)
       }
       catch let error as NSError {

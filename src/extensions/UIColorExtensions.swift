@@ -7,6 +7,7 @@
 //
 
 import MetalKit
+import simd
 import UIKit
 
 public typealias GEColor = (r: Float, g: Float, b: Float, a: Float)
@@ -18,6 +19,10 @@ public extension UIColor {
 
   var data: [Float] {
     return [rgb.r, rgb.g, rgb.b, rgb.a]
+  }
+
+  var vec4: Vec4 {
+    return Vec4(r: rgb.r, g: rgb.g, b: rgb.b, a: rgb.a)
   }
 
   var rgb: (r: Float, g: Float, b: Float, a: Float) {

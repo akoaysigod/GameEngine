@@ -72,6 +72,7 @@ struct Quad {
 
     //lol everything is upside down and I don't understand it 
     //should probably standardize this across every way of making sprites but who knows
+    //alternatively unflip the quads and flip them here which is what I should have did to begin with :(
     let ll = SpriteVertex(s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, x: sWidth)
     let ul = SpriteVertex(s: (x + sWidth) / tWidth, t: y / tHeight, x: sWidth, y: sHeight)
     let ur = SpriteVertex(s: x / tWidth, t: y / tHeight, y: sHeight)

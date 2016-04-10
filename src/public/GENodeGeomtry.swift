@@ -6,8 +6,9 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
-import Foundation
 import GLKit
+import UIKit
+import simd
 
 public protocol GENodeGeometry: class {
   var camera: GECamera! { get set }
@@ -29,7 +30,7 @@ public protocol GENodeGeometry: class {
   var xScale: Float { get set }
   var yScale: Float { get set }
 
-  var modelMatrix: GLKMatrix4 { get }
+  var modelMatrix: Mat4 { get }
 
   func updateSize()
 }
@@ -48,7 +49,7 @@ public extension GENodeGeometry {
     set {
       x = newValue.0
       y = newValue.1
-    } 
+    }
   }
 
   var z: Float {
@@ -63,14 +64,33 @@ public extension GENodeGeometry {
     }
   }
 
-  public var modelMatrix: GLKMatrix4 {
+  public var modelMatrix: Mat4 {
     let x = self.x - (width * anchorPoint.x)
     let y = self.y - (height * anchorPoint.y)
 
     let xRot = 0.0 - (width * anchorPoint.x)
     let yRot = 0.0 - (height * anchorPoint.y)
 
-    let scale = GLKMatrix4MakeScale(xScale, yScale, 1.0)
+    let scale = Mat4.scale(xScale, yScale)
+    let worldTranslate = Mat4.translate(x - xRot, y - yRot, z)
+    let rotation = Mat4.rotate(-1 * self.rotation)
+    let rotationTranslate = Mat4.translate(xRot, yRot, z)
+
+//    let scale = GLKMatrix4MakeScale(xScale, yScale, 1.0)
+//    let worldTranslate = GLKMatrix4MakeTranslation(x - xRot, y - yRot, z)
+//    let rotation = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-1 * self.rotation), 0.0, 0.0, 1.0)
+//    let rotationTranslate = GLKMatrix4MakeTranslation(xRot, yRot, z)
+
+    return worldTranslate * rotation * rotationTranslate * scale
+  }
+
+  var oldmatrix: GLKMatrix4 {
+    let x = self.x - (width * anchorPoint.x)
+    let y = self.y - (height * anchorPoint.y)
+
+    let xRot = 0.0 - (width * anchorPoint.x)
+    let yRot = 0.0 - (height * anchorPoint.y)
+        let scale = GLKMatrix4MakeScale(xScale, yScale, 1.0)
     let worldTranslate = GLKMatrix4MakeTranslation(x - xRot, y - yRot, z)
     let rotation = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-1 * self.rotation), 0.0, 0.0, 1.0)
     let rotationTranslate = GLKMatrix4MakeTranslation(xRot, yRot, z)
