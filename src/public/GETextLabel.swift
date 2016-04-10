@@ -10,7 +10,6 @@
 
 import CoreText
 import Foundation
-import GLKit
 import Metal
 import UIKit
 
@@ -38,7 +37,7 @@ public class GETextLabel: GENode, Renderable {
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 
-    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: sizeof(Uniforms))
 
     super.init(size: texture!.size)
   }

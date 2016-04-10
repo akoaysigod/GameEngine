@@ -26,7 +26,7 @@ public class GEColorRect: GENode, Renderable {
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 
-    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: color.size)
+    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: sizeof(Uniforms))
 
     super.init(size: size)
   }

@@ -39,21 +39,21 @@ public class GEViewController: UIViewController {
       sp.position = (0.0, 0.0)
       scene.addNode(sp)
 
-//      let sp2 = GESprite(texture: floor)
-//      sp2.position = (Float(sp2.size.width), 0.0)
-//      scene.addNode(sp2)
-//
-//      let sp3 = GESprite(texture: openDoor)
-//      sp3.position = (Float(sp3.size.width * 2), 0.0)
-//      scene.addNode(sp3)
-//
-//      let sp4 = GESprite(texture: stairsDown)
-//      sp4.position = (Float(sp4.size.width * 3), 0.0)
-//      scene.addNode(sp4)
-//
-//      let sp5 = GESprite(texture: stairsUp)
-//      sp5.position = (Float(sp5.size.width * 4), 0.0)
-//      scene.addNode(sp5)
+      let sp2 = GESprite(texture: floor)
+      sp2.position = (Float(sp2.size.width), 0.0)
+      scene.addNode(sp2)
+
+      let sp3 = GESprite(texture: openDoor)
+      sp3.position = (Float(sp3.size.width * 2), 0.0)
+      scene.addNode(sp3)
+
+      let sp4 = GESprite(texture: stairsDown)
+      sp4.position = (Float(sp4.size.width * 3), 0.0)
+      scene.addNode(sp4)
+
+      let sp5 = GESprite(texture: stairsUp)
+      sp5.position = (Float(sp5.size.width * 4), 0.0)
+      scene.addNode(sp5)
     }
 
 //    let texture = GETexture(imageName: "Knight")
@@ -71,23 +71,23 @@ public class GEViewController: UIViewController {
 //    testText.name = "test text"
 //    scene.addNode(testText)
 //
-//    let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
-//    colorRect.name = "Gray rect"
-//    colorRect.anchorPoint = (0.5, 0.5)
-//    colorRect.x = 100
-//    colorRect.y = 300
-//    
-//    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
-//    let forever = GEAction.repeatForever(action)
-//    colorRect.runAction(forever)
-//    scene.addNode(colorRect)
-//
-//    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
-//    colorRect2.name = "Red rect"
-//    colorRect2.position = (50, 300)
-//    colorRect2.anchorPoint = (0.5, 0.5)
-//    colorRect2.zPosition = 0
-//    colorRect.addNode(colorRect2)
+    let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
+    colorRect.name = "Gray rect"
+    colorRect.anchorPoint = (0.5, 0.5)
+    colorRect.x = 100
+    colorRect.y = 300
+    
+    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
+    let forever = GEAction.repeatForever(action)
+    colorRect.runAction(forever)
+    scene.addNode(colorRect)
+
+    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
+    colorRect2.name = "Red rect"
+    colorRect2.position = (50, 300)
+    colorRect2.anchorPoint = (0.5, 0.5)
+    colorRect2.zPosition = 0
+    colorRect.addNode(colorRect2)
 //
 //    let texture = GETexture(imageName: "Atlas")
 //    let sp = GESprite(texture: texture)
