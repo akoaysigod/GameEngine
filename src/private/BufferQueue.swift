@@ -20,7 +20,8 @@ final class BufferQueue {
   var inflightSemaphore: dispatch_semaphore_t
 
   init(device: MTLDevice, dataSize: Int = 0) {
-    //kind of a weird way to handle this but since everything has a matrix just add to whatever else the type might have
+    assert(dataSize > 0, "The size of the buffer should be greater than 0.")
+
     self.dataSize = dataSize
 
     let bufferSize = self.dataSize * self.size

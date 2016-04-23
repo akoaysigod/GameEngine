@@ -253,11 +253,10 @@ public extension Mat4 {
    - parameter top:    The top coordinate of the projection volume. The width/height of the screen.
    - parameter near:   The near coordinate of the projection volume.
    - parameter far:    The far coordinate of the projection volume. Must be greater than near.
-   - parameter zoom:   The "zoomed"-in-ness of the "camera."
 
    - returns: a `Mat4` matrix to be used for projection.
    */
-  public static func orthographic(left: Float = 0.0, right: Float, bottom: Float = 0.0, top: Float, near: Float = -1.0, far: Float = 1.0, zoom: Float = 1.0) -> Mat4 {
+  public static func orthographic(left: Float = 0.0, right: Float, bottom: Float = 0.0, top: Float, near: Float = -1.0, far: Float = 1.0) -> Mat4 {
     assert(near < far, "The orthographic projection doesn't make sense.")
 
     let ral = right + left
@@ -267,8 +266,8 @@ public extension Mat4 {
     let fan = far + near 
     let fsn = far - near
 
-    let xRow = Vec4(x: 2.0 / rsl * zoom, y: 0.0, z: 0.0, w: 0.0)
-    let yRow = Vec4(x: 0.0, y: 2.0 / tsb * zoom, z: 0.0, w: 0.0)
+    let xRow = Vec4(x: 2.0 / rsl, y: 0.0, z: 0.0, w: 0.0)
+    let yRow = Vec4(x: 0.0, y: 2.0 / tsb, z: 0.0, w: 0.0)
     let zRow = Vec4(x: 0.0, y: 0.0, z: -2.0 / fsn, w: 0.0)
     let wRow = Vec4(x: -ral / rsl, y: -tab / tsb, z: -fan / fsn, w: 1.0)
 

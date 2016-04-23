@@ -15,7 +15,9 @@ struct VertexIn {
 };
 
 struct Uniforms {
-  float4x4 mvp;
+  float4x4 projection;
+  float4x4 view;
+  float4x4 model;
   float4 color;
 };
 
@@ -30,7 +32,7 @@ vertex VertexOut colorVertex(uint vid [[vertex_id]],
   VertexIn vertIn = vert[vid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.mvp * float4(vertIn.position);
+  outVertex.position = uniforms.projection * uniforms.view * uniforms.model * float4(vertIn.position);
 
   return outVertex;
 }

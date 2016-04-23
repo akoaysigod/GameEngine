@@ -11,11 +11,8 @@ import simd
 import UIKit
 
 struct Uniforms {
-  var mvp: Mat4
+  var projection: Mat4
+  var view: Mat4
+  var model: Mat4
   var color: Vec4
-
-  init(mvp: Mat4, color: UIColor) {
-    self.mvp = mvp
-    self.color = color.vec4
-  }
 }

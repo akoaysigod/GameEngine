@@ -11,17 +11,16 @@ import simd
 import UIKit
 
 public class Camera: Node {
-  private var cameraMatrix: Mat4 {
-    return Mat4.translate(x, y)
+  var view: Mat4 {
+    return Mat4.translate(x, y) * Mat4.scale(zoom, zoom)
   }
 
-  private var projectionMatrix: Mat4
+  let projection: Mat4
 
   public var zoom: Float = 1.0
   public var scale: Float {
     didSet {
       zoom = scale
-      projectionMatrix = Mat4.orthographic(right: width, top: height, zoom: zoom)
     }
   }
 
@@ -34,14 +33,14 @@ public class Camera: Node {
     self.width = Float(size.width)
     self.height = Float(size.height)
 
-    self.projectionMatrix = Mat4.orthographic(right: width, top: height)
+    self.projection = Mat4.orthographic(right: width, top: height)
 
     super.init(size: size)
   }
 
-  func multiplyMatrices(modelViewMatrix: Mat4) -> Mat4 {
-    return projectionMatrix * cameraMatrix * modelViewMatrix
-  }
+//  func multiplyMatrices(modelViewMatrix: Mat4) -> Mat4 {
+//    return projectionMatrix * cameraMatrix * modelViewMatrix
+//  }
 
   public override func addNode(node: Node) {
     super.addNode(node)

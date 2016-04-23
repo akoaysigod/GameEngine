@@ -20,7 +20,9 @@ struct TransformedVertex {
 };
 
 struct Uniforms {
-  float4x4 mvp;
+  float4x4 projection;
+  float4x4 view;
+  float4x4 model;
   float4 color;
 };
 
@@ -31,7 +33,7 @@ vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
   VertexIn vertIn = vertices[vid];
   
   TransformedVertex outVert;
-  outVert.position = uniforms.mvp * float4(vertIn.position);
+  outVert.position = uniforms.projection * uniforms.view * uniforms.model * float4(vertIn.position);
   outVert.texCoords = vertIn.texCoords;
   
   return outVert;
