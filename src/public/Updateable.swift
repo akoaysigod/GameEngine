@@ -8,11 +8,14 @@
 
 import Foundation
 
+/**
+ Any type that needs to be updated during the main game loop should implement the `Updateable` protocol.
+ */
 protocol Updateable: class, Tree {
-  var time: CFTimeInterval { get }
   var action: Action? { get set }
   var hasAction: Bool { get }
 
-  func updateWithDelta(delta: CFTimeInterval)
+  func update(delta: CFTimeInterval)
   func runAction(action: Action)
+  func stopAction()
 }

@@ -12,7 +12,7 @@ import UIKit
 public typealias ActionCompletion = () -> ()
 public typealias Actions = [Action]
 
-final class ActionSequence {
+private final class ActionSequence {
   var sequence: Actions
   var currentAction: Action? = nil
 
@@ -29,8 +29,13 @@ final class ActionSequence {
   }
 }
 
+/**
+ The `Action` class provides various animation types to be applied to nodes.
+ 
+ Any action applied to a `Node` will also be applied to any of it's child nodes.
+ */
 public final class Action {
-  enum ActionType {
+  private enum ActionType {
     case MoveTo(x: Float, y: Float)
     case MoveBy(x: Float, y: Float)
     case RotateBy(degrees: Float)
@@ -54,30 +59,36 @@ public final class Action {
     self.completion = completion
   }
 
+  func stopAction() {
+    completed = true
+    completion?()
+  }
+
   func run(node: Node, delta: Double) {
-    switch self.actionType {
+    switch actionType {
     case .MoveTo(let x, let y):
-      self.moveTo(node, delta, x, y)
+      moveTo(node, delta, x, y)
     case .MoveBy(let x, let y):
-      self.moveBy(node, delta, x, y)
+      moveBy(node, delta, x, y)
     case .RotateBy(let degrees):
-      self.rotateBy(node, delta, degrees)
+      rotateBy(node, delta, degrees)
     case .ScaleBy(let scale):
-      self.scaleBy(node, delta, scale)
+      scaleBy(node, delta, scale)
     case .ScaleByXY(let x, let y):
-      self.scaleByXY(node, delta, x, y)
+      scaleByXY(node, delta, x, y)
     case .ScaleTo(let x, let y):
-      self.scaleTo(node, delta, x, y)
+      scaleTo(node, delta, x, y)
     case .Sequence(let sequence):
-      self.sequenceActions(node, delta, sequence)
+      sequenceActions(node, delta, sequence)
     case .Group(let actions):
-      self.groupActions(node, delta, actions)
+      groupActions(node, delta, actions)
     }
 
-    self.timer -= delta
+    timer -= delta
 
-    if self.timer <= 0.0 {
-      self.completed = true
+    if timer <= 0.0 {
+      completed = true
+      completion?()
     }
   }
 
@@ -137,46 +148,150 @@ public final class Action {
 }
 
 extension Action {
-  public static func moveTo(to: CGPoint, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .MoveTo(x: to.float.x, y: to.float.y), duration: duration, completion: completion)
-  }
+  /**
+   Move a `Node` to a specific point. 
+   
+   This will update the `position` property of a `Node`.
 
+   - parameter x:          The x coordinate to move to.
+   - parameter y:          The y coordinate to move to.
+   - parameter duration:   How long it should take to move the node.
+   - parameter completion: The closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that moves a node to a point.
+   */
   public static func moveTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action(actionType: .MoveTo(x: x, y: y), duration: duration, completion: completion)
   }
 
+  /**
+   Move a `Node` to a specific point. 
+   
+   This will update the `position` property of a `Node`.
+
+   - parameter to:         The point to move to.
+   - parameter duration:   How long it should take to move the node.
+   - parameter completion: The closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that moves a node to a point.
+   */
+  public static func moveTo(to: CGPoint, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action.moveTo(Float(to.x), y: Float(to.y), duration: duration, completion: completion)
+  }
+
+  /**
+   Move a `Node` by a relative amount from it's current position. 
+   
+   This will update the `position` property of a `Node`.
+
+   - parameter x:          The amount in the x direction to move by.
+   - parameter y:          The amount in the y direction to move by.
+   - parameter duration:   How long it should take to move the node.
+   - parameter completion: The closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that moves a node by a given amount.
+   */
   public static func moveBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action(actionType: .MoveBy(x: x, y: y), duration: duration)
   }
 
+  /**
+   Rotate a `Node` by given amount relative to it's current rotation.
+
+   This will update the `rotation` property of a `Node`.
+
+   - parameter degrees:    The amount to rotate in degrees.
+   - parameter duration:   How long it should take to rotate by the given amount.
+   - parameter completion: A closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that rotates a node by a given amount.
+   */
   public static func rotateBy(degrees: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action(actionType: .RotateBy(degrees: degrees), duration: duration)
   }
 
+  /**
+   Uniformly scale a `Node` by a given amount relative to it's current scale.
+
+   This will update the `scale` property of a `Node`.
+
+   - parameter scale:      The amount to scale by.
+   - parameter duration:   How long it should take to scale.
+   - parameter completion: A closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that scales a node by a given amount.
+   */
   public static func scaleBy(scale: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action(actionType: .ScaleBy(scale: scale), duration: duration, completion: completion)
   }
 
+  /**
+   Scale a `Node` in the x and y direction by a given amount relative to it's current scale.
+   
+   This will update the `scale` property of a `Node`.
+
+   - parameter x:          The amount to scale in the x direction.
+   - parameter y:          The amount to scale in the y direction.
+   - parameter duration:   How long it should take to scale.
+   - parameter completion: A closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that scales a node by a given amount.
+   */
   public static func scaleBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action(actionType: .ScaleByXY(x: x, y: y), duration: duration, completion: completion)
   }
 
+  /**
+   Scale a `Node` to a certain size along the x and y axes.
+   
+   This will update the `scale` property of a `Node`.
+
+   - parameter x:          The amount to scale in the x direction.
+   - parameter y:          The amount to scale in the y direction.
+   - parameter duration:   How long it should take to scale.
+   - parameter completion: A closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that scales a node to a given amount.
+   */
   public static func scaleTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action(actionType: .ScaleTo(x: x, y: y), duration: duration, completion: completion)
   }
 
+  /**
+   Construct an `Action` that is a series of other actions that run when the previous action has finished, ie, in a sequence.
+
+   - parameter sequence:   The actions to be performed in the given order.
+   - parameter completion: A closure to be run when ALL of the actions are completed.
+
+   - returns: A new instance of `Action` with a sequence of `Action`s.
+   */
   public static func sequence(sequence: Actions, completion: ActionCompletion? = nil) -> Action {
     let duration = sequence.map { $0.duration }.reduce(0.0, combine: +)
     return Action(actionType: .Sequence(sequence: ActionSequence(sequence: sequence)), duration: duration, completion: completion)
   }
 
+  /**
+   A group of `Action`s are actions that will run in parallel.
+
+   - parameter group:      The `Action`s to be run at the same time.
+   - parameter completion: The closure to be run when the last action has completed.
+
+   - returns: A new instance of `Action` with a group of `Action`s.
+   */
   public static func group(group: Actions, completion: ActionCompletion? = nil) -> Action {
     let maxDuration = group.map {
       $0.duration
     }.maxElement() ?? 0.0
     return Action(actionType: .Group(actions: group), duration: maxDuration, completion: completion)
   }
-  
+
+  /**
+   Repeat the same action forever.
+
+   - parameter action: The action to be forever repeated.
+
+   - returns: A new instance of `Action` that will run forever.
+   */
   public static func repeatForever(action: Action) -> Action {
     return Action(actionType: action.actionType, duration: Double.infinity, completion: nil)
   }

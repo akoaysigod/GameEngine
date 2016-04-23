@@ -8,6 +8,13 @@
 
 import Foundation
 
+/**
+ The `Tree` protocol is used by any object that wishes to be part of the tree hiearchy with the root more than likely being a `Scene`.
+ 
+ The basic implementation of this is in the `Node` class where the hiearchy is more or less a group of sets so that a `Node` cannot be added multiple times.
+ It would still be possible to add a node to another parent but I'm not sure what will happen or if that even makes sense. 
+ Probably best to avoid doing stuff like that.
+ */
 public protocol Tree: class {
   var nodes: Nodes { get }
   var parent: Node? { get }

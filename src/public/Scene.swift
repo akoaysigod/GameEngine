@@ -12,7 +12,14 @@ import UIKit
 
 /**
  A `Scene` is a node object that holds everything on screen as the root of the node tree. Anything that needs to be displayed must be added to 
- either the scene directorly or a node that is already part of the scene's tree. 
+ either the scene directly or a node that is already part of the scene's tree.
+ 
+ The scene is also responsible for setting up and maintaining the render loop.
+ 
+ In general, this is where all the stuff should happen. Any game using this engine should subclass this and override the `update(_:)` method.
+
+ - discussion: Unlike other `Node` types it's safe to unwrap the `Camera` object on a scene. It will always have a default value and unless no other cameras are created
+               it will be the same camera used for each node added to the scene. Also, it probably makes little sense to add a scene as a child to another scene and may cause problems.
  */
 public class Scene: Node {
   private var metalLayer: CAMetalLayer!
@@ -25,50 +32,37 @@ public class Scene: Node {
 
   private var device: MTLDevice!
 
-  #if DEBUG
-  var debugCamera: Camera
-  var fpsText: TextNode
-  #endif
-
   public override var parent: Node? {
     return nil
   }
 
   public override init(size: CGSize) {
-
-    #if DEBUG
-      self.debugCamera = Camera(size: size)
-      self.fpsText = TextNode(text: "00", font: UIFont.systemFontOfSize(16), color: UIColor.whiteColor())
-      fpsText.name = "FPS Debug text"
-      //fpsText.position = (300, 0)
-      fpsText.camera = debugCamera
-    #endif
-
-    //nodeSet.insert(camera)
-    
     super.init(size: size)
 
     self.name = "scene"
     self.camera = Camera(size: size)
   }
 
-  //why is this like this again?
-  //why not just pass the view to the init?
   func setupRenderer(view: GameView) {
-    self.device = view.device!
+    device = view.device!
     self.renderer = Renderer(view: view)
-    Fonts.cache.device = self.device
-
-    #if DEBUG
-    //addNode(fpsText)
-    #endif
+    Fonts.cache.device = device
   }
-  
-  public func update(timeSinceLastUpdate: CFTimeInterval) {
+
+  /**
+   This is more or less the game loop. 
+   
+   - note: Although this loop is actually set up in `GameViewController` that's only because Metal forced that upon me. I may change this
+           back to a CADisplayLink loop at some point but I believe this is easier for cross platform, ie, OSX, tvOS, etc. So this should be 
+           the main loop for any game using this engine.
+   
+   - parameter timeSinceLastUpdate: The amount of time that's passed since this method was last called.
+   */
+  public override func update(delta: CFTimeInterval) {
     let nodes = getAllNodes()
 
     nodes.forEach { node in
-      node.updateWithDelta(timeSinceLastUpdate)
+      node.update(delta)
     }
 
     let drawables = nodes.flatMap { node -> Renderables in

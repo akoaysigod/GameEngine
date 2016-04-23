@@ -14,6 +14,17 @@ import UIKit
 
 typealias Renderables = [Renderable]
 
+/**
+ The `Renderable` protocol is required by an object that wishes to be rendered. 
+ 
+ The following base classes conform to this protocol: 
+ - ShapeNode
+ - SpriteNode
+ - TextNode
+ 
+ - discussion: At some point I'd like to expose this as a public protocol for creating custom pipelines and renderable types.
+               I'm just not entirely sure how I want it to work.
+ */
 protocol Renderable: NodeGeometry, Tree {
   var vertexBuffer: MTLBuffer { get }
   var indexBuffer: MTLBuffer { get }
@@ -58,9 +69,7 @@ extension Renderable {
 
     let parentMatrix = parent?.modelMatrix ?? Mat4.identity
 
-    //let uniformMatrix = camera.multiplyMatrices(decompose(parentMatrix))
-    //let uniformData = Uniforms(mvp: uniformMatrix, color: color)
-    let uniforms = Uniforms(projection: camera.projection, view: camera.view, model: decompose(parentMatrix), color: color.vec4)
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(parentMatrix), color: color.vec4)
 
     let offset = uniformBufferQueue.next(commandBuffer, uniforms: uniforms)
     renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)

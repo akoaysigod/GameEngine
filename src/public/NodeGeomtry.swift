@@ -9,8 +9,13 @@
 import simd
 import UIKit
 
+/**
+ The `NodeGeometry` protocol is used to give an object enough information to be placed in a scene and possibly rendered. 
+ 
+ - note: Any rendered `Node` must have the camera property be non-nil. I'm still trying to figure out a nicer way to enforce this.
+ */
 public protocol NodeGeometry: class {
-  var camera: Camera! { get set }
+  var camera: Camera? { get set }
 
   var size: CGSize { get set }
   var width: Float { get }
@@ -31,6 +36,10 @@ public protocol NodeGeometry: class {
 
   var modelMatrix: Mat4 { get }
 
+  /**
+   This function updates the actual geometry size of the vertices. It does not scale.
+   It's default implementation is in `Renderable`.
+   */
   func updateSize()
 }
 

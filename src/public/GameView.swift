@@ -11,11 +11,7 @@ import Metal
 import MetalKit
 
 public class GameView: MTKView {
-  //private var currentScene: Scene!
-
-  #if DEBUG
-  public var showFPS = false
-  #endif
+  private weak var currentScene: Scene!
 
   //In case you forget device creation causes a fatal error so just unwrap it everywhere because it does exist
   //or we wouldn't have gotten that far in the execution of this program
@@ -30,11 +26,13 @@ public class GameView: MTKView {
   }
   
   func presentScene(scene: Scene) {
+    currentScene = scene
+
     scene.setupRenderer(self)
 
     paused = false
   }
-//  
+  
 //  var timestamp: CFTimeInterval = 0.0
 //  func newFrame(displayLink: CADisplayLink) {
 //    if timestamp == 0.0 {

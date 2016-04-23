@@ -10,6 +10,19 @@ import Metal
 import MetalKit
 import UIKit
 
+/**
+ The `GameViewController` is responsible for mainly the game/rendering loop. 
+ 
+ A basic setup in viewDidLoad() would look something like 
+ 
+ ````
+ super.viewDidLoad()
+
+ let view = self.view as! GameView
+ scene = Scene(size: view.bounds.size)
+ view.presentScene(scene)
+ ````
+ */
 public class GameViewController: UIViewController {
   var scene: Scene!
 
@@ -158,14 +171,14 @@ extension GameViewController {
     let xMin = t.x > 0 ? tMax : tMin
     let yMin = t.y > 0 ? tMax : tMin
    
-    self.scene.camera.x += t.x > 0 ? Float(min(t.x, xMin)) : Float(max(t.x, xMin))
-    self.scene.camera.y += t.y > 0 ? Float(min(t.y, yMin)) : Float(max(t.y, yMin))
+    self.scene.camera?.x += t.x > 0 ? Float(min(t.x, xMin)) : Float(max(t.x, xMin))
+    self.scene.camera?.y += t.y > 0 ? Float(min(t.y, yMin)) : Float(max(t.y, yMin))
   }
 
   func zoomCamera(p: UIPinchGestureRecognizer) {
-    let scale = self.scene.camera.scale * Float(p.scale)
+    let scale = self.scene.camera!.scale * Float(p.scale)
     let realScale = max(0.5, min(scale, 5.0));
-    self.scene.camera.scale = realScale
+    self.scene.camera!.scale = realScale
     p.scale = 1.0
   }
 }
