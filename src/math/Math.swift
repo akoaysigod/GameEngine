@@ -8,8 +8,8 @@
 
 import Foundation
 
-final class Math {
-  static func degreesToRadians(d: Float) -> Float {
+public final class Math {
+  public static func degreesToRadians(d: Float) -> Float {
     return (Float(M_PI) / 180.0) * d
   }
 }

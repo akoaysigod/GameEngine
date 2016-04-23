@@ -21,7 +21,7 @@ public class Camera: Node {
   public var scale: Float {
     didSet {
       zoom = scale
-      projectionMatrix = Mat4.orthographic(width, height: height, zoom: zoom)
+      projectionMatrix = Mat4.orthographic(right: width, top: height, zoom: zoom)
     }
   }
 
@@ -34,7 +34,7 @@ public class Camera: Node {
     self.width = Float(size.width)
     self.height = Float(size.height)
 
-    self.projectionMatrix = Mat4.orthographic(width, height: height)
+    self.projectionMatrix = Mat4.orthographic(right: width, top: height)
 
     super.init(size: size)
   }

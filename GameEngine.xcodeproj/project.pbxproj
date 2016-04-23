@@ -10,14 +10,6 @@
 		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
 		EA0964B91CBAD23300C03BA9 /* SVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964B81CBAD23300C03BA9 /* SVertex.swift */; };
 		EA0964BA1CBAD23300C03BA9 /* SVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964B81CBAD23300C03BA9 /* SVertex.swift */; };
-		EA0964BC1CBAD30300C03BA9 /* Mat4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964BB1CBAD30300C03BA9 /* Mat4.swift */; };
-		EA0964BD1CBAD30300C03BA9 /* Mat4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964BB1CBAD30300C03BA9 /* Mat4.swift */; };
-		EA0964C01CBAEB1E00C03BA9 /* Mat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964BF1CBAEB1E00C03BA9 /* Mat3.swift */; };
-		EA0964C11CBAEB1E00C03BA9 /* Mat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964BF1CBAEB1E00C03BA9 /* Mat3.swift */; };
-		EA0964C31CBAEB3F00C03BA9 /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C21CBAEB3F00C03BA9 /* Mat2.swift */; };
-		EA0964C41CBAEB3F00C03BA9 /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C21CBAEB3F00C03BA9 /* Mat2.swift */; };
-		EA0964C61CBAEB5E00C03BA9 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C51CBAEB5E00C03BA9 /* Math.swift */; };
-		EA0964C71CBAEB5E00C03BA9 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C51CBAEB5E00C03BA9 /* Math.swift */; };
 		EA0964C91CBAF05100C03BA9 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C81CBAF05100C03BA9 /* Uniforms.swift */; };
 		EA0964CA1CBAF05100C03BA9 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C81CBAF05100C03BA9 /* Uniforms.swift */; };
 		EA1ACBED1C9E53A800878EE6 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACBEC1C9E53A800878EE6 /* Texture.swift */; };
@@ -85,6 +77,14 @@
 		EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
 		EACA16711C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
 		EACA16721C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
+		EAE6ED451CCBC1330046A5BE /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED411CCBC1330046A5BE /* Mat2.swift */; };
+		EAE6ED461CCBC1330046A5BE /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED411CCBC1330046A5BE /* Mat2.swift */; };
+		EAE6ED471CCBC1330046A5BE /* Mat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED421CCBC1330046A5BE /* Mat3.swift */; };
+		EAE6ED481CCBC1330046A5BE /* Mat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED421CCBC1330046A5BE /* Mat3.swift */; };
+		EAE6ED491CCBC1330046A5BE /* Mat4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED431CCBC1330046A5BE /* Mat4.swift */; };
+		EAE6ED4A1CCBC1330046A5BE /* Mat4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED431CCBC1330046A5BE /* Mat4.swift */; };
+		EAE6ED4B1CCBC1330046A5BE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED441CCBC1330046A5BE /* Math.swift */; };
+		EAE6ED4C1CCBC1330046A5BE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED441CCBC1330046A5BE /* Math.swift */; };
 		EAE75E371C42D091001EB176 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* Scene.swift */; };
 		EAE75E381C42D091001EB176 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E361C42D091001EB176 /* Scene.swift */; };
 		EAE75E7F1C42FE62001EB176 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE75E7E1C42FE62001EB176 /* GameView.swift */; };
@@ -115,10 +115,6 @@
 		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA0964B81CBAD23300C03BA9 /* SVertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SVertex.swift; path = src/private/SVertex.swift; sourceTree = SOURCE_ROOT; };
-		EA0964BB1CBAD30300C03BA9 /* Mat4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat4.swift; path = src/private/Mat4.swift; sourceTree = SOURCE_ROOT; };
-		EA0964BF1CBAEB1E00C03BA9 /* Mat3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat3.swift; path = src/private/Mat3.swift; sourceTree = SOURCE_ROOT; };
-		EA0964C21CBAEB3F00C03BA9 /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/private/Mat2.swift; sourceTree = SOURCE_ROOT; };
-		EA0964C51CBAEB5E00C03BA9 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = src/private/Math.swift; sourceTree = SOURCE_ROOT; };
 		EA0964C81CBAF05100C03BA9 /* Uniforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Uniforms.swift; path = src/private/Uniforms.swift; sourceTree = SOURCE_ROOT; };
 		EA1ACBEC1C9E53A800878EE6 /* Texture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Texture.swift; path = src/public/Texture.swift; sourceTree = SOURCE_ROOT; };
 		EA1ACBF21C9E5D7000878EE6 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = resources/error.png; sourceTree = "<group>"; };
@@ -158,6 +154,10 @@
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EACA166D1C9F1A8C00C9119A /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Test.xcassets; path = resources/Test.xcassets; sourceTree = "<group>"; };
 		EACA16701C9F391000C9119A /* Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey.png; path = resources/Grey.png; sourceTree = "<group>"; };
+		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
+		EAE6ED421CCBC1330046A5BE /* Mat3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat3.swift; path = src/math/Mat3.swift; sourceTree = "<group>"; };
+		EAE6ED431CCBC1330046A5BE /* Mat4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat4.swift; path = src/math/Mat4.swift; sourceTree = "<group>"; };
+		EAE6ED441CCBC1330046A5BE /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = src/math/Math.swift; sourceTree = "<group>"; };
 		EAE75E361C42D091001EB176 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Scene.swift; path = src/public/Scene.swift; sourceTree = SOURCE_ROOT; };
 		EAE75E7E1C42FE62001EB176 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = src/public/GameView.swift; sourceTree = SOURCE_ROOT; };
 		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
@@ -196,6 +196,7 @@
 			children = (
 				EA0363BB1C31C85E00D283E3 /* GameEngine */,
 				EAA99DE71C41E53800CF3246 /* Shaders */,
+				EAE6ED401CCBC1090046A5BE /* Math */,
 				EAA99E231C41E64700CF3246 /* resources */,
 				EA0363D21C31C85F00D283E3 /* GameEngineTests */,
 				EA0363BA1C31C85E00D283E3 /* Products */,
@@ -233,17 +234,6 @@
 			);
 			name = GameEngineTests;
 			path = MKTestTests;
-			sourceTree = "<group>";
-		};
-		EA0964BE1CBAEB0800C03BA9 /* Math */ = {
-			isa = PBXGroup;
-			children = (
-				EA0964C21CBAEB3F00C03BA9 /* Mat2.swift */,
-				EA0964BF1CBAEB1E00C03BA9 /* Mat3.swift */,
-				EA0964BB1CBAD30300C03BA9 /* Mat4.swift */,
-				EA0964C51CBAEB5E00C03BA9 /* Math.swift */,
-			);
-			name = Math;
 			sourceTree = "<group>";
 		};
 		EA0DDB9F1C66E1E4002DD5B7 /* Font */ = {
@@ -346,7 +336,6 @@
 		EAC640A01C34B17A00B6AE68 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				EA0964BE1CBAEB0800C03BA9 /* Math */,
 				EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */,
 				EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */,
 				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
@@ -365,6 +354,17 @@
 				EAA99DD31C41E50200CF3246 /* Vertex.swift */,
 			);
 			name = DataStructures;
+			sourceTree = "<group>";
+		};
+		EAE6ED401CCBC1090046A5BE /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				EAE6ED411CCBC1330046A5BE /* Mat2.swift */,
+				EAE6ED421CCBC1330046A5BE /* Mat3.swift */,
+				EAE6ED431CCBC1330046A5BE /* Mat4.swift */,
+				EAE6ED441CCBC1330046A5BE /* Math.swift */,
+			);
+			name = Math;
 			sourceTree = "<group>";
 		};
 		EAE75E391C42D096001EB176 /* Views */ = {
@@ -600,10 +600,9 @@
 				EA9B1E7B1C724C3D000FFDF7 /* TextShader.metal in Sources */,
 				EA1ACBED1C9E53A800878EE6 /* Texture.swift in Sources */,
 				EAA99DEF1C41E57300CF3246 /* GameViewController.swift in Sources */,
-				EA0964BC1CBAD30300C03BA9 /* Mat4.swift in Sources */,
 				EAFD76971C836BF100ABDC50 /* NodeGeomtry.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
-				EA0964C61CBAEB5E00C03BA9 /* Math.swift in Sources */,
+				EAE6ED4B1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* Scene.swift in Sources */,
 				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
@@ -619,10 +618,11 @@
 				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EA7C9AF61C4AF01600A64CB9 /* Renderable.swift in Sources */,
 				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
+				EAE6ED451CCBC1330046A5BE /* Mat2.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
-				EA0964C01CBAEB1E00C03BA9 /* Mat3.swift in Sources */,
-				EA0964C31CBAEB3F00C03BA9 /* Mat2.swift in Sources */,
+				EAE6ED471CCBC1330046A5BE /* Mat3.swift in Sources */,
+				EAE6ED491CCBC1330046A5BE /* Mat4.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* Camera.swift in Sources */,
 				EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */,
@@ -643,11 +643,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA99DF01C41E57300CF3246 /* GameViewController.swift in Sources */,
-				EA0964C71CBAEB5E00C03BA9 /* Math.swift in Sources */,
 				EA9B1E7C1C724C3D000FFDF7 /* TextShader.metal in Sources */,
-				EA0964C11CBAEB1E00C03BA9 /* Mat3.swift in Sources */,
+				EAE6ED481CCBC1330046A5BE /* Mat3.swift in Sources */,
 				EAA99DE21C41E52700CF3246 /* ShapeNode.swift in Sources */,
 				EA3236291C8B85A500DA7FCF /* Tree.swift in Sources */,
+				EAE6ED461CCBC1330046A5BE /* Mat2.swift in Sources */,
+				EAE6ED4A1CCBC1330046A5BE /* Mat4.swift in Sources */,
 				EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
@@ -664,18 +665,17 @@
 				EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
 				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* Camera.swift in Sources */,
-				EA0964C41CBAEB3F00C03BA9 /* Mat2.swift in Sources */,
 				EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EA1ACBEE1C9E53A800878EE6 /* Texture.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* Action.swift in Sources */,
-				EA0964BD1CBAD30300C03BA9 /* Mat4.swift in Sources */,
 				EA0964CA1CBAF05100C03BA9 /* Uniforms.swift in Sources */,
 				EA9B1E821C727625000FFDF7 /* TextNode.swift in Sources */,
 				EA256A101CA88057008F720B /* TextureFrame.swift in Sources */,
 				EA256A131CA88082008F720B /* TextureAtlas.swift in Sources */,
 				EAFD76981C836BF100ABDC50 /* NodeGeomtry.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
+				EAE6ED4C1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DE61C41E52700CF3246 /* SpriteNode.swift in Sources */,
 				EAA99DCD1C41E4F100CF3246 /* Pipelines.swift in Sources */,
