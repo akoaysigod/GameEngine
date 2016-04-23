@@ -10,6 +10,10 @@ import Foundation
 import Metal
 import UIKit
 
+/**
+ A `Scene` is a node object that holds everything on screen as the root of the node tree. Anything that needs to be displayed must be added to 
+ either the scene directorly or a node that is already part of the scene's tree. 
+ */
 public class Scene: Node {
   private var metalLayer: CAMetalLayer!
   private var renderer: Renderer!

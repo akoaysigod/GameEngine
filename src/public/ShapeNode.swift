@@ -54,8 +54,8 @@ public class ShapeNode: Node, Renderable {
 
    - returns: A new instance of `ShapeNode`.
    */
-  public convenience init(width: Double, height: Double, color: UIColor) {
-    self.init(width: Float(width), height: Float(height), color: color)
+  public convenience init<T: FloatLiteralConvertible>(width: T, height: T, color: UIColor) {
+    self.init(width: width, height: height, color: color)
   }
 
   /**
