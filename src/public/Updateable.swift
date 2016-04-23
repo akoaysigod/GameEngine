@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol Updateable: class, GETree {
+protocol Updateable: class, Tree {
   var time: CFTimeInterval { get }
-  var action: GEAction? { get set }
+  var action: Action? { get set }
   var hasAction: Bool { get }
 
   func updateWithDelta(delta: CFTimeInterval)
-  func runAction(action: GEAction)
+  func runAction(action: Action)
 }

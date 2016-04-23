@@ -1,5 +1,5 @@
 //
-//  GETexture.swift
+//  Texture.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 3/19/16.
@@ -10,9 +10,7 @@ import Foundation
 import Metal
 import MetalKit
 
-
-
-public class GETexture {
+public class Texture {
   let texture: MTLTexture
 
   public let width: Int
@@ -42,7 +40,7 @@ public class GETexture {
   }
 
   //not sure if there is a better way to handle this
-  //it basically makes a copy with the same refs but different frames for using a GETextureAtlas
+  //it basically makes a copy with the same refs but different frames for using a TextureAtlas
   init(texture: MTLTexture, frame: TextureFrame) {
     self.texture = texture
     self.width = Int(frame.sWidth)
@@ -59,13 +57,13 @@ public class GETexture {
     //need to think of a way around using UIImage
     guard let image = UIImage(named: named) else {
       DLog("\(named) not found")
-      self.init(texture: GETexture.errorTexture)
+      self.init(texture: Texture.errorTexture)
       return
     }
 
     guard let data = UIImagePNGRepresentation(image) else {
       DLog("\(named) could not be turned into NSData")
-      self.init(texture: GETexture.errorTexture)
+      self.init(texture: Texture.errorTexture)
       return
     }
 
@@ -74,7 +72,7 @@ public class GETexture {
     }
     catch let error {
       DLog("Error loading image named \(named): \(error)")
-      texture = GETexture.errorTexture
+      texture = Texture.errorTexture
     }
 
     self.init(texture: texture)

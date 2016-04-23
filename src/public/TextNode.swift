@@ -1,5 +1,5 @@
 //
-//  GEFont.swift
+//  Font.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 2/15/16.
@@ -13,14 +13,14 @@ import Foundation
 import Metal
 import UIKit
 
-public class GETextLabel: GENode, Renderable {
+public class TextNode: Node, Renderable {
   private typealias GlyphClosure = (glyph: CGGlyph, bounds: CGRect) -> ()
 
   var text: String
   let fontAtlas: FontAtlas
   public var color = UIColor.whiteColor()
 
-  var texture: GETexture?
+  var texture: Texture?
   let vertexBuffer: MTLBuffer
   let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
@@ -30,10 +30,10 @@ public class GETextLabel: GENode, Renderable {
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
 
-    let quads = GETextLabel.makeTextQuads(text, fontAtlas: fontAtlas)
-    self.texture = GETextLabel.loadTexture(fontAtlas, device: Device.shared.device)
+    let quads = TextNode.makeTextQuads(text, fontAtlas: fontAtlas)
+    self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
 
-    let (vertexBuffer, indexBuffer) = GETextLabel.setupBuffers(quads, device: Device.shared.device)
+    let (vertexBuffer, indexBuffer) = TextNode.setupBuffers(quads, device: Device.shared.device)
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 
@@ -42,7 +42,7 @@ public class GETextLabel: GENode, Renderable {
     super.init(size: texture!.size)
   }
 
-  static func loadTexture(fontAtlas: FontAtlas, device: MTLDevice) -> GETexture {
+  static func loadTexture(fontAtlas: FontAtlas, device: MTLDevice) -> Texture {
     let texDesc = MTLTextureDescriptor()
     let textureSize = fontAtlas.textureSize
     texDesc.pixelFormat = .R8Unorm
@@ -53,7 +53,7 @@ public class GETextLabel: GENode, Renderable {
     let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
     texture.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
 
-    return GETexture(texture: texture)
+    return Texture(texture: texture)
   }
 
   //need a size that fits rect sort of thing for the text

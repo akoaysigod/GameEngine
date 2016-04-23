@@ -11,7 +11,7 @@ import Metal
 import MetalKit
 
 class RenderPassQueue {
-  private let view: GEView
+  private let view: GameView
   var queue: [MTLRenderPassDescriptor]
   let depthTex: MTLTexture
 
@@ -21,7 +21,7 @@ class RenderPassQueue {
 
   private var currentDescriptorIndex = 0
 
-  init(view: GEView, queueSize: Int = 3) {
+  init(view: GameView, queueSize: Int = 3) {
     self.view = view
     self.queue = [MTLRenderPassDescriptor]()
 

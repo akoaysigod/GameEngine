@@ -1,5 +1,5 @@
 //
-//  GETextureAtlas.swift
+//  TextureAtlas.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 3/27/16.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class GETextureAtlas {
+public class TextureAtlas {
   //from the resources/AtlasGen.py
   private struct Keys {
     static let Frame = "frame"
@@ -17,19 +17,19 @@ public class GETextureAtlas {
   }
 
   private let jsonData: [String: AnyObject]
-  private let texture: GETexture
+  private let texture: Texture
   public var textureNames: [String] {
     return Array(jsonData.keys)
   }
 
   public init?(named: String) {
     let scale = "\(Int(UIScreen.mainScreen().scale))"
-    guard let jsonData = GETextureAtlas.loadJSONData(named, scale: "@" + scale + "x") else {
+    guard let jsonData = TextureAtlas.loadJSONData(named, scale: "@" + scale + "x") else {
       return nil
     }
     self.jsonData = jsonData
 
-    self.texture = GETexture(named: named)
+    self.texture = Texture(named: named)
   }
 
   private static func loadJSONData(name: String, scale: String) -> [String: AnyObject]? {
@@ -45,7 +45,7 @@ public class GETextureAtlas {
     }
   }
 
-  public func textureNamed(named: String) -> GETexture? {
+  public func textureNamed(named: String) -> Texture? {
     guard let data = jsonData[named] as? [String: AnyObject] else { return nil }
     guard let frameData = data["frame"] as? [String: AnyObject],
       let x = frameData["x"] as? Int,
@@ -54,6 +54,6 @@ public class GETextureAtlas {
       let height = frameData["height"] as? Int else { return nil }
 
     let frame = TextureFrame(x: x, y: y, sWidth: width, sHeight: height, tWidth: texture.width, tHeight: texture.height)
-    return GETexture(texture: texture.texture, frame: frame)
+    return Texture(texture: texture.texture, frame: frame)
   }
 }

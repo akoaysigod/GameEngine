@@ -1,5 +1,5 @@
 //
-//  GEView.swift
+//  GameView.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 1/10/16.
@@ -10,8 +10,8 @@ import Foundation
 import Metal
 import MetalKit
 
-public class GEView: MTKView {
-  private var currentScene: GEScene!
+public class GameView: MTKView {
+  private var currentScene: Scene!
   private var timer: CADisplayLink!
 
   #if DEBUG
@@ -28,7 +28,7 @@ public class GEView: MTKView {
     super.init(coder: aDecoder)
   }
   
-  func presentScene(scene: GEScene) {
+  func presentScene(scene: Scene) {
     self.currentScene = scene
     
     scene.setupRenderer(self)
@@ -47,7 +47,7 @@ public class GEView: MTKView {
     //not sure how to deal with this if you hit a break point the timer gets off making it difficult to figure out what's going on
     #if DEBUG
     if showFPS {
-      let comeBackToThis = 1
+      _ = 1
       //need to figure out how to "animate" text changes for this singular purpose
 
 //      let time = elapsedTime > 0.0 ? elapsedTime : 1.0

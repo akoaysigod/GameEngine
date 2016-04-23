@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
     self.window?.makeKeyAndVisible()
     
-    self.window?.rootViewController = GEViewController()
+    self.window?.rootViewController = GameViewController()
     
     return true
   }

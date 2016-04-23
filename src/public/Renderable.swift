@@ -1,5 +1,5 @@
 //
-//  GERenderNode.swift
+//  RenderNode.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 1/16/16.
@@ -14,12 +14,12 @@ import UIKit
 
 typealias Renderables = [Renderable]
 
-protocol Renderable: GENodeGeometry, GETree {
+protocol Renderable: NodeGeometry, Tree {
   var vertexBuffer: MTLBuffer { get }
   var indexBuffer: MTLBuffer { get }
   var uniformBufferQueue: BufferQueue { get }
 
-  var texture: GETexture? { get set }
+  var texture: Texture? { get set }
   var color: UIColor { get set }
 
   static func setupBuffers(quads: Quads, device: MTLDevice) -> (vertexBuffer: MTLBuffer, indexBuffer: MTLBuffer)
@@ -74,7 +74,7 @@ extension Renderable {
   }
 }
 
-extension GENodeGeometry {
+extension NodeGeometry {
   public func updateSize() {
     guard let renderable = self as? Renderable else { return }
 

@@ -1,5 +1,5 @@
 //
-//  GENodeGeometry.swift
+//  NodeGeometry.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 2/28/16.
@@ -9,8 +9,8 @@
 import simd
 import UIKit
 
-public protocol GENodeGeometry: class {
-  var camera: GECamera! { get set }
+public protocol NodeGeometry: class {
+  var camera: Camera! { get set }
 
   var size: CGSize { get set }
   var width: Float { get }
@@ -34,7 +34,7 @@ public protocol GENodeGeometry: class {
   func updateSize()
 }
 
-public extension GENodeGeometry {
+public extension NodeGeometry {
   public var width: Float {
     return size.w * xScale
   }

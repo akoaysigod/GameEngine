@@ -1,5 +1,5 @@
 //
-//  GEAnimation.swift
+//  Animation.swift
 //  MKTest
 //
 //  Created by Anthony Green on 1/2/16.
@@ -10,17 +10,17 @@ import Foundation
 import UIKit
 
 public typealias ActionCompletion = () -> ()
-public typealias GEActions = [GEAction]
+public typealias Actions = [Action]
 
 final class ActionSequence {
-  var sequence: GEActions
-  var currentAction: GEAction? = nil
+  var sequence: Actions
+  var currentAction: Action? = nil
 
-  init(sequence: GEActions) {
+  init(sequence: Actions) {
     self.sequence = sequence
   }
 
-  func getNextAction() -> GEAction? {
+  func getNextAction() -> Action? {
     guard let currentAction = self.currentAction where !currentAction.completed else {
       self.currentAction = self.sequence.count > 0 ? self.sequence.removeFirst() : nil
       return self.currentAction
@@ -29,7 +29,7 @@ final class ActionSequence {
   }
 }
 
-public final class GEAction {
+public final class Action {
   enum ActionType {
     case MoveTo(x: Float, y: Float)
     case MoveBy(x: Float, y: Float)
@@ -38,7 +38,7 @@ public final class GEAction {
     case ScaleByXY(x: Float, y: Float)
     case ScaleTo(x: Float, y: Float)
     case Sequence(sequence: ActionSequence)
-    case Group(actions: GEActions)
+    case Group(actions: Actions)
   }
 
   private var actionType: ActionType
@@ -54,7 +54,7 @@ public final class GEAction {
     self.completion = completion
   }
 
-  func run(node: GENode, delta: Double) {
+  func run(node: Node, delta: Double) {
     switch self.actionType {
     case .MoveTo(let x, let y):
       self.moveTo(node, delta, x, y)
@@ -81,7 +81,7 @@ public final class GEAction {
     }
   }
 
-  private func moveTo(node: GENode, _ delta: Double, _ x: Float, _ y: Float) {
+  private func moveTo(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     let dirX = x - node.x
     let dirY = y - node.y
 
@@ -89,26 +89,26 @@ public final class GEAction {
     self.actionType = .MoveBy(x: dirX, y: dirY)
   }
 
-  private func moveBy(node: GENode, _ delta: Double, _ x: Float, _ y: Float) {
+  private func moveBy(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     node.x += Float(delta) * x
     node.y += Float(delta) * y
   }
 
-  private func rotateBy(node: GENode, _ delta: Double, _ degrees: Float) {
+  private func rotateBy(node: Node, _ delta: Double, _ degrees: Float) {
     node.rotation += Float(delta) * degrees
   }
 
-  private func scaleBy(node: GENode, _ delta: Double, _ scale: Float) {
+  private func scaleBy(node: Node, _ delta: Double, _ scale: Float) {
     node.xScale += Float(delta) * scale
     node.yScale += Float(delta) * scale
   }
 
-  private func scaleByXY(node: GENode, _ delta: Double, _ x: Float, _ y: Float) {
+  private func scaleByXY(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     node.xScale += Float(delta) * x
     node.yScale += Float(delta) * y
   }
 
-  private func scaleTo(node: GENode, _ delta: Double, _ x: Float, _ y: Float) {
+  private func scaleTo(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     var xScale: Float = max(x, node.xScale) - min(x, node.xScale)
     if node.xScale > x {
       xScale *= -1.0
@@ -123,61 +123,61 @@ public final class GEAction {
     self.actionType = .ScaleByXY(x: xScale, y: yScale)
   }
 
-  private func sequenceActions(node: GENode, _ delta: Double, _ sequence: ActionSequence) {
+  private func sequenceActions(node: Node, _ delta: Double, _ sequence: ActionSequence) {
     if let action = sequence.getNextAction() {
       action.run(node, delta: delta)
     }
   }
 
-  private func groupActions(node: GENode, _ delta: Double, _ actions: GEActions) {
+  private func groupActions(node: Node, _ delta: Double, _ actions: Actions) {
     actions.forEach { action in
       action.run(node, delta: delta)
     }
   }
 }
 
-extension GEAction {
-  public static func moveTo(to: CGPoint, duration: Double, completion: ActionCompletion? = nil) -> GEAction {
-    return GEAction(actionType: .MoveTo(x: to.float.x, y: to.float.y), duration: duration, completion: completion)
+extension Action {
+  public static func moveTo(to: CGPoint, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .MoveTo(x: to.float.x, y: to.float.y), duration: duration, completion: completion)
   }
 
-  public static func moveTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> GEAction {
-    return GEAction(actionType: .MoveTo(x: x, y: y), duration: duration, completion: completion)
+  public static func moveTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .MoveTo(x: x, y: y), duration: duration, completion: completion)
   }
 
-  public static func moveBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> GEAction {
-    return GEAction(actionType: .MoveBy(x: x, y: y), duration: duration)
+  public static func moveBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .MoveBy(x: x, y: y), duration: duration)
   }
 
-  public static func rotateBy(degrees: Float, duration: Double, completion: ActionCompletion? = nil) -> GEAction {
-    return GEAction(actionType: .RotateBy(degrees: degrees), duration: duration)
+  public static func rotateBy(degrees: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .RotateBy(degrees: degrees), duration: duration)
   }
 
-  public static func scaleBy(scale: Float, duration: Double, completion: ActionCompletion? = nil) -> GEAction {
-    return GEAction(actionType: .ScaleBy(scale: scale), duration: duration, completion: completion)
+  public static func scaleBy(scale: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .ScaleBy(scale: scale), duration: duration, completion: completion)
   }
 
-  public static func scaleBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> GEAction {
-    return GEAction(actionType: .ScaleByXY(x: x, y: y), duration: duration, completion: completion)
+  public static func scaleBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .ScaleByXY(x: x, y: y), duration: duration, completion: completion)
   }
 
-  public static func scaleTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> GEAction {
-    return GEAction(actionType: .ScaleTo(x: x, y: y), duration: duration, completion: completion)
+  public static func scaleTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .ScaleTo(x: x, y: y), duration: duration, completion: completion)
   }
 
-  public static func sequence(sequence: GEActions, completion: ActionCompletion? = nil) -> GEAction {
+  public static func sequence(sequence: Actions, completion: ActionCompletion? = nil) -> Action {
     let duration = sequence.map { $0.duration }.reduce(0.0, combine: +)
-    return GEAction(actionType: .Sequence(sequence: ActionSequence(sequence: sequence)), duration: duration, completion: completion)
+    return Action(actionType: .Sequence(sequence: ActionSequence(sequence: sequence)), duration: duration, completion: completion)
   }
 
-  public static func group(group: GEActions, completion: ActionCompletion? = nil) -> GEAction {
+  public static func group(group: Actions, completion: ActionCompletion? = nil) -> Action {
     let maxDuration = group.map {
       $0.duration
     }.maxElement() ?? 0.0
-    return GEAction(actionType: .Group(actions: group), duration: maxDuration, completion: completion)
+    return Action(actionType: .Group(actions: group), duration: maxDuration, completion: completion)
   }
   
-  public static func repeatForever(action: GEAction) -> GEAction {
-    return GEAction(actionType: action.actionType, duration: Double.infinity, completion: nil)
+  public static func repeatForever(action: Action) -> Action {
+    return Action(actionType: action.actionType, duration: Double.infinity, completion: nil)
   }
 }

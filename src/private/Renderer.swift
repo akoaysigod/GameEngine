@@ -18,7 +18,7 @@ final class Renderer {
   private var spritePipeline: SpritePipeline!
   private var textPipeline: TextPipeline!
 
-  init(view: GEView) {
+  init(view: GameView) {
     let device = view.device!
 
     self.commandQueue = device.newCommandQueue()
@@ -39,19 +39,19 @@ final class Renderer {
     if let drawable = descriptorQueue.currentDrawable {
       var renderPassDescriptor = descriptorQueue.next()
 
-      if let colorNodes: [GEColorRect] = colorPipeline.filterRenderables(nodes) {
+      if let colorNodes: [ShapeNode] = colorPipeline.filterRenderables(nodes) {
         colorPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: colorNodes)
       }
       
       renderPassDescriptor = descriptorQueue.next()
 
-      if let spriteNodes: [GESprite] = spritePipeline.filterRenderables(nodes) {
+      if let spriteNodes: [SpriteNode] = spritePipeline.filterRenderables(nodes) {
         spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
       }
       
       renderPassDescriptor = descriptorQueue.next()
 
-      if let textNodes: [GETextLabel] = textPipeline.filterRenderables(nodes) {
+      if let textNodes: [TextNode] = textPipeline.filterRenderables(nodes) {
         textPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: textNodes)
       }
 

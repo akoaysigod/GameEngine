@@ -10,10 +10,10 @@ import Foundation
 import Metal
 import UIKit
 
-public class GEColorRect: GENode, Renderable {
+public class ShapeNode: Node, Renderable {
   public var color = UIColor.whiteColor()
   
-  var texture: GETexture? = nil
+  var texture: Texture? = nil
 
   let vertexBuffer: MTLBuffer
   let indexBuffer: MTLBuffer
@@ -22,7 +22,7 @@ public class GEColorRect: GENode, Renderable {
   init(size: CGSize, color: UIColor) {
     self.color = color
 
-    let (vertexBuffer, indexBuffer) = GEColorRect.setupBuffers([Quad.rect(size.w, size.h)], device: Device.shared.device)
+    let (vertexBuffer, indexBuffer) = ShapeNode.setupBuffers([Quad.rect(size.w, size.h)], device: Device.shared.device)
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 

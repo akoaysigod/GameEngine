@@ -1,5 +1,5 @@
 //
-//  GEScene.swift
+//  Scene.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 1/10/16.
@@ -10,11 +10,11 @@ import Foundation
 import Metal
 import UIKit
 
-public class GEScene: GENode {
+public class Scene: Node {
   private var metalLayer: CAMetalLayer!
   private var renderer: Renderer!
 
-  private var nodeSet = Set<GENode>()
+  private var nodeSet = Set<Node>()
 
   var visible = false
   var uniqueID = "1"
@@ -22,19 +22,19 @@ public class GEScene: GENode {
   private var device: MTLDevice!
 
   #if DEBUG
-  var debugCamera: GECamera
-  var fpsText: GETextLabel
+  var debugCamera: Camera
+  var fpsText: TextNode
   #endif
 
-  public override var parent: GENode? {
+  public override var parent: Node? {
     return nil
   }
 
   public override init(size: CGSize) {
 
     #if DEBUG
-      self.debugCamera = GECamera(size: size)
-      self.fpsText = GETextLabel(text: "00", font: UIFont.systemFontOfSize(16), color: UIColor.whiteColor())
+      self.debugCamera = Camera(size: size)
+      self.fpsText = TextNode(text: "00", font: UIFont.systemFontOfSize(16), color: UIColor.whiteColor())
       fpsText.name = "FPS Debug text"
       //fpsText.position = (300, 0)
       fpsText.camera = debugCamera
@@ -45,12 +45,12 @@ public class GEScene: GENode {
     super.init(size: size)
 
     self.name = "scene"
-    self.camera = GECamera(size: size)
+    self.camera = Camera(size: size)
   }
 
   //why is this like this again?
   //why not just pass the view to the init?
-  func setupRenderer(view: GEView) {
+  func setupRenderer(view: GameView) {
     self.device = view.device!
     self.renderer = Renderer(view: view)
     Fonts.cache.device = self.device

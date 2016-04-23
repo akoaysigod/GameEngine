@@ -10,11 +10,11 @@ import Metal
 import MetalKit
 import UIKit
 
-public class GEViewController: UIViewController {
-  var scene: GEScene!
+public class GameViewController: UIViewController {
+  var scene: Scene!
 
   override public func loadView() {
-    view = GEView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
+    view = GameView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
     view.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
   }
 
@@ -24,88 +24,88 @@ public class GEViewController: UIViewController {
     //let fontTest = FontAtlas(font: UIFont.systemFontOfSize(15.0))
 
 
-    let view = self.view as! GEView
-    scene = GEScene(size: view.bounds.size)
+    let view = self.view as! GameView
+    scene = Scene(size: view.bounds.size)
     view.presentScene(scene)
 
-    if let environmentAtlas = GETextureAtlas(named: "Environment"),
+    if let environmentAtlas = TextureAtlas(named: "Environment"),
        let wall = environmentAtlas.textureNamed("Wall"),
        let floor = environmentAtlas.textureNamed("Floor"),
        let openDoor = environmentAtlas.textureNamed("OpenDoor"),
        let stairsDown = environmentAtlas.textureNamed("StairsDown"),
        let stairsUp = environmentAtlas.textureNamed("StairsUp") {
-      let sp = GESprite(texture: wall)
+      let sp = SpriteNode(texture: wall)
       sp.position = (0.0, 0.0)
       scene.addNode(sp)
 
-      let sp2 = GESprite(texture: floor)
+      let sp2 = SpriteNode(texture: floor)
       sp2.position = (Float(sp2.size.width), 0.0)
       scene.addNode(sp2)
 
-      let sp3 = GESprite(texture: openDoor)
+      let sp3 = SpriteNode(texture: openDoor)
       sp3.position = (Float(sp3.size.width * 2), 0.0)
       scene.addNode(sp3)
 
-      let sp4 = GESprite(texture: stairsDown)
+      let sp4 = SpriteNode(texture: stairsDown)
       sp4.position = (Float(sp4.size.width * 3), 0.0)
       scene.addNode(sp4)
 
-      let sp5 = GESprite(texture: stairsUp)
+      let sp5 = SpriteNode(texture: stairsUp)
       sp5.position = (Float(sp5.size.width * 4), 0.0)
       scene.addNode(sp5)
     }
 
-//    let texture = GETexture(imageName: "Knight")
-//    let sp = GESprite(texture: texture, size: size)
+//    let texture = Texture(imageName: "Knight")
+//    let sp = SpriteNode(texture: texture, size: size)
 //    sp.position = (0.0, 0.0)
-//    let sp2 = GESprite(texture: texture, size: size)
+//    let sp2 = SpriteNode(texture: texture, size: size)
 //    sp2.position = (10.0, 0.0)
-//    let sp3 = GESprite(texture: texture, size: size)
+//    let sp3 = SpriteNode(texture: texture, size: size)
 //    sp3.position = (20.0, 0.0)
 //    scene.addNode(sp)
 //    scene.addNode(sp2)
 //    scene.addNode(sp3)
 
-//    let testText = GETextLabel(text: "wtf test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.orangeColor())
+//    let testText = TextLabel(text: "wtf test test", font: UIFont.boldSystemFontOfSize(32), color: UIColor.orangeColor())
 //    testText.name = "test text"
 //    scene.addNode(testText)
 //
-    let colorRect = GEColorRect(width: 100, height: 100, color: UIColor.grayColor())
+    let colorRect = ShapeNode(width: 100, height: 100, color: UIColor.grayColor())
     colorRect.name = "Gray rect"
     colorRect.anchorPoint = (0.5, 0.5)
     colorRect.x = 100
     colorRect.y = 300
     
-    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
-    //let action = GEAction.moveBy(10.0, y: 0.0, duration: 1.0)
-    //let action = GEAction.moveTo(CGPoint(x: 0.0, y: 0.0), duration: 1.0)
-    let forever = GEAction.repeatForever(action)
+    let action = Action.rotateBy(Float(360.0), duration: 1.0)
+    //let action = Action.moveBy(10.0, y: 0.0, duration: 1.0)
+    //let action = Action.moveTo(CGPoint(x: 0.0, y: 0.0), duration: 1.0)
+    let forever = Action.repeatForever(action)
     colorRect.runAction(forever)
     scene.addNode(colorRect)
 
-    let colorRect2 = GEColorRect(width: 100, height: 100, color: UIColor.redColor())
+    let colorRect2 = ShapeNode(width: 100, height: 100, color: UIColor.redColor())
     colorRect2.name = "Red rect"
     colorRect2.position = (50, 300)
     colorRect2.anchorPoint = (0.5, 0.5)
     colorRect2.zPosition = 0
     colorRect.addNode(colorRect2)
 
-    //let translate1 = GEAction.moveBy(150, y: 0.0, duration: 1.0)
-    //let translate2 = GEAction.moveBy(-150, y: 0.0, duration: 2.0)
-    //let group = GEAction.group([translate1, translate2])
-    //let forever2 = GEAction.repeatForever(group)
+    //let translate1 = Action.moveBy(150, y: 0.0, duration: 1.0)
+    //let translate2 = Action.moveBy(-150, y: 0.0, duration: 2.0)
+    //let group = Action.group([translate1, translate2])
+    //let forever2 = Action.repeatForever(group)
     //colorRect.runAction(group)
 
 //
-//    let texture = GETexture(imageName: "Atlas")
-//    let sp = GESprite(texture: texture)
+//    let texture = Texture(imageName: "Atlas")
+//    let sp = SpriteNode(texture: texture)
 //    sp.name = "bottom sprite"
 //    sp.scale = (10, 10)
 //    sp.position = (300, 300)
 //    scene.addNode(sp)
 //
-//    let texture2 = GETexture(imageName: "Knight")
-//    let sp2 = GESprite(texture: texture2)
+//    let texture2 = Texture(imageName: "Knight")
+//    let sp2 = SpriteNode(texture: texture2)
 //    sp2.size = CGSize(width: 10, height: 10)
 //    sp2.name = "top sprite"
 //    sp2.scale = (10, 10)
@@ -122,7 +122,7 @@ public class GEViewController: UIViewController {
 
 
 //tmp
-extension GEViewController {
+extension GameViewController {
   func addGestures() {
     let pan = UIPanGestureRecognizer(target: self, action: #selector(panCamera(_:)))
     self.view.addGestureRecognizer(pan)
