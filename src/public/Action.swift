@@ -47,9 +47,9 @@ public final class Action {
   }
 
   private var actionType: ActionType
-  public var duration: Double
+  private(set) public var duration: Double
   private var timer: Double
-  public var completion: ActionCompletion? = nil
+  private var completion: ActionCompletion? = nil
   public var completed = false
 
   private init(actionType: ActionType, duration: Double, completion: ActionCompletion? = nil) {
