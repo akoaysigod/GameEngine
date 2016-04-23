@@ -10,11 +10,22 @@ import Foundation
 import Metal
 import MetalKit
 
+/**
+ A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple. 
+ */
 public class GameView: MTKView {
-  private weak var currentScene: Scene!
+  private weak var currentScene: Scene?
 
-  //In case you forget device creation causes a fatal error so just unwrap it everywhere because it does exist
-  //or we wouldn't have gotten that far in the execution of this program
+  /**
+   Create a `GameView` with the current GPU device.
+   
+   - discussion: Anytime device is used it's forced unwrapped as the device will always exist or this program will terminate before getting this far, probably.
+   
+   - parameter frameRect: The frame to make the view.
+   - parameter device:    The current device.
+
+   - returns: A new instance of `GameView` for presenting scenes.
+   */
   override init(frame frameRect: CGRect, device: MTLDevice?) {
     super.init(frame: frameRect, device: device)
 
@@ -25,7 +36,7 @@ public class GameView: MTKView {
     super.init(coder: aDecoder)
   }
   
-  func presentScene(scene: Scene) {
+  public func presentScene(scene: Scene) {
     currentScene = scene
 
     scene.setupRenderer(self)

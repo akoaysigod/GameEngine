@@ -10,6 +10,8 @@ import Foundation
 import Metal
 import UIKit
 
+// since this and GameView have been refactored a lot it might make sense to move this rendering logic into the GameViewController since that holds the main loop anyway. Who knows. I'll think about it.
+
 /**
  A `Scene` is a node object that holds everything on screen as the root of the node tree. Anything that needs to be displayed must be added to 
  either the scene directly or a node that is already part of the scene's tree.
@@ -22,20 +24,22 @@ import UIKit
                it will be the same camera used for each node added to the scene. Also, it probably makes little sense to add a scene as a child to another scene and may cause problems.
  */
 public class Scene: Node {
-  private var metalLayer: CAMetalLayer!
   private var renderer: Renderer!
-
-  private var nodeSet = Set<Node>()
 
   var visible = false
   var uniqueID = "1"
-
-  private var device: MTLDevice!
 
   public override var parent: Node? {
     return nil
   }
 
+  /**
+   Create a scene of a given size. This will serve as the root node to which all other nodes should be added to.
+
+   - parameter size: The size to make the scene.
+
+   - returns: A new instance of `Scene`.
+   */
   public override init(size: CGSize) {
     super.init(size: size)
 
@@ -43,10 +47,14 @@ public class Scene: Node {
     self.camera = Camera(size: size)
   }
 
+  /**
+   The scene is partially responsible for controlling the render loop. This method basically kicks off the whole app.
+
+   - parameter view: The view that has the MTLDevice property.
+   */
   func setupRenderer(view: GameView) {
-    device = view.device!
     self.renderer = Renderer(view: view)
-    Fonts.cache.device = device
+    Fonts.cache.device = view.device!
   }
 
   /**
