@@ -1,5 +1,5 @@
 //
-//  Math.swift
+//  Mat4.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 4/10/16.

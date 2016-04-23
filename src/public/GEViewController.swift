@@ -76,7 +76,9 @@ public class GEViewController: UIViewController {
     colorRect.x = 100
     colorRect.y = 300
     
-    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
+    //let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
+    //let action = GEAction.moveBy(10.0, y: 0.0, duration: 1.0)
+    //let action = GEAction.moveTo(CGPoint(x: 0.0, y: 0.0), duration: 1.0)
     let forever = GEAction.repeatForever(action)
     colorRect.runAction(forever)
     scene.addNode(colorRect)
@@ -87,6 +89,13 @@ public class GEViewController: UIViewController {
     colorRect2.anchorPoint = (0.5, 0.5)
     colorRect2.zPosition = 0
     colorRect.addNode(colorRect2)
+
+    //let translate1 = GEAction.moveBy(150, y: 0.0, duration: 1.0)
+    //let translate2 = GEAction.moveBy(-150, y: 0.0, duration: 2.0)
+    //let group = GEAction.group([translate1, translate2])
+    //let forever2 = GEAction.repeatForever(group)
+    //colorRect.runAction(group)
+
 //
 //    let texture = GETexture(imageName: "Atlas")
 //    let sp = GESprite(texture: texture)
