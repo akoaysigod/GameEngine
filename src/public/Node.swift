@@ -32,7 +32,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
   public var y: Float = 0.0
 
   public var zPosition: Int = 0
-//
+
   public var rotation: Float = 0.0
 
   public var xScale: Float = 1.0

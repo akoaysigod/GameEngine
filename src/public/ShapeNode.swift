@@ -10,6 +10,9 @@ import Foundation
 import Metal
 import UIKit
 
+/**
+ A `ShapeNode` is a node for creating colored shapes. Currently only supports rectangular shapes.
+ */
 public class ShapeNode: Node, Renderable {
   public var color = UIColor.whiteColor()
   
@@ -19,19 +22,51 @@ public class ShapeNode: Node, Renderable {
   let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
 
-  init(size: CGSize, color: UIColor) {
+  /**
+   Designated initializer. Creates a rectangular shape node of a given color.
+
+   - parameter width:  The width of the shape.
+   - parameter height: The height of the shape.
+   - parameter color:  The color of the shape.
+
+   - returns: A new instance of a rectangular `ShapeNode`.
+   */
+  public init(width: Float, height: Float, color: UIColor) {
     self.color = color
 
-    let (vertexBuffer, indexBuffer) = ShapeNode.setupBuffers([Quad.rect(size.w, size.h)], device: Device.shared.device)
+    let (vertexBuffer, indexBuffer) = ShapeNode.setupBuffers([Quad.rect(width, height)], device: Device.shared.device)
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 
     self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: sizeof(Uniforms))
 
-    super.init(size: size)
+    super.init(size: CGSize(width: width, height: height))
   }
 
-  convenience init(width: Double, height: Double, color: UIColor) {
-    self.init(size: CGSize(width: width, height: height), color: color)
+  /**
+   Convenience init. Creates a rectangular shape node of a given color.
+   
+   - discussion: Most of this engine uses `Float` but Swift likes to default numbers to `Doubles`.
+
+   - parameter width:  The width of the shape.
+   - parameter height: The height of the shape.
+   - parameter color:  The color of the shape.
+
+   - returns: A new instance of `ShapeNode`.
+   */
+  public convenience init(width: Double, height: Double, color: UIColor) {
+    self.init(width: Float(width), height: Float(height), color: color)
+  }
+
+  /**
+   Convenience initializer. Creates a rectangular shape node of a given color.
+   
+   - parameter size:  The size of the shape.
+   - parameter color: The color of the shape.
+
+   - returns: A new instance of a rectangular `ShapeNode`.
+   */
+  public convenience init(size: CGSize, color: UIColor) {
+    self.init(width: Float(size.width), height: Float(size.height), color: color)
   }
 }

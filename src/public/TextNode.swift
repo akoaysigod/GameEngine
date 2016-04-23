@@ -13,6 +13,18 @@ import Foundation
 import Metal
 import UIKit
 
+/**
+ A `TextNode` creates a "string" sprite essentially. 
+ 
+ This still needs to be updated for modifying the text properties such as alignment. As well as support for glowing/outlined/better anti-aliased stuff, probably.
+
+ - note: It also currently does not support being updated even if the text property is. I'm not sure if that will ever change or if I'll make the text property private at some point.
+
+ - warning: This will be incredibly slow in debug mode. I'm still trying to figure out a work around. Generally, creating the `FontAtlas` using `Fonts` 
+            in release mode will speed up the process significantly. After which switching back to debug will be ok as it'll be cached.
+ 
+ - seealso: `FontAtlas` and `Fonts` classes.
+ */
 public class TextNode: Node, Renderable {
   private typealias GlyphClosure = (glyph: CGGlyph, bounds: CGRect) -> ()
 
@@ -25,7 +37,18 @@ public class TextNode: Node, Renderable {
   let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
 
-  init(text: String, font: UIFont, color: UIColor) {
+  /**
+   Create a new text label node with a given font.
+   
+   - warning: If the font does not exist yet this will take forever in debug mode and a bit of time with more compiler optimizations turned on.
+
+   - parameter text:  The string to be displayed.
+   - parameter font:  The font to render the string as.
+   - parameter color: The color of the node.
+
+   - returns: A new instance of `TextNode`.
+   */
+  public init(text: String, font: UIFont, color: UIColor) {
     self.text = text
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
