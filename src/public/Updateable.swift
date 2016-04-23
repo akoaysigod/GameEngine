@@ -11,7 +11,7 @@ import Foundation
 /**
  Any type that needs to be updated during the main game loop should implement the `Updateable` protocol.
  */
-protocol Updateable: class, Tree {
+public protocol Updateable: class, Tree {
   var action: Action? { get }
   var hasAction: Bool { get }
 

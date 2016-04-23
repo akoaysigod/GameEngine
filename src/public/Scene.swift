@@ -20,7 +20,7 @@ import UIKit
  
  In general, this is where all the stuff should happen. Any game using this engine should subclass this and override the `update(_:)` method.
 
- - discussion: Unlike other `Node` types it's safe to unwrap the `Camera` object on a scene. It will always have a default value and unless no other cameras are created
+ - discussion: Unlike other `Node` types it's safe to force unwrap the `Camera` object on a scene. It will always have a default value and unless no other cameras are created
                it will be the same camera used for each node added to the scene. Also, it probably makes little sense to add a scene as a child to another scene and may cause problems.
  */
 public class Scene: Node {

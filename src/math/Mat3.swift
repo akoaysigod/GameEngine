@@ -12,6 +12,11 @@ import simd
 public typealias Vec3 = float3
 public typealias Mat3 = float3x3
 
+/**
+ Vec3 is a typealias for simd's float3
+ 
+ This extension provides convenience initializers.
+ */
 public extension Vec3 {
   /**
    Create a `Vec3` using the first 3 components of a `Vec4`.
@@ -25,7 +30,13 @@ public extension Vec3 {
   }
 }
 
+/**
+ Mat3 is a typealias for simd's float3x3
+ 
+ This extension just creates an identity matrix right now.
+ */
 public extension Mat3 {
+  /// Create an identity matrix
   public static var identity: Mat3 {
     return Mat3(1.0)
   }

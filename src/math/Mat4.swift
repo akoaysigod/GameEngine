@@ -17,6 +17,7 @@ import simd
 public typealias Mat4 = float4x4
 public typealias Vec4 = float4
 
+/// Vec4 is a typealias for simd's float4, this extension provides convenience methods for initializing.
 public extension Vec4 {
   /**
    A convenience initializer so you know it's being used as a color vector.
@@ -47,7 +48,15 @@ public extension Vec4 {
   }
 }
 
+/**
+ This is an extension on simd's float4x4.
+ 
+ This mostly provides methods relevant to the graphics math whether or not it's related to 2D or not I'll probably keep adding stuff here when I remember it or need it.
+ 
+ Most of this has been tested against GLKit which was what I was originally using to do the math.
+ */
 public extension Mat4 {
+  /// Create an identity matrix.
   public static var identity: Mat4 {
     return Mat4(1.0)
   }
@@ -103,12 +112,12 @@ public extension Mat4 {
    - returns: A new `Mat4` representing a rotation around an axis.
    */
   public static func rotateAround(axis: Vec3, _ degrees: Float) -> Mat4 {
-    var m = Mat4()
-
     let angle = Math.degreesToRadians(degrees)
 
     let c = cos(angle)
     let s = sin(angle)
+
+    var m = Mat4()
 
     m[0].x = c + axis.x * axis.x * (1 - c)
     m[0].y = (axis.y * axis.x) * (1 - c) + axis.z * s

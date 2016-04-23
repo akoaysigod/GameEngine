@@ -33,8 +33,6 @@
 		EA9B1E811C727625000FFDF7 /* TextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E801C727625000FFDF7 /* TextNode.swift */; };
 		EA9B1E821C727625000FFDF7 /* TextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E801C727625000FFDF7 /* TextNode.swift */; };
 		EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */; };
-		EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
-		EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */; };
 		EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */; };
 		EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */; };
 		EAA99DC11C41E47D00CF3246 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */; };
@@ -128,7 +126,6 @@
 		EA9B1E801C727625000FFDF7 /* TextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextNode.swift; path = src/public/TextNode.swift; sourceTree = SOURCE_ROOT; };
 		EAA99D781C41E10900CF3246 /* GameEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GameEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA99D9A1C41E3D400CF3246 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CFTimeIntervalExtensions.swift; path = src/extensions/CFTimeIntervalExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGExtensions.swift; path = src/extensions/CGExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = src/extensions/UIColorExtensions.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DC61C41E4B900CF3246 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = src/private/Globals.swift; sourceTree = SOURCE_ROOT; };
@@ -336,7 +333,6 @@
 		EAC640A01C34B17A00B6AE68 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				EAA99DB71C41E47D00CF3246 /* CFTimeIntervalExtensions.swift */,
 				EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */,
 				EAA99DBA1C41E47D00CF3246 /* UIColorExtensions.swift */,
 			);
@@ -359,10 +355,10 @@
 		EAE6ED401CCBC1090046A5BE /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				EAE6ED441CCBC1330046A5BE /* Math.swift */,
 				EAE6ED411CCBC1330046A5BE /* Mat2.swift */,
 				EAE6ED421CCBC1330046A5BE /* Mat3.swift */,
 				EAE6ED431CCBC1330046A5BE /* Mat4.swift */,
-				EAE6ED441CCBC1330046A5BE /* Math.swift */,
 			);
 			name = Math;
 			sourceTree = "<group>";
@@ -617,7 +613,6 @@
 				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EAE75E7F1C42FE62001EB176 /* GameView.swift in Sources */,
 				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
-				EAA99DBB1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAE6ED451CCBC1330046A5BE /* Mat2.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
@@ -649,7 +644,6 @@
 				EA3236291C8B85A500DA7FCF /* Tree.swift in Sources */,
 				EAE6ED461CCBC1330046A5BE /* Mat2.swift in Sources */,
 				EAE6ED4A1CCBC1330046A5BE /* Mat4.swift in Sources */,
-				EAA99DBC1C41E47D00CF3246 /* CFTimeIntervalExtensions.swift in Sources */,
 				EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAA99DC81C41E4B900CF3246 /* Globals.swift in Sources */,
 				EAF7BB021C8CC85700258C37 /* Quad.swift in Sources */,
