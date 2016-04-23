@@ -1,5 +1,5 @@
 //
-//  GENode.swift
+//  Node.swift
 //  MKTest
 //
 //  Created by Anthony Green on 12/23/15.
@@ -11,13 +11,13 @@ import Metal
 import QuartzCore
 import UIKit
 
-public typealias GENodes = [GENode]
+public typealias Nodes = [Node]
 
-public func ==(rhs: GENode, lhs: GENode) -> Bool {
+public func ==(rhs: Node, lhs: Node) -> Bool {
    return rhs.hashValue == lhs.hashValue
 }
 
-public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
+public class Node: NodeGeometry, Tree, Equatable, Hashable {
   public var name: String? = nil
   
   public var size: CGSize {
@@ -38,16 +38,16 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   public var xScale: Float = 1.0
   public var yScale: Float = 1.0
   
-  public var camera: GECamera!
+  public var camera: Camera!
 
   //tree related
   private var uuid = NSUUID().UUIDString
   public var hashValue: Int { return uuid.hashValue }
-  private var nodeSet = Set<GENode>()
-  public var nodes: GENodes {
+  private var nodeSet = Set<Node>()
+  public var nodes: Nodes {
     return Array(nodeSet)
   }
-  public private(set) var parent: GENode? = nil
+  public private(set) var parent: Node? = nil
 
   init(size: CGSize = .zero) {
     self.size = size
@@ -68,7 +68,7 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   }
 
   //actions
-  public var action: GEAction? = nil
+  public var action: Action? = nil
   var hasAction: Bool {
     var performingAction = parent?.hasAction ?? false
     while let parent = parent?.parent where !performingAction {
@@ -78,18 +78,18 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
     return action != nil || performingAction
   }
 
-  func runAction(action: GEAction) {
+  func runAction(action: Action) {
     self.action = action
   }
 
   //tree stuff
-  public func addNode(node: GENode) {
+  public func addNode(node: Node) {
     node.camera = camera
     node.parent = self
     nodeSet.insert(node)
   }
   
-  public func removeNode<T: GENode>(node: T?) -> T? {
+  public func removeNode<T: Node>(node: T?) -> T? {
     guard let node = node else { return nil }
     let optNode = nodeSet.remove(node) as? T
     optNode?.parent = nil
@@ -97,7 +97,7 @@ public class GENode: GENodeGeometry, GETree, Equatable, Hashable {
   }
 }
 
-extension GENode: CustomDebugStringConvertible {
+extension Node: CustomDebugStringConvertible {
   public var debugDescription: String {
     let name = self.name ?? "\(self.dynamicType)"
     return name

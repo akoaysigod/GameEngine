@@ -65,14 +65,14 @@
 		EAA99DDD1C41E51C00CF3246 /* GEAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDB1C41E51C00CF3246 /* GEAction.swift */; };
 		EAA99DE11C41E52700CF3246 /* GEColorRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */; };
 		EAA99DE21C41E52700CF3246 /* GEColorRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */; };
-		EAA99DE31C41E52700CF3246 /* GENode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDF1C41E52700CF3246 /* GENode.swift */; };
-		EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDF1C41E52700CF3246 /* GENode.swift */; };
+		EAA99DE31C41E52700CF3246 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDF1C41E52700CF3246 /* Node.swift */; };
+		EAA99DE41C41E52700CF3246 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDF1C41E52700CF3246 /* Node.swift */; };
 		EAA99DE51C41E52700CF3246 /* GESprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DE01C41E52700CF3246 /* GESprite.swift */; };
 		EAA99DE61C41E52700CF3246 /* GESprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DE01C41E52700CF3246 /* GESprite.swift */; };
 		EAA99DEF1C41E57300CF3246 /* GEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DEE1C41E57300CF3246 /* GEViewController.swift */; };
 		EAA99DF01C41E57300CF3246 /* GEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DEE1C41E57300CF3246 /* GEViewController.swift */; };
-		EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* GECamera.swift */; };
-		EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* GECamera.swift */; };
+		EAA99DF21C41E57C00CF3246 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* Camera.swift */; };
+		EAA99DF31C41E57C00CF3246 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* Camera.swift */; };
 		EAA99E281C41E66B00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
 		EAA99E291C41E66C00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
 		EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */; };
@@ -144,10 +144,10 @@
 		EAA99DD31C41E50200CF3246 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vertex.swift; path = src/private/Vertex.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DDB1C41E51C00CF3246 /* GEAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEAction.swift; path = src/public/GEAction.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DDE1C41E52700CF3246 /* GEColorRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEColorRect.swift; path = src/public/GEColorRect.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DDF1C41E52700CF3246 /* GENode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GENode.swift; path = src/public/GENode.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DDF1C41E52700CF3246 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Node.swift; path = src/public/Node.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DE01C41E52700CF3246 /* GESprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GESprite.swift; path = src/public/GESprite.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DEE1C41E57300CF3246 /* GEViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GEViewController.swift; path = src/public/GEViewController.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DF11C41E57C00CF3246 /* GECamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GECamera.swift; path = src/public/GECamera.swift; sourceTree = SOURCE_ROOT; };
+		EAA99DF11C41E57C00CF3246 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Camera.swift; path = src/public/Camera.swift; sourceTree = SOURCE_ROOT; };
 		EAA99E241C41E65700CF3246 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = resources/Assets.xcassets; sourceTree = "<group>"; };
 		EAA99E271C41E65700CF3246 /* Test2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Test2.png; path = resources/Test2.png; sourceTree = "<group>"; };
 		EAA99E2C1C41E6A500CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/Test/Info.plist; sourceTree = "<group>"; };
@@ -324,8 +324,8 @@
 				EAFD76951C836BB200ABDC50 /* Protocols */,
 				EA4A58571C38823D00D39F17 /* Animation */,
 				EAC640A11C34B60E00B6AE68 /* DataStructures */,
-				EAA99DDF1C41E52700CF3246 /* GENode.swift */,
-				EAA99DF11C41E57C00CF3246 /* GECamera.swift */,
+				EAA99DDF1C41E52700CF3246 /* Node.swift */,
+				EAA99DF11C41E57C00CF3246 /* Camera.swift */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -622,10 +622,10 @@
 				EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EA0964C01CBAEB1E00C03BA9 /* Mat3.swift in Sources */,
 				EA0964C31CBAEB3F00C03BA9 /* Mat2.swift in Sources */,
-				EAA99DF21C41E57C00CF3246 /* GECamera.swift in Sources */,
+				EAA99DF21C41E57C00CF3246 /* Camera.swift in Sources */,
 				EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */,
-				EAA99DE31C41E52700CF3246 /* GENode.swift in Sources */,
+				EAA99DE31C41E52700CF3246 /* Node.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,7 +654,7 @@
 				EAE75E801C42FE68001EB176 /* GEView.swift in Sources */,
 				EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */,
-				EAA99DE41C41E52700CF3246 /* GENode.swift in Sources */,
+				EAA99DE41C41E52700CF3246 /* Node.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EA1ACBF51C9E74F000878EE6 /* Renderable.swift in Sources */,
 				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
@@ -662,7 +662,7 @@
 				EAE75E381C42D091001EB176 /* GEScene.swift in Sources */,
 				EAA99DC21C41E47D00CF3246 /* UIColorExtensions.swift in Sources */,
 				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
-				EAA99DF31C41E57C00CF3246 /* GECamera.swift in Sources */,
+				EAA99DF31C41E57C00CF3246 /* Camera.swift in Sources */,
 				EA0964C41CBAEB3F00C03BA9 /* Mat2.swift in Sources */,
 				EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */,

@@ -76,7 +76,7 @@ public class GEViewController: UIViewController {
     colorRect.x = 100
     colorRect.y = 300
     
-    //let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
+    let action = GEAction.rotateBy(Float(360.0), duration: 1.0)
     //let action = GEAction.moveBy(10.0, y: 0.0, duration: 1.0)
     //let action = GEAction.moveTo(CGPoint(x: 0.0, y: 0.0), duration: 1.0)
     let forever = GEAction.repeatForever(action)
