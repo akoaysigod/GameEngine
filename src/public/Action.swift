@@ -71,6 +71,8 @@ public final class Action {
   private var completion: ActionCompletion? = nil
   public var completed = false
 
+  public var easingFunction: EaseFunction = .Linear
+
   private init(actionType: ActionType, duration: Double, completion: ActionCompletion? = nil) {
     self.actionType = actionType
     self.duration = duration
@@ -119,9 +121,26 @@ public final class Action {
     actionType = .MoveBy(x: dirX, y: dirY)
   }
 
+  /*
+   Need a break.
+   
+   Need to interpolate the actual value since this is resetting and the timing is incorrect anyway 
+   
+   cval = (eval - sval) * t + sval
+   
+   definitely other stuff I'm doing incorrectly as well need to read some more
+  */
   private func moveBy(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
-    node.x += Float(delta) * x
-    node.y += Float(delta) * y
+    let normalizedTime = 1.0 - (timer / duration)
+    let time = easingFunction.easeFunction.pointAtTime(normalizedTime)
+
+    print(normalizedTime, time)
+
+    node.x = Float(time.y) * x
+    node.y = Float(time.y) * y
+
+//    node.x += Float(delta) * x
+//    node.y += Float(delta) * y
   }
 
   private func rotateBy(node: Node, _ delta: Double, _ degrees: Float) {

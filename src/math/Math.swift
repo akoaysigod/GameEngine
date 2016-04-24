@@ -8,11 +8,7 @@
 
 import Foundation
 
-infix operator ** {}
 
-public func **(lhs: Float, rhs: Int) -> Float {
-  return pow(lhs, rhs)
-}
 
 /// A collection of Math related helper functions.
 public final class Math {
