@@ -15,6 +15,7 @@ Currently, the `TextureAtlas` classes is tied to this but I'd be totally ok with
 
 ## A few things left to do are:
 - add easing to animations
+- texture animation
 - ensure that the rendering engine is as performant as it can be
   - I'm mostly worried about how textures are being loaded at the moment but I'm sure there are other things I don't fully understand
 - fix the data structures for font rendering
@@ -32,7 +33,8 @@ With that being said, feel free to use it.
 # howto
 If you know SpriteKit you can probably skip this. One thing worth keeping in mind is the `TextNode` will take a really long time to create with no compiler optimization. The algorithm is pretty intense and the array bound checking kills it. It's worth running once with optimizations to force the font textures to be saved to disk.
 
-Currently, I have a bunch of temporary code in `GameViewController` you should probably delete that if compiling down to a framework. Alternatively, to just test stuff out you can just use the `GameEngineTest` target which is not actually a unit test target.
+To just test stuff out you can just build the `GameEngineTest` target which is not actually a unit test target.
+The `TestGameViewController` is already setup to display some stuff.
 
 Otherwise, subclass `GameViewController` and in `viewDidLoad()`:
 

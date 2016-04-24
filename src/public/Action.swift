@@ -15,17 +15,36 @@ public typealias Actions = [Action]
 private final class ActionSequence {
   var sequence: Actions
   var currentAction: Action? = nil
+  var index = 0
+  var forever = false
 
   init(sequence: Actions) {
     self.sequence = sequence
+    self.currentAction = sequence.first
   }
 
   func getNextAction() -> Action? {
-    guard let currentAction = self.currentAction where !currentAction.completed else {
-      self.currentAction = self.sequence.count > 0 ? self.sequence.removeFirst() : nil
+    guard let currentAction = currentAction where !currentAction.completed else {
+      if forever && index + 1 < sequence.count {
+        index += 1
+      }
+      else {
+        index = 0
+      }
+
+      if let action = self.currentAction where forever {
+        action.completed = false
+        action.timer = action.duration
+      }
+
+      self.currentAction = sequence[index]
       return self.currentAction
     }
-    return currentAction
+
+    if !currentAction.completed {
+      return currentAction
+    }
+    return nil
   }
 }
 
@@ -96,8 +115,8 @@ public final class Action {
     let dirX = x - node.x
     let dirY = y - node.y
 
-    self.moveBy(node, delta, dirX, dirY)
-    self.actionType = .MoveBy(x: dirX, y: dirY)
+    moveBy(node, delta, dirX, dirY)
+    actionType = .MoveBy(x: dirX, y: dirY)
   }
 
   private func moveBy(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
@@ -130,8 +149,8 @@ public final class Action {
       yScale *= -1.0
     }
 
-    self.scaleByXY(node, delta, xScale, yScale)
-    self.actionType = .ScaleByXY(x: xScale, y: yScale)
+    scaleByXY(node, delta, xScale, yScale)
+    actionType = .ScaleByXY(x: xScale, y: yScale)
   }
 
   private func sequenceActions(node: Node, _ delta: Double, _ sequence: ActionSequence) {
@@ -288,11 +307,19 @@ extension Action {
   /**
    Repeat the same action forever.
 
-   - parameter action: The action to be forever repeated.
+   - parameter action: The `Action` to be repeated forever.
 
    - returns: A new instance of `Action` that will run forever.
    */
   public static func repeatForever(action: Action) -> Action {
+    let action = action
+    switch action.actionType {
+    case .Sequence(let seq):
+      seq.forever = true
+      action.actionType = .Sequence(sequence: seq)
+    case _: break
+    }
+
     return Action(actionType: action.actionType, duration: Double.infinity, completion: nil)
   }
 }
