@@ -34,7 +34,7 @@ private final class ActionSequence {
 
       if let action = self.currentAction where forever {
         action.completed = false
-        action.timer = action.duration
+        action.timer = 0.0
       }
 
       self.currentAction = sequence[index]
@@ -67,16 +67,19 @@ public final class Action {
 
   private var actionType: ActionType
   private(set) public var duration: Double
-  private var timer: Double
+  private var timer: Double = 0.0
   private var completion: ActionCompletion? = nil
   public var completed = false
 
   public var easingFunction: EaseFunction = .Linear
+  var time: Float {
+    let normalized = timer / duration
+    return Float(easingFunction.function.pointAtTime(normalized))
+  }
 
   private init(actionType: ActionType, duration: Double, completion: ActionCompletion? = nil) {
     self.actionType = actionType
     self.duration = duration
-    self.timer = duration
     self.completion = completion
   }
 
@@ -105,9 +108,9 @@ public final class Action {
       groupActions(node, delta, actions)
     }
 
-    timer -= delta
+    timer += delta
 
-    if timer <= 0.0 {
+    if timer >= duration {
       completed = true
       completion?()
     }
@@ -121,40 +124,23 @@ public final class Action {
     actionType = .MoveBy(x: dirX, y: dirY)
   }
 
-  /*
-   Need a break.
-   
-   Need to interpolate the actual value since this is resetting and the timing is incorrect anyway 
-   
-   cval = (eval - sval) * t + sval
-   
-   definitely other stuff I'm doing incorrectly as well need to read some more
-  */
+
+  var sPos: (x: Float, y: Float) = (0, 0) //tmp maybe
   private func moveBy(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
-    let normalizedTime = 1.0 - (timer / duration)
-    let time = easingFunction.easeFunction.pointAtTime(normalizedTime)
+    if timer == 0.0 {
+      sPos = (node.x, node.y)
+    }
 
-    print(normalizedTime, time)
-
-    node.x = Float(time.y) * x
-    node.y = Float(time.y) * y
-
-//    node.x += Float(delta) * x
-//    node.y += Float(delta) * y
+    node.x = sPos.x + (time * x)
+    node.y = sPos.y + (time * y)
   }
 
+  var sRot: Float = 0.0
   private func rotateBy(node: Node, _ delta: Double, _ degrees: Float) {
-    node.rotation += Float(delta) * degrees
-  }
-
-  private func scaleBy(node: Node, _ delta: Double, _ scale: Float) {
-    node.xScale += Float(delta) * scale
-    node.yScale += Float(delta) * scale
-  }
-
-  private func scaleByXY(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
-    node.xScale += Float(delta) * x
-    node.yScale += Float(delta) * y
+    if timer == 0.0 {
+      sRot = node.rotation
+    }
+    node.rotation = sRot + (time * degrees)
   }
 
   private func scaleTo(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
@@ -170,6 +156,20 @@ public final class Action {
 
     scaleByXY(node, delta, xScale, yScale)
     actionType = .ScaleByXY(x: xScale, y: yScale)
+  }
+
+  private func scaleBy(node: Node, _ delta: Double, _ scale: Float) {
+    scaleByXY(node, delta, scale, scale)
+    actionType = .ScaleByXY(x: scale, y: scale)
+  }
+
+  var sScale: (x: Float, y: Float) = (0, 0)
+  private func scaleByXY(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
+    if timer == 0.0 {
+      sScale = (node.xScale, node.yScale)
+    }
+    node.xScale = sScale.x + (time * x)
+    node.yScale = sScale.y + (time * y)
   }
 
   private func sequenceActions(node: Node, _ delta: Double, _ sequence: ActionSequence) {
@@ -249,6 +249,22 @@ extension Action {
   }
 
   /**
+   Scale a `Node` to a certain size along the x and y axes.
+   
+   This will update the `scale` property of a `Node`.
+
+   - parameter x:          The amount to scale in the x direction.
+   - parameter y:          The amount to scale in the y direction.
+   - parameter duration:   How long it should take to scale.
+   - parameter completion: A closure to be run when the action is over.
+
+   - returns: A new instance of `Action` that scales a node to a given amount.
+   */
+  public static func scaleTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .ScaleTo(x: x, y: y), duration: duration, completion: completion)
+  }
+
+  /**
    Uniformly scale a `Node` by a given amount relative to it's current scale.
 
    This will update the `scale` property of a `Node`.
@@ -277,22 +293,6 @@ extension Action {
    */
   public static func scaleBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action(actionType: .ScaleByXY(x: x, y: y), duration: duration, completion: completion)
-  }
-
-  /**
-   Scale a `Node` to a certain size along the x and y axes.
-   
-   This will update the `scale` property of a `Node`.
-
-   - parameter x:          The amount to scale in the x direction.
-   - parameter y:          The amount to scale in the y direction.
-   - parameter duration:   How long it should take to scale.
-   - parameter completion: A closure to be run when the action is over.
-
-   - returns: A new instance of `Action` that scales a node to a given amount.
-   */
-  public static func scaleTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .ScaleTo(x: x, y: y), duration: duration, completion: completion)
   }
 
   /**

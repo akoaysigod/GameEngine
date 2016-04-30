@@ -20,7 +20,7 @@ public enum EaseFunction {
   private static let easeOut = Easing.easeOut()
   private static let easeInOut = Easing.easeInOut()
 
-  public var easeFunction: Easing {
+  public var function: Easing {
     switch self {
     case .Linear: return EaseFunction.linear
     case .EaseIn: return EaseFunction.easeIn
@@ -44,7 +44,7 @@ public final class Easing {
     self.c2 = c2
   }
 
-  public func pointAtTime(t: Double) -> (x: Double, y: Double) {
+  public func pointAtTime(t: Double) -> Double {
     assert(t >= 0.0 && t <= 1.0, "bezier parameter is out of bounds")
 
     let oneminust = (1.0 - t)
@@ -54,10 +54,9 @@ public final class Easing {
     let thr = 3 * (t**2) * oneminust
     let fur = t**3
 
-    let x = one * s1.x + two * c1.x + thr * c2.x + fur * s2.x
-    let y = one * s1.y + two * c1.y + thr * c2.y + fur * s2.y
-
-    return (x, y)
+    return one * s1.x + two * c1.x + thr * c2.x + fur * s2.x
+    //let y = one * s1.y + two * c1.y + thr * c2.y + fur * s2.y
+    //return (x, y)
   }
 
   public static func linear() -> Easing {
