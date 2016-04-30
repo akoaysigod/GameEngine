@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>GameViewController Class Reference</title>
+    <title>Updateable Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/GameViewController" class="dashAnchor"></a>
-    <a title="GameViewController Class Reference"></a>
+    <a name="//apple_ref/swift/Protocol/Updateable" class="dashAnchor"></a>
+    <a title="Updateable Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a> (43% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        GameViewController Class Reference
+        Updateable Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -134,23 +134,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>GameViewController</h1>
+            <h1>Updateable</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GameViewController</span><span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Updateable</span><span class="p">:</span> <span class="kd">class</span><span class="p">,</span> <span class="kt">Tree</span></code></pre>
 
                 </div>
               </div>
-            <p>The <code>GameViewController</code> is responsible for mainly the game/rendering loop. </p>
-
-<p>A basic setup in viewDidLoad() would look something like </p>
-
-<pre class="highlight plaintext"><code>super.viewDidLoad()
-
-let view = self.view as! GameView
-scene = Scene(size: view.bounds.size)
-view.presentScene(scene)
-</code></pre>
+            <p>Any type that needs to be updated during the main game loop should implement the <code>Updateable</code> protocol.</p>
 
           </section>
           <section class="section task-group-section">
@@ -159,9 +150,9 @@ view.presentScene(scene)
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC10GameEngine18GameViewController8loadViewFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/loadView()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine18GameViewController8loadViewFT_T_">loadView()</a>
+                    <a name="/s:vP10GameEngine10Updateable6actionGSqCS_6Action_"></a>
+                    <a name="//apple_ref/swift/Property/action" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP10GameEngine10Updateable6actionGSqCS_6Action_">action</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -176,7 +167,7 @@ view.presentScene(scene)
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GameViewController</span><span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Updateable</span><span class="p">:</span> <span class="kd">class</span><span class="p">,</span> <span class="kt">Tree</span></code></pre>
 
                         </div>
                       </div>
@@ -186,9 +177,9 @@ view.presentScene(scene)
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC10GameEngine18GameViewController11viewDidLoadFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/viewDidLoad()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine18GameViewController11viewDidLoadFT_T_">viewDidLoad()</a>
+                    <a name="/s:vP10GameEngine10Updateable9hasActionSb"></a>
+                    <a name="//apple_ref/swift/Property/hasAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP10GameEngine10Updateable9hasActionSb">hasAction</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -203,38 +194,7 @@ view.presentScene(scene)
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GameViewController</span><span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC10GameEngine18GameViewController13drawInMTKViewFCSo7MTKViewT_"></a>
-                    <a name="//apple_ref/swift/Method/drawInMTKView(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine18GameViewController13drawInMTKViewFCSo7MTKViewT_">drawInMTKView(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GameViewController</span><span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Updateable</span><span class="p">:</span> <span class="kd">class</span><span class="p">,</span> <span class="kt">Tree</span></code></pre>
 
                         </div>
                       </div>
@@ -244,9 +204,9 @@ view.presentScene(scene)
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC10GameEngine18GameViewController7mtkViewFTCSo7MTKView22drawableSizeWillChangeVSC6CGSize_T_"></a>
-                    <a name="//apple_ref/swift/Method/mtkView(_:drawableSizeWillChange:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine18GameViewController7mtkViewFTCSo7MTKView22drawableSizeWillChangeVSC6CGSize_T_">mtkView(_:drawableSizeWillChange:)</a>
+                    <a name="/s:FP10GameEngine10Updateable6updateFSdT_"></a>
+                    <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10GameEngine10Updateable6updateFSdT_">update(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -261,7 +221,61 @@ view.presentScene(scene)
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GameViewController</span><span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Updateable</span><span class="p">:</span> <span class="kd">class</span><span class="p">,</span> <span class="kt">Tree</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10GameEngine10Updateable9runActionFCS_6ActionT_"></a>
+                    <a name="//apple_ref/swift/Method/runAction(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10GameEngine10Updateable9runActionFCS_6ActionT_">runAction(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Updateable</span><span class="p">:</span> <span class="kd">class</span><span class="p">,</span> <span class="kt">Tree</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10GameEngine10Updateable10stopActionFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/stopAction()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10GameEngine10Updateable10stopActionFT_T_">stopAction()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Updateable</span><span class="p">:</span> <span class="kd">class</span><span class="p">,</span> <span class="kt">Tree</span></code></pre>
 
                         </div>
                       </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ShapeNode Class Reference</title>
+    <title>Renderable Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/ShapeNode" class="dashAnchor"></a>
-    <a title="ShapeNode Class Reference"></a>
+    <a name="//apple_ref/swift/Protocol/Renderable" class="dashAnchor"></a>
+    <a title="Renderable Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a> (43% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        ShapeNode Class Reference
+        Renderable Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -134,14 +134,27 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>ShapeNode</h1>
+            <h1>Renderable</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Renderable</span><span class="p">:</span> <span class="kt">NodeGeometry</span><span class="p">,</span> <span class="kt">Tree</span></code></pre>
 
                 </div>
               </div>
-            <p>A <code>ShapeNode</code> is a node for creating colored shapes. Currently only supports rectangular shapes.</p>
+            <p>The <code>Renderable</code> protocol is required by an object that wishes to be rendered. Applying this protocol to an object should be sufficient for creating a custom pipeline.</p>
+
+<p>The following base classes conform to this protocol:
+- ShapeNode
+- SpriteNode
+- TextNode</p>
+
+<p><li><p>discussion: Currently, this doesn&rsquo;t need to be public as there&rsquo;s no way to add a custom <code>Pipeline</code> to the <code>Renderer</code> at some point I will expose that.
+          I&rsquo;m just not entirely sure how I want to do it yet.</p></li>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><code><a href="../Protocols/NodeGeometry.html">NodeGeometry</a></code> and <code><a href="../Protocols/Tree.html">Tree</a></code></p></p>
+
+<p></div></p>
 
           </section>
           <section class="section task-group-section">
@@ -150,63 +163,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC10GameEngine9ShapeNode5colorVS_5Color"></a>
-                    <a name="//apple_ref/swift/Property/color" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC10GameEngine9ShapeNode5colorVS_5Color">color</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vC10GameEngine9ShapeNode7textureGSqCS_7Texture_"></a>
-                    <a name="//apple_ref/swift/Property/texture" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC10GameEngine9ShapeNode7textureGSqCS_7Texture_">texture</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vC10GameEngine9ShapeNode12vertexBufferPSo9MTLBuffer_"></a>
+                    <a name="/s:vP10GameEngine10Renderable12vertexBufferPSo9MTLBuffer_"></a>
                     <a name="//apple_ref/swift/Property/vertexBuffer" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC10GameEngine9ShapeNode12vertexBufferPSo9MTLBuffer_">vertexBuffer</a>
+                    <a class="token" href="#/s:vP10GameEngine10Renderable12vertexBufferPSo9MTLBuffer_">vertexBuffer</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -214,14 +173,34 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Holds the vertex data for an object. Currently, perhaps forever, the only way to update the vertices of an object after creating
+is by updating their size using the default implementation of updateSize in <code><a href="../Protocols/NodeGeometry.html">NodeGeometry</a></code>.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>All the default renderable objects only have 4 vertices in a rectangular shape.</p>
+
+</div>
+
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>For the default renderable objects, the size of this is buffer is the exact size required and therefore should not be updated
+       after this object has been added to the draw loop. Currently, it&rsquo;s not a big deal I don&rsquo;t think, but that may change at some point.</p>
+
+</div>
+
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><code>func updateSize()</code></p>
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">vertexBuffer</span><span class="p">:</span> <span class="kt">MTLBuffer</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -231,9 +210,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC10GameEngine9ShapeNode11indexBufferPSo9MTLBuffer_"></a>
+                    <a name="/s:vP10GameEngine10Renderable11indexBufferPSo9MTLBuffer_"></a>
                     <a name="//apple_ref/swift/Property/indexBuffer" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC10GameEngine9ShapeNode11indexBufferPSo9MTLBuffer_">indexBuffer</a>
+                    <a class="token" href="#/s:vP10GameEngine10Renderable11indexBufferPSo9MTLBuffer_">indexBuffer</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -241,6 +220,114 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
+                        <p>Holds the indices for each vertex of an object. </p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>By default, this buffer holds [0, 1, 2, 2, 3, 0] where 0, 1, 2 is the upper left triangle, 0 being the lower left vertex.</p>
+
+</div>
+
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><code>Quad</code> for an example.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">indexBuffer</span><span class="p">:</span> <span class="kt">MTLBuffer</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP10GameEngine10Renderable7textureGSqCS_7Texture_"></a>
+                    <a name="//apple_ref/swift/Property/texture" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP10GameEngine10Renderable7textureGSqCS_7Texture_">texture</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A texture to be applied in the fragment shader.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">texture</span><span class="p">:</span> <span class="kt">Texture</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP10GameEngine10Renderable5colorVS_5Color"></a>
+                    <a name="//apple_ref/swift/Property/color" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP10GameEngine10Renderable5colorVS_5Color">color</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A color to be applied during the fragment shader. By default, this is blended with the texture.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">Color</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP10GameEngine10Renderable9decomposeFV4simd8float4x4S2_"></a>
+                    <a name="//apple_ref/swift/Method/decompose(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10GameEngine10Renderable9decomposeFV4simd8float4x4S2_">decompose(_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is used in order to properly update a model matrix of an object based on the parent&rsquo;s model matrix. This, in general, should be used as the 
+model matrix for the uniform buffer and not the default model matrix of the <code><a href="../Protocols/Renderable.html">Renderable</a></code> object.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>By default, the <code>parentMatrix</code> is the direct parent of a <code><a href="../Protocols/Renderable.html">Renderable</a></code> object. I think that&rsquo;s sufficient?</p>
+
+</div>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
                         <p>Undocumented</p>
 
                       </div>
@@ -248,34 +335,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC10GameEngine9ShapeNodecFT5widthSf6heightSf5colorVS_5Color_S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(width:height:color:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecFT5widthSf6heightSf5colorVS_5Color_S0_">init(width:height:color:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Designated initializer. Creates a rectangular shape node of a given color.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">Color</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">decompose</span><span class="p">(</span><span class="nv">parentMatrix</span><span class="p">:</span> <span class="kt">Mat4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Mat4</span></code></pre>
 
                         </div>
                       </div>
@@ -286,38 +346,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>width</em>
+                                <em>parentMatrix</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The width of the shape.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>height</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The height of the shape.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>color</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The color of the shape.</p>
+                                  <p>The <code>Renderable</code>&rsquo;s parent model matrix.</p>
 
                                 </div>
                               </td>
@@ -327,7 +361,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>A new instance of a rectangular <code><a href="../Classes/ShapeNode.html">ShapeNode</a></code>.</p>
+                        <p>A new model matrix to be used as this <code><a href="../Protocols/Renderable.html">Renderable</a></code>&rsquo;s model matrix.</p>
 
                       </div>
                     </section>
@@ -336,160 +370,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC10GameEngine9ShapeNodecuRxs23FloatLiteralConvertiblerFT5widthx6heightx5colorVS_5Color_S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(width:height:color:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecuRxs23FloatLiteralConvertiblerFT5widthx6heightx5colorVS_5Color_S0_">init(width:height:color:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Convenience init. Creates a rectangular shape node of a given color.</p>
-
-<ul>
-<li><p>discussion: Most of this engine uses <code>Float</code> but Swift likes to default numbers to <code>Doubles</code>.</p></li>
-</ul>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">FloatLiteralConvertible</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">Color</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>width</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The width of the shape.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>height</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The height of the shape.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>color</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The color of the shape.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of <code><a href="../Classes/ShapeNode.html">ShapeNode</a></code>.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC10GameEngine9ShapeNodecFT4sizeVSC6CGSize5colorVS_5Color_S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(size:color:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecFT4sizeVSC6CGSize5colorVS_5Color_S0_">init(size:color:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Convenience initializer. Creates a rectangular shape node of a given color.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">Color</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>size</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The size of the shape.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>color</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The color of the shape.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of a rectangular <code><a href="../Classes/ShapeNode.html">ShapeNode</a></code>.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC10GameEngine9ShapeNode4drawFTPSo16MTLCommandBuffer_13renderEncoderPSo23MTLRenderCommandEncoder_7samplerGSqPSo15MTLSamplerState___T_"></a>
+                    <a name="/s:FP10GameEngine10Renderable4drawFTPSo16MTLCommandBuffer_13renderEncoderPSo23MTLRenderCommandEncoder_7samplerGSqPSo15MTLSamplerState___T_"></a>
                     <a name="//apple_ref/swift/Method/draw(_:renderEncoder:sampler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine9ShapeNode4drawFTPSo16MTLCommandBuffer_13renderEncoderPSo23MTLRenderCommandEncoder_7samplerGSqPSo15MTLSamplerState___T_">draw(_:renderEncoder:sampler:)</a>
+                    <a class="token" href="#/s:FP10GameEngine10Renderable4drawFTPSo16MTLCommandBuffer_13renderEncoderPSo23MTLRenderCommandEncoder_7samplerGSqPSo15MTLSamplerState___T_">draw(_:renderEncoder:sampler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -497,16 +380,69 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This is used by the various <code>Pipeline</code>s to encode the objects to the <code>MTLCommandBuffer</code> to be drawn by the GPU.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>The commandBuffer in general is not actually required at this point. It&rsquo;s only being used to signal to the <code>uniformBufferQueue</code> that 
+    the commandBuffer is done and we can update the uniform buffers again.</p>
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">draw</span><span class="p">(</span><span class="nv">commandBuffer</span><span class="p">:</span> <span class="kt">MTLCommandBuffer</span><span class="p">,</span> <span class="nv">renderEncoder</span><span class="p">:</span> <span class="kt">MTLRenderCommandEncoder</span><span class="p">,</span> <span class="nv">sampler</span><span class="p">:</span> <span class="kt">MTLSamplerState</span><span class="p">?)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>commandBuffer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The buffer to encode the commands for drawing the <code>Renderable</code>.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>renderEncoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The command encoder to use for encoding the commands for drawing the <code>Renderale</code> to the command buffer.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sampler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The sampler to use to encode how the shader should sample the texture being applied.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>

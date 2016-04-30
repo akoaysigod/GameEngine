@@ -14,7 +14,7 @@
     <a title="NodeGeometry Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html"> Docs</a> (40% documented)</p>
+        <p><a href="../index.html"> Docs</a> (43% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -35,6 +35,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Camera.html">Camera</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Easing.html">Easing</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/GameView.html">GameView</a>
@@ -69,6 +72,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/EaseFunction.html">EaseFunction</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -76,9 +87,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Mat4.html">Mat4</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/UIColor.html">UIColor</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Vec3.html">Vec3</a>
@@ -103,7 +111,21 @@
                 <a href="../Protocols/NodeGeometry.html">NodeGeometry</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/Renderable.html">Renderable</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/Tree.html">Tree</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Updateable.html">Updateable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Color.html">Color</a>
               </li>
             </ul>
           </li>
@@ -123,9 +145,18 @@
 
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    Any rendered <code><a href="../Classes/Node.html">Node</a></code> must have the camera property be non-nil. I&rsquo;m still trying to figure out a nicer way to enforce this.
+    <p>Any rendered <code><a href="../Classes/Node.html">Node</a></code> must have the camera property be non-nil. I&rsquo;m still trying to figure out a nicer way to enforce this.</p>
 
 </div>
+
+<p><li><p>discussion: Conforming to this protocol will grant access to most of the underlying maths required to render an object properly. 
+          Additionally, conforming to Tree will grant access to adding custom nodes to a <code><a href="../Classes/Scene.html">Scene</a></code> graph. 
+          <code><a href="../Protocols/Renderable.html">Renderable</a></code> has all the required information to do both of the above, as well as draw a node using a custom <code>Pipeline</code>.</p></li>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><code><a href="../Protocols/Renderable.html">Renderable</a></code> and <code><a href="../Protocols/Tree.html">Tree</a></code>.</p></p>
+
+<p></div></p>
 
           </section>
           <section class="section task-group-section">
@@ -144,14 +175,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Any object that wishes to be placed in a <code><a href="../Classes/Scene.html">Scene</a></code> requires a <code><a href="../Classes/Camera.html">Camera</a></code>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">camera</span><span class="p">:</span> <span class="kt">Camera</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -171,14 +202,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The size in world coordinates. This should NOT take the <code><a href="../Protocols/NodeGeometry.html#/s:vP10GameEngine12NodeGeometry5scaleT1xSf1ySf_">scale</a></code> property into considering.
+By default, modifying this property modifies the actual vectors being used by the GPU.</p>
+
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <code><a href="../Protocols/Renderable.html">Renderable</a></code> where the default implementation of <code>func updateSize()</code> is located.
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -201,7 +239,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The width in world coordinates. This uses the <code><a href="../Protocols/NodeGeometry.html#/s:vP10GameEngine12NodeGeometry5scaleT1xSf1ySf_">scale</a></code> property by default.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
@@ -213,7 +251,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">Float</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -236,7 +274,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The height in world coordinates. This uses the <code><a href="../Protocols/NodeGeometry.html#/s:vP10GameEngine12NodeGeometry5scaleT1xSf1ySf_">scale</a></code> property by default.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
@@ -248,7 +286,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Float</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -268,14 +306,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The relative position to which various calculations will be done. This is in unit coordinates in the coordinate system of the model.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">anchorPoint</span><span class="p">:</span> <span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="kt">Float</span><span class="p">)</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -295,14 +333,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The x position. This is relative to the parent or if the scene is a parent, then world coordinates.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">x</span><span class="p">:</span> <span class="kt">Float</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -322,14 +360,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The y position. This is relative to the parent or if the scene is a parent, then world coordinates.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">y</span><span class="p">:</span> <span class="kt">Float</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -352,7 +390,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A convenience var for getting the position variables.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
@@ -364,7 +402,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">position</span><span class="p">:</span> <span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="kt">Float</span><span class="p">)</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -384,14 +422,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This controls the rendering <q>depth.</q></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">zPosition</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -411,14 +449,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>How much to rotate by.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">rotation</span><span class="p">:</span> <span class="kt">Float</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -441,7 +479,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>How much to scale by. In general, this does not affect the <code><a href="../Protocols/NodeGeometry.html#/s:vP10GameEngine12NodeGeometry4sizeVSC6CGSize">size</a></code> property but will modify the width and height.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
@@ -453,7 +491,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">scale</span><span class="p">:</span> <span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="kt">Float</span><span class="p">)</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -473,14 +511,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>How much to scale in the x direction.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">xScale</span><span class="p">:</span> <span class="kt">Float</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -500,14 +538,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>How much to scale in the y direction.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">yScale</span><span class="p">:</span> <span class="kt">Float</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -530,7 +568,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This is actual 4x4 matrix being sent to the GPU in order to properly render a node. 
+The default implementation should be sufficient for creating a custom rendering pipeline.</p>
+
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <code><a href="../Protocols/Renderable.html">Renderable</a></code> and <code>Uniforms</code>.
+
+</div>
 
                       </div>
                       <h4>Default Implementation</h4>
@@ -542,7 +587,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NodeGeometry</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">modelMatrix</span><span class="p">:</span> <span class="kt">Mat4</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -565,8 +610,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This function updates the actual geometry size of the vertices. It does not scale.
-It&rsquo;s default implementation is in <code>Renderable</code>.</p>
+                        <p>This function updates the actual geometry size of the vertices. It&rsquo;s not used as scaling is in the model matrix.
+The actual model matrix will apply it&rsquo;s changes to the update vertices.
+It&rsquo;s default implementation is in <code><a href="../Protocols/Renderable.html">Renderable</a></code>.</p>
+
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <code><a href="../Protocols/Renderable.html">Renderable</a></code>
+
+</div>
 
                       </div>
                       <h4>Default Implementation</h4>
@@ -624,7 +676,7 @@ It&rsquo;s default implementation is in <code>Renderable</code>.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-04-23)</p>
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-04-30)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

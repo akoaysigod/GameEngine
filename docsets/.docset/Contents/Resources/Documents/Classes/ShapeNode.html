@@ -14,7 +14,7 @@
     <a title="ShapeNode Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html"> Docs</a> (40% documented)</p>
+        <p><a href="../index.html"> Docs</a> (43% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -35,6 +35,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Camera.html">Camera</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Easing.html">Easing</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/GameView.html">GameView</a>
@@ -69,6 +72,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/EaseFunction.html">EaseFunction</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -76,9 +87,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Mat4.html">Mat4</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/UIColor.html">UIColor</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Vec3.html">Vec3</a>
@@ -103,7 +111,21 @@
                 <a href="../Protocols/NodeGeometry.html">NodeGeometry</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/Renderable.html">Renderable</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/Tree.html">Tree</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Updateable.html">Updateable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Color.html">Color</a>
               </li>
             </ul>
           </li>
@@ -128,9 +150,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC10GameEngine9ShapeNode5colorCSo7UIColor"></a>
+                    <a name="/s:vC10GameEngine9ShapeNode5colorVS_5Color"></a>
                     <a name="//apple_ref/swift/Property/color" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC10GameEngine9ShapeNode5colorCSo7UIColor">color</a>
+                    <a class="token" href="#/s:vC10GameEngine9ShapeNode5colorVS_5Color">color</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -155,9 +177,90 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC10GameEngine9ShapeNodecFT5widthSf6heightSf5colorCSo7UIColor_S0_"></a>
+                    <a name="/s:vC10GameEngine9ShapeNode7textureGSqCS_7Texture_"></a>
+                    <a name="//apple_ref/swift/Property/texture" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC10GameEngine9ShapeNode7textureGSqCS_7Texture_">texture</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC10GameEngine9ShapeNode12vertexBufferPSo9MTLBuffer_"></a>
+                    <a name="//apple_ref/swift/Property/vertexBuffer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC10GameEngine9ShapeNode12vertexBufferPSo9MTLBuffer_">vertexBuffer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC10GameEngine9ShapeNode11indexBufferPSo9MTLBuffer_"></a>
+                    <a name="//apple_ref/swift/Property/indexBuffer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC10GameEngine9ShapeNode11indexBufferPSo9MTLBuffer_">indexBuffer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10GameEngine9ShapeNodecFT5widthSf6heightSf5colorVS_5Color_S0_"></a>
                     <a name="//apple_ref/swift/Method/init(width:height:color:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecFT5widthSf6heightSf5colorCSo7UIColor_S0_">init(width:height:color:)</a>
+                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecFT5widthSf6heightSf5colorVS_5Color_S0_">init(width:height:color:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -172,7 +275,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">Color</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -233,9 +336,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC10GameEngine9ShapeNodecuRxs23FloatLiteralConvertiblerFT5widthx6heightx5colorCSo7UIColor_S0_"></a>
+                    <a name="/s:FC10GameEngine9ShapeNodecuRxs23FloatLiteralConvertiblerFT5widthx6heightx5colorVS_5Color_S0_"></a>
                     <a name="//apple_ref/swift/Method/init(width:height:color:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecuRxs23FloatLiteralConvertiblerFT5widthx6heightx5colorCSo7UIColor_S0_">init(width:height:color:)</a>
+                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecuRxs23FloatLiteralConvertiblerFT5widthx6heightx5colorVS_5Color_S0_">init(width:height:color:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -254,7 +357,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">FloatLiteralConvertible</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">FloatLiteralConvertible</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">Color</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -315,9 +418,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC10GameEngine9ShapeNodecFT4sizeVSC6CGSize5colorCSo7UIColor_S0_"></a>
+                    <a name="/s:FC10GameEngine9ShapeNodecFT4sizeVSC6CGSize5colorVS_5Color_S0_"></a>
                     <a name="//apple_ref/swift/Method/init(size:color:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecFT4sizeVSC6CGSize5colorCSo7UIColor_S0_">init(size:color:)</a>
+                    <a class="token" href="#/s:FC10GameEngine9ShapeNodecFT4sizeVSC6CGSize5colorVS_5Color_S0_">init(size:color:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -332,7 +435,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">Color</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -379,10 +482,41 @@
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10GameEngine9ShapeNode4drawFTPSo16MTLCommandBuffer_13renderEncoderPSo23MTLRenderCommandEncoder_7samplerGSqPSo15MTLSamplerState___T_"></a>
+                    <a name="//apple_ref/swift/Method/draw(_:renderEncoder:sampler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10GameEngine9ShapeNode4drawFTPSo16MTLCommandBuffer_13renderEncoderPSo23MTLRenderCommandEncoder_7samplerGSqPSo15MTLSamplerState___T_">draw(_:renderEncoder:sampler:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShapeNode</span><span class="p">:</span> <span class="kt">Node</span><span class="p">,</span> <span class="kt">Renderable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-04-23)</p>
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-04-30)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

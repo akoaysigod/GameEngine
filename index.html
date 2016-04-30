@@ -13,7 +13,7 @@
     <a title="  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html"> Docs</a> (40% documented)</p>
+        <p><a href="index.html"> Docs</a> (43% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -34,6 +34,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Camera.html">Camera</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Easing.html">Easing</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/GameView.html">GameView</a>
@@ -68,6 +71,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/EaseFunction.html">EaseFunction</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -75,9 +86,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/Mat4.html">Mat4</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Extensions/UIColor.html">UIColor</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/Vec3.html">Vec3</a>
@@ -102,7 +110,21 @@
                 <a href="Protocols/NodeGeometry.html">NodeGeometry</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/Renderable.html">Renderable</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/Tree.html">Tree</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Updateable.html">Updateable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Color.html">Color</a>
               </li>
             </ul>
           </li>
@@ -119,17 +141,65 @@
 <p>It currently only works on iOS but I have plans to extend it to tvOS and OSX at some point.</p>
 
 <p>It&rsquo;s based off of SpriteKit so if you know that API this should be pretty straight forward to use. It is not, however, a complete clone of the SpriteKit API and likely never will be.</p>
+
+<p>Part of the motivation to create this engine was to (learn how to make engines and) have a game engine that had access to the lower level internals of the engine but still have a working framework that didn&rsquo;t require
+any lower level programming. This is why certain parts of the Metal API are exposed publicly. In general, no knowledge of Metal is required to actually use this engine.</p>
+
+<p>If you are feeling adventurous or want to learn a little more about rendering stuff using Metal this will eventually have enough exposed to create a custom pipeline without needing to know enough background math
+or knowledge of the complete inner workings of Metal.</p>
 <a href='#current_state' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='current_state'>current state</h1>
 
-<p>This is very close to being ready to go. It really just needs more testing and makin sure the rendering makes sense.</p>
+<p>This is very close to being ready to go. It really just needs more testing and making sure the rendering makes sense and is efficient</p>
+
+<p>Documentation can be <a href="https://akoaysigod.github.io/GameEngine">here</a> a good portion of the public API has been documented but basically none of the rendering engine has been documented yet.</p>
+
+<p>It&rsquo;s also very much so designed around tile sprites at the moment. See this <a href="resources/README.md">README.md</a> for the relavent information about how that&rsquo;s currently implemented. I&rsquo;d definitely be ok with removing this restriction.
+Currently, the <code>TextureAtlas</code> classes is tied to this but I&rsquo;d be totally ok with someone changing it to support other formats!</p>
+<a href='#a_few_things_left_to_do_are' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='a_few_things_left_to_do_are'>A few things left to do are:</h2>
+
+<ul>
+<li>texture animation</li>
+<li>ensure that the rendering engine is as performant as it can be
+
+<ul>
+<li>I&rsquo;m mostly worried about how textures are being loaded at the moment but I&rsquo;m sure there are other things I don&rsquo;t fully understand</li>
+</ul></li>
+<li>fix the data structures for font rendering</li>
+<li>fix up the text rendering shaders to have more options</li>
+<li>add an easy way to create custom pipelines for those more adventurous.</li>
+</ul>
+
+<p>The last one is not needed in general but it&rsquo;s the reason I decided to write a custom engine, besides curiosity. Right now there are predefined <code>MTLRenderPipelineState</code> being created to render the various types of objects.
+Ideally, it should be possible to add a pipeline that will hook into the <code>Renderer</code> draw method to render custom types.</p>
 <a href='#should_you_use_it' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='should_you_use_it'>Should you use it?</h1>
 
 <p>Probably not. I was having some performance issues using SpriteKit and I think (hope) this will address those issues but I don&rsquo;t know what I&rsquo;m doing really. This will also never be as robust as SpriteKit as I have fairly specific needs.</p>
 
+<p>With that being said, feel free to use it.</p>
+<a href='#howto' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='howto'>howto</h1>
+
+<p>If you know SpriteKit you can probably skip this. One thing worth keeping in mind is the <code>TextNode</code> will take a really long time to create with no compiler optimization. The algorithm is pretty intense and the array bound checking kills it. It&rsquo;s worth running once with optimizations to force the font textures to be saved to disk.</p>
+
+<p>To just test stuff out you can just build the <code>GameEngineTest</code> target which is not actually a unit test target.
+The <code>TestGameViewController</code> is already setup to display some stuff.</p>
+
+<p>Otherwise, subclass <code>GameViewController</code> and in <code>viewDidLoad()</code>:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span> <span class="k">as?</span> <span class="kt">GameView</span> <span class="p">{</span>
+  <span class="n">scene</span> <span class="o">=</span> <span class="kt">Scene</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="n">view</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+  <span class="n">view</span><span class="o">.</span><span class="nf">presentScene</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//this should probably be done in a subclass of `Scene` where it's easier to override the update method</span>
+<span class="k">let</span> <span class="nv">sprite</span> <span class="o">=</span> <span class="kt">Sprite</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"AnImageYouAdded"</span><span class="p">)</span>
+<span class="n">scene</span><span class="o">.</span><span class="nf">addNode</span><span class="p">(</span><span class="n">sprite</span><span class="p">)</span>
+</code></pre>
+
+<p>And you should see the sprite at the bottom left corner of the screen.</p>
+
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-04-23)</p>
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-04-30)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
