@@ -35,7 +35,19 @@ public struct Color {
 
 extension Color {
   public static let white = Color(1.0, 1.0, 1.0)
-  public static let grey = Color(0.25, 0.25, 0.25)
+  public static let black = Color(0.0, 0.0, 0.0)
+  public static let grey = Color(0.5, 0.5, 0.5)
+  public static let darkGrey = Color(0.25, 0.25, 0.25)
+  public static let gray = Color(0.5, 0.5, 0.5)
+  public static let darkGray = Color(0.25, 0.25, 0.25)
   public static let red = Color(1.0, 0.0, 0.0)
+  public static let green = Color(0.0, 1.0, 0.0)
+  public static let blue = Color(0.0, 0.0, 1.0)
+  public static let cyan = Color(0.0, 1.0, 1.0)
+  public static let yellow = Color(1.0, 1.0, 0.0)
+  public static let magenta = Color(1.0, 0.0, 1.0)
+  public static let orange = Color(1.0, 0.5, 0.0)
+  public static let purple = Color(0.0, 0.5, 0.5)
+  public static let brown = Color(0.6, 0.4, 0.2)
   public static let clear = Color(0.0, 0.0, 0.0, 0.0)
 }
