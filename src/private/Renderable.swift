@@ -53,7 +53,7 @@ public protocol Renderable: NodeGeometry, Tree {
   /// A texture to be applied in the fragment shader.
   var texture: Texture? { get set }
   /// A color to be applied during the fragment shader. By default, this is blended with the texture.
-  var color: UIColor { get set }
+  var color: Color { get set }
 
   /**
    This is used in order to properly update a model matrix of an object based on the parent's model matrix. This, in general, should be used as the 

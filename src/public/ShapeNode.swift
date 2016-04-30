@@ -14,7 +14,7 @@ import UIKit
  A `ShapeNode` is a node for creating colored shapes. Currently only supports rectangular shapes.
  */
 public class ShapeNode: Node, Renderable {
-  public var color = UIColor.whiteColor()
+  public var color: Color
   
   public var texture: Texture? = nil
 
@@ -31,7 +31,7 @@ public class ShapeNode: Node, Renderable {
 
    - returns: A new instance of a rectangular `ShapeNode`.
    */
-  public init(width: Float, height: Float, color: UIColor) {
+  public init(width: Float, height: Float, color: Color) {
     self.color = color
 
     let (vertexBuffer, indexBuffer) = ShapeNode.setupBuffers([Quad.rect(width, height)], device: Device.shared.device)
@@ -54,7 +54,7 @@ public class ShapeNode: Node, Renderable {
 
    - returns: A new instance of `ShapeNode`.
    */
-  public convenience init<T: FloatLiteralConvertible>(width: T, height: T, color: UIColor) {
+  public convenience init<T: FloatLiteralConvertible>(width: T, height: T, color: Color) {
     self.init(width: width, height: height, color: color)
   }
 
@@ -66,7 +66,7 @@ public class ShapeNode: Node, Renderable {
 
    - returns: A new instance of a rectangular `ShapeNode`.
    */
-  public convenience init(size: CGSize, color: UIColor) {
+  public convenience init(size: CGSize, color: Color) {
     self.init(width: Float(size.width), height: Float(size.height), color: color)
   }
 }

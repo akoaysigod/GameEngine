@@ -30,7 +30,6 @@ final class TestGameViewController: UIViewController {
 
   override func loadView() {
     view = GameView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
-    view.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
   }
 
   override func viewDidLoad() {
@@ -41,6 +40,7 @@ final class TestGameViewController: UIViewController {
 
     let view = self.view as! GameView
     view.delegate = self
+    view.clearColor = Color(0.0, 0.5, 0.0).clearColor
     scene = Scene(size: view.bounds.size)
     view.presentScene(scene)
 
@@ -86,7 +86,7 @@ final class TestGameViewController: UIViewController {
     //    testText.name = "test text"
     //    scene.addNode(testText)
     //
-    let colorRect = ShapeNode(width: 100, height: 100, color: UIColor.grayColor())
+    let colorRect = ShapeNode(width: 100, height: 100, color: .grey)
     colorRect.name = "Gray rect"
     colorRect.anchorPoint = (0.5, 0.5)
     colorRect.x = 100
@@ -99,7 +99,7 @@ final class TestGameViewController: UIViewController {
     //colorRect.runAction(action)
     scene.addNode(colorRect)
 
-    let colorRect2 = ShapeNode(width: 100, height: 100, color: UIColor.redColor())
+    let colorRect2 = ShapeNode(width: 100, height: 100, color: .red)
     colorRect2.name = "Red rect"
     colorRect2.position = (50, 300)
     colorRect2.anchorPoint = (0.5, 0.5)

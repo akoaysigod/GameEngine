@@ -30,7 +30,7 @@ public class TextNode: Node, Renderable {
 
   var text: String
   let fontAtlas: FontAtlas
-  public var color = UIColor.whiteColor()
+  public var color: Color
 
   public var texture: Texture?
   public let vertexBuffer: MTLBuffer
@@ -48,7 +48,7 @@ public class TextNode: Node, Renderable {
 
    - returns: A new instance of `TextNode`.
    */
-  public init(text: String, font: UIFont, color: UIColor) {
+  public init(text: String, font: UIFont, color: Color) {
     self.text = text
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color

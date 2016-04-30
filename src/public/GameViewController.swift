@@ -30,7 +30,6 @@ public class GameViewController: UIViewController {
 
   override public func loadView() {
     view = GameView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
-    view.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
   }
 
   override public func viewDidLoad() {
@@ -38,6 +37,7 @@ public class GameViewController: UIViewController {
     
     let view = self.view as! GameView
     view.delegate = self
+    view.clearColor = Color(0.0, 0.5, 0.0).clearColor
   }
 }
 
