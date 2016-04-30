@@ -13,32 +13,65 @@ import UIKit
  The `NodeGeometry` protocol is used to give an object enough information to be placed in a scene and possibly rendered. 
  
  - note: Any rendered `Node` must have the camera property be non-nil. I'm still trying to figure out a nicer way to enforce this.
+ 
+ - discussion: Conforming to this protocol will grant access to most of the underlying maths required to render an object properly. 
+               Additionally, conforming to Tree will grant access to adding custom nodes to a `Scene` graph. 
+               `Renderable` has all the required information to do both of the above, as well as draw a node using a custom `Pipeline`.
+ 
+ - seealso: `Renderable` and `Tree`.
  */
 public protocol NodeGeometry: class {
+  /// Any object that wishes to be placed in a `Scene` requires a `Camera`.
   var camera: Camera? { get set }
 
+  /**
+   The size in world coordinates. This should NOT take the `scale` property into considering.
+   By default, modifying this property modifies the actual vectors being used by the GPU.
+   
+   - seealso: `Renderable` where the default implementation of `func updateSize()` is located.
+   */
   var size: CGSize { get set }
+  /// The width in world coordinates. This uses the `scale` property by default.
   var width: Float { get }
+  /// The height in world coordinates. This uses the `scale` property by default.
   var height: Float { get }
 
+  /// The relative position to which various calculations will be done. This is in unit coordinates in the coordinate system of the model.
   var anchorPoint: (x: Float, y: Float) { get set }
 
+  /// The x position. This is relative to the parent or if the scene is a parent, then world coordinates.
   var x: Float { get set }
+  /// The y position. This is relative to the parent or if the scene is a parent, then world coordinates.
   var y: Float { get set }
+  /// A convenience var for getting the position variables.
   var position: (x: Float, y: Float) { get set }
+  /// This controls the rendering "depth."
   var zPosition: Int { get set }
 
+  /// How much to rotate by.
   var rotation: Float { get set }
 
+  /// How much to scale by. In general, this does not affect the `size` property but will modify the width and height.
   var scale: (x: Float, y: Float) { get set }
+  /// How much to scale in the x direction.
   var xScale: Float { get set }
+  /// How much to scale in the y direction.
   var yScale: Float { get set }
 
+  /**
+   This is actual 4x4 matrix being sent to the GPU in order to properly render a node. 
+   The default implementation should be sufficient for creating a custom rendering pipeline.
+   
+   - seealso: `Renderable` and `Uniforms`.
+   */
   var modelMatrix: Mat4 { get }
 
   /**
-   This function updates the actual geometry size of the vertices. It does not scale.
+   This function updates the actual geometry size of the vertices. It's not used as scaling is in the model matrix.
+   The actual model matrix will apply it's changes to the update vertices.
    It's default implementation is in `Renderable`.
+   
+   - seealso: `Renderable`
    */
   func updateSize()
 }

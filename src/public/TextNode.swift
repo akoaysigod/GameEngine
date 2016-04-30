@@ -32,9 +32,9 @@ public class TextNode: Node, Renderable {
   let fontAtlas: FontAtlas
   public var color = UIColor.whiteColor()
 
-  var texture: Texture?
-  let vertexBuffer: MTLBuffer
-  let indexBuffer: MTLBuffer
+  public var texture: Texture?
+  public let vertexBuffer: MTLBuffer
+  public let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
 
   /**
@@ -162,5 +162,26 @@ public class TextNode: Node, Renderable {
       }
     }
     UIGraphicsEndImageContext()
+  }
+}
+
+extension TextNode {
+  public func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
+    assert(texture != nil, "A TextNode without a texture makes no sense really.")
+
+    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
+  
+    let parentMatrix = parent?.modelMatrix ?? Mat4.identity
+  
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(parentMatrix), color: color.vec4)
+  
+    let offset = uniformBufferQueue.next(commandBuffer, uniforms: uniforms)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
+    renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
+  
+    renderEncoder.setFragmentTexture(texture!.texture, atIndex: 0)
+    renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
+
+    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
   }
 }

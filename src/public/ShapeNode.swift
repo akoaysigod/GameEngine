@@ -16,10 +16,10 @@ import UIKit
 public class ShapeNode: Node, Renderable {
   public var color = UIColor.whiteColor()
   
-  var texture: Texture? = nil
+  public var texture: Texture? = nil
 
-  let vertexBuffer: MTLBuffer
-  let indexBuffer: MTLBuffer
+  public let vertexBuffer: MTLBuffer
+  public let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
 
   /**
@@ -68,5 +68,21 @@ public class ShapeNode: Node, Renderable {
    */
   public convenience init(size: CGSize, color: UIColor) {
     self.init(width: Float(size.width), height: Float(size.height), color: color)
+  }
+}
+
+extension ShapeNode {
+  public func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
+    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
+  
+    let parentMatrix = parent?.modelMatrix ?? Mat4.identity
+  
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(parentMatrix), color: color.vec4)
+  
+    let offset = uniformBufferQueue.next(commandBuffer, uniforms: uniforms)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
+    renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
+  
+    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
   }
 }
