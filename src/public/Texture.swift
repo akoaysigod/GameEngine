@@ -22,8 +22,8 @@ public class Texture {
 
   public let width: Int
   public let height: Int
-  public var size: CGSize {
-    return CGSize(width: width, height: height)
+  public var size: Size {
+    return Size(width: width, height: height)
   }
   var frame: TextureFrame
 

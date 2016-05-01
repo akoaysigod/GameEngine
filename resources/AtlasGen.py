@@ -46,9 +46,9 @@ class FileManager:
       pass
     shutil.copyfile(self.inPath + '/Contents.json', self.outPath + '/Contents.json')
     shutil.copyfile(self.inPath + '/Contents.json', self.jsonOutPath + '/Contents.json')
- 
+
   def getImageData(self):
-    imageDirs = [i[0] for i in os.walk(self.inPath) if i[0].endswith('imageset')] 
+    imageDirs = [i[0] for i in os.walk(self.inPath) if i[0].endswith('imageset')]
     imageConts = [i + '/Contents.json' for i in imageDirs]
 
     for c in imageConts:
@@ -71,7 +71,7 @@ class FileManager:
     return (self.twoImages, self.thrImages)
 
   #only designing this to handle one extra depth I think for now anyway
-  #I'm pretty sure that's as big as I organize anything 
+  #I'm pretty sure that's as big as I organize anything
   def filterByFolder(self, data):
     pathNum = len(self.inPath.split('/'))
     top = filter(lambda x: len(x.split('/')) == pathNum + 2, data)
@@ -85,7 +85,7 @@ class FileManager:
       except:
         subfolders[folder] = [directory]
     return subfolders
-      
+
   def getFolderName(self, directory):
     folders = directory.split('/')
     for (i, f) in enumerate(folders):
@@ -102,7 +102,7 @@ class FileManager:
       pass
 
     imageData.save(outdir + filename + '@' + scale + '.png')
-    
+
     try:
       f = open(outdir + 'Contents.json', 'r+')
     except:
@@ -203,15 +203,15 @@ class AtlasGen:
     for i in folders:
       if i.endswith('imageset'):
         return i[:-len('.imageset')]
-  
+
   def makeAtlas(self, data):
     size = self.getSize(data[0])
 
-    if not size:
+    if not size or len(size) < 2:
       raise Exception('no image data')
       return None
     elif size[0] != size[1]:
-      raise Exception('this was only (poorly) designed for square images')
+      #raise Exception('this was only (poorly) designed for square images')
       return None
 
     s = size[0]
@@ -227,7 +227,7 @@ class AtlasGen:
       if x * s >= dimensions[0]:
         y += 1
         x = 0
-       
+
       cat.paste(image, (x * s, y * s))
 
       imageName = self.getImageName(i)
@@ -249,7 +249,7 @@ def main():
   if not fm.updateRequired():
     print('no update needed')
     return
-  
+
   (size2data, size3data)= fm.getImageData()
   size2folders = fm.filterByFolder(size2data)
   size3folders = fm.filterByFolder(size3data)
@@ -258,21 +258,28 @@ def main():
 
   images2 = {}
   for (k, v) in size2folders.iteritems():
+    if len(v) == 0:
+      continue
     images2[k] = ag.makeAtlas(v)
-  
+
   images3 = {}
   for (k, v) in size3folders.iteritems():
+    if len(v) == 0:
+      continue
     images3[k] = ag.makeAtlas(v)
 
   fm.deleteOldData()
 
   for (k, v) in images2.iteritems():
+    if not v:
+      continue
     fm.saveImageData(k, v[0], '2x')
     fm.saveJSONData(k, v[1], '2x')
   for (k, v) in images3.iteritems():
+    if not v:
+      continue
     fm.saveImageData(k, v[0], '3x')
     fm.saveJSONData(k, v[1], '3x')
 
 if __name__ == '__main__':
   main()
-

@@ -33,7 +33,7 @@ public func ==(rhs: Node, lhs: Node) -> Bool {
 public class Node: NodeGeometry, Tree, Equatable, Hashable {
   public var name: String? = nil
   
-  public var size: CGSize {
+  public var size: Size {
     didSet {
       updateSize()
     }
@@ -72,7 +72,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
 
    - returns: A new instance of `Node`.
    */
-  public init(size: CGSize = .zero) {
+  public init(size: Size = .zero) {
     self.size = size
   }
   

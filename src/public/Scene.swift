@@ -40,7 +40,7 @@ public class Scene: Node {
 
    - returns: A new instance of `Scene`.
    */
-  public override init(size: CGSize) {
+  public override init(size: Size) {
     super.init(size: size)
 
     self.name = "scene"

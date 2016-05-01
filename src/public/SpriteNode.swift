@@ -6,7 +6,6 @@
 //  Copyright © 2015 Anthony Green. All rights reserved.
 //
 
-import Foundation
 import Metal
 import MetalKit
 
@@ -35,7 +34,7 @@ public class SpriteNode: Node, Renderable {
 
    - returns: A new instance of `SpriteNode`.
    */
-  public required init(texture: Texture, color: Color, size: CGSize) {
+  public required init(texture: Texture, color: Color, size: Size) {
     let (vertexBuffer, indexBuffer) = SpriteNode.setupBuffers([Quad.spriteRect(texture.frame)], device: Device.shared.device)
 
     self.vertexBuffer = vertexBuffer
@@ -58,7 +57,7 @@ public class SpriteNode: Node, Renderable {
 
    - returns: A new instance of `SpriteNode`.
    */
-  public convenience init(texture: Texture, size: CGSize) {
+  public convenience init(texture: Texture, size: Size) {
     self.init(texture: texture, color: .white, size: size)
   }
 

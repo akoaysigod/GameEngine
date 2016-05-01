@@ -27,7 +27,7 @@ public class Camera: Node {
   private let width: Float
   private let height: Float
 
-  public override init(size: CGSize) {
+  public override init(size: Size) {
     self.scale = 1.0
 
     self.width = Float(size.width)

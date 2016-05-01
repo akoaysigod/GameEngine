@@ -41,8 +41,8 @@ struct Quad {
     return Quad(vertices: [ll, ul, ur, lr])
   }
 
-  static func rect(size: CGSize) -> Quad {
-    return rect(size.w, size.h)
+  static func rect(size: Size) -> Quad {
+    return rect(size.width, size.height)
   }
 
   static func spriteRect(width: Float, _ height: Float) -> Quad {
@@ -54,8 +54,8 @@ struct Quad {
     return Quad(vertices: [ll, ul, ur, lr])
   }
 
-  static func spriteRect(size: CGSize) -> Quad {
-    return spriteRect(size.w, size.h)
+  static func spriteRect(size: Size) -> Quad {
+    return spriteRect(size.width, size.height)
   }
 
   static func spriteRect(width: Int, _ height: Int) -> Quad {

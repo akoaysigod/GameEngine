@@ -7,7 +7,6 @@
 //
 
 import simd
-import UIKit
 
 /**
  The `NodeGeometry` protocol is used to give an object enough information to be placed in a scene and possibly rendered. 
@@ -30,7 +29,7 @@ public protocol NodeGeometry: class {
    
    - seealso: `Renderable` where the default implementation of `func updateSize()` is located.
    */
-  var size: CGSize { get set }
+  var size: Size { get set }
   /// The width in world coordinates. This uses the `scale` property by default.
   var width: Float { get }
   /// The height in world coordinates. This uses the `scale` property by default.
@@ -78,11 +77,11 @@ public protocol NodeGeometry: class {
 
 public extension NodeGeometry {
   public var width: Float {
-    return size.w * xScale
+    return size.width * xScale
   }
 
   public var height: Float {
-    return size.h * yScale
+    return size.height * yScale
   }
 
   public var position: (x: Float, y: Float) {

@@ -40,7 +40,7 @@ public class ShapeNode: Node, Renderable {
 
     self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: sizeof(Uniforms))
 
-    super.init(size: CGSize(width: width, height: height))
+    super.init(size: Size(width: width, height: height))
   }
 
   /**

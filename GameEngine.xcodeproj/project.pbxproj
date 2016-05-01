@@ -91,6 +91,10 @@
 		EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
 		EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEAAC661C66995000BFB938 /* FontAtlas.swift */; };
 		EAEE8E951CCD37E900CF8344 /* TestGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEE8E941CCD37E900CF8344 /* TestGameViewController.swift */; };
+		EAEF9CCA1CD6811A0059832D /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF9CC91CD6811A0059832D /* Size.swift */; };
+		EAEF9CCB1CD6811A0059832D /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF9CC91CD6811A0059832D /* Size.swift */; };
+		EAEF9CCD1CD684D20059832D /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF9CCC1CD684D20059832D /* Point.swift */; };
+		EAEF9CCE1CD684D20059832D /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF9CCC1CD684D20059832D /* Point.swift */; };
 		EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7BB001C8CC85700258C37 /* Quad.swift */; };
 		EAF7BB021C8CC85700258C37 /* Quad.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7BB001C8CC85700258C37 /* Quad.swift */; };
 		EAFD76971C836BF100ABDC50 /* NodeGeomtry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFD76961C836BF100ABDC50 /* NodeGeomtry.swift */; };
@@ -162,6 +166,8 @@
 		EAE75E7E1C42FE62001EB176 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = src/public/GameView.swift; sourceTree = SOURCE_ROOT; };
 		EAEAAC661C66995000BFB938 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = src/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
 		EAEE8E941CCD37E900CF8344 /* TestGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestGameViewController.swift; path = src/public/TestGameViewController.swift; sourceTree = SOURCE_ROOT; };
+		EAEF9CC91CD6811A0059832D /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Size.swift; path = src/public/Size.swift; sourceTree = SOURCE_ROOT; };
+		EAEF9CCC1CD684D20059832D /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Point.swift; path = src/public/Point.swift; sourceTree = SOURCE_ROOT; };
 		EAF7BB001C8CC85700258C37 /* Quad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Quad.swift; path = src/private/Quad.swift; sourceTree = SOURCE_ROOT; };
 		EAFD76961C836BF100ABDC50 /* NodeGeomtry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NodeGeomtry.swift; path = src/public/NodeGeomtry.swift; sourceTree = SOURCE_ROOT; };
 		EAFD769A1C836C0500ABDC50 /* Updateable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updateable.swift; path = src/public/Updateable.swift; sourceTree = SOURCE_ROOT; };
@@ -340,6 +346,8 @@
 			children = (
 				EA1994261CD57B4F009DC869 /* Color.swift */,
 				EAA99DB81C41E47D00CF3246 /* CGExtensions.swift */,
+				EAEF9CC91CD6811A0059832D /* Size.swift */,
+				EAEF9CCC1CD684D20059832D /* Point.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -571,11 +579,13 @@
 				EA9B1E7B1C724C3D000FFDF7 /* TextShaders.metal in Sources */,
 				EA1ACBED1C9E53A800878EE6 /* Texture.swift in Sources */,
 				EAFD76971C836BF100ABDC50 /* NodeGeomtry.swift in Sources */,
+				EAEF9CCD1CD684D20059832D /* Point.swift in Sources */,
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
 				EA1993E21CD56239009DC869 /* Easing.swift in Sources */,
 				EAE6ED4B1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* Scene.swift in Sources */,
+				EAEF9CCA1CD6811A0059832D /* Size.swift in Sources */,
 				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */,
 				EA1994271CD57B4F009DC869 /* Color.swift in Sources */,
@@ -630,6 +640,7 @@
 				EAA99DE41C41E52700CF3246 /* Node.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
+				EAEF9CCE1CD684D20059832D /* Point.swift in Sources */,
 				EAA99DD51C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EA1994281CD57B4F009DC869 /* Color.swift in Sources */,
 				EAE75E381C42D091001EB176 /* Scene.swift in Sources */,
@@ -639,6 +650,7 @@
 				EAE6ED4F1CCBF02E0046A5BE /* Renderable.swift in Sources */,
 				EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EA1ACBEE1C9E53A800878EE6 /* Texture.swift in Sources */,
+				EAEF9CCB1CD6811A0059832D /* Size.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* Action.swift in Sources */,
 				EA0964CA1CBAF05100C03BA9 /* Uniforms.swift in Sources */,
 				EA9B1E821C727625000FFDF7 /* TextNode.swift in Sources */,
