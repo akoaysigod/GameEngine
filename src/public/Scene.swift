@@ -44,7 +44,7 @@ public class Scene: Node {
     super.init(size: size)
 
     self.name = "scene"
-    self.camera = Camera(size: size)
+    self.camera = CameraNode(size: size)
   }
 
   /**

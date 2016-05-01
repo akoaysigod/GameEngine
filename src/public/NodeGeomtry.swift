@@ -21,7 +21,7 @@ import simd
  */
 public protocol NodeGeometry: class {
   /// Any object that wishes to be placed in a `Scene` requires a `Camera`.
-  var camera: Camera? { get set }
+  var camera: CameraNode? { get set }
 
   /**
    The size in world coordinates. This should NOT take the `scale` property into considering.
@@ -36,14 +36,14 @@ public protocol NodeGeometry: class {
   var height: Float { get }
 
   /// The relative position to which various calculations will be done. This is in unit coordinates in the coordinate system of the model.
-  var anchorPoint: (x: Float, y: Float) { get set }
+  var anchorPoint: Point { get set }
 
   /// The x position. This is relative to the parent or if the scene is a parent, then world coordinates.
   var x: Float { get set }
   /// The y position. This is relative to the parent or if the scene is a parent, then world coordinates.
   var y: Float { get set }
   /// A convenience var for getting the position variables.
-  var position: (x: Float, y: Float) { get set }
+  var position: Point { get set }
   /// This controls the rendering "depth."
   var zPosition: Int { get set }
 
@@ -84,11 +84,11 @@ public extension NodeGeometry {
     return size.height * yScale
   }
 
-  public var position: (x: Float, y: Float) {
-    get { return (x, y) }
+  public var position: Point {
+    get { return Point(x: x, y: y) }
     set {
-      x = newValue.0
-      y = newValue.1
+      x = newValue.x
+      y = newValue.y
     }
   }
 

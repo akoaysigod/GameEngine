@@ -39,7 +39,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
     }
   }
 
-  public var anchorPoint: (x: Float, y: Float) = (x: 0.0, y: 0.0)
+  public var anchorPoint = Point(x: 0.0, y: 0.0)
 
   public var x: Float = 0.0
   public var y: Float = 0.0
@@ -51,7 +51,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
   public var xScale: Float = 1.0
   public var yScale: Float = 1.0
   
-  public var camera: Camera?
+  public var camera: CameraNode?
 
   //tree related
   private var uuid = NSUUID().UUIDString

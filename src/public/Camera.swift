@@ -10,7 +10,7 @@ import Foundation
 import simd
 import UIKit
 
-public class Camera: Node {
+public class CameraNode: Node {
   var view: Mat4 {
     return Mat4.translate(x, y) * Mat4.scale(zoom, zoom)
   }
