@@ -24,9 +24,10 @@ import UIKit
                it will be the same camera used for each node added to the scene. Also, it probably makes little sense to add a scene as a child to another scene and may cause problems.
  */
 public class Scene: Node {
+  public weak var view: GameView?
+
   private var renderer: Renderer!
 
-  var visible = false
   var uniqueID = "1"
 
   public override var parent: Node? {
@@ -47,12 +48,17 @@ public class Scene: Node {
     self.camera = CameraNode(size: size)
   }
 
+  public func didMoveToView(view: GameView) {
+
+  }
+
   /**
    The scene is partially responsible for controlling the render loop. This method basically kicks off the whole app.
 
    - parameter view: The view that has the MTLDevice property.
    */
   func setupRenderer(view: GameView) {
+    self.view = view
     self.renderer = Renderer(view: view)
     Fonts.cache.device = view.device!
   }

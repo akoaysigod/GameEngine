@@ -20,12 +20,13 @@ It's also very much so designed around tile sprites at the moment. See this [REA
 Currently, the `TextureAtlas` classes is tied to this but I'd be totally ok with someone changing it to support other formats!
 
 ## A few things left to do are:
+- control specific things, like tap location in a view
 - texture animation
 - ensure that the rendering engine is as performant as it can be
   - I'm mostly worried about how textures are being loaded at the moment but I'm sure there are other things I don't fully understand
 - fix the data structures for font rendering
 - fix up the text rendering shaders to have more options
-- add an easy way to create custom pipelines for those more adventurous.
+- add an easy way to create custom pipelines.
 
 The last one is not needed in general but it's the reason I decided to write a custom engine, besides curiosity. Right now there are predefined `MTLRenderPipelineState` being created to render the various types of objects.
 Ideally, it should be possible to add a pipeline that will hook into the `Renderer` draw method to render custom types.

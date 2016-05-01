@@ -22,7 +22,5 @@ public struct Point {
 
 extension Point {
   /// Create a point with 0.0 for both elements
-  public static var zero: Point {
-    return Point(x: 0.0, y: 0.0)
-  }
+  public static let zero = Point(x: 0.0, y: 0.0)
 }

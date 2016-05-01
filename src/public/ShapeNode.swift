@@ -22,6 +22,9 @@ public class ShapeNode: Node, Renderable {
   public let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
 
+  public var hidden = false
+  public let isVisible = true
+
   /**
    Designated initializer. Creates a rectangular shape node of a given color.
 
@@ -66,7 +69,7 @@ public class ShapeNode: Node, Renderable {
 
    - returns: A new instance of a rectangular `ShapeNode`.
    */
-  public convenience init(size: CGSize, color: Color) {
+  public convenience init(size: Size, color: Color) {
     self.init(width: Float(size.width), height: Float(size.height), color: color)
   }
 }

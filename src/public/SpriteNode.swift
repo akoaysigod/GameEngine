@@ -21,7 +21,8 @@ public class SpriteNode: Node, Renderable {
   public let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
 
-  public var isVisible = true
+  public var hidden = false
+  public let isVisible = true
 
   /**
    Designated initializer. Creates a new sprite object using an existing `Texture`.

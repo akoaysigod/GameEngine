@@ -28,7 +28,7 @@ import UIKit
 public class TextNode: Node, Renderable {
   private typealias GlyphClosure = (glyph: CGGlyph, bounds: CGRect) -> ()
 
-  var text: String
+  public var text: String
   let fontAtlas: FontAtlas
   public var color: Color
 
@@ -36,6 +36,9 @@ public class TextNode: Node, Renderable {
   public let vertexBuffer: MTLBuffer
   public let indexBuffer: MTLBuffer
   let uniformBufferQueue: BufferQueue
+
+  public var hidden = false
+  public let isVisible = true
 
   /**
    Create a new text label node with a given font.

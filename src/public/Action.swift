@@ -6,9 +6,6 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
-import Foundation
-import UIKit
-
 public typealias ActionCompletion = () -> ()
 public typealias Actions = [Action]
 
@@ -213,7 +210,7 @@ extension Action {
 
    - returns: A new instance of `Action` that moves a node to a point.
    */
-  public static func moveTo(to: CGPoint, duration: Double, completion: ActionCompletion? = nil) -> Action {
+  public static func moveTo(to: Point, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action.moveTo(Float(to.x), y: Float(to.y), duration: duration, completion: completion)
   }
 

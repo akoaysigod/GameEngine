@@ -55,6 +55,12 @@ public protocol Renderable: NodeGeometry, Tree {
   /// A color to be applied during the fragment shader. By default, this is blended with the texture.
   var color: Color { get set }
 
+  /// whether or not the object should be rendered
+  var hidden: Bool { get set }
+
+  /// whether or not the object is visible from the current view point
+  var isVisible: Bool { get }
+
   /**
    This is used in order to properly update a model matrix of an object based on the parent's model matrix. This, in general, should be used as the 
    model matrix for the uniform buffer and not the default model matrix of the `Renderable` object.

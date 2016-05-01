@@ -10,11 +10,19 @@ import Foundation
 import Metal
 import MetalKit
 
+//TODO: switch this back to a a regular UIView and layer setup using CADisplayLink
+
 /**
  A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple. 
  */
 public class GameView: MTKView {
-  private weak var currentScene: Scene?
+  private var currentScene: Scene?
+
+  /// tmp until this is converted back to a UIView
+  public var size: Size {
+    let cgsize = frame.size
+    return Size(width: Float(cgsize.width), height: Float(cgsize.height))
+  }
 
   /**
    Create a `GameView` with the current GPU device.
@@ -40,6 +48,7 @@ public class GameView: MTKView {
     currentScene = scene
 
     scene.setupRenderer(self)
+    scene.didMoveToView(self)
 
     paused = false
   }
