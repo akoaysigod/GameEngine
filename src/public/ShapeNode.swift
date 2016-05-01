@@ -15,6 +15,12 @@ import UIKit
  */
 public class ShapeNode: Node, Renderable {
   public var color: Color
+  public var alpha: Float {
+    get { return color.alpha }
+    set {
+      color = Color(color.red, color.green, color.blue, newValue)
+    }
+  }
   
   public var texture: Texture? = nil
 

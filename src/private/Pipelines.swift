@@ -22,11 +22,24 @@ extension Pipeline {
   private var label: String {
     return "\(Self.self)"
   }
-  
+
+//  private static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
+//    #if TESTTARGET
+//      return Self.getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+//    #endif
+//
+//    let vProgram = library.newFunctionWithName(vertexProgram)!
+//    let fProgram = library.newFunctionWithName(fragmentProgram)!
+//    return (vProgram, fProgram)
+//  }
+
   private static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
-    //default library can't be found? probably will fatalError before this as I think this means metal can't be used (or there are no metal files?)
-    //either way this probably won't happen if everything else is correct
+    #if TESTTARGET
     let defaultLibrary = device.newDefaultLibrary()!
+    #else
+    let defaultLibrary = try! device.newLibraryWithFile(NSBundle(forClass: ColorPipeline.self).URLForResource("default", withExtension: "metallib")!.path!)
+    #endif
+
     guard let vProgram = defaultLibrary.newFunctionWithName(vertexProgram) else {
       fatalError("no vertex program for name: \(vertexProgram)")
     }
@@ -36,7 +49,9 @@ extension Pipeline {
     return (vProgram, fProgram)
   }
 
-  private static func createPipelineDescriptor(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> MTLRenderPipelineDescriptor {
+  private static func createPipelineDescriptor(device: MTLDevice,
+                                               vertexProgram: String,
+                                               fragmentProgram: String) -> MTLRenderPipelineDescriptor {
     let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -134,11 +149,15 @@ final class ColorPipeline: Pipeline {
   let sampler: MTLSamplerState? = nil
 
   private struct Programs {
+    static let Shader = "ColorShaders"
     static let Vertex = "colorVertex"
     static let Fragment = "colorFragment"
   }
   
-  init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String = Programs.Vertex, fragmentProgram: String = Programs.Fragment) {
+  init(device: MTLDevice,
+       depthState: MTLDepthStencilState,
+       vertexProgram: String = Programs.Vertex,
+       fragmentProgram: String = Programs.Fragment) {
     self.depthState = depthState
     
     let pipelineDescriptor = ColorPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
@@ -152,11 +171,15 @@ final class SpritePipeline: Pipeline {
   let depthState: MTLDepthStencilState
 
   private struct Programs {
+    static let Shader = "SpriteShaders"
     static let Vertex = "spriteVertex"
     static let Fragment = "spriteFragment"
   }
 
-  init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String = Programs.Vertex, fragmentProgram: String = Programs.Fragment) {
+  init(device: MTLDevice,
+       depthState: MTLDepthStencilState,
+       vertexProgram: String = Programs.Vertex,
+       fragmentProgram: String = Programs.Fragment) {
     self.depthState = depthState
 
     let samplerDescriptor = MTLSamplerDescriptor()
@@ -179,11 +202,15 @@ final class TextPipeline: Pipeline {
   let depthState: MTLDepthStencilState
 
   private struct Programs {
-    static var Vertex = "textVertex"
+    static let Shader = "TextShaders"
+    static let Vertex = "textVertex"
     static let Fragment = "textFragment"
   }
 
-  init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String = Programs.Vertex, fragmentProgram: String = Programs.Fragment) {
+  init(device: MTLDevice,
+       depthState: MTLDepthStencilState,
+       vertexProgram: String = Programs.Vertex,
+       fragmentProgram: String = Programs.Fragment) {
     self.depthState = depthState
 
     let samplerDescriptor = MTLSamplerDescriptor()

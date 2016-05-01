@@ -31,6 +31,12 @@ public class TextNode: Node, Renderable {
   public var text: String
   let fontAtlas: FontAtlas
   public var color: Color
+  public var alpha: Float {
+    get { return color.alpha }
+    set {
+      color = Color(color.red, color.green, color.blue, newValue)
+    }
+  }
 
   public var texture: Texture?
   public let vertexBuffer: MTLBuffer

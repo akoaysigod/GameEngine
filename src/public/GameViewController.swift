@@ -24,7 +24,7 @@ import UIKit
  ````
  */
 public class GameViewController: UIViewController {
-  var scene: Scene!
+  public var scene: Scene!
 
   private var currentTime = 0.0
 

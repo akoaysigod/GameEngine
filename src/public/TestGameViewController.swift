@@ -41,7 +41,7 @@ final class TestGameViewController: UIViewController {
     let view = self.view as! GameView
     view.delegate = self
     view.clearColor = Color(0.0, 0.5, 0.0).clearColor
-    scene = Scene(size: view.bounds.size)
+    scene = Scene(size: view.size)
     view.presentScene(scene)
 
     if let environmentAtlas = TextureAtlas(named: "Environment"),
@@ -51,23 +51,23 @@ final class TestGameViewController: UIViewController {
       let stairsDown = environmentAtlas.textureNamed("StairsDown"),
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
       let sp = SpriteNode(texture: wall)
-      sp.position = (0.0, 0.0)
+      sp.position = Point(x: 0.0, y: 0.0)
       scene.addNode(sp)
 
       let sp2 = SpriteNode(texture: floor)
-      sp2.position = (Float(sp2.size.width), 0.0)
+      sp2.position = Point(x: Float(sp2.size.width), y: 0.0)
       scene.addNode(sp2)
 
       let sp3 = SpriteNode(texture: openDoor)
-      sp3.position = (Float(sp3.size.width * 2), 0.0)
+      sp3.position = Point(x: Float(sp3.size.width * 2), y: 0.0)
       scene.addNode(sp3)
 
       let sp4 = SpriteNode(texture: stairsDown)
-      sp4.position = (Float(sp4.size.width * 3), 0.0)
+      sp4.position = Point(x: Float(sp4.size.width * 3), y: 0.0)
       scene.addNode(sp4)
 
       let sp5 = SpriteNode(texture: stairsUp)
-      sp5.position = (Float(sp5.size.width * 4), 0.0)
+      sp5.position = Point(x: Float(sp5.size.width * 4), y: 0.0)
       scene.addNode(sp5)
     }
 
@@ -86,9 +86,9 @@ final class TestGameViewController: UIViewController {
     //    testText.name = "test text"
     //    scene.addNode(testText)
     //
-    let colorRect = ShapeNode(width: 100, height: 100, color: .grey)
+    let colorRect = ShapeNode(width: 100, height: 100, color: .gray)
     colorRect.name = "Gray rect"
-    colorRect.anchorPoint = (0.5, 0.5)
+    colorRect.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect.x = 100
     colorRect.y = 300
 
@@ -101,8 +101,8 @@ final class TestGameViewController: UIViewController {
 
     let colorRect2 = ShapeNode(width: 100, height: 100, color: .red)
     colorRect2.name = "Red rect"
-    colorRect2.position = (50, 300)
-    colorRect2.anchorPoint = (0.5, 0.5)
+    colorRect2.position = Point(x: 50, y: 300)
+    colorRect2.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect2.zPosition = 0
     colorRect.addNode(colorRect2)
 

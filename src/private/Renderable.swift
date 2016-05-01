@@ -55,6 +55,9 @@ public protocol Renderable: NodeGeometry, Tree {
   /// A color to be applied during the fragment shader. By default, this is blended with the texture.
   var color: Color { get set }
 
+  /// sometimes it's nice to just be able to set the alpha of something
+  var alpha: Float { get set }
+
   /// whether or not the object should be rendered
   var hidden: Bool { get set }
 
@@ -130,31 +133,3 @@ extension NodeGeometry {
     memcpy(p, [quad].vertexData, [quad].vertexSize)
   }
 }
-
-
-
-
-//  func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
-//
-//  }
-//  public func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
-//
-//  }
-//  func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
-//    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
-//
-//    let parentMatrix = parent?.modelMatrix ?? Mat4.identity
-//
-//    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(parentMatrix), color: color.vec4)
-//
-//    let offset = uniformBufferQueue.next(commandBuffer, uniforms: uniforms)
-//    renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
-//    renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
-//
-//    if let texture = texture?.texture, sampler = sampler {
-//      renderEncoder.setFragmentTexture(texture, atIndex: 0)
-//      renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
-//    }
-//
-//    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
-//  }

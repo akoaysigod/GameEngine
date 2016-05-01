@@ -52,6 +52,12 @@ public protocol NodeGeometry: class {
 
   /// How much to scale by. In general, this does not affect the `size` property but will modify the width and height.
   var scale: (x: Float, y: Float) { get set }
+  /**
+   A convenience function for setting the xScale and yScale uniformly.
+
+   - parameter scale: The scale to set to.
+   */
+  func setScale(scale: Float)
   /// How much to scale in the x direction.
   var xScale: Float { get set }
   /// How much to scale in the y direction.
@@ -117,5 +123,9 @@ public extension NodeGeometry {
     let rotationTranslate = Mat4.translate(xRot, yRot, z)
 
     return worldTranslate * rotation * rotationTranslate * scale
+  }
+
+  func setScale(scale: Float) {
+    self.scale = (scale, scale)
   }
 }

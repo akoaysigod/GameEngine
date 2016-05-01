@@ -26,6 +26,10 @@ public protocol Tree: class {
   func getAllNodes() -> Nodes
 }
 
+public func +(lhs: Node, rhs: Node) {
+  lhs.addNode(rhs)
+}
+
 extension Tree {
   public var superParent: Node? {
     var ret = self.parent

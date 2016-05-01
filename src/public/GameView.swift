@@ -23,6 +23,9 @@ public class GameView: MTKView {
     let cgsize = frame.size
     return Size(width: Float(cgsize.width), height: Float(cgsize.height))
   }
+  public var rect: Rect {
+    return Rect(origin: Point(x: Float(frame.origin.x), y: Float(frame.origin.y)), size: size)
+  }
 
   /**
    Create a `GameView` with the current GPU device.

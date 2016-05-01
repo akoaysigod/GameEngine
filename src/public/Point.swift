@@ -7,8 +7,8 @@
 //
 
 public struct Point {
-  public let x: Float
-  public let y: Float
+  public var x: Float
+  public var y: Float
 
   public init(x: Float, y: Float) {
     self.x = x

@@ -13,9 +13,9 @@ import Foundation
  */
 public struct Size {
   /// a value representing a width
-  public let width: Float
+  public var width: Float
   /// a value representing a height
-  public let height: Float
+  public var height: Float
 
   public init(width: Float, height: Float) {
     self.width = width
@@ -29,5 +29,5 @@ public struct Size {
 
 extension Size {
   /// Create a size with zero width and height.
-  static let zero = Size(width: 0.0, height: 0.0)
+  public static let zero = Size(width: 0.0, height: 0.0)
 }

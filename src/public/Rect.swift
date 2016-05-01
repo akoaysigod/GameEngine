@@ -7,13 +7,13 @@
 //
 
 public struct Rect {
-  public let x: Float
-  public let y: Float
+  public var x: Float
+  public var y: Float
   public var origin: Point {
     return Point(x: x, y: y)
   }
-  public let width: Float
-  public let height: Float
+  public var width: Float
+  public var height: Float
   public var size: Size {
     return Size(width: width, height: height)
   }
@@ -31,6 +31,27 @@ public struct Rect {
 
   public init(origin: Point, size: Size) {
     self.init(x: origin.x, y: origin.y, width: size.width, height: size.height)
+  }
+
+  /**
+   Determines if two `Rect`s are overlapping.
+
+   The comparison is done like so:
+   - left edge of self is greater than comparison right edge
+   - right edge of self is less than comparison left edge
+   - bottom edge of self is greater than comparison top edge
+   - top edge of self is less than comparison bottom edge
+
+   - parameter rect: The rectangle to compare against.
+
+   - returns: True if the rectangles are overlapping, false otherwise.
+   */
+  public func intersects(rect: Rect) -> Bool {
+    let toRight = self.x > rect.x + rect.width  
+    let toLeft = self.x + width < rect.x        
+    let above = self.y > rect.y + rect.height   
+    let below = self.y + self.height < rect.y
+    return toRight && toLeft && above && below
   }
 }
 

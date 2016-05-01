@@ -98,7 +98,8 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
   /// True if this `Node` or any of it's parents' `Node` is currently running an action.
   public var hasAction: Bool {
     var performingAction = parent?.hasAction ?? false
-    while let parent = parent?.parent where !performingAction {
+    //not sure when this !(parent is Scene) bug got introduced but hopefully fixing the view/scene/controller hiearchy fixes this maybe
+    while let parent = parent?.parent where !(parent is Scene) && !performingAction {
       guard parent.hasAction else { continue }
       performingAction = true
     }
