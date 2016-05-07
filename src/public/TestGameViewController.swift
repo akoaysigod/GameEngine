@@ -100,10 +100,17 @@ final class TestGameViewController: UIViewController {
 
     let colorRect2 = ShapeNode(width: 100, height: 100, color: .red)
     colorRect2.name = "Red rect"
-    colorRect2.position = Point(x: 50, y: 300)
+    //colorRect2.position = Point(x: 0, y: 0)
     colorRect2.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect2.zPosition = 0
     colorRect.addNode(colorRect2)
+
+    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
+    colorRect3.name = "Red rect"
+    //colorRect3.position = Point(x: 100, y: 50)
+    colorRect3.anchorPoint = Point(x: 0.5, y: 0.5)
+    colorRect3.zPosition = 0
+    colorRect2.addNode(colorRect3)
 
     let translate1 = Action.moveBy(150, y: 0.0, duration: 1.0)
     let translate2 = Action.moveBy(-150, y: 0.0, duration: 1.0)

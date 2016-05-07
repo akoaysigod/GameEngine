@@ -68,13 +68,9 @@ public protocol Renderable: NodeGeometry, Tree {
    This is used in order to properly update a model matrix of an object based on the parent's model matrix. This, in general, should be used as the 
    model matrix for the uniform buffer and not the default model matrix of the `Renderable` object.
 
-   - note: By default, the `parentMatrix` is the direct parent of a `Renderable` object. I think that's sufficient?
-
-   - parameter parentMatrix: The `Renderable`'s parent model matrix.
-
    - returns: A new model matrix to be used as this `Renderable`'s model matrix.
    */
-  func decompose(node: Node) -> Mat4
+  func decompose() -> Mat4
 
   /**
    This is used by the various `Pipeline`s to encode the objects to the `MTLCommandBuffer` to be drawn by the GPU.
@@ -93,25 +89,18 @@ extension Renderable {
     return (vertexBuffer, indexBuffer)
   }
 
-  public func decompose(node: Node) -> Mat4 {
-    let parentMatrix = node.parent?.modelMatrix ?? Mat4.identity
-//this does not take into consideration if a node is nested in several parents
-    let parentRotScale = parentMatrix.mat3
-    let selfRotScale = modelMatrix.mat3
-    let rotScale = parentRotScale * selfRotScale
-
-    let parentTranslate = parentMatrix.translation
-    let selfTranslate = modelMatrix.translation
-    var translate = parentTranslate + selfTranslate
-    translate.z = self.z
-    translate.w = 1.0
-
-    let column1 = Vec4(vec3: rotScale[0])
-    let column2 = Vec4(vec3: rotScale[1])
-    let column3 = Vec4(vec3: rotScale[2])
-    let column4 = translate
-
-    return Mat4([column1, column2, column3, column4])
+  public func decompose() -> Mat4 {
+    /*
+     lol I don't know why I complicated that so much.
+     
+     TODO: cache these calculations somehow, deeply nested nodes probably don't need to update based on the parents
+           if the parent's aren't updating. This could possibly be a lot of calculation for no reason.
+    */
+    var ret = Mat4.identity
+    allParents.forEach { parent in
+      ret *= parent.modelMatrix
+    }
+    return ret * modelMatrix
   }
 }
 
