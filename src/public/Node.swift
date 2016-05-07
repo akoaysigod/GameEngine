@@ -39,6 +39,15 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
     }
   }
 
+  public var frame: Rect {
+    var ret = boundingRect
+    allParents.forEach { parent in
+      ret.x += parent.x
+      ret.y += parent.y
+    }
+    return ret
+  }
+
   public var anchorPoint = Point(x: 0.0, y: 0.0)
 
   public var x: Float = 0.0
@@ -97,14 +106,9 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
 
   /// True if this `Node` or any of it's parents' `Node` is currently running an action.
   public var hasAction: Bool {
-    var performingAction = parent?.hasAction ?? false
-    //not sure when this !(parent is Scene) bug got introduced but hopefully fixing the view/scene/controller hiearchy fixes this maybe
-    //the scene returns nil for parent so I'm not sure what's going on with this
-    while let parent = parent?.parent where !(parent is Scene) && !performingAction {
-      guard parent.hasAction else { continue }
-      performingAction = true
-    }
-    return action != nil || performingAction
+    guard action == nil else { return true }
+    let parentActions = allParents.filter { $0.hasAction }
+    return parentActions.count > 0
   }
 
   /**

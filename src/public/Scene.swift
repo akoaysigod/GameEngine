@@ -50,3 +50,18 @@ public class Scene: Node {
 
   }
 }
+
+// MARK: Control related
+extension Scene {
+  public func nodesAtPoint(point: Point) -> Nodes {
+    return getAllNodes().filter { node -> Bool in
+      let frame = node.frame
+      if node.rotation == 0.0 {
+        return frame.containsPoint(point)
+      }
+
+
+      return false
+    }
+  }
+}

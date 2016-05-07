@@ -35,6 +35,12 @@ public protocol NodeGeometry: class {
   /// The height in world coordinates. This uses the `scale` property by default.
   var height: Float { get }
 
+  /// The rectangle containing the node in world coordinates computed using scale but not rotation.
+  var frame: Rect { get }
+
+  /// The rectangle containing the node in local coordiates computed using scale but not rotation.
+  var boundingRect: Rect { get }
+
   /// The relative position to which various calculations will be done. This is in unit coordinates in the coordinate system of the model.
   var anchorPoint: Point { get set }
 
@@ -96,6 +102,10 @@ public extension NodeGeometry {
       x = newValue.x
       y = newValue.y
     }
+  }
+
+  public var boundingRect: Rect {
+    return Rect(x: x, y: y, width: width, height: height)
   }
 
   var z: Float {

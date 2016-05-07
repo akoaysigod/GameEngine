@@ -19,6 +19,7 @@ public protocol Tree: class {
   var nodes: Nodes { get }
   var parent: Node? { get }
   var superParent: Node? { get }
+  var allParents: Nodes { get }
 
   func addNode(node: Node)
   func removeNode<T: Node>(node: T?) -> T?
@@ -32,11 +33,16 @@ public func +(lhs: Node, rhs: Node) {
 
 extension Tree {
   public var superParent: Node? {
-    var ret = self.parent
-    //hmmm, since I changed this everythings super parent is a Scene so just ignore it
-    //or think of a better way to handle this
-    while let parent = ret?.parent where !(parent is Scene) {
-      ret = parent
+    return allParents.last
+  }
+
+  public var allParents: Nodes {
+    var ret = Nodes()
+
+    var nextParent = parent
+    while let parent = nextParent {
+      ret += [parent]
+      nextParent = parent.parent
     }
     return ret
   }

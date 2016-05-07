@@ -74,7 +74,7 @@ public protocol Renderable: NodeGeometry, Tree {
 
    - returns: A new model matrix to be used as this `Renderable`'s model matrix.
    */
-  func decompose(parentMatrix: Mat4) -> Mat4
+  func decompose(node: Node) -> Mat4
 
   /**
    This is used by the various `Pipeline`s to encode the objects to the `MTLCommandBuffer` to be drawn by the GPU.
@@ -93,7 +93,9 @@ extension Renderable {
     return (vertexBuffer, indexBuffer)
   }
 
-  public func decompose(parentMatrix: Mat4) -> Mat4 {
+  public func decompose(node: Node) -> Mat4 {
+    let parentMatrix = node.parent?.modelMatrix ?? Mat4.identity
+//this does not take into consideration if a node is nested in several parents
     let parentRotScale = parentMatrix.mat3
     let selfRotScale = modelMatrix.mat3
     let rotScale = parentRotScale * selfRotScale

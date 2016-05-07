@@ -9,6 +9,8 @@
 public struct Rect {
   public var x: Float
   public var y: Float
+
+  /// The lower left corner of the Rect.
   public var origin: Point {
     return Point(x: x, y: y)
   }
@@ -52,6 +54,19 @@ public struct Rect {
     let above = self.y > rect.y + rect.height   
     let below = self.y + self.height < rect.y
     return toRight && toLeft && above && below
+  }
+
+  /**
+   Determines if a point is inside a `Rect`.
+
+   - parameter point: The point to check.
+
+   - returns: True if the point is inside the `Rect`, false otherwise.
+   */
+  public func containsPoint(point: Point) -> Bool {
+    let pX = point.x
+    let pY = point.y
+    return pX > x && pX < x + width && pY > y && pY < y + height
   }
 }
 

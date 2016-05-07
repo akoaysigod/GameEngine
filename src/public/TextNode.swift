@@ -180,9 +180,7 @@ extension TextNode {
 
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
   
-    let parentMatrix = parent?.modelMatrix ?? Mat4.identity
-  
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(parentMatrix), color: color.vec4)
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(self), color: color.vec4)
   
     let offset = uniformBufferQueue.next(uniforms)
     renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
