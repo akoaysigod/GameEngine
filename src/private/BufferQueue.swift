@@ -40,11 +40,6 @@ final class BufferQueue {
   }
 
   func next(commandBuffer: MTLCommandBuffer, uniforms: Uniforms) -> Int {
-    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
-    commandBuffer.addCompletedHandler { [weak self] (_) -> Void in
-      guard let strongSelf = self else { return }
-      dispatch_semaphore_signal(strongSelf.inflightSemaphore)
-    }
     updateBuffer(uniforms)
     currentBuffer = (currentBuffer + 1) % size
     return currentBuffer * dataSize

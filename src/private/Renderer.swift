@@ -18,8 +18,15 @@ final class Renderer {
   private var spritePipeline: SpritePipeline!
   private var textPipeline: TextPipeline!
 
+  private let MaxFrameLag = 3
+  private let inflightSemaphore: dispatch_semaphore_t
+
   init(view: GameView) {
-    let device = view.device!
+    let device = view.device
+
+    //not sure where to set this up or if I even want to do it this way
+    Fonts.cache.device = device
+    //-----------------------------------------------------------------
 
     self.commandQueue = device.newCommandQueue()
     self.commandQueue.label = "main command queue"
@@ -27,34 +34,55 @@ final class Renderer {
     self.descriptorQueue = RenderPassQueue(view: view)
     
     let factory = PipelineFactory(device: device)
-    self.colorPipeline = factory.provideColorPipeline()
-    self.spritePipeline = factory.provideSpritePipeline()
-    self.textPipeline = factory.provideTextPipeline()
-  }
+    colorPipeline = factory.provideColorPipeline()
+    spritePipeline = factory.provideSpritePipeline()
+    textPipeline = factory.provideTextPipeline()
 
-  func draw(nodes: Renderables) {
+    inflightSemaphore = dispatch_semaphore_create(MaxFrameLag)
+
+    //tmp
+    let depthStateDescriptor = MTLDepthStencilDescriptor()
+    depthStateDescriptor.depthCompareFunction = .GreaterEqual
+    depthStateDescriptor.depthWriteEnabled = true
+    depthState = device.newDepthStencilStateWithDescriptor(depthStateDescriptor)
+  }
+  let depthState: MTLDepthStencilState
+
+  func render(nodes: Renderables) {
+    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
+
     let commandBuffer = commandQueue.commandBuffer()
     commandBuffer.label = "Frame command buffer"
 
-    if let drawable = descriptorQueue.currentDrawable {
-      var renderPassDescriptor = descriptorQueue.next()
+    if let (renderPassDescriptor, drawable) = descriptorQueue.next() {
+      let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
+      encoder.setDepthStencilState(depthState)
 
       if let colorNodes: [ShapeNode] = colorPipeline.filterRenderables(nodes) {
-        colorPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: colorNodes)
+        //colorPipeline.encode(renderPassDescriptor, commandBuffer: commandBuffer, nodes: colorNodes)
+        colorPipeline.encode(encoder, commandBuffer: commandBuffer, nodes: colorNodes)
       }
       
-      renderPassDescriptor = descriptorQueue.next()
+      //renderPassDescriptor = descriptorQueue.next()
 
       if let spriteNodes: [SpriteNode] = spritePipeline.filterRenderables(nodes) {
-        spritePipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: spriteNodes)
+        //spritePipeline.encode(renderPassDescriptor, commandBuffer: commandBuffer, nodes: spriteNodes)
+        spritePipeline.encode(encoder, commandBuffer: commandBuffer, nodes: spriteNodes)
       }
       
-      renderPassDescriptor = descriptorQueue.next()
+      //renderPassDescriptor = descriptorQueue.next()
 
       if let textNodes: [TextNode] = textPipeline.filterRenderables(nodes) {
-        textPipeline.encode(renderPassDescriptor, drawable: drawable, commandBuffer: commandBuffer, nodes: textNodes)
+        //textPipeline.encode(renderPassDescriptor, commandBuffer: commandBuffer, nodes: textNodes)
+        textPipeline.encode(encoder, commandBuffer: commandBuffer, nodes: textNodes)
       }
 
+      encoder.endEncoding()
+
+      commandBuffer.addCompletedHandler { [unowned self] (_) -> Void in
+        dispatch_semaphore_signal(self.inflightSemaphore)
+      }
+      
       commandBuffer.presentDrawable(drawable)
     }
 

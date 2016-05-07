@@ -30,6 +30,8 @@
 		EA3236291C8B85A500DA7FCF /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* Tree.swift */; };
 		EA72451C1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
 		EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
+		EA8C82C61CDE61BE00D1E59F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8C82C51CDE61BE00D1E59F /* Updater.swift */; };
+		EA8C82C71CDE61BE00D1E59F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8C82C51CDE61BE00D1E59F /* Updater.swift */; };
 		EA9B1E7B1C724C3D000FFDF7 /* TextShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */; };
 		EA9B1E7C1C724C3D000FFDF7 /* TextShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */; };
 		EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */; };
@@ -131,6 +133,7 @@
 		EA256A111CA88082008F720B /* TextureAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextureAtlas.swift; path = src/public/TextureAtlas.swift; sourceTree = SOURCE_ROOT; };
 		EA3236271C8B85A500DA7FCF /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = src/public/Tree.swift; sourceTree = SOURCE_ROOT; };
 		EA72451B1C8CFF6E0059B068 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = src/private/Device.swift; sourceTree = SOURCE_ROOT; };
+		EA8C82C51CDE61BE00D1E59F /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updater.swift; path = src/private/Updater.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TextShaders.metal; path = src/shaders/TextShaders.metal; sourceTree = SOURCE_ROOT; };
 		EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = src/private/Fonts.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E801C727625000FFDF7 /* TextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextNode.swift; path = src/public/TextNode.swift; sourceTree = SOURCE_ROOT; };
@@ -388,6 +391,7 @@
 				EAA99DEE1C41E57300CF3246 /* GameViewController.swift */,
 				EAEE8E941CCD37E900CF8344 /* TestGameViewController.swift */,
 				EAE75E7E1C42FE62001EB176 /* GameView.swift */,
+				EA8C82C51CDE61BE00D1E59F /* Updater.swift */,
 				EAE75E361C42D091001EB176 /* Scene.swift */,
 			);
 			name = Views;
@@ -603,6 +607,7 @@
 				EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DD41C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EAE75E7F1C42FE62001EB176 /* GameView.swift in Sources */,
+				EA8C82C61CDE61BE00D1E59F /* Updater.swift in Sources */,
 				EAA99DCE1C41E4F100CF3246 /* Renderer.swift in Sources */,
 				EAE6ED451CCBC1330046A5BE /* Mat2.swift in Sources */,
 				EAA99DC71C41E4B900CF3246 /* Globals.swift in Sources */,
@@ -646,6 +651,7 @@
 				EAA99DE41C41E52700CF3246 /* Node.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
 				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
+				EA8C82C71CDE61BE00D1E59F /* Updater.swift in Sources */,
 				EAEF9CCE1CD684D20059832D /* Point.swift in Sources */,
 				EAA99DD51C41E50200CF3246 /* BufferQueue.swift in Sources */,
 				EA1994281CD57B4F009DC869 /* Color.swift in Sources */,

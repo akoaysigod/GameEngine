@@ -29,7 +29,7 @@ final class TestGameViewController: UIViewController {
   private var currentTime = 0.0
 
   override func loadView() {
-    view = GameView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
+    view = GameView(frame: UIScreen.mainScreen().bounds)
   }
 
   override func viewDidLoad() {
@@ -39,8 +39,7 @@ final class TestGameViewController: UIViewController {
 
 
     let view = self.view as! GameView
-    view.delegate = self
-    view.clearColor = Color(0.0, 0.5, 0.0).clearColor
+    view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
     scene = Scene(size: view.size)
     view.presentScene(scene)
 

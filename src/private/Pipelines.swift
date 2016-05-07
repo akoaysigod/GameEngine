@@ -15,23 +15,13 @@ protocol Pipeline {
   var sampler: MTLSamplerState? { get }
 
   init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String, fragmentProgram: String)
-  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: [T])
+  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer, nodes: [T])
 }
 
 extension Pipeline {
   private var label: String {
     return "\(Self.self)"
   }
-
-//  private static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
-//    #if TESTTARGET
-//      return Self.getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-//    #endif
-//
-//    let vProgram = library.newFunctionWithName(vertexProgram)!
-//    let fProgram = library.newFunctionWithName(fragmentProgram)!
-//    return (vProgram, fProgram)
-//  }
 
   private static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
     #if TESTTARGET
@@ -102,7 +92,7 @@ extension Pipeline {
     }
   }
 
-  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, drawable: MTLDrawable, commandBuffer: MTLCommandBuffer, nodes: [T]) {
+  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer, nodes: [T]) {
     let renderEncoder = createRenderEncoder(commandBuffer, label: label, renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState, depthState: depthState)
 
     nodes.forEach {
@@ -110,6 +100,14 @@ extension Pipeline {
     }
 
     renderEncoder.endEncoding()
+  }
+
+  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, commandBuffer: MTLCommandBuffer, nodes: [T]) {
+    encoder.setRenderPipelineState(pipelineState)
+    nodes.forEach {
+      $0.draw(commandBuffer, renderEncoder: encoder, sampler: sampler)
+    }
+    //encoder.endEncoding()
   }
 }
 
@@ -187,12 +185,12 @@ final class SpritePipeline: Pipeline {
     samplerDescriptor.magFilter = .Nearest
     samplerDescriptor.sAddressMode = .ClampToEdge
     samplerDescriptor.tAddressMode = .ClampToEdge
-    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
+    sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     let pipelineDescriptor = SpritePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     //pipelineStateDescriptor.sampleCount = view.sampleCount
 
-    self.pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
+    pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
 }
 
@@ -218,7 +216,7 @@ final class TextPipeline: Pipeline {
     samplerDescriptor.magFilter = .Linear
     samplerDescriptor.sAddressMode = .ClampToZero
     samplerDescriptor.tAddressMode = .ClampToZero
-    self.sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
+    sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     let pipelineDescriptor = TextPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
@@ -237,6 +235,6 @@ final class TextPipeline: Pipeline {
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
 
-    self.pipelineState = TextPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
+    pipelineState = TextPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
 }

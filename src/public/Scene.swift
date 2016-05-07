@@ -26,8 +26,6 @@ import UIKit
 public class Scene: Node {
   public weak var view: GameView?
 
-  private var renderer: Renderer!
-
   var uniqueID = "1"
 
   public override var parent: Node? {
@@ -50,44 +48,5 @@ public class Scene: Node {
 
   public func didMoveToView(view: GameView) {
 
-  }
-
-  /**
-   The scene is partially responsible for controlling the render loop. This method basically kicks off the whole app.
-
-   - parameter view: The view that has the MTLDevice property.
-   */
-  func setupRenderer(view: GameView) {
-    self.view = view
-    self.renderer = Renderer(view: view)
-    Fonts.cache.device = view.device!
-  }
-
-  /**
-   This is more or less the game loop. 
-   
-   - note: Although this loop is actually set up in `GameViewController` that's only because Metal forced that upon me. I may change this
-           back to a CADisplayLink loop at some point but I believe this is easier for cross platform, ie, OSX, tvOS, etc. So this should be 
-           the main loop for any game using this engine.
-   
-   - parameter timeSinceLastUpdate: The amount of time that's passed since this method was last called.
-   */
-  public override func update(delta: CFTimeInterval) {
-    let nodes = getAllNodes()
-
-    nodes.forEach { node in
-      node.update(delta)
-    }
-
-    let drawables = nodes.flatMap { node -> Renderables in
-      if let renderable = node as? Renderable {
-        return [renderable]
-      }
-      return []
-    }
-
-    autoreleasepool {
-      renderer.draw(drawables)
-    }
   }
 }
