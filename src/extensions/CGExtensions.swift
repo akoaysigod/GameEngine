@@ -39,6 +39,10 @@ extension CGSize {
     return Float(height)
   }
 
+  var size: Size {
+    return Size(width: w, height: h)
+  }
+
   /**
    Convenience initializer for creating a `CGSize` with `Float` values.
 

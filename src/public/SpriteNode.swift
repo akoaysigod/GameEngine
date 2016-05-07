@@ -98,7 +98,7 @@ public class SpriteNode: Node, Renderable {
 
 extension SpriteNode {
   // I couldn't figure out how to not repeat this everywhere and expose this publicly :(
-  public func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
+  public func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
     assert(texture != nil, "A SpriteNode without a texture makes no sense really.")
 
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
@@ -107,7 +107,7 @@ extension SpriteNode {
   
     let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(parentMatrix), color: color.vec4)
   
-    let offset = uniformBufferQueue.next(commandBuffer, uniforms: uniforms)
+    let offset = uniformBufferQueue.next(uniforms)
     renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
     renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
   

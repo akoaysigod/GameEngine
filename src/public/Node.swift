@@ -99,6 +99,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
   public var hasAction: Bool {
     var performingAction = parent?.hasAction ?? false
     //not sure when this !(parent is Scene) bug got introduced but hopefully fixing the view/scene/controller hiearchy fixes this maybe
+    //the scene returns nil for parent so I'm not sure what's going on with this
     while let parent = parent?.parent where !(parent is Scene) && !performingAction {
       guard parent.hasAction else { continue }
       performingAction = true

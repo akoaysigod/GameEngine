@@ -79,14 +79,10 @@ public protocol Renderable: NodeGeometry, Tree {
   /**
    This is used by the various `Pipeline`s to encode the objects to the `MTLCommandBuffer` to be drawn by the GPU.
 
-   - note: The commandBuffer in general is not actually required at this point. It's only being used to signal to the `uniformBufferQueue` that 
-           the commandBuffer is done and we can update the uniform buffers again.
-
-   - parameter commandBuffer: The buffer to encode the commands for drawing the `Renderable`.
    - parameter renderEncoder: The command encoder to use for encoding the commands for drawing the `Renderale` to the command buffer.
    - parameter sampler:       The sampler to use to encode how the shader should sample the texture being applied.
    */
-  func draw(commandBuffer: MTLCommandBuffer, renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
+  func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?)
 }
 
 extension Renderable {

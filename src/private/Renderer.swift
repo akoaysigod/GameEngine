@@ -12,80 +12,70 @@ import MetalKit
 final class Renderer {
   private let commandQueue: MTLCommandQueue
 
-  private let descriptorQueue: RenderPassQueue
-
-  private var colorPipeline: ColorPipeline!
-  private var spritePipeline: SpritePipeline!
-  private var textPipeline: TextPipeline!
+  private let colorPipeline: ColorPipeline
+  private let spritePipeline: SpritePipeline
+  private let textPipeline: TextPipeline
+  private let depthState: MTLDepthStencilState
 
   private let MaxFrameLag = 3
   private let inflightSemaphore: dispatch_semaphore_t
 
-  init(view: GameView) {
-    let device = view.device
-
+  init(device: MTLDevice) {
     //not sure where to set this up or if I even want to do it this way
     Fonts.cache.device = device
     //-----------------------------------------------------------------
 
-    self.commandQueue = device.newCommandQueue()
-    self.commandQueue.label = "main command queue"
+    commandQueue = device.newCommandQueue()
+    commandQueue.label = "main command queue"
 
-    self.descriptorQueue = RenderPassQueue(view: view)
+    //descriptorQueue = RenderPassQueue(view: view)
     
     let factory = PipelineFactory(device: device)
     colorPipeline = factory.provideColorPipeline()
     spritePipeline = factory.provideSpritePipeline()
     textPipeline = factory.provideTextPipeline()
+    depthState = factory.createDepthStencil()
 
     inflightSemaphore = dispatch_semaphore_create(MaxFrameLag)
-
-    //tmp
-    let depthStateDescriptor = MTLDepthStencilDescriptor()
-    depthStateDescriptor.depthCompareFunction = .GreaterEqual
-    depthStateDescriptor.depthWriteEnabled = true
-    depthState = device.newDepthStencilStateWithDescriptor(depthStateDescriptor)
   }
-  let depthState: MTLDepthStencilState
 
-  func render(nodes: Renderables) {
+  func render(nextRenderPass: NextRenderPass, renderables: Renderables) {
     dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
 
     let commandBuffer = commandQueue.commandBuffer()
     commandBuffer.label = "Frame command buffer"
 
-    if let (renderPassDescriptor, drawable) = descriptorQueue.next() {
+    if let (renderPassDescriptor, drawable) = nextRenderPass() {
       let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
       encoder.setDepthStencilState(depthState)
 
-      if let colorNodes: [ShapeNode] = colorPipeline.filterRenderables(nodes) {
-        //colorPipeline.encode(renderPassDescriptor, commandBuffer: commandBuffer, nodes: colorNodes)
-        colorPipeline.encode(encoder, commandBuffer: commandBuffer, nodes: colorNodes)
+      if let colorNodes: [ShapeNode] = colorPipeline.filterRenderables(renderables) {
+        colorPipeline.encode(encoder, nodes: colorNodes)
       }
       
-      //renderPassDescriptor = descriptorQueue.next()
-
-      if let spriteNodes: [SpriteNode] = spritePipeline.filterRenderables(nodes) {
-        //spritePipeline.encode(renderPassDescriptor, commandBuffer: commandBuffer, nodes: spriteNodes)
-        spritePipeline.encode(encoder, commandBuffer: commandBuffer, nodes: spriteNodes)
+      if let spriteNodes: [SpriteNode] = spritePipeline.filterRenderables(renderables) {
+        spritePipeline.encode(encoder, nodes: spriteNodes)
       }
-      
-      //renderPassDescriptor = descriptorQueue.next()
 
-      if let textNodes: [TextNode] = textPipeline.filterRenderables(nodes) {
-        //textPipeline.encode(renderPassDescriptor, commandBuffer: commandBuffer, nodes: textNodes)
-        textPipeline.encode(encoder, commandBuffer: commandBuffer, nodes: textNodes)
+      if let textNodes: [TextNode] = textPipeline.filterRenderables(renderables) {
+        textPipeline.encode(encoder, nodes: textNodes)
       }
 
       encoder.endEncoding()
 
-      commandBuffer.addCompletedHandler { [unowned self] (_) -> Void in
+      commandBuffer.addCompletedHandler { _ in
         dispatch_semaphore_signal(self.inflightSemaphore)
       }
-      
+
       commandBuffer.presentDrawable(drawable)
     }
 
     commandBuffer.commit()
+  }
+
+  deinit {
+    (0...MaxFrameLag).forEach { _ in
+      dispatch_semaphore_signal(inflightSemaphore)
+    }
   }
 }

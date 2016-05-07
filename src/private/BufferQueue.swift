@@ -17,8 +17,6 @@ final class BufferQueue {
   private let size = 3
   private var currentBuffer = 0
 
-  var inflightSemaphore: dispatch_semaphore_t
-
   init(device: MTLDevice, dataSize: Int = 0) {
     assert(dataSize > 0, "The size of the buffer should be greater than 0.")
 
@@ -26,8 +24,6 @@ final class BufferQueue {
 
     let bufferSize = self.dataSize * self.size
     buffer = device.newBufferWithLength(bufferSize, options: [])
-
-    inflightSemaphore = dispatch_semaphore_create(size)
   }
 
   private func updateBuffer(uniforms: Uniforms) {
@@ -39,15 +35,9 @@ final class BufferQueue {
     memcpy(pointer, &uniforms, dataSize)
   }
 
-  func next(commandBuffer: MTLCommandBuffer, uniforms: Uniforms) -> Int {
+  func next(uniforms: Uniforms) -> Int {
     updateBuffer(uniforms)
     currentBuffer = (currentBuffer + 1) % size
     return currentBuffer * dataSize
-  }
-
-  deinit {
-    (0...size).forEach { _ in
-      dispatch_semaphore_signal(inflightSemaphore)
-    }
   }
 }

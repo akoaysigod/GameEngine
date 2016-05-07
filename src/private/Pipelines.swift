@@ -11,11 +11,10 @@ import MetalKit
 
 protocol Pipeline {
   var pipelineState: MTLRenderPipelineState { get }
-  var depthState: MTLDepthStencilState { get }
   var sampler: MTLSamplerState? { get }
 
-  init(device: MTLDevice, depthState: MTLDepthStencilState, vertexProgram: String, fragmentProgram: String)
-  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer, nodes: [T])
+  init(device: MTLDevice, vertexProgram: String, fragmentProgram: String)
+  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T])
 }
 
 extension Pipeline {
@@ -92,35 +91,22 @@ extension Pipeline {
     }
   }
 
-  func encode<T: Renderable>(renderPassDescriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer, nodes: [T]) {
-    let renderEncoder = createRenderEncoder(commandBuffer, label: label, renderPassDescriptor: renderPassDescriptor, pipelineState: pipelineState, depthState: depthState)
-
-    nodes.forEach {
-      $0.draw(commandBuffer, renderEncoder: renderEncoder, sampler: sampler)
-    }
-
-    renderEncoder.endEncoding()
-  }
-
-  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, commandBuffer: MTLCommandBuffer, nodes: [T]) {
+  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
     encoder.setRenderPipelineState(pipelineState)
     nodes.forEach {
-      $0.draw(commandBuffer, renderEncoder: encoder, sampler: sampler)
+      $0.draw(encoder, sampler: sampler)
     }
-    //encoder.endEncoding()
   }
 }
 
 final class PipelineFactory {
   let device: MTLDevice
-  let depthState: MTLDepthStencilState
 
   init(device: MTLDevice) {
     self.device = device
-    self.depthState = PipelineFactory.createDepthStencil(device)
   }
 
-  private static func createDepthStencil(device: MTLDevice) -> MTLDepthStencilState {
+  func createDepthStencil() -> MTLDepthStencilState {
     let depthStateDescriptor = MTLDepthStencilDescriptor()
     depthStateDescriptor.depthCompareFunction = .GreaterEqual
     depthStateDescriptor.depthWriteEnabled = true
@@ -129,21 +115,20 @@ final class PipelineFactory {
   }
 
   func provideColorPipeline() -> ColorPipeline {
-    return ColorPipeline(device: device, depthState: depthState)
+    return ColorPipeline(device: device)
   }
 
   func provideSpritePipeline() -> SpritePipeline {
-    return SpritePipeline(device: device, depthState: depthState)
+    return SpritePipeline(device: device)
   }
 
   func provideTextPipeline() -> TextPipeline {
-    return TextPipeline(device: device, depthState: depthState)
+    return TextPipeline(device: device)
   }
 }
 
 final class ColorPipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
-  let depthState: MTLDepthStencilState
   let sampler: MTLSamplerState? = nil
 
   private struct Programs {
@@ -153,11 +138,8 @@ final class ColorPipeline: Pipeline {
   }
   
   init(device: MTLDevice,
-       depthState: MTLDepthStencilState,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    self.depthState = depthState
-    
     let pipelineDescriptor = ColorPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     self.pipelineState = ColorPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
@@ -166,7 +148,6 @@ final class ColorPipeline: Pipeline {
 final class SpritePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
-  let depthState: MTLDepthStencilState
 
   private struct Programs {
     static let Shader = "SpriteShaders"
@@ -175,10 +156,8 @@ final class SpritePipeline: Pipeline {
   }
 
   init(device: MTLDevice,
-       depthState: MTLDepthStencilState,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    self.depthState = depthState
 
     let samplerDescriptor = MTLSamplerDescriptor()
     samplerDescriptor.minFilter = .Nearest
@@ -197,7 +176,6 @@ final class SpritePipeline: Pipeline {
 final class TextPipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
-  let depthState: MTLDepthStencilState
 
   private struct Programs {
     static let Shader = "TextShaders"
@@ -206,11 +184,8 @@ final class TextPipeline: Pipeline {
   }
 
   init(device: MTLDevice,
-       depthState: MTLDepthStencilState,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    self.depthState = depthState
-
     let samplerDescriptor = MTLSamplerDescriptor()
     samplerDescriptor.minFilter = .Nearest
     samplerDescriptor.magFilter = .Linear
