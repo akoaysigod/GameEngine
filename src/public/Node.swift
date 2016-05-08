@@ -42,9 +42,11 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
   public var frame: Rect {
     var ret = boundingRect
     allParents.forEach { parent in
-      ret.x += parent.x
-      ret.y += parent.y
+      ret.x += parent.x - (parent.width * parent.anchorPoint.x)
+      ret.y += parent.y - (parent.height * parent.anchorPoint.y)
     }
+    ret.x -= width * anchorPoint.x
+    ret.y -= height * anchorPoint.y
     return ret
   }
 

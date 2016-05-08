@@ -49,30 +49,30 @@ final class TestGameViewController: UIViewController {
       let openDoor = environmentAtlas.textureNamed("OpenDoor"),
       let stairsDown = environmentAtlas.textureNamed("StairsDown"),
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
-      let sp = SpriteNode(texture: wall)
-      sp.position = Point(x: 0.0, y: 0.0)
-      sp.name = "wall"
-      scene.addNode(sp)
-
-      let sp2 = SpriteNode(texture: floor)
-      sp2.position = Point(x: 64.0, y: 0.0)
-      sp2.name = "floor"
-      scene.addNode(sp2)
-
-      let sp3 = SpriteNode(texture: openDoor)
-      sp3.position = Point(x: Float(sp3.size.width * 2), y: 0.0)
-      sp3.name = "open door"
-      scene.addNode(sp3)
-
-      let sp4 = SpriteNode(texture: stairsDown)
-      sp4.position = Point(x: Float(sp4.size.width * 3), y: 0.0)
-      sp4.name = "stairs down"
-      scene.addNode(sp4)
-
-      let sp5 = SpriteNode(texture: stairsUp)
-      sp5.position = Point(x: Float(sp5.size.width * 4), y: 0.0)
-      sp5.name = "stairs up"
-      scene.addNode(sp5)
+//      let sp = SpriteNode(texture: wall)
+//      sp.position = Point(x: 0.0, y: 0.0)
+//      sp.name = "wall"
+//      scene.addNode(sp)
+//
+//      let sp2 = SpriteNode(texture: floor)
+//      sp2.position = Point(x: 64.0, y: 0.0)
+//      sp2.name = "floor"
+//      scene.addNode(sp2)
+//
+//      let sp3 = SpriteNode(texture: openDoor)
+//      sp3.position = Point(x: Float(sp3.size.width * 2), y: 0.0)
+//      sp3.name = "open door"
+//      scene.addNode(sp3)
+//
+//      let sp4 = SpriteNode(texture: stairsDown)
+//      sp4.position = Point(x: Float(sp4.size.width * 3), y: 0.0)
+//      sp4.name = "stairs down"
+//      scene.addNode(sp4)
+//
+//      let sp5 = SpriteNode(texture: stairsUp)
+//      sp5.position = Point(x: Float(sp5.size.width * 4), y: 0.0)
+//      sp5.name = "stairs up"
+//      scene.addNode(sp5)
     }
 
     //    let texture = Texture(imageName: "Knight")
@@ -93,8 +93,8 @@ final class TestGameViewController: UIViewController {
     let colorRect = ShapeNode(width: 100, height: 100, color: .gray)
     colorRect.name = "Gray rect"
     colorRect.anchorPoint = Point(x: 0.5, y: 0.5)
-    colorRect.x = 100
-    colorRect.y = 300
+    colorRect.x = 50
+    colorRect.y = 50
 
     //let action = Action.rotateBy(Float(360.0), duration: 1.0)
     //let action = Action.moveTo(100.0, y: 0.0, duration: 1.0)
@@ -106,23 +106,23 @@ final class TestGameViewController: UIViewController {
     let colorRect2 = ShapeNode(width: 100, height: 100, color: .red)
     colorRect2.name = "Red rect"
     //colorRect2.position = Point(x: 0, y: 0)
-    //colorRect2.anchorPoint = Point(x: 0.5, y: 0.5)
+    colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
     colorRect2.zPosition = 0
     colorRect.addNode(colorRect2)
 
     let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
     colorRect3.name = "blue rect"
     //colorRect3.position = Point(x: 100, y: 50)
-    colorRect3.anchorPoint = Point(x: 0.5, y: 0.5)
+    //colorRect3.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect3.zPosition = 0
     colorRect2.addNode(colorRect3)
 
-    let translate1 = Action.moveBy(150, y: 0.0, duration: 1.0)
-    let translate2 = Action.moveBy(-150, y: 0.0, duration: 1.0)
-    let group = Action.sequence([translate1, translate2])
-    let forever2 = Action.repeatForever(group)
+    //let translate1 = Action.moveBy(150, y: 0.0, duration: 1.0)
+    //let translate2 = Action.moveBy(-150, y: 0.0, duration: 1.0)
+    //let group = Action.sequence([translate1, translate2])
+    //let forever2 = Action.repeatForever(group)
     //colorRect.runAction(group)
-    colorRect.runAction(forever2)
+    //colorRect.runAction(forever2)
 
 
     //
@@ -167,8 +167,7 @@ extension TestGameViewController {
 
     scene.nodesAtPoint(r).forEach {
       print($0.name ?? "")
-      print($0.position)
-      print(r)
+      print($0.frame)
     }
   }
 

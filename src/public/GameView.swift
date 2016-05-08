@@ -139,7 +139,7 @@ extension GameView {
 
   func render(delta: CFTimeInterval, nodes: Nodes) {
     let renderables = nodes.flatMap { node -> Renderables in
-      if let renderable = node as? Renderable {
+      if let renderable = node as? Renderable where renderable.isVisible && !renderable.hidden {
         return [renderable]
       }
       return []
