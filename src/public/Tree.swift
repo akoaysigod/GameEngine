@@ -20,14 +20,35 @@ public protocol Tree: class {
   var nodes: Nodes { get }
   var parent: Node? { get }
   var superParent: Node? { get }
+  /// Gets all parent nodes.
   var allParents: Nodes { get }
+  /// Gets all child nodes.
   var allNodes: Nodes { get }
 
   /// Calculates the combined transform for every parents' `modelMatrix`
   var parentTransform: Mat4 { get }
 
+  /**
+   Add a node to the hiearchy.
+
+   - parameter node: The `Node` to add to the tree.
+   */
   func addNode(node: Node)
+
+  /**
+   Remove a node from the hiearchy and returns the `Node` removed if it was found.
+   The `Node` does not have to be a direct child `Node` of the calling `Node`.
+
+   - parameter node: The `Node` to remove from the hiearchy.
+
+   - returns: The `Node` removed or nil if it wasn't found.
+   */
   func removeNode<T: Node>(node: T?) -> T?
+
+  /**
+   Remove calling `Node` from it's parent. 
+   By default, this is safe to call on a `Node` that has not been added to a hiearchy.
+   */
   func removeFromParent()
 }
 

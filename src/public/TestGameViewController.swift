@@ -101,7 +101,9 @@ final class TestGameViewController: UIViewController {
     //let action = Action.moveTo(CGPoint(x: 0.0, y: 0.0), duration: 1.0)
     //let forever = Action.repeatForever(action)
     //colorRect.runAction(action)
+    let camera = CameraNode(size: view.bounds.size.size)
     scene.addNode(colorRect)
+    //camera.addNode(colorRect)
 
     let colorRect2 = ShapeNode(width: 100, height: 100, color: .red)
     colorRect2.name = "Red rect"

@@ -136,6 +136,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
    */
   public func addNode(node: Node) {
     node.camera = camera
+    node.allNodes.forEach { $0.camera = camera }
     node.parent = self
     nodeSet.insert(node)
   }
