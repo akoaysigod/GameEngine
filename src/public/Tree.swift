@@ -17,11 +17,17 @@ import simd
  Probably best to avoid doing stuff like that.
  */
 public protocol Tree: class {
+  /**
+   This returns all direct `Node`s of the current `Node`. It's mostly for making other calculations easier.
+   */
   var nodes: Nodes { get }
+
+  /// The `Node` directly above the hiearchy of the current `Node`.
   var parent: Node? { get }
-  var superParent: Node? { get }
-  /// Gets all parent nodes.
+
+  /// Gets all parent `Node`s starting at the current `Node`.
   var allParents: Nodes { get }
+
   /// Gets all child nodes.
   var allNodes: Nodes { get }
 
@@ -61,10 +67,6 @@ public func -(lhs: Node, rhs: Node) {
 }
 
 extension Tree {
-  public var superParent: Node? {
-    return allParents.last
-  }
-
   public var allParents: Nodes {
     var ret = Nodes()
 

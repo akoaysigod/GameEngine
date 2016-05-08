@@ -21,7 +21,7 @@ import simd
  */
 public protocol NodeGeometry: class {
   /// Any object that wishes to be placed in a `Scene` requires a `Camera`.
-  var camera: CameraNode? { get set }
+  weak var camera: CameraNode? { get set }
 
   /**
    The size in world coordinates. This should NOT take the `scale` property into considering.

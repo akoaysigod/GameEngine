@@ -11,8 +11,6 @@ import Metal
 import simd
 import UIKit
 
-// since this and GameView have been refactored a lot it might make sense to move this rendering logic into the GameViewController since that holds the main loop anyway. Who knows. I'll think about it.
-
 /**
  A `Scene` is a node object that holds everything on screen as the root of the node tree. Anything that needs to be displayed must be added to 
  either the scene directly or a node that is already part of the scene's tree.
@@ -47,7 +45,9 @@ public class Scene: Node {
   public override init(size: Size) {
     super.init(size: size)
 
-    camera = CameraNode(size: size)
+    let camera = CameraNode(size: size)
+    addNode(camera)
+    self.camera = camera
   }
 
   public func didMoveToView(view: GameView) {

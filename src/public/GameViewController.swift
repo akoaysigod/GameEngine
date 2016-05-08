@@ -11,7 +11,8 @@ import MetalKit
 import UIKit
 
 /**
- The `GameViewController` is responsible for mainly the game/rendering loop. 
+ The `GameViewController` is a controller for stuff. It probably won't do much but it's required for iOS. Pretty much just 
+ set up the `GameView` and `Scene` from here. After that???
  
  A basic setup in viewDidLoad() would look something like 
  
@@ -29,30 +30,13 @@ public class GameViewController: UIViewController {
   private var currentTime = 0.0
 
   override public func loadView() {
-    view = GameView(frame: UIScreen.mainScreen().bounds, device: Device.shared.device)
+    view = GameView(frame: UIScreen.mainScreen().bounds)
   }
 
   override public func viewDidLoad() {
     super.viewDidLoad()
     
     let view = self.view as! GameView
-    view.delegate = self
-    view.clearColor = Color(0.0, 0.5, 0.0).clearColor
+    view.clearColor = Color(0.0, 0.5, 0.0)
   }
-}
-
-extension GameViewController: MTKViewDelegate {
-  public func drawInMTKView(view: MTKView) {
-    let cTime = CACurrentMediaTime()
-
-    if currentTime == 0.0 {
-      currentTime = cTime
-    }
-    let eTime = cTime - currentTime
-    currentTime = cTime
-
-    scene.update(eTime)
-  }
-
-  public func mtkView(view: MTKView, drawableSizeWillChange size: CGSize) {}
 }

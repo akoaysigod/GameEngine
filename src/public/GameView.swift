@@ -97,7 +97,7 @@ extension GameView {
 
 // MARK: Update
 extension GameView {
-  func newFrame(displayLink: CADisplayLink) {
+  @objc private func newFrame(displayLink: CADisplayLink) {
     if timestamp == 0.0 {
       timestamp = displayLink.timestamp
     }
@@ -137,7 +137,7 @@ extension GameView {
     render(delta, nodes: nodes)
   }
 
-  func render(delta: CFTimeInterval, nodes: Nodes) {
+  private func render(delta: CFTimeInterval, nodes: Nodes) {
     let renderables = nodes.flatMap { node -> Renderables in
       if let renderable = node as? Renderable where renderable.isVisible && !renderable.hidden {
         return [renderable]
@@ -150,14 +150,14 @@ extension GameView {
     }
   }
 
-  func getNewSize() -> CGSize {
+  private func getNewSize() -> CGSize {
     var size = bounds.size
     size.width *= contentScaleFactor
     size.height *= contentScaleFactor
     return size
   }
 
-  func updateDrawableSize() {
+  private func updateDrawableSize() {
     let newSize = getNewSize()
     let width = Int(newSize.width)
     let height = Int(newSize.height)

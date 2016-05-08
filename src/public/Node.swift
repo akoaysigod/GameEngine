@@ -62,7 +62,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
   public var xScale: Float = 1.0
   public var yScale: Float = 1.0
   
-  public var camera: CameraNode?
+  public weak var camera: CameraNode?
 
   //tree related
   private var uuid = NSUUID().UUIDString
@@ -129,25 +129,19 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
 
   //MARK: Tree stuff
 
-  /**
-   Add a `Node` to this `Node`'s tree hiearchy.
-
-   - parameter node: The node to add to the tree.
-   */
   public func addNode(node: Node) {
     node.camera = camera
-    node.allNodes.forEach { $0.camera = camera }
+    node.allNodes.forEach {
+      //I have no idea if this is the best way to handle adding more cameras to the scene
+      //This will probably break in a weird way someday.
+      if $0.camera == nil {
+        $0.camera = camera
+      }
+    }
     node.parent = self
     nodeSet.insert(node)
   }
 
-  /**
-   Remove a `Node` from this `Node`'s tree hiearchy.
-
-   - parameter node: The node to remove.
-
-   - returns: The `Node` removed if it existed.
-   */
   public func removeNode<T: Node>(node: T?) -> T? {
     guard let node = node else { return nil }
     let optNode = nodeSet.remove(node) as? T
