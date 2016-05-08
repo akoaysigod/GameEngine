@@ -6,9 +6,7 @@
 //  Copyright © 2015 Anthony Green. All rights reserved.
 //
 
-import Foundation
 import Metal
-import UIKit
 
 /**
  A `ShapeNode` is a node for creating colored shapes. Currently only supports rectangular shapes.
@@ -84,7 +82,7 @@ extension ShapeNode {
   public func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
   
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: decompose(), color: color.vec4)
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: modelMatrix, color: color.vec4)
   
     let offset = uniformBufferQueue.next(uniforms)
     renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)

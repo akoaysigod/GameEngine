@@ -9,9 +9,13 @@
 import UIKit
 
 /// This extension provides conveniences for using `Float`s with `CGPoint`s
-extension CGPoint {
-  var float: (x: Float, y: Float) {
+public extension CGPoint {
+  public var float: (x: Float, y: Float) {
     return (Float(self.x), Float(self.y))
+  }
+
+  public var point: Point {
+    return Point(x: float.x, y: float.y)
   }
 
   /**
@@ -22,24 +26,24 @@ extension CGPoint {
 
    - returns: A new instance of `CGPoint`.
    */
-  init(x: Float, y: Float) {
+  public init(x: Float, y: Float) {
     self.x = CGFloat(x)
     self.y = CGFloat(y)
   }
 }
 
 /// This extension provides conveniences for using `Float`s with `CGSize`
-extension CGSize {
+public extension CGSize {
   /// Get the width as a `Float`
-  var w: Float {
+  public var w: Float {
     return Float(width)
   }
   /// Get the height as a `Float`
-  var h: Float {
+  public var h: Float {
     return Float(height)
   }
 
-  var size: Size {
+  public var size: Size {
     return Size(width: w, height: h)
   }
 
@@ -51,7 +55,7 @@ extension CGSize {
 
    - returns: A new instance of `CGSize`.
    */
-  init(width: Float, height: Float) {
+  public init(width: Float, height: Float) {
     self.init(width: Double(width), height: Double(height))
   }
 }

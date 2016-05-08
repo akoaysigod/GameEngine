@@ -8,6 +8,7 @@
 
 import Foundation
 import Metal
+import simd
 import UIKit
 
 // since this and GameView have been refactored a lot it might make sense to move this rendering logic into the GameViewController since that holds the main loop anyway. Who knows. I'll think about it.
@@ -32,6 +33,10 @@ public class Scene: Node {
     return nil
   }
 
+  public var transform: Mat4 {
+    return Mat4.identity
+  }
+
   /**
    Create a scene of a given size. This will serve as the root node to which all other nodes should be added to.
 
@@ -42,8 +47,7 @@ public class Scene: Node {
   public override init(size: Size) {
     super.init(size: size)
 
-    self.name = "scene"
-    self.camera = CameraNode(size: size)
+    camera = CameraNode(size: size)
   }
 
   public func didMoveToView(view: GameView) {
@@ -53,15 +57,52 @@ public class Scene: Node {
 
 // MARK: Control related
 extension Scene {
+  /**
+   Get all nodes at a given point in world coordinates. 
+   
+   - note: Needs to be updated to take rotation into consideration.
+
+   - parameter point: The point in world coordinates.
+
+   - returns: An array of Nodes at a given point or an empty array if no nodes at point.
+   */
   public func nodesAtPoint(point: Point) -> Nodes {
-    return getAllNodes().filter { node -> Bool in
-      let frame = node.frame
-      if node.rotation == 0.0 {
-        return frame.containsPoint(point)
-      }
+    return allNodes.filter { node -> Bool in
+      let rect = node.frame
 
+//      let transform = node.parentTransform * node.transform
+//
+//      let ll = transform * Vec4(rect.origin.x, rect.origin.y, 1.0, 1.0)
+//      let ur = transform * Vec4(rect.upperRight.x, rect.upperRight.y, 1.0, 1.0)
+      let ll = rect.origin
+      let ur = rect.upperRight
 
-      return false
+      //probably requires more logic here for rotation
+      //also need to calculate the other corners more than likely
+      return point.x > ll.x && point.x < ur.x && point.y > ll.y && point.y < ur.y
     }
+  }
+
+  /**
+   Converts a point from screen coordinates to a point in the scene, ie, world coordinates.
+
+   - parameter point: A point in screen coordinates.
+
+   - returns: A point in the `Scene`.
+   */
+  public func convertPointFromView(point: Point) -> Point {
+    guard let height = view?.bounds.size.height else {
+      DLog("scene has not yet been present but you're trying to convert a point from view.")
+      return .zero
+    }
+
+    let x = point.x
+    let y = Float(height) - point.y
+    let vec = Vec4(x, y, 1.0, 1.0)
+
+    let scale = 1.0 / camera!.scale
+    let translate = scale * (vec - camera!.view.translation)
+
+    return Point(x: translate.x, y: translate.y)
   }
 }

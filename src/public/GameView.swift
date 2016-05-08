@@ -53,6 +53,7 @@ public class GameView: UIView {
 
   public func presentScene(scene: Scene) {
     currentScene = scene
+    scene.view = self
     scene.didMoveToView(self)
     paused = false
     timer.addToRunLoop(.mainRunLoop(), forMode: NSDefaultRunLoopMode)
@@ -125,7 +126,7 @@ extension GameView {
       return
     }
 
-    let nodes = scene.getAllNodes()
+    let nodes = scene.allNodes
     if !paused {
       nodes.forEach { node in
         node.update(delta)

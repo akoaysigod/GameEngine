@@ -70,12 +70,12 @@ public protocol NodeGeometry: class {
   var yScale: Float { get set }
 
   /**
-   This is actual 4x4 matrix being sent to the GPU in order to properly render a node. 
+   This transforms the relevent data about the `Node` into a `Mat4` to be used to compute the final `modelMatrix` of a `Renderable`.
    The default implementation should be sufficient for creating a custom rendering pipeline.
    
    - seealso: `Renderable` and `Uniforms`.
    */
-  var modelMatrix: Mat4 { get }
+  var transform: Mat4 { get }
 
   /**
    This function updates the actual geometry size of the vertices. It's not used as scaling is in the model matrix.
@@ -120,7 +120,11 @@ public extension NodeGeometry {
     }
   }
 
-  public var modelMatrix: Mat4 {
+  func setScale(scale: Float) {
+    self.scale = (scale, scale)
+  }
+
+  public var transform: Mat4 {
     let x = self.x - (width * anchorPoint.x)
     let y = self.y - (height * anchorPoint.y)
 
@@ -133,9 +137,5 @@ public extension NodeGeometry {
     let rotationTranslate = Mat4.translate(xRot, yRot, z)
 
     return worldTranslate * rotation * rotationTranslate * scale
-  }
-
-  func setScale(scale: Float) {
-    self.scale = (scale, scale)
   }
 }

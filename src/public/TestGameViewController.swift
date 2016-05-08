@@ -51,22 +51,27 @@ final class TestGameViewController: UIViewController {
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
       let sp = SpriteNode(texture: wall)
       sp.position = Point(x: 0.0, y: 0.0)
+      sp.name = "wall"
       scene.addNode(sp)
 
       let sp2 = SpriteNode(texture: floor)
-      sp2.position = Point(x: Float(sp2.size.width), y: 0.0)
+      sp2.position = Point(x: 64.0, y: 0.0)
+      sp2.name = "floor"
       scene.addNode(sp2)
 
       let sp3 = SpriteNode(texture: openDoor)
       sp3.position = Point(x: Float(sp3.size.width * 2), y: 0.0)
+      sp3.name = "open door"
       scene.addNode(sp3)
 
       let sp4 = SpriteNode(texture: stairsDown)
       sp4.position = Point(x: Float(sp4.size.width * 3), y: 0.0)
+      sp4.name = "stairs down"
       scene.addNode(sp4)
 
       let sp5 = SpriteNode(texture: stairsUp)
       sp5.position = Point(x: Float(sp5.size.width * 4), y: 0.0)
+      sp5.name = "stairs up"
       scene.addNode(sp5)
     }
 
@@ -101,12 +106,12 @@ final class TestGameViewController: UIViewController {
     let colorRect2 = ShapeNode(width: 100, height: 100, color: .red)
     colorRect2.name = "Red rect"
     //colorRect2.position = Point(x: 0, y: 0)
-    colorRect2.anchorPoint = Point(x: 0.5, y: 0.5)
+    //colorRect2.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect2.zPosition = 0
     colorRect.addNode(colorRect2)
 
     let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
-    colorRect3.name = "Red rect"
+    colorRect3.name = "blue rect"
     //colorRect3.position = Point(x: 100, y: 50)
     colorRect3.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect3.zPosition = 0
@@ -118,6 +123,7 @@ final class TestGameViewController: UIViewController {
     let forever2 = Action.repeatForever(group)
     //colorRect.runAction(group)
     colorRect.runAction(forever2)
+
 
     //
     //    let texture = Texture(imageName: "Atlas")
@@ -142,35 +148,32 @@ final class TestGameViewController: UIViewController {
   }
 }
 
-extension TestGameViewController: MTKViewDelegate {
-  func drawInMTKView(view: MTKView) {
-    let cTime = CACurrentMediaTime()
-
-    if currentTime == 0.0 {
-      currentTime = cTime
-    }
-    let eTime = cTime - currentTime
-    currentTime = cTime
-
-    scene.update(eTime)
-  }
-
-  func mtkView(view: MTKView, drawableSizeWillChange size: CGSize) {}
-}
-
-
 //tmp
 extension TestGameViewController {
   func addGestures() {
+    let tap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
+    view.addGestureRecognizer(tap)
+
     let pan = UIPanGestureRecognizer(target: self, action: #selector(panCamera(_:)))
-    self.view.addGestureRecognizer(pan)
+    view.addGestureRecognizer(pan)
 
     let pinch = UIPinchGestureRecognizer(target: self, action: #selector(zoomCamera(_:)))
-    self.view.addGestureRecognizer(pinch)
+    view.addGestureRecognizer(pinch)
+  }
+
+  func tap(t: UITapGestureRecognizer) {
+    let p = t.locationInView(view)
+    let r = scene.convertPointFromView(p.point)
+
+    scene.nodesAtPoint(r).forEach {
+      print($0.name ?? "")
+      print($0.position)
+      print(r)
+    }
   }
 
   func panCamera(p: UIPanGestureRecognizer) {
-    let t = p.translationInView(self.view)
+    let t = p.translationInView(view)
 
     let tMax: CGFloat = 3.0
     let tMin: CGFloat = -3.0

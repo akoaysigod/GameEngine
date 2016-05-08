@@ -20,6 +20,10 @@ public struct Rect {
     return Size(width: width, height: height)
   }
 
+  public var upperRight: Point {
+    return Point(x: x + width, y: y + height)
+  }
+
   public init(x: Float, y: Float, width: Float, height: Float) {
     self.x = x
     self.y = y
@@ -66,7 +70,7 @@ public struct Rect {
   public func containsPoint(point: Point) -> Bool {
     let pX = point.x
     let pY = point.y
-    return pX > x && pX < x + width && pY > y && pY < y + height
+    return pX > x && pX < upperRight.x && pY > y && pY < upperRight.y
   }
 }
 

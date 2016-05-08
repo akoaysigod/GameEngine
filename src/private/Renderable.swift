@@ -64,13 +64,8 @@ public protocol Renderable: NodeGeometry, Tree {
   /// whether or not the object is visible from the current view point
   var isVisible: Bool { get }
 
-  /**
-   This is used in order to properly update a model matrix of an object based on the parent's model matrix. This, in general, should be used as the 
-   model matrix for the uniform buffer and not the default model matrix of the `Renderable` object.
-
-   - returns: A new model matrix to be used as this `Renderable`'s model matrix.
-   */
-  func decompose() -> Mat4
+  /// This is the actual model matrix to be sent to the GPU == `parentTransform` * `transform` by default.
+  var modelMatrix: Mat4 { get }
 
   /**
    This is used by the various `Pipeline`s to encode the objects to the `MTLCommandBuffer` to be drawn by the GPU.
@@ -82,25 +77,15 @@ public protocol Renderable: NodeGeometry, Tree {
 }
 
 extension Renderable {
+  public var modelMatrix: Mat4 {
+    return parentTransform * transform
+  }
+
   static func setupBuffers(quads: Quads, device: MTLDevice) -> (vertexBuffer: MTLBuffer, indexBuffer: MTLBuffer) {
     let vertexBuffer = device.newBufferWithBytes(quads.vertexData, length: quads.vertexSize, options: [])
     let indexBuffer = device.newBufferWithBytes(quads.indicesData, length: quads.indicesSize, options: [])
 
     return (vertexBuffer, indexBuffer)
-  }
-
-  public func decompose() -> Mat4 {
-    /*
-     lol I don't know why I complicated that so much.
-     
-     TODO: cache these calculations somehow, deeply nested nodes probably don't need to update based on the parents
-           if the parent's aren't updating. This could possibly be a lot of calculation for no reason.
-    */
-    var ret = Mat4.identity
-    allParents.forEach { parent in
-      ret *= parent.modelMatrix
-    }
-    return ret * modelMatrix
   }
 }
 
