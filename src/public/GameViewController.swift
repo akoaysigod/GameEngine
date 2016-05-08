@@ -7,7 +7,6 @@
 //
 
 import Metal
-import MetalKit
 import UIKit
 
 /**
@@ -26,8 +25,6 @@ import UIKit
  */
 public class GameViewController: UIViewController {
   public var scene: Scene!
-
-  private var currentTime = 0.0
 
   override public func loadView() {
     view = GameView(frame: UIScreen.mainScreen().bounds)

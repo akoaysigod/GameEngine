@@ -138,11 +138,17 @@ extension GameView {
   }
 
   private func render(delta: CFTimeInterval, nodes: Nodes) {
-    let renderables = nodes.flatMap { node -> Renderables in
-      if let renderable = node as? Renderable where renderable.isVisible && !renderable.hidden {
-        return [renderable]
+//    let renderables = nodes.flatMap { node -> Renderables in
+//      if let renderable = node as? Renderable where renderable.isVisible && !renderable.hidden {
+//        return [renderable]
+//      }
+//      return []
+//    }
+    var renderables = Renderables()
+    for node in nodes {
+      if let renderable = node as? Renderable {
+        renderables += [renderable]
       }
-      return []
     }
 
     autoreleasepool {

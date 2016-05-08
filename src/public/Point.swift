@@ -6,6 +6,11 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
+public func +=(inout p: Point, rhs: Point) {
+  p.x += rhs.x
+  p.y += rhs.y
+}
+
 public struct Point {
   public var x: Float
   public var y: Float

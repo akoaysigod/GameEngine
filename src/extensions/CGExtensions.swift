@@ -8,6 +8,18 @@
 
 import UIKit
 
+public extension Float {
+  var cg: CGFloat {
+    return CGFloat(self)
+  }
+}
+
+public extension CGFloat {
+  var float: Float {
+    return Float(self)
+  }
+}
+
 /// This extension provides conveniences for using `Float`s with `CGPoint`s
 public extension CGPoint {
   public var float: (x: Float, y: Float) {

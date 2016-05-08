@@ -175,16 +175,23 @@ extension TestGameViewController {
   }
 
   func panCamera(p: UIPanGestureRecognizer) {
-    let t = p.translationInView(view)
-
-    let tMax: CGFloat = 3.0
-    let tMin: CGFloat = -3.0
-
-    let xMin = t.x > 0 ? tMax : tMin
-    let yMin = t.y > 0 ? tMax : tMin
-
-    self.scene.camera?.x += t.x > 0 ? Float(min(t.x, xMin)) : Float(max(t.x, xMin))
-    self.scene.camera?.y += t.y > 0 ? Float(min(t.y, yMin)) : Float(max(t.y, yMin))
+    var pos = p.translationInView(view)
+    pos.x *= CGFloat(scene.camera!.xScale)
+    pos.y *= CGFloat(scene.camera!.yScale)
+    pos.x *= -1.0
+    
+    scene.camera!.position += pos.point
+    p.setTranslation(.zero, inView: view)
+//    let t = p.translationInView(view)
+//
+//    let tMax: CGFloat = 3.0
+//    let tMin: CGFloat = -3.0
+//
+//    let xMin = t.x > 0 ? tMax : tMin
+//    let yMin = t.y > 0 ? tMax : tMin
+//
+//    self.scene.camera?.x += t.x > 0 ? Float(min(t.x, xMin)) : Float(max(t.x, xMin))
+//    self.scene.camera?.y += t.y > 0 ? Float(min(t.y, yMin)) : Float(max(t.y, yMin))
   }
 
   func zoomCamera(p: UIPinchGestureRecognizer) {
