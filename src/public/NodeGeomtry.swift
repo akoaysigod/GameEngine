@@ -80,7 +80,8 @@ public protocol NodeGeometry: class {
   /**
    This function updates the actual geometry size of the vertices. It's not used as scaling is in the model matrix.
    The actual model matrix will apply it's changes to the update vertices.
-   It's default implementation is in `Renderable`.
+
+   - note: By default, this does nothing if the node is not a `Renderable`.
    
    - seealso: `Renderable`
    */
@@ -124,18 +125,37 @@ public extension NodeGeometry {
     self.scale = (scale, scale)
   }
 
-  public var transform: Mat4 {
-    let x = self.x - (width * anchorPoint.x)
-    let y = self.y - (height * anchorPoint.y)
+//  public var transform: Mat4 {
+//    let x = self.x - (width * anchorPoint.x)
+//    let y = self.y - (height * anchorPoint.y)
+//
+//    let xRot = 0.0 - (width * anchorPoint.x)
+//    let yRot = 0.0 - (height * anchorPoint.y)
+//
+//    let scale = Mat4.scale(xScale, yScale)
+//    let worldTranslate = Mat4.translate(x - xRot, y - yRot, z)
+//    let rotation = Mat4.rotate(-1 * self.rotation)
+//    let rotationTranslate = Mat4.translate(xRot, yRot, z)
+//
+//    return worldTranslate * rotation * rotationTranslate * scale
+//  }
 
-    let xRot = 0.0 - (width * anchorPoint.x)
-    let yRot = 0.0 - (height * anchorPoint.y)
+  public func updateSize() {}
 
-    let scale = Mat4.scale(xScale, yScale)
-    let worldTranslate = Mat4.translate(x - xRot, y - yRot, z)
-    let rotation = Mat4.rotate(-1 * self.rotation)
-    let rotationTranslate = Mat4.translate(xRot, yRot, z)
 
-    return worldTranslate * rotation * rotationTranslate * scale
+}
+
+extension NodeGeometry where Self: Renderable {
+  public func updateSize() {
+    let quad: Quad
+    if texture == nil {
+      quad = .rect(size)
+    }
+    else {
+      quad = .spriteRect(size)
+    }
+
+    let p = vertexBuffer.contents()
+    memcpy(p, [quad].vertexData, [quad].vertexSize)
   }
 }

@@ -12,7 +12,7 @@ import QuartzCore
 import simd
 import UIKit
 
-typealias Renderables = [Renderable]
+public typealias Renderables = [Renderable]
 
 /**
  The `Renderable` protocol is required by an object that wishes to be rendered. Applying this protocol to an object should be sufficient for creating a custom pipeline.
@@ -27,7 +27,7 @@ typealias Renderables = [Renderable]
  
  - seealso: `NodeGeometry` and `Tree`
  */
-public protocol Renderable: NodeGeometry, Tree {
+public protocol Renderable: class, NodeGeometry, Tree, RenderTree {
   /**
    Holds the vertex data for an object. Currently, perhaps forever, the only way to update the vertices of an object after creating
    is by updating their size using the default implementation of updateSize in `NodeGeometry`.
@@ -86,22 +86,5 @@ extension Renderable {
     let indexBuffer = device.newBufferWithBytes(quads.indicesData, length: quads.indicesSize, options: [])
 
     return (vertexBuffer, indexBuffer)
-  }
-}
-
-extension NodeGeometry {
-  public func updateSize() {
-    guard let renderable = self as? Renderable else { return }
-
-    let quad: Quad
-    if renderable.texture == nil {
-      quad = .rect(size)
-    }
-    else {
-      quad = .spriteRect(size)
-    }
-
-    let p = renderable.vertexBuffer.contents()
-    memcpy(p, [quad].vertexData, [quad].vertexSize)
   }
 }

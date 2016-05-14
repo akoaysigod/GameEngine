@@ -12,7 +12,7 @@ import MetalKit
 final class Renderer {
   private let commandQueue: MTLCommandQueue
 
-  private let colorPipeline: ColorPipeline
+  private let shapePipeline: ShapePipeline
   private let spritePipeline: SpritePipeline
   private let textPipeline: TextPipeline
   private let depthState: MTLDepthStencilState
@@ -31,14 +31,34 @@ final class Renderer {
     //descriptorQueue = RenderPassQueue(view: view)
     
     let factory = PipelineFactory(device: device)
-    colorPipeline = factory.provideColorPipeline()
-    spritePipeline = factory.provideSpritePipeline()
-    textPipeline = factory.provideTextPipeline()
-    depthState = factory.createDepthStencil()
+    shapePipeline = factory.constructShapePipeline()
+    spritePipeline = factory.constructSpritePipeline()
+    textPipeline = factory.constructTextPipeline()
+    depthState = factory.constructDepthStencil()
 
     inflightSemaphore = dispatch_semaphore_create(MaxFrameLag)
   }
 
+  func testSplit(renderables: Renderables) -> ([ShapeNode], [SpriteNode], [TextNode]) {
+    var shapeNodes = [ShapeNode]()
+    var spriteNodes = [SpriteNode]()
+    var textNodes = [TextNode]()
+    
+    for renderable in renderables {
+      if let shape = renderable as? ShapeNode {
+        shapeNodes += [shape]
+      }
+      else if let sprite = renderable as? SpriteNode {
+        spriteNodes += [sprite]
+      }
+      else if let text = renderable as? TextNode {
+        textNodes += [text]
+      }
+    }
+    
+    return (shapeNodes, spriteNodes, textNodes)
+  }
+  
   func render(nextRenderPass: NextRenderPass, renderables: Renderables) {
     dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
 
@@ -49,17 +69,27 @@ final class Renderer {
       let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
       encoder.setDepthStencilState(depthState)
 
-      if let colorNodes: [ShapeNode] = colorPipeline.filterRenderables(renderables) {
-        colorPipeline.encode(encoder, nodes: colorNodes)
-      }
-      
-      if let spriteNodes: [SpriteNode] = spritePipeline.filterRenderables(renderables) {
-        spritePipeline.encode(encoder, nodes: spriteNodes)
-      }
+//      var shapeNodes = [ShapeNode]()
+//      var spriteNodes = [SpriteNode]()
+//      var textNodes = [TextNode]()
+//
+//      for renderable in renderables {
+//        if let shape = renderable as? ShapeNode {
+//          shapeNodes += [shape]
+//        }
+//        else if let sprite = renderable as? SpriteNode {
+//          spriteNodes += [sprite]
+//        }
+//        else if let text = renderable as? TextNode {
+//          textNodes += [text]
+//        }
+//      }
 
-      if let textNodes: [TextNode] = textPipeline.filterRenderables(renderables) {
-        textPipeline.encode(encoder, nodes: textNodes)
-      }
+      let (shapeNodes, spriteNodes, textNodes) = testSplit(renderables)
+
+      shapePipeline.encode(encoder, nodes: shapeNodes)
+      spritePipeline.encode(encoder, nodes: spriteNodes)
+      textPipeline.encode(encoder, nodes: textNodes)
 
       encoder.endEncoding()
 

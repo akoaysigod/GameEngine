@@ -26,7 +26,7 @@ extension Pipeline {
     #if TESTTARGET
     let defaultLibrary = device.newDefaultLibrary()!
     #else
-    let defaultLibrary = try! device.newLibraryWithFile(NSBundle(forClass: ColorPipeline.self).URLForResource("default", withExtension: "metallib")!.path!)
+    let defaultLibrary = try! device.newLibraryWithFile(NSBundle(forClass: ShapePipeline.self).URLForResource("default", withExtension: "metallib")!.path!)
     #endif
 
     guard let vProgram = defaultLibrary.newFunctionWithName(vertexProgram) else {
@@ -80,22 +80,26 @@ extension Pipeline {
     return renderEncoder
   }
 
-  func filterRenderables<T: Renderable>(renderable: Renderables) -> [T]? {
-    guard renderable.count > 0 else { return nil } 
-
-    return renderable.flatMap { (r: Renderable) -> [T] in
-      if let t = r as? T {
-        return [t]
-      }         
-      return []
-    }
-  }
+//this is too slow to use
+//  func filterRenderables<T: Renderable>(renderable: Renderables) -> [T]? {
+//    guard renderable.count > 0 else { return nil }
+//
+//    return renderable.flatMap { (r: Renderable) -> [T] in
+//      if let t = r as? T {
+//        return [t]
+//      }         
+//      return []
+//    }
+//  }
 
   func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
     encoder.setRenderPipelineState(pipelineState)
-    nodes.forEach {
-      $0.draw(encoder, sampler: sampler)
+    for node in nodes {
+      node.draw(encoder, sampler: sampler)
     }
+//    nodes.forEach {
+//      $0.draw(encoder, sampler: sampler)
+//    }
   }
 }
 
@@ -106,7 +110,7 @@ final class PipelineFactory {
     self.device = device
   }
 
-  func createDepthStencil() -> MTLDepthStencilState {
+  func constructDepthStencil() -> MTLDepthStencilState {
     let depthStateDescriptor = MTLDepthStencilDescriptor()
     depthStateDescriptor.depthCompareFunction = .GreaterEqual
     depthStateDescriptor.depthWriteEnabled = true
@@ -114,20 +118,20 @@ final class PipelineFactory {
     return device.newDepthStencilStateWithDescriptor(depthStateDescriptor)
   }
 
-  func provideColorPipeline() -> ColorPipeline {
-    return ColorPipeline(device: device)
+  func constructShapePipeline() -> ShapePipeline {
+    return ShapePipeline(device: device)
   }
 
-  func provideSpritePipeline() -> SpritePipeline {
+  func constructSpritePipeline() -> SpritePipeline {
     return SpritePipeline(device: device)
   }
 
-  func provideTextPipeline() -> TextPipeline {
+  func constructTextPipeline() -> TextPipeline {
     return TextPipeline(device: device)
   }
 }
 
-final class ColorPipeline: Pipeline {
+final class ShapePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState? = nil
 
@@ -140,8 +144,8 @@ final class ColorPipeline: Pipeline {
   init(device: MTLDevice,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    let pipelineDescriptor = ColorPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-    self.pipelineState = ColorPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
+    let pipelineDescriptor = ShapePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    self.pipelineState = ShapePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
 }
 

@@ -65,6 +65,7 @@ public final class Action {
   private var actionType: ActionType
   private(set) public var duration: Double
   private var timer: Double = 0.0
+  private let forever: Bool
   private var completion: ActionCompletion? = nil
   public var completed = false
 
@@ -74,9 +75,10 @@ public final class Action {
     return Float(easingFunction.function.pointAtTime(normalized))
   }
 
-  private init(actionType: ActionType, duration: Double, completion: ActionCompletion? = nil) {
+  private init(actionType: ActionType, duration: Double, forever: Bool = false, completion: ActionCompletion? = nil) {
     self.actionType = actionType
     self.duration = duration
+    self.forever = forever
     self.completion = completion
   }
 
@@ -107,9 +109,12 @@ public final class Action {
 
     timer += delta
 
-    if timer >= duration {
+    if timer >= duration && !forever {
       completed = true
       completion?()
+    }
+    else if timer >= duration && forever {
+      timer = 0.0
     }
   }
 
@@ -328,7 +333,6 @@ extension Action {
    - returns: A new instance of `Action` that will run forever.
    */
   public static func repeatForever(action: Action) -> Action {
-    let action = action
     switch action.actionType {
     case .Sequence(let seq):
       seq.forever = true
@@ -336,6 +340,6 @@ extension Action {
     case _: break
     }
 
-    return Action(actionType: action.actionType, duration: Double.infinity, completion: nil)
+    return Action(actionType: action.actionType, duration: action.duration, forever: true, completion: nil)
   }
 }

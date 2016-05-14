@@ -25,14 +25,27 @@ import UIKit
 public class Scene: Node {
   public weak var view: GameView?
 
+  private var updateNodes = Nodes()
+  public var allNodes: Nodes {
+    return updateNodes
+  }
+  private var renderNodes = Renderables()
+  public var allRenderables: Renderables {
+    return renderNodes
+  }
+
   var uniqueID = "1"
 
   public override var parent: Node? {
     return nil
   }
 
-  public var transform: Mat4 {
+  public override var transform: Mat4 {
     return Mat4.identity
+  }
+
+  public override var hasAction: Bool {
+    return false
   }
 
   /**
@@ -48,10 +61,49 @@ public class Scene: Node {
     let camera = CameraNode(size: size)
     addNode(camera)
     self.camera = camera
+    self.scene = self
   }
 
-  public func didMoveToView(view: GameView) {
+  /**
+   The scene is about to start rendering.
+   
+   - parameter view: The `GameView` that owns the `Scene`.
+   */
+  public func didMoveToView(view: GameView) {}
 
+  public override func addNode(node: Node) {
+    super.addNode(node)
+
+    updateNodes += [node] + node.allNodes
+    if let renderable = node as? Renderable {
+      renderNodes += [renderable]
+    }
+    renderNodes += node.allRenderables
+  }
+
+  func updateNodes<T : Node>(node: T?) {
+    guard let node = node else { return }
+    guard let index = updateNodes.find(node) else { return }
+
+    let removed = updateNodes.removeAtIndex(index) as? T
+
+    if let removedNode = removed as? Node {
+      removedNode.allNodes.forEach {
+        if let i = updateNodes.find($0) {
+          updateNodes.removeAtIndex(i)
+        }
+
+        if $0 is Renderable {
+          if let i = renderNodes.findRenderable($0) {
+            renderNodes.removeAtIndex(i)
+          }
+        }
+      }
+
+      if let i = renderNodes.findRenderable(removedNode) {
+        renderNodes.removeAtIndex(i)
+      }
+    }
   }
 }
 

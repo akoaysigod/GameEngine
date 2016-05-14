@@ -126,31 +126,20 @@ extension GameView {
       return
     }
 
-    let nodes = scene.allNodes
     if !paused {
-      nodes.forEach { node in
-        node.update(delta)
-      }
-
+      updateNodes(delta, nodes: scene.allNodes)
       scene.update(delta)
     }
-    render(delta, nodes: nodes)
+    render(scene.allRenderables)
   }
 
-  private func render(delta: CFTimeInterval, nodes: Nodes) {
-//    let renderables = nodes.flatMap { node -> Renderables in
-//      if let renderable = node as? Renderable where renderable.isVisible && !renderable.hidden {
-//        return [renderable]
-//      }
-//      return []
-//    }
-    var renderables = Renderables()
-    for node in nodes {
-      if let renderable = node as? Renderable {
-        renderables += [renderable]
-      }
+  private func updateNodes(delta: CFTimeInterval, nodes: Nodes) {
+    nodes.forEach {
+      $0.update(delta)
     }
+  }
 
+  private func render(renderables: Renderables) {
     autoreleasepool {
       renderer.render(renderPassQueue.next(self), renderables: renderables)
     }
