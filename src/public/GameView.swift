@@ -127,17 +127,21 @@ extension GameView {
     }
 
     if !paused {
-      scene.allNodes.forEach { node in
-        node.update(delta)
-      }
+      updateNodes(delta, nodes: scene.allNodes)
       scene.update(delta)
     }
-    render(delta, scene: scene)
+    render(scene.allRenderables)
   }
 
-  private func render(delta: CFTimeInterval, scene: Scene) {
+  private func updateNodes(delta: CFTimeInterval, nodes: Nodes) {
+    nodes.forEach {
+      $0.update(delta)
+    }
+  }
+
+  private func render(renderables: Renderables) {
     autoreleasepool {
-      renderer.render(renderPassQueue.next(self), renderables: scene.allRenderables)
+      renderer.render(renderPassQueue.next(self), renderables: renderables)
     }
   }
 

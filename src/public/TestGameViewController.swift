@@ -50,13 +50,20 @@ final class TestGameViewController: UIViewController {
       let stairsDown = environmentAtlas.textureNamed("StairsDown"),
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
 
+      var nodes = [SpriteNode]()
       (0...155).forEach { _ in
         let sp = SpriteNode(texture: wall)
         let x = Float(arc4random_uniform(500))
         let y = Float(arc4random_uniform(300))
         sp.position = Point(x: x, y: y)
+        nodes += [sp]
         scene.addNode(sp)
       }
+
+      nodes.forEach {
+        scene.removeNode($0)
+      }
+
 //      let sp = SpriteNode(texture: wall)
 //      sp.position = Point(x: 0.0, y: 0.0)
 //      sp.name = "wall"
@@ -191,22 +198,12 @@ extension TestGameViewController {
     
     scene.camera!.position += pos.point
     p.setTranslation(.zero, inView: view)
-//    let t = p.translationInView(view)
-//
-//    let tMax: CGFloat = 3.0
-//    let tMin: CGFloat = -3.0
-//
-//    let xMin = t.x > 0 ? tMax : tMin
-//    let yMin = t.y > 0 ? tMax : tMin
-//
-//    self.scene.camera?.x += t.x > 0 ? Float(min(t.x, xMin)) : Float(max(t.x, xMin))
-//    self.scene.camera?.y += t.y > 0 ? Float(min(t.y, yMin)) : Float(max(t.y, yMin))
   }
 
   func zoomCamera(p: UIPinchGestureRecognizer) {
     let scale = self.scene.camera!.scale * Float(p.scale)
     let realScale = max(0.5, min(scale, 5.0));
-    self.scene.camera!.scale = realScale
+    self.scene.camera!.zoom = realScale
     p.scale = 1.0
   }
 }

@@ -81,9 +81,9 @@ public class Scene: Node {
     renderNodes += node.allRenderables
   }
 
-  public override func removeNode<T : Node>(node: T?) -> T? {
-    guard let node = node else { return nil }
-    guard let index = updateNodes.find(node) else { return nil }
+  func updateNodes<T : Node>(node: T?) {
+    guard let node = node else { return }
+    guard let index = updateNodes.find(node) else { return }
 
     let removed = updateNodes.removeAtIndex(index) as? T
 
@@ -92,33 +92,18 @@ public class Scene: Node {
         if let i = updateNodes.find($0) {
           updateNodes.removeAtIndex(i)
         }
-      }
-    }
 
-    if let removedNode = removed as? Renderable {
-      var indices = [Int]()
-      removedNode.allRenderables.forEach {
-        //bleh
-        var renderIndex: Int?
-        for (i, v) in renderNodes.enumerate() {
-          if v == $0 {
-            renderIndex = i
-            break
+        if $0 is Renderable {
+          if let i = renderNodes.findRenderable($0) {
+            renderNodes.removeAtIndex(i)
           }
         }
-        if let renderIndex = renderIndex {
-          indices += [renderIndex]
-        }
       }
 
-      indices.forEach {
-        renderNodes.removeAtIndex($0)
+      if let i = renderNodes.findRenderable(removedNode) {
+        renderNodes.removeAtIndex(i)
       }
     }
-
-    super.removeNode(node)
-
-    return removed
   }
 }
 

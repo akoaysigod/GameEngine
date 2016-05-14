@@ -18,13 +18,4 @@ extension RenderTree {
     let allNodes = renderableNodes.flatMap { $0.allRenderables }
     return renderableNodes + allNodes
   }
-
-  func findRenderable(renderable: Renderable) -> Int? {
-    for (i, v) in renderableNodes.enumerate() {
-      if v == renderable {
-        return i
-      }
-    }
-    return nil
-  }
 }

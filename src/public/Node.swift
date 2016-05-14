@@ -22,6 +22,10 @@ func ==(lhs: Renderable, rhs: Renderable) -> Bool {
   return lhs.hashValue == rhs.hashValue
 }
 
+func ==(lhs: Renderable, rhs: Node) -> Bool {
+  return lhs.hashValue == rhs.hashValue
+}
+
 /**
  A `Node` is the most basic object from which most game type objects should be subclassed from.
  
@@ -119,6 +123,7 @@ public class Node: NodeGeometry, Updateable, Tree, RenderTree, Equatable, Hashab
    */
   public func update(delta: CFTimeInterval) {
     guard let action = self.action else { return }
+
     if !action.completed {
       action.run(self, delta: delta)
     }
@@ -191,10 +196,14 @@ public class Node: NodeGeometry, Updateable, Tree, RenderTree, Equatable, Hashab
     guard let node = node else { return nil }
     guard let index = nodes.find(node) else { return nil }
 
+    if let scene = node.scene {
+      scene.updateNodes(node)
+    }
+
     let removed = nodes.removeAtIndex(index) as? T
 
-    if let renderable = removed as? Renderable {
-      if let renderIndex = findRenderable(renderable) {
+    if let renderable = removed as? Node {
+      if let renderIndex = renderableNodes.findRenderable(renderable) {
         renderableNodes.removeAtIndex(renderIndex)
       }
     }
