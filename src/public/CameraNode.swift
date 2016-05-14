@@ -20,16 +20,17 @@ import UIKit
          Adding a camera to anything else is kind of undefined.
  */
 public class CameraNode: Node {
-  var view: Mat4 {
-    return Mat4.translate(x + (width * anchorPoint.x), y + (height * anchorPoint.y)) * Mat4.scale(zoom, zoom)
-  }
+  private(set) var view: Mat4 = .identity
 
   let projection: Mat4
 
-  public var zoom: Float = 1.0
-  public var scale: Float = 1.0 {
+  public var scale: Float {
+    return zoom
+  }
+
+  public var zoom: Float = 1.0 {
     didSet {
-      zoom = scale
+      updateTransform()
     }
   }
 
@@ -45,6 +46,7 @@ public class CameraNode: Node {
     super.init(size: size)
 
     anchorPoint = Point(x: 0.5, y: 0.5)
+    updateTransform()
   }
 
   public override func addNode(node: Node) {
@@ -52,5 +54,9 @@ public class CameraNode: Node {
 
     node.camera = self
     node.allNodes.forEach { $0.camera = self }
+  }
+
+  override func updateTransform() {
+    view = Mat4.translate(x + (width * anchorPoint.x), y + (height * anchorPoint.y)) * Mat4.scale(zoom, zoom)
   }
 }
