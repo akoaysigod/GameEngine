@@ -9,12 +9,17 @@
 import Foundation
 import Metal
 import QuartzCore
+import simd
 import UIKit
 
 public typealias Nodes = [Node]
 
 public func ==(rhs: Node, lhs: Node) -> Bool {
    return rhs.hashValue == lhs.hashValue
+}
+
+func ==(lhs: Renderable, rhs: Renderable) -> Bool {
+  return lhs.hashValue == rhs.hashValue
 }
 
 /**
@@ -30,12 +35,15 @@ public func ==(rhs: Node, lhs: Node) -> Bool {
  - TextNode
  - Camera
  */
-public class Node: NodeGeometry, Tree, Equatable, Hashable {
+public class Node: NodeGeometry, Updateable, Tree, RenderTree, Equatable, Hashable {
   public var name: String? = nil
+
+  public var scene: Scene? = nil
   
   public var size: Size {
     didSet {
       updateSize()
+      updateTransform()
     }
   }
 
@@ -50,28 +58,44 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
     return ret
   }
 
-  public var anchorPoint = Point(x: 0.0, y: 0.0)
+  public var anchorPoint = Point(x: 0.0, y: 0.0) {
+    didSet { updateTransform() }
+  }
 
-  public var x: Float = 0.0
-  public var y: Float = 0.0
+  public var x: Float = 0.0 {
+    didSet { updateTransform() }
+  }
+  public var y: Float = 0.0 {
+    didSet { updateTransform() }
+  }
 
-  public var zPosition: Int = 0
+  public var zPosition: Int = 0 {
+    didSet { updateTransform() }
+  }
 
-  public var rotation: Float = 0.0
+  public var rotation: Float = 0.0 {
+    didSet { updateTransform() }
+  }
 
-  public var xScale: Float = 1.0
-  public var yScale: Float = 1.0
-  
+  public var xScale: Float = 1.0 {
+    didSet { updateTransform() }
+  }
+  public var yScale: Float = 1.0 {
+    didSet { updateTransform() }
+  }
+
+  public private(set) var transform: Mat4 = .identity
+
   public weak var camera: CameraNode?
 
   //tree related
   private var uuid = NSUUID().UUIDString
   public var hashValue: Int { return uuid.hashValue }
-  private var nodeSet = Set<Node>()
-  public var nodes: Nodes {
-    return Array(nodeSet)
-  }
+  public private(set) var nodes = Nodes()
   public private(set) var parent: Node? = nil
+
+  //render tree
+  public private(set) var renderableNodes = Renderables()
 
   /**
    Designated initializer. 
@@ -85,6 +109,7 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
    */
   public init(size: Size = .zero) {
     self.size = size
+    updateTransform()
   }
   
   /**
@@ -130,23 +155,67 @@ public class Node: NodeGeometry, Tree, Equatable, Hashable {
   //MARK: Tree stuff
 
   public func addNode(node: Node) {
-    node.camera = camera
+    guard node.parent == nil else {
+      DLog("Node already has parent node.")
+      return
+    }
+    guard node.scene == nil else {
+      DLog("Node has already been added to a scene.")
+      return
+    }
+
+    node.scene = scene
+    node.parent = self
+
     node.allNodes.forEach {
       //I have no idea if this is the best way to handle adding more cameras to the scene
       //This will probably break in a weird way someday.
+      $0.scene = scene
       if $0.camera == nil {
         $0.camera = camera
       }
     }
-    node.parent = self
-    nodeSet.insert(node)
+
+    if node.camera == nil {
+      node.camera = camera
+    }
+
+    nodes += [node]
+
+    if let renderable = node as? Renderable {
+      renderableNodes += [renderable]
+    }
   }
 
   public func removeNode<T: Node>(node: T?) -> T? {
     guard let node = node else { return nil }
-    let optNode = nodeSet.remove(node) as? T
-    optNode?.parent = nil
-    return optNode
+    guard let index = nodes.find(node) else { return nil }
+
+    let removed = nodes.removeAtIndex(index) as? T
+
+    if let renderable = removed as? Renderable {
+      if let renderIndex = findRenderable(renderable) {
+        renderableNodes.removeAtIndex(renderIndex)
+      }
+    }
+
+    return removed
+  }
+
+  //MARK: transform caching
+  func updateTransform() {
+    let x = self.x - (width * anchorPoint.x)
+    let y = self.y - (height * anchorPoint.y)
+
+    let xRot = 0.0 - (width * anchorPoint.x)
+    let yRot = 0.0 - (height * anchorPoint.y)
+
+    let scale = Mat4.scale(xScale, yScale)
+    let worldTranslate = Mat4.translate(x - xRot, y - yRot, z)
+    let rotation = Mat4.rotate(-1 * self.rotation)
+    let rotationTranslate = Mat4.translate(xRot, yRot, z)
+
+    transform = worldTranslate * rotation * rotationTranslate * scale
   }
 }
 

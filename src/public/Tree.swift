@@ -17,6 +17,8 @@ import simd
  Probably best to avoid doing stuff like that.
  */
 public protocol Tree: class {
+  var hashValue: Int { get }
+
   /**
    This returns all direct `Node`s of the current `Node`. It's mostly for making other calculations easier.
    */
@@ -79,6 +81,10 @@ extension Tree {
   }
 
   public var parentTransform: Mat4 {
+    if parent is Scene {
+      return Mat4.identity
+    }
+
     /*
      lol I don't know why I complicated that so much.
      

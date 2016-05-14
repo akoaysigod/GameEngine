@@ -49,6 +49,14 @@ final class TestGameViewController: UIViewController {
       let openDoor = environmentAtlas.textureNamed("OpenDoor"),
       let stairsDown = environmentAtlas.textureNamed("StairsDown"),
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
+
+      (0...155).forEach { _ in
+        let sp = SpriteNode(texture: wall)
+        let x = Float(arc4random_uniform(500))
+        let y = Float(arc4random_uniform(300))
+        sp.position = Point(x: x, y: y)
+        scene.addNode(sp)
+      }
 //      let sp = SpriteNode(texture: wall)
 //      sp.position = Point(x: 0.0, y: 0.0)
 //      sp.name = "wall"
@@ -96,11 +104,12 @@ final class TestGameViewController: UIViewController {
     colorRect.x = 50
     colorRect.y = 50
 
-    //let action = Action.rotateBy(Float(360.0), duration: 1.0)
+    let action = Action.rotateBy(Float(360.0), duration: 1.0)
     //let action = Action.moveTo(100.0, y: 0.0, duration: 1.0)
     //let action = Action.moveTo(CGPoint(x: 0.0, y: 0.0), duration: 1.0)
-    //let forever = Action.repeatForever(action)
-    //colorRect.runAction(action)
+    let forever = Action.repeatForever(action)
+    colorRect.runAction(forever)
+
     let camera = CameraNode(size: view.bounds.size.size)
     camera.addNode(colorRect)
     scene.addNode(camera)
