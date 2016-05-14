@@ -39,27 +39,7 @@ final class Renderer {
     inflightSemaphore = dispatch_semaphore_create(MaxFrameLag)
   }
 
-  func testSplit(renderables: Renderables) -> ([ShapeNode], [SpriteNode], [TextNode]) {
-    var shapeNodes = [ShapeNode]()
-    var spriteNodes = [SpriteNode]()
-    var textNodes = [TextNode]()
-    
-    for renderable in renderables {
-      if let shape = renderable as? ShapeNode {
-        shapeNodes += [shape]
-      }
-      else if let sprite = renderable as? SpriteNode {
-        spriteNodes += [sprite]
-      }
-      else if let text = renderable as? TextNode {
-        textNodes += [text]
-      }
-    }
-    
-    return (shapeNodes, spriteNodes, textNodes)
-  }
-  
-  func render(nextRenderPass: NextRenderPass, renderables: Renderables) {
+  func render(nextRenderPass: NextRenderPass, shapeNodes: [ShapeNode], spriteNodes: [SpriteNode], textNodes: [TextNode]) {
     dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
 
     let commandBuffer = commandQueue.commandBuffer()
@@ -68,24 +48,6 @@ final class Renderer {
     if let (renderPassDescriptor, drawable) = nextRenderPass() {
       let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
       encoder.setDepthStencilState(depthState)
-
-//      var shapeNodes = [ShapeNode]()
-//      var spriteNodes = [SpriteNode]()
-//      var textNodes = [TextNode]()
-//
-//      for renderable in renderables {
-//        if let shape = renderable as? ShapeNode {
-//          shapeNodes += [shape]
-//        }
-//        else if let sprite = renderable as? SpriteNode {
-//          spriteNodes += [sprite]
-//        }
-//        else if let text = renderable as? TextNode {
-//          textNodes += [text]
-//        }
-//      }
-
-      let (shapeNodes, spriteNodes, textNodes) = testSplit(renderables)
 
       shapePipeline.encode(encoder, nodes: shapeNodes)
       spritePipeline.encode(encoder, nodes: spriteNodes)

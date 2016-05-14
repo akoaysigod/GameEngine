@@ -130,7 +130,7 @@ extension GameView {
       updateNodes(delta, nodes: scene.allNodes)
       scene.update(delta)
     }
-    render(scene.allRenderables)
+    render(scene)
   }
 
   private func updateNodes(delta: CFTimeInterval, nodes: Nodes) {
@@ -139,9 +139,9 @@ extension GameView {
     }
   }
 
-  private func render(renderables: Renderables) {
+  private func render(scene: Scene) {
     autoreleasepool {
-      renderer.render(renderPassQueue.next(self), renderables: renderables)
+      renderer.render(renderPassQueue.next(self), shapeNodes: scene.shapeNodes, spriteNodes: scene.spriteNodes, textNodes: scene.textNodes)
     }
   }
 

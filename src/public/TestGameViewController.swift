@@ -60,9 +60,7 @@ final class TestGameViewController: UIViewController {
         scene.addNode(sp)
       }
 
-      nodes.forEach {
-        scene.removeNode($0)
-      }
+
 
 //      let sp = SpriteNode(texture: wall)
 //      sp.position = Point(x: 0.0, y: 0.0)
