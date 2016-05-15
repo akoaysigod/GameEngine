@@ -14,32 +14,36 @@ struct VertexIn {
   packed_float2 texCoords;
 };
 
-struct TransformedVertex {
-  float4 position [[position]];
-  float2 texCoords;
+struct InstanceUniforms {
+  float4x4 model;
+  float4 color;
 };
 
 struct Uniforms {
   float4x4 projection;
   float4x4 view;
-  float4x4 model;
-  float4 color;
 };
 
-vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
-                                    constant Uniforms &uniforms [[buffer(1)]],
-                                    uint vid [[vertex_id]])
+struct VertexOut {
+  float4 position [[position]];
+  float2 texCoords;
+};
+
+vertex VertexOut textVertex(uint vid [[vertex_id]],
+                            const device VertexIn *vertices [[buffer(0)]],
+                            const device InstanceUniforms &instanceUniforms [[buffer(1)]],
+                            const device Uniforms &uniforms [[buffer(2)]])
 {
   VertexIn vertIn = vertices[vid];
   
-  TransformedVertex outVert;
-  outVert.position = uniforms.projection * uniforms.view * uniforms.model * float4(vertIn.position);
+  VertexOut outVert;
+  outVert.position = uniforms.projection * uniforms.view * instanceUniforms.model * float4(vertIn.position);
   outVert.texCoords = vertIn.texCoords;
   
   return outVert;
 }
 
-//fragment float4 textFragment(TransformedVertex vert [[stage_in]],
+//fragment float4 textFragment(VertexOut vert [[stage_in]],
 //                            sampler samplr [[sampler(0)]],
 //                            texture2d<float, access::sample> texture [[texture(0)]])
 //{
@@ -52,12 +56,12 @@ vertex TransformedVertex textVertex(constant VertexIn *vertices [[buffer(0)]],
 //  return float4(color.r, color.g, color.b, opacity);
 //}
 
-fragment float4 textFragment(TransformedVertex vert [[stage_in]],
-                             constant Uniforms &uniforms [[buffer(0)]],
+fragment float4 textFragment(VertexOut vert [[stage_in]],
+                             constant InstanceUniforms &instanceUniforms [[buffer(0)]],
                              sampler samplr [[sampler(0)]],
                              texture2d<float, access::sample> texture [[texture(0)]])
 {
-  float4 color = uniforms.color;
+  float4 color = instanceUniforms.color;
   float edgeDistance = 0.5;
   float dist = texture.sample(samplr, vert.texCoords).r;
   float edgeWidth = 0.75 * length(float2(dfdx(dist), dfdy(dist)));

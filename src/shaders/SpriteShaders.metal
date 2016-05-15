@@ -15,11 +15,14 @@ struct VertexIn {
   packed_float2 texCoord;
 };
 
+struct InstanceUniforms {
+  float4x4 model;
+  float4 color;
+};
+
 struct Uniforms {
   float4x4 projection;
   float4x4 view;
-  float4x4 model;
-  float4 color;
 };
 
 struct VertexOut {
@@ -29,24 +32,25 @@ struct VertexOut {
 
 vertex VertexOut spriteVertex(uint vid [[vertex_id]],
                               const device VertexIn* vert [[buffer(0)]],
-                              const device Uniforms& uniforms [[buffer(1)]])
+                              const device InstanceUniforms& instanceUniforms [[buffer(1)]],
+                              const device Uniforms& uniforms [[buffer(2)]])
 {
   VertexIn vertIn = vert[vid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.projection * uniforms.view * uniforms.model * float4(vertIn.position);
+  outVertex.position = uniforms.projection * uniforms.view * instanceUniforms.model * float4(vertIn.position);
   outVertex.texCoord = vertIn.texCoord;
 
   return outVertex;
 }
 
 fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
-                               constant Uniforms &uniforms [[buffer(0)]],
+                               constant InstanceUniforms &instanceUniforms [[buffer(0)]],
                                texture2d<float> tex2D [[texture(0)]],
                                sampler sampler2D [[sampler(0)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
-  return color * uniforms.color;
+  return color * instanceUniforms.color;
 }
 
 //fragment float4 passThroughFragment(VertexOut interpolated [[stage_in]]) {

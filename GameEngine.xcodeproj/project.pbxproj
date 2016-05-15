@@ -30,8 +30,6 @@
 		EA3236291C8B85A500DA7FCF /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3236271C8B85A500DA7FCF /* Tree.swift */; };
 		EA3F2D2C1CE79A7200095512 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F2D2B1CE79A7200095512 /* ArrayExtension.swift */; };
 		EA3F2D2D1CE79A7200095512 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F2D2B1CE79A7200095512 /* ArrayExtension.swift */; };
-		EA3F2D321CE7C4A100095512 /* RenderTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F2D311CE7C4A100095512 /* RenderTree.swift */; };
-		EA3F2D331CE7C4A100095512 /* RenderTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F2D311CE7C4A100095512 /* RenderTree.swift */; };
 		EA3F2D351CE7C4AC00095512 /* Caching.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F2D341CE7C4AC00095512 /* Caching.swift */; };
 		EA3F2D361CE7C4AC00095512 /* Caching.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F2D341CE7C4AC00095512 /* Caching.swift */; };
 		EA72451C1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
@@ -139,7 +137,6 @@
 		EA256A111CA88082008F720B /* TextureAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextureAtlas.swift; path = src/public/TextureAtlas.swift; sourceTree = SOURCE_ROOT; };
 		EA3236271C8B85A500DA7FCF /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = src/public/Tree.swift; sourceTree = SOURCE_ROOT; };
 		EA3F2D2B1CE79A7200095512 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtension.swift; path = src/extensions/ArrayExtension.swift; sourceTree = SOURCE_ROOT; };
-		EA3F2D311CE7C4A100095512 /* RenderTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderTree.swift; path = src/public/RenderTree.swift; sourceTree = SOURCE_ROOT; };
 		EA3F2D341CE7C4AC00095512 /* Caching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Caching.swift; path = src/private/Caching.swift; sourceTree = SOURCE_ROOT; };
 		EA72451B1C8CFF6E0059B068 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = src/private/Device.swift; sourceTree = SOURCE_ROOT; };
 		EA8C82C51CDE61BE00D1E59F /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updater.swift; path = src/private/Updater.swift; sourceTree = SOURCE_ROOT; };
@@ -413,7 +410,6 @@
 				EA3F2D341CE7C4AC00095512 /* Caching.swift */,
 				EAFD76961C836BF100ABDC50 /* NodeGeomtry.swift */,
 				EAE6ED4D1CCBF02E0046A5BE /* Renderable.swift */,
-				EA3F2D311CE7C4A100095512 /* RenderTree.swift */,
 				EA3236271C8B85A500DA7FCF /* Tree.swift */,
 				EAFD769A1C836C0500ABDC50 /* Updateable.swift */,
 			);
@@ -605,7 +601,6 @@
 				EAA99DCC1C41E4F100CF3246 /* Pipelines.swift in Sources */,
 				EA1993E21CD56239009DC869 /* Easing.swift in Sources */,
 				EAE6ED4B1CCBC1330046A5BE /* Math.swift in Sources */,
-				EA3F2D321CE7C4A100095512 /* RenderTree.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EAE75E371C42D091001EB176 /* Scene.swift in Sources */,
 				EAEF9CCA1CD6811A0059832D /* Size.swift in Sources */,
@@ -688,7 +683,6 @@
 				EA256A131CA88082008F720B /* TextureAtlas.swift in Sources */,
 				EAFD76981C836BF100ABDC50 /* NodeGeomtry.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
-				EA3F2D331CE7C4A100095512 /* RenderTree.swift in Sources */,
 				EAE6ED4C1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DE61C41E52700CF3246 /* SpriteNode.swift in Sources */,

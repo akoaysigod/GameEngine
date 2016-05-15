@@ -17,7 +17,6 @@ final class Renderer {
   private let textPipeline: TextPipeline
   private let depthState: MTLDepthStencilState
 
-  private let MaxFrameLag = 3
   private let inflightSemaphore: dispatch_semaphore_t
 
   init(device: MTLDevice) {
@@ -36,7 +35,7 @@ final class Renderer {
     textPipeline = factory.constructTextPipeline()
     depthState = factory.constructDepthStencil()
 
-    inflightSemaphore = dispatch_semaphore_create(MaxFrameLag)
+    inflightSemaphore = dispatch_semaphore_create(BUFFER_SIZE)
   }
 
   func render(nextRenderPass: NextRenderPass, shapeNodes: [ShapeNode], spriteNodes: [SpriteNode], textNodes: [TextNode]) {
@@ -66,7 +65,7 @@ final class Renderer {
   }
 
   deinit {
-    (0...MaxFrameLag).forEach { _ in
+    (0..<BUFFER_SIZE).forEach { _ in
       dispatch_semaphore_signal(inflightSemaphore)
     }
   }

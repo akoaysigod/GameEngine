@@ -24,7 +24,7 @@ public class ShapeNode: Node, Renderable {
 
   public let vertexBuffer: MTLBuffer
   public let indexBuffer: MTLBuffer
-  let uniformBufferQueue: BufferQueue
+  let uniformBufferQueue = BufferQueue()
 
   public var hidden = false
   public let isVisible = true
@@ -44,8 +44,6 @@ public class ShapeNode: Node, Renderable {
     let (vertexBuffer, indexBuffer) = ShapeNode.setupBuffers([Quad.rect(width, height)], device: Device.shared.device)
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
-
-    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: sizeof(Uniforms))
 
     super.init(size: Size(width: width, height: height))
   }
@@ -82,11 +80,13 @@ extension ShapeNode {
   public func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
   
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: modelMatrix, color: color.vec4)
-  
-    let offset = uniformBufferQueue.next(uniforms)
-    renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
-    renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
+    let instanceUniforms = InstanceUniforms(model: modelMatrix, color: color.vec4)
+    let (uniformOffset, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 1)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.uniformBuffer, offset: uniformOffset, atIndex: 2)
+
+    renderEncoder.setFragmentBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 0)
   
     renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
   }

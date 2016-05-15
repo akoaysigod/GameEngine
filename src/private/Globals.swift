@@ -8,6 +8,9 @@
 
 import Foundation
 
+let BUFFER_SIZE = 3
+
+//are these still being used?
 typealias Data = [Float]
 let FloatSize = sizeof(Float)
 

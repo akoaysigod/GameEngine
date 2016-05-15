@@ -59,6 +59,10 @@ final class TestGameViewController: UIViewController {
         nodes += [sp]
         scene.addNode(sp)
       }
+//
+//      nodes.forEach {
+//        scene.removeNode($0)
+//      }
 
 
 

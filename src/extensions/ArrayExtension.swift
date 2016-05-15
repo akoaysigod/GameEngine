@@ -17,21 +17,13 @@ extension CollectionType where Generator.Element: Equatable {
     }
     return nil
   }
+
 }
 
-//bleh I'll figure out how to make Renderables equatable at some point
-//other protocol problems, etc
-extension CollectionType {
-  func findRenderable(node: Node) -> Int? {
-    guard let renderable = node as? Renderable else { return nil }
-
-    let renderables = self.filter { $0 is Renderable }.flatMap { $0 as? Renderable }
-    guard renderables.count > 0 else { return nil }
-
-    for (i, v) in renderables.enumerate() {
-      if v == renderable {
-        return i
-      }
+extension Array where Element: Node {
+  mutating func remove(node: Element) -> Element? {
+    if let index = find(node) {
+      return removeAtIndex(index)
     }
     return nil
   }

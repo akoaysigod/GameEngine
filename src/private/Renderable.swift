@@ -27,7 +27,7 @@ public typealias Renderables = [Renderable]
  
  - seealso: `NodeGeometry` and `Tree`
  */
-public protocol Renderable: class, NodeGeometry, Tree, RenderTree {
+public protocol Renderable: class, NodeGeometry, Tree {
   /**
    Holds the vertex data for an object. Currently, perhaps forever, the only way to update the vertices of an object after creating
    is by updating their size using the default implementation of updateSize in `NodeGeometry`.

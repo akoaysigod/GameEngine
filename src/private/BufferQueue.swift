@@ -11,33 +11,37 @@ import Metal
 
 
 final class BufferQueue {
-  let buffer: MTLBuffer
+  let uniformBuffer: MTLBuffer
+  let instanceBuffer: MTLBuffer
 
-  private let dataSize: Int
-  private let size = 3
   private var currentBuffer = 0
 
-  init(device: MTLDevice, dataSize: Int = 0) {
-    assert(dataSize > 0, "The size of the buffer should be greater than 0.")
-
-    self.dataSize = dataSize
-
-    let bufferSize = self.dataSize * self.size
-    buffer = device.newBufferWithLength(bufferSize, options: [])
+  init(device: MTLDevice = Device.shared.device) {
+    uniformBuffer = device.newBufferWithLength(sizeof(Uniforms) * BUFFER_SIZE, options: .CPUCacheModeDefaultCache)
+    instanceBuffer = device.newBufferWithLength(sizeof(InstanceUniforms) * BUFFER_SIZE, options: .CPUCacheModeDefaultCache)
   }
 
-  private func updateBuffer(uniforms: Uniforms) {
-    let offset = currentBuffer * dataSize
-    let contents = buffer.contents()
-    let pointer = UnsafeMutablePointer<Uniforms>(contents + offset)
+  private func updateBuffer(buffer: MTLBuffer, size: Int, data: UnsafeMutablePointer<Void>) {
+    let offset = currentBuffer * size
+    let pointer = buffer.contents().advancedBy(offset)
+    memcpy(pointer, data, size)
+  }
 
+  private func updateBuffers(uniforms: Uniforms, instanceUniforms: InstanceUniforms) {
     var uniforms = uniforms
-    memcpy(pointer, &uniforms, dataSize)
+    withUnsafeMutablePointer(&uniforms) { pointer in
+      updateBuffer(uniformBuffer, size: sizeof(Uniforms), data: pointer)
+    }
+
+    var instanceUniforms = instanceUniforms
+    withUnsafeMutablePointer(&instanceUniforms) { pointer in
+      updateBuffer(instanceBuffer, size: sizeof(InstanceUniforms), data: pointer)
+    }
   }
 
-  func next(uniforms: Uniforms) -> Int {
-    updateBuffer(uniforms)
-    currentBuffer = (currentBuffer + 1) % size
-    return currentBuffer * dataSize
+  func next(uniforms: Uniforms, instanceUniforms: InstanceUniforms) -> (uniformOffset: Int, instanceOffset: Int) {
+    updateBuffers(uniforms, instanceUniforms: instanceUniforms)
+    currentBuffer = (currentBuffer + 1) % BUFFER_SIZE
+    return (currentBuffer * sizeof(Uniforms), currentBuffer * sizeof(InstanceUniforms))
   }
 }

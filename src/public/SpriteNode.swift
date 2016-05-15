@@ -24,7 +24,7 @@ public class SpriteNode: Node, Renderable {
 
   public let vertexBuffer: MTLBuffer
   public let indexBuffer: MTLBuffer
-  let uniformBufferQueue: BufferQueue
+  let uniformBufferQueue = BufferQueue()
 
   public var hidden = false
   public let isVisible = true
@@ -45,7 +45,6 @@ public class SpriteNode: Node, Renderable {
 
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
-    self.uniformBufferQueue = BufferQueue(device: Device.shared.device, dataSize: sizeof(Uniforms))
 
     self.texture = texture
     self.color = color
@@ -103,12 +102,14 @@ extension SpriteNode {
 
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
   
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view, model: modelMatrix, color: color.vec4)
-  
-    let offset = uniformBufferQueue.next(uniforms)
-    renderEncoder.setVertexBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 1)
-    renderEncoder.setFragmentBuffer(uniformBufferQueue.buffer, offset: offset, atIndex: 0)
-  
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
+    let instanceUniforms = InstanceUniforms(model: modelMatrix, color: color.vec4)
+
+    let (uniformOffset, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 1)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.uniformBuffer, offset: uniformOffset, atIndex: 2)
+
+    renderEncoder.setFragmentBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 0)
     renderEncoder.setFragmentTexture(texture!.texture, atIndex: 0)
     renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
 

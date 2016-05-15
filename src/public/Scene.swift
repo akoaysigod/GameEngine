@@ -29,13 +29,10 @@ public class Scene: Node {
   public var allNodes: Nodes {
     return updateNodes
   }
-  private var renderNodes = Renderables()
-  public var allRenderables: Renderables {
-    return renderNodes
-  }
-  var shapeNodes = [ShapeNode]()
-  var spriteNodes = [SpriteNode]()
-  var textNodes = [TextNode]()
+
+  private(set) var shapeNodes = [ShapeNode]()
+  private(set) var spriteNodes = [SpriteNode]()
+  private(set) var textNodes = [TextNode]()
 
   var uniqueID = "1"
 
@@ -74,69 +71,52 @@ public class Scene: Node {
    */
   public func didMoveToView(view: GameView) {}
 
-  /*
-lol refactor all this 
- */
-
   public override func addNode(node: Node) {
     super.addNode(node)
 
-    updateNodes += [node] + node.allNodes
-    if let renderable = node as? Renderable {
-      renderNodes += [renderable]
+    let allNodes = [node] + node.allNodes
 
-      if let shape = renderable as? ShapeNode {
-        shapeNodes += [shape]
-      }
-      else if let sprite = renderable as? SpriteNode {
-        spriteNodes += [sprite]
-      }
-      else if let text = renderable as? TextNode {
-        textNodes += [text]
+    updateNodes += allNodes
+
+    allNodes.forEach {
+      if $0 is Renderable {
+        if let shape = $0 as? ShapeNode {
+          shapeNodes += [shape]
+        }
+        else if let sprite = $0 as? SpriteNode {
+          spriteNodes += [sprite]
+        }
+        else if let text = $0 as? TextNode {
+          textNodes += [text]
+        }
       }
     }
-    renderNodes += node.allRenderables
+  }
+
+  private func removeNode(node: Node) {
+    if let index = updateNodes.find(node) {
+      guard let removed = updateNodes.removeAtIndex(index) as? Renderable else { return }
+
+      if let shape = removed as? ShapeNode {
+          shapeNodes.remove(shape)
+        }
+        else if let sprite = removed as? SpriteNode {
+          spriteNodes.remove(sprite)
+        }
+        else if let text = removed as? TextNode {
+          textNodes.remove(text)
+      }
+    }
   }
 
   func updateNodes<T : Node>(node: T?) {
     guard let node = node else { return }
-    guard let index = updateNodes.find(node) else { return }
+    guard updateNodes.find(node) != nil else { return }
 
-    let removed = updateNodes.removeAtIndex(index) as? T
-
-    if let removedNode = removed as? Node {
-      removedNode.allNodes.forEach {
-        if let i = updateNodes.find($0) {
-          updateNodes.removeAtIndex(i)
-        }
-
-        if $0 is Renderable {
-          if let i = renderNodes.findRenderable($0) {
-            renderNodes.removeAtIndex(i)
-          }
-
-          if let shape = $0 as? ShapeNode {
-            if let i = shapeNodes.find(shape) {
-              shapeNodes.removeAtIndex(i)
-            }
-          }
-          else if let sprite = $0 as? SpriteNode {
-            if let i = spriteNodes.find(sprite) {
-              shapeNodes.removeAtIndex(i)
-            }
-          }
-          else if let text = $0 as? TextNode {
-            if let i = textNodes.find(text) {
-              textNodes.removeAtIndex(i)
-            }
-          }
-        }
-      }
-      
-      if let i = renderNodes.findRenderable(removedNode) {
-        renderNodes.removeAtIndex(i)
-      }
+    (node as Node).allNodes.forEach {
+      removeNode($0)
     }
+    removeNode(node)
   }
 }
 

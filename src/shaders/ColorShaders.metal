@@ -14,11 +14,14 @@ struct VertexIn {
   packed_float4 position;
 };
 
+struct InstanceUniforms {
+  float4x4 model;
+  float4 color;
+};
+
 struct Uniforms {
   float4x4 projection;
   float4x4 view;
-  float4x4 model;
-  float4 color;
 };
 
 struct VertexOut {
@@ -27,17 +30,18 @@ struct VertexOut {
 
 vertex VertexOut colorVertex(uint vid [[vertex_id]],
                              const device VertexIn* vert [[buffer(0)]],
-                             const device Uniforms& uniforms [[buffer(1)]])
+                             const device InstanceUniforms& instanceUniforms [[buffer(1)]],
+                             const device Uniforms& uniforms [[buffer(2)]])
 {
   VertexIn vertIn = vert[vid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.projection * uniforms.view * uniforms.model * float4(vertIn.position);
+  outVertex.position = uniforms.projection * uniforms.view * instanceUniforms.model * float4(vertIn.position);
 
   return outVertex;
 }
 
 fragment float4 colorFragment(VertexOut interpolated [[stage_in]],
-                              constant Uniforms &uniforms [[buffer(0)]]) {
-  return uniforms.color;
+                              constant InstanceUniforms &instanceUniforms [[buffer(0)]]) {
+  return instanceUniforms.color;
 }

@@ -18,14 +18,6 @@ public func ==(rhs: Node, lhs: Node) -> Bool {
    return rhs.hashValue == lhs.hashValue
 }
 
-func ==(lhs: Renderable, rhs: Renderable) -> Bool {
-  return lhs.hashValue == rhs.hashValue
-}
-
-func ==(lhs: Renderable, rhs: Node) -> Bool {
-  return lhs.hashValue == rhs.hashValue
-}
-
 /**
  A `Node` is the most basic object from which most game type objects should be subclassed from.
  
@@ -39,7 +31,7 @@ func ==(lhs: Renderable, rhs: Node) -> Bool {
  - TextNode
  - Camera
  */
-public class Node: NodeGeometry, Updateable, Tree, RenderTree, Equatable, Hashable {
+public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
   public var name: String? = nil
 
   public var scene: Scene? = nil
@@ -97,9 +89,6 @@ public class Node: NodeGeometry, Updateable, Tree, RenderTree, Equatable, Hashab
   public var hashValue: Int { return uuid.hashValue }
   public private(set) var nodes = Nodes()
   public private(set) var parent: Node? = nil
-
-  //render tree
-  public private(set) var renderableNodes = Renderables()
 
   /**
    Designated initializer. 
@@ -186,10 +175,6 @@ public class Node: NodeGeometry, Updateable, Tree, RenderTree, Equatable, Hashab
     }
 
     nodes += [node]
-
-    if let renderable = node as? Renderable {
-      renderableNodes += [renderable]
-    }
   }
 
   public func removeNode<T: Node>(node: T?) -> T? {
@@ -200,15 +185,7 @@ public class Node: NodeGeometry, Updateable, Tree, RenderTree, Equatable, Hashab
       scene.updateNodes(node)
     }
 
-    let removed = nodes.removeAtIndex(index) as? T
-
-    if let renderable = removed as? Node {
-      if let renderIndex = renderableNodes.findRenderable(renderable) {
-        renderableNodes.removeAtIndex(renderIndex)
-      }
-    }
-
-    return removed
+    return nodes.removeAtIndex(index) as? T
   }
 
   //MARK: transform caching
