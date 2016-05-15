@@ -141,12 +141,10 @@ public extension NodeGeometry {
 //  }
 
   public func updateSize() {}
-
-
 }
 
 extension NodeGeometry where Self: Renderable {
-  public func updateSize() {
+  func updateSize() {
     let quad: Quad
     if texture == nil {
       quad = .rect(size)

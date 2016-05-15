@@ -85,12 +85,6 @@ extension Tree {
       return Mat4.identity
     }
 
-    /*
-     lol I don't know why I complicated that so much.
-     
-     TODO: cache these calculations somehow, deeply nested nodes probably don't need to update based on the parents
-           if the parents aren't updating. This could possibly be a lot of calculation for no reason.
-    */
     var ret = Mat4.identity
     allParents.forEach { parent in
       ret *= parent.transform

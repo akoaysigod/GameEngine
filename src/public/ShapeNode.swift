@@ -75,19 +75,3 @@ public class ShapeNode: Node, Renderable {
     self.init(width: Float(size.width), height: Float(size.height), color: color)
   }
 }
-
-extension ShapeNode {
-  public func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState? = nil) {
-    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
-  
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
-    let instanceUniforms = InstanceUniforms(model: modelMatrix, color: color.vec4)
-    let (uniformOffset, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
-    renderEncoder.setVertexBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 1)
-    renderEncoder.setVertexBuffer(uniformBufferQueue.uniformBuffer, offset: uniformOffset, atIndex: 2)
-
-    renderEncoder.setFragmentBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 0)
-  
-    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
-  }
-}

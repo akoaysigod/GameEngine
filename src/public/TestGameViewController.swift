@@ -59,10 +59,7 @@ final class TestGameViewController: UIViewController {
         nodes += [sp]
         scene.addNode(sp)
       }
-//
-//      nodes.forEach {
-//        scene.removeNode($0)
-//      }
+
 
 
 
@@ -122,7 +119,6 @@ final class TestGameViewController: UIViewController {
     let camera = CameraNode(size: view.bounds.size.size)
     camera.addNode(colorRect)
     scene.addNode(camera)
-    //camera.addNode(colorRect)
 
     let colorRect2 = ShapeNode(width: 100, height: 100, color: .red)
     colorRect2.name = "Red rect"

@@ -47,6 +47,9 @@ final class Renderer {
     if let (renderPassDescriptor, drawable) = nextRenderPass() {
       let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
       encoder.setDepthStencilState(depthState)
+      //need to update the data I think
+      //encoder.setFrontFacingWinding(.CounterClockwise)
+      //encoder.setCullMode(.Back)
 
       shapePipeline.encode(encoder, nodes: shapeNodes)
       spritePipeline.encode(encoder, nodes: spriteNodes)

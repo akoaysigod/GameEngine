@@ -42,6 +42,7 @@ final class BufferQueue {
   func next(uniforms: Uniforms, instanceUniforms: InstanceUniforms) -> (uniformOffset: Int, instanceOffset: Int) {
     updateBuffers(uniforms, instanceUniforms: instanceUniforms)
     currentBuffer = (currentBuffer + 1) % BUFFER_SIZE
+
     return (currentBuffer * sizeof(Uniforms), currentBuffer * sizeof(InstanceUniforms))
   }
 }

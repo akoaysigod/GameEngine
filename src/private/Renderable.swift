@@ -12,7 +12,7 @@ import QuartzCore
 import simd
 import UIKit
 
-public typealias Renderables = [Renderable]
+typealias Renderables = [Renderable]
 
 /**
  The `Renderable` protocol is required by an object that wishes to be rendered. Applying this protocol to an object should be sufficient for creating a custom pipeline.
@@ -27,7 +27,7 @@ public typealias Renderables = [Renderable]
  
  - seealso: `NodeGeometry` and `Tree`
  */
-public protocol Renderable: class, NodeGeometry, Tree {
+protocol Renderable: class, NodeGeometry, Tree {
   /**
    Holds the vertex data for an object. Currently, perhaps forever, the only way to update the vertices of an object after creating
    is by updating their size using the default implementation of updateSize in `NodeGeometry`.
@@ -50,6 +50,8 @@ public protocol Renderable: class, NodeGeometry, Tree {
    */
   var indexBuffer: MTLBuffer { get }
 
+  var uniformBufferQueue: BufferQueue { get }
+
   /// A texture to be applied in the fragment shader.
   var texture: Texture? { get set }
   /// A color to be applied during the fragment shader. By default, this is blended with the texture.
@@ -64,9 +66,6 @@ public protocol Renderable: class, NodeGeometry, Tree {
   /// whether or not the object is visible from the current view point
   var isVisible: Bool { get }
 
-  /// This is the actual model matrix to be sent to the GPU == `parentTransform` * `transform` by default.
-  var modelMatrix: Mat4 { get }
-
   /**
    This is used by the various `Pipeline`s to encode the objects to the `MTLCommandBuffer` to be drawn by the GPU.
 
@@ -77,14 +76,30 @@ public protocol Renderable: class, NodeGeometry, Tree {
 }
 
 extension Renderable {
-  public var modelMatrix: Mat4 {
-    return parentTransform * transform
-  }
-
   static func setupBuffers(quads: Quads, device: MTLDevice) -> (vertexBuffer: MTLBuffer, indexBuffer: MTLBuffer) {
     let vertexBuffer = device.newBufferWithBytes(quads.vertexData, length: quads.vertexSize, options: [])
     let indexBuffer = device.newBufferWithBytes(quads.indicesData, length: quads.indicesSize, options: [])
 
     return (vertexBuffer, indexBuffer)
+  }
+
+  func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
+    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
+  
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
+    let instanceUniforms = InstanceUniforms(model: parentTransform * transform, color: color.vec4)
+
+    let (uniformOffset, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 1)
+    renderEncoder.setVertexBuffer(uniformBufferQueue.uniformBuffer, offset: uniformOffset, atIndex: 2)
+
+    renderEncoder.setFragmentBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 0)
+
+    if let texture = texture?.texture, let sampler = sampler {
+      renderEncoder.setFragmentTexture(texture, atIndex: 0)
+      renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
+    }
+
+    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
   }
 }

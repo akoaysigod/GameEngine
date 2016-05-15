@@ -80,26 +80,11 @@ extension Pipeline {
     return renderEncoder
   }
 
-//this is too slow to use
-//  func filterRenderables<T: Renderable>(renderable: Renderables) -> [T]? {
-//    guard renderable.count > 0 else { return nil }
-//
-//    return renderable.flatMap { (r: Renderable) -> [T] in
-//      if let t = r as? T {
-//        return [t]
-//      }         
-//      return []
-//    }
-//  }
-
   func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
     encoder.setRenderPipelineState(pipelineState)
-    for node in nodes {
-      node.draw(encoder, sampler: sampler)
+    nodes.forEach {
+      $0.draw(encoder, sampler: sampler)
     }
-//    nodes.forEach {
-//      $0.draw(encoder, sampler: sampler)
-//    }
   }
 }
 

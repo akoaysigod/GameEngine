@@ -170,24 +170,3 @@ public class TextNode: Node, Renderable {
     UIGraphicsEndImageContext()
   }
 }
-
-extension TextNode {
-  public func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
-    assert(texture != nil, "A TextNode without a texture makes no sense really.")
-
-    renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
-  
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
-    let instanceUniforms = InstanceUniforms(model: modelMatrix, color: color.vec4)
-    let (uniformOffset, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
-    
-    renderEncoder.setVertexBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 1)
-    renderEncoder.setVertexBuffer(uniformBufferQueue.uniformBuffer, offset: uniformOffset, atIndex: 2)
-
-    renderEncoder.setFragmentBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 0)
-    renderEncoder.setFragmentTexture(texture!.texture, atIndex: 0)
-    renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
-
-    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
-  }
-}
