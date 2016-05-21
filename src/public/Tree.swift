@@ -81,10 +81,6 @@ extension Tree {
   }
 
   public var parentTransform: Mat4 {
-    if parent is Scene {
-      return Mat4.identity
-    }
-
     var ret = Mat4.identity
     allParents.forEach { parent in
       ret *= parent.transform

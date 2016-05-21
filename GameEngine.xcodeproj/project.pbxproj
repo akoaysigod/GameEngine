@@ -80,6 +80,8 @@
 		EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
 		EACA16711C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
 		EACA16721C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
+		EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
+		EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAE6ED451CCBC1330046A5BE /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED411CCBC1330046A5BE /* Mat2.swift */; };
 		EAE6ED461CCBC1330046A5BE /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED411CCBC1330046A5BE /* Mat2.swift */; };
 		EAE6ED471CCBC1330046A5BE /* Mat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED421CCBC1330046A5BE /* Mat3.swift */; };
@@ -168,6 +170,7 @@
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EACA166D1C9F1A8C00C9119A /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Test.xcassets; path = resources/Test.xcassets; sourceTree = "<group>"; };
 		EACA16701C9F391000C9119A /* Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey.png; path = resources/Grey.png; sourceTree = "<group>"; };
+		EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphCache.swift; path = src/private/GraphCache.swift; sourceTree = SOURCE_ROOT; };
 		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
 		EAE6ED421CCBC1330046A5BE /* Mat3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat3.swift; path = src/math/Mat3.swift; sourceTree = "<group>"; };
 		EAE6ED431CCBC1330046A5BE /* Mat4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat4.swift; path = src/math/Mat4.swift; sourceTree = "<group>"; };
@@ -400,6 +403,7 @@
 				EAE75E7E1C42FE62001EB176 /* GameView.swift */,
 				EA8C82C51CDE61BE00D1E59F /* Updater.swift */,
 				EAE75E361C42D091001EB176 /* Scene.swift */,
+				EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -585,6 +589,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA99D9B1C41E3D400CF3246 /* AppDelegate.swift in Sources */,
+				EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */,
 				EAA99DDC1C41E51C00CF3246 /* Action.swift in Sources */,
 				EAA99DE51C41E52700CF3246 /* SpriteNode.swift in Sources */,
 				EAA99DE11C41E52700CF3246 /* ShapeNode.swift in Sources */,
@@ -670,6 +675,7 @@
 				EAE75E381C42D091001EB176 /* Scene.swift in Sources */,
 				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* CameraNode.swift in Sources */,
+				EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */,
 				EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EAE6ED4F1CCBF02E0046A5BE /* Renderable.swift in Sources */,
 				EA9B1E7F1C725EDE000FFDF7 /* Fonts.swift in Sources */,

@@ -29,6 +29,8 @@ public class SpriteNode: Node, Renderable {
   public var hidden = false
   public let isVisible = true
 
+  let quad: Quad
+
   /**
    Designated initializer. Creates a new sprite object using an existing `Texture`.
    
@@ -41,6 +43,8 @@ public class SpriteNode: Node, Renderable {
    - returns: A new instance of `SpriteNode`.
    */
   public required init(texture: Texture, color: Color, size: Size) {
+    self.quad = Quad.spriteRect(texture.frame)
+
     let (vertexBuffer, indexBuffer) = SpriteNode.setupBuffers([Quad.spriteRect(texture.frame)], device: Device.shared.device)
 
     self.vertexBuffer = vertexBuffer

@@ -67,21 +67,28 @@ public class TextureAtlas {
   /**
    "Unpack" a texture from the atlas with a given name.
    
-   - note: I'm still trying to decide if there is a better way to make a "copy".
-
    - parameter named: The name of the texture to get.
 
    - returns: A `Texture` "copy" from the atlas.
    */
   public func textureNamed(named: String) -> Texture? {
-    guard let data = jsonData[named] as? [String: AnyObject] else { return nil }
+    guard let data = jsonData[named] as? [String: AnyObject] else {
+      DLog("\(named) does not exist in atlas.")
+      return nil
+    }
+
     guard let frameData = data["frame"] as? [String: AnyObject],
       let x = frameData["x"] as? Int,
       let y = frameData["y"] as? Int,
       let width = frameData["width"] as? Int,
-      let height = frameData["height"] as? Int else { return nil }
+      let height = frameData["height"] as? Int else {
+        DLog("\(named)'s data does not exist in atlas.")
+        return nil
+    }
 
     let frame = TextureFrame(x: x, y: y, sWidth: width, sHeight: height, tWidth: texture.width, tHeight: texture.height)
-    return Texture(texture: texture.texture, frame: frame)
+    let ret = Texture(texture: texture.texture, frame: frame)
+    ret.uuid = texture.uuid
+    return ret
   }
 }

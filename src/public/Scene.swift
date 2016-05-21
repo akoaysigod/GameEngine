@@ -25,14 +25,11 @@ import UIKit
 public class Scene: Node {
   public weak var view: GameView?
 
-  private var updateNodes = Nodes()
   public var allNodes: Nodes {
-    return updateNodes
+    return graphCache.allNodes
   }
 
-  private(set) var shapeNodes = [ShapeNode]()
-  private(set) var spriteNodes = [SpriteNode]()
-  private(set) var textNodes = [TextNode]()
+  let graphCache = GraphCache()
 
   var uniqueID = "1"
 
@@ -74,49 +71,51 @@ public class Scene: Node {
   public override func addNode(node: Node) {
     super.addNode(node)
 
-    let allNodes = [node] + node.allNodes
-
-    updateNodes += allNodes
-
-    allNodes.forEach {
-      if $0 is Renderable {
-        if let shape = $0 as? ShapeNode {
-          shapeNodes += [shape]
-        }
-        else if let sprite = $0 as? SpriteNode {
-          spriteNodes += [sprite]
-        }
-        else if let text = $0 as? TextNode {
-          textNodes += [text]
-        }
-      }
-    }
+    graphCache.addNode(node)
+//    let allNodes = [node] + node.allNodes
+//
+//    updateNodes += allNodes
+//
+//    allNodes.forEach {
+//      if $0 is Renderable {
+//        if let shape = $0 as? ShapeNode {
+//          shapeNodes += [shape]
+//        }
+//        else if let sprite = $0 as? SpriteNode {
+//          spriteNodes += [sprite]
+//        }
+//        else if let text = $0 as? TextNode {
+//          textNodes += [text]
+//        }
+//      }
+//    }
   }
 
-  private func removeNode(node: Node) {
-    if let index = updateNodes.find(node) {
-      guard let removed = updateNodes.removeAtIndex(index) as? Renderable else { return }
-
-      if let shape = removed as? ShapeNode {
-          shapeNodes.remove(shape)
-        }
-        else if let sprite = removed as? SpriteNode {
-          spriteNodes.remove(sprite)
-        }
-        else if let text = removed as? TextNode {
-          textNodes.remove(text)
-      }
-    }
-  }
+//  private func removeNode(node: Node) {
+//    if let index = updateNodes.find(node) {
+//      guard let removed = updateNodes.removeAtIndex(index) as? Renderable else { return }
+//
+//      if let shape = removed as? ShapeNode {
+//          shapeNodes.remove(shape)
+//        }
+//        else if let sprite = removed as? SpriteNode {
+//          spriteNodes.remove(sprite)
+//        }
+//        else if let text = removed as? TextNode {
+//          textNodes.remove(text)
+//      }
+//    }
+//  }
 
   func updateNodes<T : Node>(node: T?) {
-    guard let node = node else { return }
-    guard updateNodes.find(node) != nil else { return }
-
-    (node as Node).allNodes.forEach {
-      removeNode($0)
-    }
-    removeNode(node)
+    graphCache.updateNodes(node)
+//    guard let node = node else { return }
+//    guard updateNodes.find(node) != nil else { return }
+//
+//    (node as Node).allNodes.forEach {
+//      removeNode($0)
+//    }
+//    removeNode(node)
   }
 }
 

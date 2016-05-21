@@ -38,7 +38,7 @@ final class Renderer {
     inflightSemaphore = dispatch_semaphore_create(BUFFER_SIZE)
   }
 
-  func render(nextRenderPass: NextRenderPass, shapeNodes: [ShapeNode], spriteNodes: [SpriteNode], textNodes: [TextNode]) {
+  func render(nextRenderPass: NextRenderPass, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode]) {
     dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
 
     let commandBuffer = commandQueue.commandBuffer()
@@ -52,7 +52,9 @@ final class Renderer {
       //encoder.setCullMode(.Back)
 
       shapePipeline.encode(encoder, nodes: shapeNodes)
-      spritePipeline.encode(encoder, nodes: spriteNodes)
+      for key in spriteNodes.keys {
+        spritePipeline.encode(encoder, nodes: spriteNodes[key]!)
+      }
       textPipeline.encode(encoder, nodes: textNodes)
 
       encoder.endEncoding()

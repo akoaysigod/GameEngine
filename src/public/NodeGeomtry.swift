@@ -75,7 +75,7 @@ public protocol NodeGeometry: class {
    
    - seealso: `Renderable` and `Uniforms`.
    */
-  var transform: Mat4 { get }
+  var model: Mat4 { get }
 
   /**
    This function updates the actual geometry size of the vertices. It's not used as scaling is in the model matrix.

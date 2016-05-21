@@ -56,7 +56,7 @@ public class GameView: UIView {
     scene.view = self
     scene.didMoveToView(self)
     paused = false
-    timer.addToRunLoop(.mainRunLoop(), forMode: NSRunLoopCommonModes)//NSDefaultRunLoopMode)
+    timer.addToRunLoop(.mainRunLoop(), forMode: NSDefaultRunLoopMode)
   }
 }
 
@@ -141,7 +141,7 @@ extension GameView {
 
   private func render(scene: Scene) {
     autoreleasepool {
-      renderer.render(renderPassQueue.next(self), shapeNodes: scene.shapeNodes, spriteNodes: scene.spriteNodes, textNodes: scene.textNodes)
+      renderer.render(renderPassQueue.next(self), shapeNodes: scene.graphCache.shapeNodes, spriteNodes: scene.graphCache.spriteNodes, textNodes: scene.graphCache.textNodes)
     }
   }
 

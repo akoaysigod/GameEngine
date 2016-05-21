@@ -189,7 +189,21 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
   }
 
   //MARK: transform caching
+  var hasTransformUpdate = false
+  private var cachedModel: Mat4 = .identity
+  public var model: Mat4 {
+    if !hasTransformUpdate {
+      return cachedModel
+    }
+    hasTransformUpdate = false
+    cachedModel = parentTransform * transform
+    return cachedModel
+  }
+
   func updateTransform() {
+    hasTransformUpdate = true
+    nodes.forEach { $0.hasTransformUpdate = true }
+
     let x = self.x - (width * anchorPoint.x)
     let y = self.y - (height * anchorPoint.y)
 

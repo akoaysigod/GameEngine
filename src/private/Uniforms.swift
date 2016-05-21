@@ -17,3 +17,9 @@ struct InstanceUniforms {
   var model: Mat4
   var color: Vec4
 }
+
+struct SInstanceUniforms {
+  var model: Mat4
+  var color: Vec4
+  var texCoords: packed_float2
+}

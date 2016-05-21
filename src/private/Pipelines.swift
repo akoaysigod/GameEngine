@@ -8,6 +8,7 @@
 
 import Foundation
 import MetalKit
+import simd
 
 protocol Pipeline {
   var pipelineState: MTLRenderPipelineState { get }
@@ -82,6 +83,7 @@ extension Pipeline {
 
   func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
     encoder.setRenderPipelineState(pipelineState)
+
     nodes.forEach {
       $0.draw(encoder, sampler: sampler)
     }
@@ -159,6 +161,37 @@ final class SpritePipeline: Pipeline {
     //pipelineStateDescriptor.sampleCount = view.sampleCount
 
     pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
+
+    tmpBuffer = device.newBufferWithLength(1000 * sizeof(InstanceUniforms), options: .CPUCacheModeDefaultCache)
+  }
+
+  var tmpBuffer: MTLBuffer
+
+  func encode(encoder: MTLRenderCommandEncoder, nodes: [SpriteNode]) {
+    guard let node = nodes.first else { return }
+    guard let texture = nodes.first?.texture?.texture else { return }
+
+    encoder.setRenderPipelineState(pipelineState)
+
+    encoder.setVertexBuffer(node.vertexBuffer, offset: 0, atIndex: 0)
+
+    var uniforms = Uniforms(projection: node.camera!.projection, view: node.camera!.view)
+    encoder.setVertexBytes(&uniforms, length: sizeof(Uniforms), atIndex: 2)
+    //memcpy(node.uniformBufferQueue.uniformBuffer.contents(), &uniforms, sizeof(Uniforms))
+
+    //tmp
+    for (i, node) in nodes.enumerate() {
+      var instance = InstanceUniforms(model: node.model, color: node.color.vec4)
+      memcpy(tmpBuffer.contents() + sizeof(InstanceUniforms) * i, &instance, sizeof(InstanceUniforms))
+    }
+    encoder.setVertexBuffer(tmpBuffer, offset: 0, atIndex: 1)
+    encoder.setFragmentBuffer(tmpBuffer, offset: 0, atIndex: 0)
+    //
+
+    encoder.setFragmentSamplerState(sampler, atIndex: 0)
+    encoder.setFragmentTexture(texture, atIndex: 0)
+
+    encoder.drawIndexedPrimitives(.Triangle, indexCount: node.indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: node.indexBuffer, indexBufferOffset: 0, instanceCount: nodes.count)
   }
 }
 

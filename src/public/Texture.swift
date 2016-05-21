@@ -10,6 +10,10 @@ import Foundation
 import Metal
 import MetalKit
 
+public func ==(rhs: Texture, lhs: Texture) -> Bool {
+  return rhs.hashValue == lhs.hashValue
+}
+
 /**
  A `Texture` holds an image, essentially, to be applied to a `SpriteNode`.
 
@@ -17,15 +21,20 @@ import MetalKit
 
  - seealso: `TextureAtlas`
  */
-public class Texture {
+public class Texture: Hashable, Equatable {
   let texture: MTLTexture
+
+  // until I can figure out a nicer way to do this
+  // I'm leaving this exposed so I can treat all atlases as if they're the same texture
+  var uuid = NSUUID().UUIDString
+  public var hashValue: Int { return uuid.hashValue }
 
   public let width: Int
   public let height: Int
   public var size: Size {
     return Size(width: width, height: height)
   }
-  var frame: TextureFrame
+  let frame: TextureFrame
 
   //for asnych loading, there's a different method on MTKTextureLoader for doing asynch stuff
   let callback: MTKTextureLoaderCallback?

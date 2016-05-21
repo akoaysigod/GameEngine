@@ -8,13 +8,15 @@
 
 import Foundation
 import Metal
-
+import simd
 
 final class BufferQueue {
   let uniformBuffer: MTLBuffer
-  let instanceBuffer: MTLBuffer
+  private let instanceBuffer: MTLBuffer
 
   private var currentBuffer = 0
+  let uSize = sizeof(Uniforms)
+  let iSize = sizeof(InstanceUniforms)
 
   init(device: MTLDevice = Device.shared.device) {
     uniformBuffer = device.newBufferWithLength(sizeof(Uniforms) * BUFFER_SIZE, options: .CPUCacheModeDefaultCache)
@@ -23,26 +25,32 @@ final class BufferQueue {
 
   private func updateBuffer(buffer: MTLBuffer, size: Int, data: UnsafeMutablePointer<Void>) {
     let offset = currentBuffer * size
-    let pointer = buffer.contents().advancedBy(offset)
-    memcpy(pointer, data, size)
+    //let pointer = buffer.contents()
+    memcpy(buffer.contents() + offset, data, size)
   }
 
   private func updateBuffers(uniforms: Uniforms, instanceUniforms: InstanceUniforms) {
     var uniforms = uniforms
-    withUnsafeMutablePointer(&uniforms) { pointer in
-      updateBuffer(uniformBuffer, size: sizeof(Uniforms), data: pointer)
-    }
-
+    memcpy(uniformBuffer.contents() + (currentBuffer * uSize), &uniforms, uSize)
     var instanceUniforms = instanceUniforms
-    withUnsafeMutablePointer(&instanceUniforms) { pointer in
-      updateBuffer(instanceBuffer, size: sizeof(InstanceUniforms), data: pointer)
-    }
+    memcpy(instanceBuffer.contents() + (currentBuffer * iSize), &instanceUniforms, iSize)
   }
 
-  func next(uniforms: Uniforms, instanceUniforms: InstanceUniforms) -> (uniformOffset: Int, instanceOffset: Int) {
-    updateBuffers(uniforms, instanceUniforms: instanceUniforms)
+  func next(uniforms: Uniforms, instanceUniforms: InstanceUniforms) -> (uBuffer: MTLBuffer, uniformOffset: Int, iBuffer: MTLBuffer, instanceOffset: Int) {
+//    if currentBuffer == 1 {
+//      return (uniformBuffer, currentBuffer * uSize, instanceBuffer, currentBuffer * iSize)
+//    }
+    var uniforms = uniforms
+    var instanceUniforms = instanceUniforms
+    //updateBuffers(uniforms, instanceUniforms: instanceUniforms)
+    //var uniforms = uniforms
+    memcpy(uniformBuffer.contents() + (currentBuffer * uSize), &uniforms, uSize)
+    //var instanceUniforms = instanceUniforms
+    memcpy(instanceBuffer.contents() + (currentBuffer * iSize), &instanceUniforms, iSize)
+
     currentBuffer = (currentBuffer + 1) % BUFFER_SIZE
 
-    return (currentBuffer * sizeof(Uniforms), currentBuffer * sizeof(InstanceUniforms))
+    //return (currentBuffer * uSize, currentBuffer * iSize)
+    return (uniformBuffer, currentBuffer * uSize, instanceBuffer, currentBuffer * iSize)
   }
 }
