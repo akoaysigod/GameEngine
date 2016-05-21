@@ -23,7 +23,7 @@ class Vertex {
   }
 
   var data: [Float] {
-    return [x, y, z, w]
+    return [x, y, z, w, 1.0, 1.0, 1.0, 1.0]
   }
 
   var dataSize: Int {

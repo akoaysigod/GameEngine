@@ -38,7 +38,7 @@ struct Quad {
     let ur = Vertex(x: width, y: height)
     let lr = Vertex(x: width)
 
-    return Quad(vertices: [ll, ul, ur, lr])
+    return Quad(vertices: [ul, ll, lr, ur])
   }
 
   static func rect(size: Size) -> Quad {

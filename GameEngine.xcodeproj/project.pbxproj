@@ -82,6 +82,8 @@
 		EACA16721C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
 		EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
+		EAD522671CF128D400A9A6D3 /* SpritePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */; };
+		EAD522681CF128D400A9A6D3 /* SpritePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */; };
 		EAE6ED451CCBC1330046A5BE /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED411CCBC1330046A5BE /* Mat2.swift */; };
 		EAE6ED461CCBC1330046A5BE /* Mat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED411CCBC1330046A5BE /* Mat2.swift */; };
 		EAE6ED471CCBC1330046A5BE /* Mat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6ED421CCBC1330046A5BE /* Mat3.swift */; };
@@ -171,6 +173,7 @@
 		EACA166D1C9F1A8C00C9119A /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Test.xcassets; path = resources/Test.xcassets; sourceTree = "<group>"; };
 		EACA16701C9F391000C9119A /* Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey.png; path = resources/Grey.png; sourceTree = "<group>"; };
 		EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphCache.swift; path = src/private/GraphCache.swift; sourceTree = SOURCE_ROOT; };
+		EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpritePipeline.swift; path = src/private/SpritePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
 		EAE6ED421CCBC1330046A5BE /* Mat3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat3.swift; path = src/math/Mat3.swift; sourceTree = "<group>"; };
 		EAE6ED431CCBC1330046A5BE /* Mat4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat4.swift; path = src/math/Mat4.swift; sourceTree = "<group>"; };
@@ -350,6 +353,7 @@
 			children = (
 				EA72451B1C8CFF6E0059B068 /* Device.swift */,
 				EAA99DC91C41E4F100CF3246 /* Pipelines.swift */,
+				EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */,
 				EAA99DCA1C41E4F100CF3246 /* Renderer.swift */,
 				EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */,
 			);
@@ -600,6 +604,7 @@
 				EAEF9CD01CD6886C0059832D /* Rect.swift in Sources */,
 				EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EA9B1E7B1C724C3D000FFDF7 /* TextShaders.metal in Sources */,
+				EAD522671CF128D400A9A6D3 /* SpritePipeline.swift in Sources */,
 				EA1ACBED1C9E53A800878EE6 /* Texture.swift in Sources */,
 				EAFD76971C836BF100ABDC50 /* NodeGeomtry.swift in Sources */,
 				EAEF9CCD1CD684D20059832D /* Point.swift in Sources */,
@@ -692,6 +697,7 @@
 				EAE6ED4C1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
 				EAA99DE61C41E52700CF3246 /* SpriteNode.swift in Sources */,
+				EAD522681CF128D400A9A6D3 /* SpritePipeline.swift in Sources */,
 				EAA99DCD1C41E4F100CF3246 /* Pipelines.swift in Sources */,
 				EA0964BA1CBAD23300C03BA9 /* SVertex.swift in Sources */,
 			);

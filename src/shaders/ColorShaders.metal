@@ -12,11 +12,11 @@ using namespace metal;
 
 struct VertexIn {
   packed_float4 position;
+  packed_float4 color;
 };
 
 struct InstanceUniforms {
   float4x4 model;
-  float4 color;
 };
 
 struct Uniforms {
@@ -26,6 +26,7 @@ struct Uniforms {
 
 struct VertexOut {
   float4 position [[position]];
+  float4 color;
 };
 
 vertex VertexOut colorVertex(uint vid [[vertex_id]],
@@ -37,11 +38,11 @@ vertex VertexOut colorVertex(uint vid [[vertex_id]],
 
   VertexOut outVertex;
   outVertex.position = uniforms.projection * uniforms.view * instanceUniforms.model * float4(vertIn.position);
+  outVertex.color = vertIn.color;
 
   return outVertex;
 }
 
-fragment float4 colorFragment(VertexOut interpolated [[stage_in]],
-                              constant InstanceUniforms &instanceUniforms [[buffer(0)]]) {
-  return instanceUniforms.color;
+fragment float4 colorFragment(VertexOut interpolated [[stage_in]]) {
+  return interpolated.color;
 }

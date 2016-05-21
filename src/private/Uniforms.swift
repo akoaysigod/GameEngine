@@ -15,7 +15,6 @@ struct Uniforms {
 
 struct InstanceUniforms {
   var model: Mat4
-  var color: Vec4
 }
 
 struct SInstanceUniforms {

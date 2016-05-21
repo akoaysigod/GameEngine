@@ -51,9 +51,9 @@ final class TestGameViewController: UIViewController {
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
 
       var nodes = [SpriteNode]()
-      for y in (0..<20) {
-        for x in (0..<20) {
-          let sp = SpriteNode(texture: wall)
+      for y in (0..<1) {
+        for x in (0..<1) {
+          let sp = SpriteNode(texture: openDoor)
           let x = sp.size.width * Float(x)
           let y = sp.size.height * Float(y)
           sp.position = Point(x: x, y: y)
@@ -61,22 +61,7 @@ final class TestGameViewController: UIViewController {
           scene.addNode(sp)
         }
       }
-      let sp1 = SpriteNode(texture: wall)
-      sp1.position = Point(x: 0.0, y: 0.0)
-      scene.addNode(sp1)
 
-      let sp2 = SpriteNode(texture: wall)
-      sp2.position = Point(x: -64.0, y: -128.0)
-      scene.addNode(sp2)
-
-      let sp3 = SpriteNode(texture: wall)
-      sp3.position = Point(x: -128.0, y: -128.0)
-      scene.addNode(sp3)
-
-      let sp4 = SpriteNode(texture: wall)
-      sp4.position = Point(x: -128.0, y: -64.0)
-      scene.addNode(sp4)
-      
 //      (0...155).forEach { _ in
 //        let sp = SpriteNode(texture: wall)
 //        let x = Float(arc4random_uniform(500))
@@ -151,7 +136,7 @@ final class TestGameViewController: UIViewController {
     colorRect2.position = Point(x: -128.0, y: -64.0)
     //colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
     colorRect2.zPosition = 0
-    //scene.addNode(colorRect2)
+    scene.addNode(colorRect2)
 
     let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
     colorRect3.name = "blue rect"

@@ -12,12 +12,12 @@ using namespace metal;
 
 struct VertexIn {
   packed_float4 position;
+  packed_float4 color;
   packed_float2 texCoord;
 };
 
 struct InstanceUniforms {
   float4x4 model;
-  float4 color;
 };
 
 struct Uniforms {
@@ -27,6 +27,7 @@ struct Uniforms {
 
 struct VertexOut {
   float4 position [[position]];
+  float4 color;
   float2 texCoord;
 };
 
@@ -41,18 +42,18 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
 
   VertexOut outVertex;
   outVertex.position = uniforms.projection * uniforms.view * instanceIn.model * float4(vertIn.position);
+  outVertex.color = vertIn.color;
   outVertex.texCoord = vertIn.texCoord;
 
   return outVertex;
 }
 
 fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
-                               constant InstanceUniforms &instanceUniforms [[buffer(0)]],
                                texture2d<float> tex2D [[texture(0)]],
                                sampler sampler2D [[sampler(0)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
-  return color * instanceUniforms.color;
+  return color * interpolated.color;
 }
 
 //fragment float4 passThroughFragment(VertexOut interpolated [[stage_in]]) {

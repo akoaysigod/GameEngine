@@ -83,53 +83,17 @@ extension Renderable {
     return (vertexBuffer, indexBuffer)
   }
 
-  func testVert(encoder: MTLRenderCommandEncoder) {
-    encoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
-  }
-
-  func testuniform(renderEncoder: MTLRenderCommandEncoder) {
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
-    //var instanceUniforms = InstanceUniforms(model: parentTransform * transform, color: color.vec4)
-    let instanceUniforms = InstanceUniforms(model: model, color: color.vec4)
-
-    let (ub, uniformOffset, ib, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
-
-    renderEncoder.setVertexBuffer(ib, offset: instanceOffset, atIndex: 1)
-    renderEncoder.setVertexBuffer(ub, offset: uniformOffset, atIndex: 2)
-    
-    renderEncoder.setFragmentBuffer(ib, offset: instanceOffset, atIndex: 0)
-  }
-
-  func testTexture(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
-    if let texture = texture?.texture, let sampler = sampler {
-      renderEncoder.setFragmentTexture(texture, atIndex: 0)
-      renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
-    }
-  }
-
-  func testDraw(renderEncoder: MTLRenderCommandEncoder) {
-    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
-  }
-
   func draw(renderEncoder: MTLRenderCommandEncoder, sampler: MTLSamplerState?) {
-    testVert(renderEncoder)
-    testuniform(renderEncoder)
-    testTexture(renderEncoder, sampler: sampler)
-    testDraw(renderEncoder)
-    return
-
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
   
-    var uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
+    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
     //var instanceUniforms = InstanceUniforms(model: parentTransform * transform, color: color.vec4)
-    var instanceUniforms = InstanceUniforms(model: model, color: color.vec4)
+    let instanceUniforms = InstanceUniforms(model: model)
 
     let (ub, uniformOffset, ib, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
 
     renderEncoder.setVertexBuffer(ib, offset: instanceOffset, atIndex: 1)
     renderEncoder.setVertexBuffer(ub, offset: uniformOffset, atIndex: 2)
-    
-    renderEncoder.setFragmentBuffer(ib, offset: instanceOffset, atIndex: 0)
     
     //renderEncoder.setVertexBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 1)
     //renderEncoder.setVertexBuffer(uniformBufferQueue.uniformBuffer, offset: uniformOffset, atIndex: 2)
@@ -141,6 +105,6 @@ extension Renderable {
       renderEncoder.setFragmentSamplerState(sampler, atIndex: 0)
     }
 
-    //renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
+    renderEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0)
   }
 }
