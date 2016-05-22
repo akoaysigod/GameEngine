@@ -61,7 +61,7 @@ public class TextNode: Node, Renderable {
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
 
-    let quads = TextNode.makeTextQuads(text, fontAtlas: fontAtlas)
+    let quads = TextNode.makeTextQuads(text, color: color, fontAtlas: fontAtlas)
     self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
 
     let (vertexBuffer, indexBuffer) = TextNode.setupBuffers(quads, device: Device.shared.device)
@@ -86,7 +86,7 @@ public class TextNode: Node, Renderable {
   }
 
   //need a size that fits rect sort of thing for the text
-  static func makeTextQuads(text: String, fontAtlas: FontAtlas) -> Quads {
+  static func makeTextQuads(text: String, color: Color, fontAtlas: FontAtlas) -> Quads {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)
 
     let attr = [NSFontAttributeName: fontAtlas.font]
@@ -120,10 +120,10 @@ public class TextNode: Node, Renderable {
       let minT = Float(glyphInfo.topLeftTexCoord.y)
       let maxT = Float(glyphInfo.bottomRightTexCoord.y)
 
-      let ll = SpriteVertex(s: minS, t: maxT, x: minX, y: minY)
-      let ul = SpriteVertex(s: minS, t: minT, x: minX, y: maxY)
-      let ur = SpriteVertex(s: maxS, t: minT, x: maxX, y: maxY)
-      let lr = SpriteVertex(s: maxS, t: maxT, x: maxX, y: minY)
+      let ll = Vertex(s: minS, t: maxT, x: minX, y: minY, color: color)
+      let ul = Vertex(s: minS, t: minT, x: minX, y: maxY, color: color)
+      let ur = Vertex(s: maxS, t: minT, x: maxX, y: maxY, color: color)
+      let lr = Vertex(s: maxS, t: maxT, x: maxX, y: minY, color: color)
       rects += [Quad(ll: ll, ul: ul, ur: ur, lr: lr)]
     }
 

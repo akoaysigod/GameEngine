@@ -41,7 +41,7 @@ public class ShapeNode: Node, Renderable {
   public init(width: Float, height: Float, color: Color) {
     self.color = color
 
-    let (vertexBuffer, indexBuffer) = ShapeNode.setupBuffers([Quad.rect(width, height)], device: Device.shared.device)
+    let (vertexBuffer, indexBuffer) = ShapeNode.setupBuffers([Quad.rect(width, height, color: color)], device: Device.shared.device)
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer
 

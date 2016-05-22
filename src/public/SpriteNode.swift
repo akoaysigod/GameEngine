@@ -13,7 +13,11 @@ import MetalKit
  A `SpriteNode` is a node that can be rendered with a `Texture`. The applied texture can also be blended with a color.
  */
 public class SpriteNode: Node, Renderable {
-  public var color: Color
+  public var color: Color {
+    didSet {
+      //add a thing to update buffer for color
+    }
+  }
   public var alpha: Float {
     get { return color.alpha }
     set {
@@ -43,9 +47,9 @@ public class SpriteNode: Node, Renderable {
    - returns: A new instance of `SpriteNode`.
    */
   public required init(texture: Texture, color: Color, size: Size) {
-    self.quad = Quad.spriteRect(texture.frame)
+    self.quad = Quad.spriteRect(texture.frame, color: color)
 
-    let (vertexBuffer, indexBuffer) = SpriteNode.setupBuffers([Quad.spriteRect(texture.frame)], device: Device.shared.device)
+    let (vertexBuffer, indexBuffer) = SpriteNode.setupBuffers([Quad.spriteRect(texture.frame, color: color)], device: Device.shared.device)
 
     self.vertexBuffer = vertexBuffer
     self.indexBuffer = indexBuffer

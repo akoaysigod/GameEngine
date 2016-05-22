@@ -11,8 +11,9 @@
 using namespace metal;
 
 struct VertexIn {
-  packed_float4 position;
-  packed_float4 color;
+  packed_float4 position [[attribute(0)]];
+  packed_float4 color [[attribute(1)]];
+  packed_float2 texCoord [[attribute(2)]]; //just makes it a bit easier to program this, it's not really being used
 };
 
 struct InstanceUniforms {

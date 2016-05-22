@@ -6,64 +6,47 @@
 //  Copyright © 2015 Anthony Green. All rights reserved.
 //
 
-import Foundation
+import simd
 
 typealias Vertices = [Vertex]
 
-//TODO: add indexes and buffer index stuff
-class Vertex {
+final class Vertex {
   var x: Float = 0.0
   var y: Float = 0.0
   var z: Float = 0.0
   var w: Float = 1.0
-  
-  init(x: Float = 0.0, y: Float = 0.0) {
-    self.x = x
-    self.y = y
-  }
 
-  var data: [Float] {
-    return [x, y, z, w, 1.0, 1.0, 1.0, 1.0]
-  }
+  var color: Color
 
-  var dataSize: Int {
-    return FloatSize * self.data.count
-  }
-
-  class func rectVertices(width: Float, _ height: Float) -> Vertices {
-    let lowerLeft = Vertex()
-    let lowerRight = Vertex(x: width)
-    let upperLeft = Vertex(y: height)
-    let upperRight = Vertex(x: width, y: height)
-
-    return [lowerLeft, lowerRight, upperLeft, lowerRight, upperLeft, upperRight]
-  }
-}
-
-final class SpriteVertex: Vertex {
   var s: Float
   var t: Float
 
-  override var data: [Float] {
-    return super.data + [s, t]
+  var data: [Float] {
+    return [x, y, z, w, color.red, color.green, color.blue, color.alpha, s, t]
   }
 
-  init(s: Float, t: Float, x: Float = 0.0, y: Float = 0.0) {
+  var dataSize: Int {
+    return sizeof(Float) * data.count
+  }
+
+  init(x: Float = 0.0, y: Float = 0.0, color: Color) {
+    self.x = x
+    self.y = y
+
+    self.color = color
+
+    self.s = 0.0
+    self.t = 0.0
+  }
+
+  // sprite initializer
+  init(s: Float, t: Float, x: Float = 0.0, y: Float = 0.0, color: Color) {
     self.s = s
     self.t = t
 
-    super.init()
+    self.color = color
 
     self.x = x
     self.y = y
-  }
-
-  override static func rectVertices(width: Float, _ height: Float) -> Vertices {
-    let lowerLeft = SpriteVertex(s: 0.0, t: 0.0)
-    let lowerRight = SpriteVertex(s: 1.0, t: 0.0, x: width)
-    let upperLeft = SpriteVertex(s: 0.0, t: 1.0, y: height)
-    let upperRight = SpriteVertex(s: 1.0, t: 1.0, x: width, y: height)
-
-    return [lowerLeft, lowerRight, upperLeft, lowerRight, upperLeft, upperRight]
   }
 }

@@ -58,6 +58,22 @@ extension Pipeline {
     pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .SourceAlpha
     pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
     pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
+
+    //vertex stuff
+    let vertexDescriptor = MTLVertexDescriptor();
+    vertexDescriptor.attributes[0].format = .Float4;
+    vertexDescriptor.attributes[0].offset = 0;
+    vertexDescriptor.attributes[0].bufferIndex = 0;
+    vertexDescriptor.attributes[1].format = .Float4;
+    vertexDescriptor.attributes[1].offset = sizeof(packed_float4);
+    vertexDescriptor.attributes[1].bufferIndex = 0;
+    vertexDescriptor.attributes[2].format = .Float2;
+    vertexDescriptor.attributes[2].offset = sizeof(packed_float4) * 2;
+    vertexDescriptor.attributes[2].bufferIndex = 0;
+    vertexDescriptor.layouts[0].stepFunction = .PerVertex;
+    vertexDescriptor.layouts[0].stride = Quad.size;
+
+    pipelineDescriptor.vertexDescriptor = vertexDescriptor
     
     return pipelineDescriptor
   }
@@ -157,21 +173,6 @@ final class TextPipeline: Pipeline {
     sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     let pipelineDescriptor = TextPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-
-    let vertexDescriptor = MTLVertexDescriptor()
-    vertexDescriptor.attributes[0].format = .Float4
-    vertexDescriptor.attributes[0].offset = 0
-    vertexDescriptor.attributes[0].bufferIndex = 0
-
-    //texture stuff
-    vertexDescriptor.attributes[1].format = .Float2
-    vertexDescriptor.attributes[1].offset = sizeof(vector_float4)
-    vertexDescriptor.attributes[1].bufferIndex = 0
-
-    vertexDescriptor.layouts[0].stepFunction = .PerVertex
-    vertexDescriptor.layouts[0].stride = Quad.size
-
-    pipelineDescriptor.vertexDescriptor = vertexDescriptor
 
     pipelineState = TextPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }

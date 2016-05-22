@@ -10,13 +10,13 @@
 using namespace metal;
 
 struct VertexIn {
-  packed_float4 position;
-  packed_float2 texCoords;
+  packed_float4 position [[attribute(0)]];
+  packed_float4 color [[attribute(1)]];
+  packed_float2 texCoord [[attribute(2)]];
 };
 
 struct InstanceUniforms {
   float4x4 model;
-  float4 color;
 };
 
 struct Uniforms {
@@ -26,6 +26,7 @@ struct Uniforms {
 
 struct VertexOut {
   float4 position [[position]];
+  float4 color;
   float2 texCoords;
 };
 
@@ -38,7 +39,8 @@ vertex VertexOut textVertex(uint vid [[vertex_id]],
   
   VertexOut outVert;
   outVert.position = uniforms.projection * uniforms.view * instanceUniforms.model * float4(vertIn.position);
-  outVert.texCoords = vertIn.texCoords;
+  outVert.color = vertIn.color;
+  outVert.texCoords = vertIn.texCoord;
   
   return outVert;
 }
@@ -57,11 +59,10 @@ vertex VertexOut textVertex(uint vid [[vertex_id]],
 //}
 
 fragment float4 textFragment(VertexOut vert [[stage_in]],
-                             constant InstanceUniforms &instanceUniforms [[buffer(0)]],
                              sampler samplr [[sampler(0)]],
                              texture2d<float, access::sample> texture [[texture(0)]])
 {
-  float4 color = instanceUniforms.color;
+  float4 color = vert.color;
   float edgeDistance = 0.5;
   float dist = texture.sample(samplr, vert.texCoords).r;
   float edgeWidth = 0.75 * length(float2(dfdx(dist), dfdy(dist)));

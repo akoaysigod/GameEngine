@@ -147,10 +147,10 @@ extension NodeGeometry where Self: Renderable {
   func updateSize() {
     let quad: Quad
     if texture == nil {
-      quad = .rect(size)
+      quad = .rect(size, color: color)
     }
     else {
-      quad = .spriteRect(size)
+      quad = .spriteRect(size, color: color)
     }
 
     let p = vertexBuffer.contents()

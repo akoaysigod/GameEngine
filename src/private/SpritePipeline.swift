@@ -7,6 +7,7 @@
 //
 
 import Metal
+import simd
 
 final class SpritePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
@@ -30,10 +31,12 @@ final class SpritePipeline: Pipeline {
     sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     let pipelineDescriptor = SpritePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-    //pipelineStateDescriptor.sampleCount = view.sampleCount
 
     pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
+
+
+    
     tmpBuffer = device.newBufferWithLength(1000 * sizeof(InstanceUniforms), options: .CPUCacheModeDefaultCache)
   }
 
