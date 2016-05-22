@@ -21,7 +21,7 @@ import simd
  */
 public protocol NodeGeometry: class {
   /// Any object that wishes to be placed in a `Scene` requires a `Camera`.
-  weak var camera: CameraNode? { get set }
+  //weak var camera: CameraNode? { get set }
 
   /**
    The size in world coordinates. This should NOT take the `scale` property into considering.
@@ -147,10 +147,10 @@ extension NodeGeometry where Self: Renderable {
   func updateSize() {
     let quad: Quad
     if texture == nil {
-      quad = .rect(size, color: color)
+      quad = .rect(size)
     }
     else {
-      quad = .spriteRect(size, color: color)
+      quad = .spriteRect(size)
     }
 
     let p = vertexBuffer.contents()

@@ -27,7 +27,6 @@ public class SpriteNode: Node, Renderable {
   public var texture: Texture?
 
   public let vertexBuffer: MTLBuffer
-  let uniformBufferQueue = BufferQueue()
 
   public var hidden = false
   public let isVisible = true
@@ -46,9 +45,9 @@ public class SpriteNode: Node, Renderable {
    - returns: A new instance of `SpriteNode`.
    */
   public required init(texture: Texture, color: Color, size: Size) {
-    self.quad = Quad.spriteRect(texture.frame, color: color)
+    self.quad = Quad.spriteRect(texture.frame)
 
-    vertexBuffer = SpriteNode.setupBuffers([Quad.spriteRect(texture.frame, color: color)], device: Device.shared.device)
+    vertexBuffer = SpriteNode.setupBuffers([Quad.spriteRect(texture.frame)], device: Device.shared.device)
 
     self.texture = texture
     self.color = color

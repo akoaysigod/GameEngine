@@ -12,17 +12,16 @@ using namespace metal;
 
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
-  packed_float4 color [[attribute(1)]];
-  packed_float2 texCoord [[attribute(2)]]; //just makes it a bit easier to program this, it's not really being used
+  packed_float2 texCoord [[attribute(1)]]; //just makes it a bit easier to program this, it's not really being used
 };
 
 struct InstanceUniforms {
   float4x4 model;
+  float4 color;
 };
 
 struct Uniforms {
   float4x4 projection;
-  float4x4 view;
 };
 
 struct VertexOut {
@@ -38,8 +37,8 @@ vertex VertexOut colorVertex(uint vid [[vertex_id]],
   VertexIn vertIn = vert[vid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.projection * uniforms.view * instanceUniforms.model * float4(vertIn.position);
-  outVertex.color = vertIn.color;
+  outVertex.position = uniforms.projection * instanceUniforms.model * float4(vertIn.position);
+  outVertex.color = instanceUniforms.color;
 
   return outVertex;
 }

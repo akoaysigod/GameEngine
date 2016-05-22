@@ -51,13 +51,14 @@ final class TestGameViewController: UIViewController {
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
 
       var nodes = [SpriteNode]()
-      for y in (0..<1) {
-        for x in (0..<1) {
-          let sp = SpriteNode(texture: openDoor)
+      for y in (0..<20) {
+        for x in (0..<20) {
+          let sp = ShapeNode(size: Size(width: 64.0, height: 64.0), color: .green)
+          //let sp = SpriteNode(texture: openDoor)
           let x = sp.size.width * Float(x)
           let y = sp.size.height * Float(y)
           sp.position = Point(x: x, y: y)
-          nodes += [sp]
+          //nodes += [sp]
           scene.addNode(sp)
         }
       }
@@ -127,9 +128,7 @@ final class TestGameViewController: UIViewController {
     let forever = Action.repeatForever(action)
     //colorRect.runAction(forever)
 
-    //let camera = CameraNode(size: view.bounds.size.size)
-    //camera.addNode(colorRect)
-    //scene.addNode(camera)
+    scene.addUINode(colorRect)
 
     let colorRect2 = ShapeNode(width: 64, height: 64, color: .red)
     colorRect2.name = "Red rect"
@@ -201,18 +200,18 @@ extension TestGameViewController {
 
   func panCamera(p: UIPanGestureRecognizer) {
     var pos = p.translationInView(view)
-    pos.x *= CGFloat(scene.camera!.xScale)
-    pos.y *= CGFloat(scene.camera!.yScale)
+    pos.x *= CGFloat(scene.camera.xScale)
+    pos.y *= CGFloat(scene.camera.yScale)
     pos.x *= -1.0
     
-    scene.camera!.position += pos.point
+    scene.camera.position += pos.point
     p.setTranslation(.zero, inView: view)
   }
 
   func zoomCamera(p: UIPinchGestureRecognizer) {
-    let scale = self.scene.camera!.scale * Float(p.scale)
+    let scale = self.scene.camera.scale * Float(p.scale)
     let realScale = max(0.5, min(scale, 5.0));
-    self.scene.camera!.zoom = realScale
+    scene.camera.zoom = realScale
     p.scale = 1.0
   }
 }

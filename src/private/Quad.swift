@@ -13,7 +13,7 @@ typealias Quads = [Quad]
 
 struct Quad {
   static var size: Int {
-    return sizeof(vector_float2) + (2 * sizeof(vector_float4))
+    return sizeof(vector_float2) + sizeof(vector_float4)
   }
   
   let vertices: Vertices
@@ -26,37 +26,37 @@ struct Quad {
     self.init(vertices: [ll, ul, ur, lr])
   }
 
-  static func rect(width: Float, _ height: Float, color: Color) -> Quad {
-    let ll = Vertex(color: color)
-    let ul = Vertex(y: height, color: color)
-    let ur = Vertex(x: width, y: height, color: color)
-    let lr = Vertex(x: width, color: color)
+  static func rect(width: Float, _ height: Float) -> Quad {
+    let ll = Vertex()
+    let ul = Vertex(y: height)
+    let ur = Vertex(x: width, y: height)
+    let lr = Vertex(x: width)
 
     return Quad(vertices: [ul, ll, lr, ur])
   }
 
-  static func rect(size: Size, color: Color) -> Quad {
-    return rect(size.width, size.height, color: color)
+  static func rect(size: Size) -> Quad {
+    return rect(size.width, size.height)
   }
 
-  static func spriteRect(width: Float, _ height: Float, color: Color) -> Quad {
-    let ll = Vertex(s: 0.0, t: 0.0, color: color)
-    let ul = Vertex(s: 0.0, t: 1.0, y: height, color: color)
-    let ur = Vertex(s: 1.0, t: 1.0, x: width, y: height, color: color)
-    let lr = Vertex(s: 1.0, t: 0.0, x: width, color: color)
+  static func spriteRect(width: Float, _ height: Float) -> Quad {
+    let ll = Vertex(s: 0.0, t: 0.0)
+    let ul = Vertex(s: 0.0, t: 1.0, y: height)
+    let ur = Vertex(s: 1.0, t: 1.0, x: width, y: height)
+    let lr = Vertex(s: 1.0, t: 0.0, x: width)
 
     return Quad(vertices: [ll, ul, ur, lr])
   }
 
-  static func spriteRect(size: Size, color: Color) -> Quad {
-    return spriteRect(size.width, size.height, color: color)
+  static func spriteRect(size: Size) -> Quad {
+    return spriteRect(size.width, size.height)
   }
 
-  static func spriteRect(width: Int, _ height: Int, color: Color) -> Quad {
-    return spriteRect(Float(width), Float(height), color: color)
+  static func spriteRect(width: Int, _ height: Int) -> Quad {
+    return spriteRect(Float(width), Float(height))
   }
 
-  static func spriteRect(frame: TextureFrame, color: Color) -> Quad {
+  static func spriteRect(frame: TextureFrame) -> Quad {
     let x = frame.x
     let y = frame.y
     let sWidth = frame.sWidth
@@ -64,10 +64,10 @@ struct Quad {
     let tWidth = frame.tWidth
     let tHeight = frame.tHeight
 
-    let ll = Vertex(s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, x: sWidth, color: color)
-    let ul = Vertex(s: (x + sWidth) / tWidth, t: y / tHeight, x: sWidth, y: sHeight, color: color)
-    let ur = Vertex(s: x / tWidth, t: y / tHeight, y: sHeight, color: color)
-    let lr = Vertex(s: x / tWidth, t: (y + sHeight) / tHeight, color: color)
+    let ll = Vertex(s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, x: sWidth)
+    let ul = Vertex(s: (x + sWidth) / tWidth, t: y / tHeight, x: sWidth, y: sHeight)
+    let ur = Vertex(s: x / tWidth, t: y / tHeight, y: sHeight)
+    let lr = Vertex(s: x / tWidth, t: (y + sHeight) / tHeight)
 
     return Quad(vertices: [ll, ul, ur, lr])
   }
@@ -75,6 +75,8 @@ struct Quad {
 
 extension Quad {
   static var indicesData: [UInt16] {
+    //this is clockwise but the textures end up being anticlockwise so ff == anti 
+    //which is why the Quad for ShapeNode is different from the sprite one
     return [
       0, 1, 2, //upper left triangle
       2, 3, 0  //lower right triangle

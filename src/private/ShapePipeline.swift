@@ -12,7 +12,8 @@ final class ShapePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState? = nil
 
-  private let indexBuffer: MTLBuffer
+  private let indexBuffer: Buffer
+  private let uniformBuffer: Buffer
 
   private struct Programs {
     static let Shader = "ColorShaders"
@@ -21,22 +22,30 @@ final class ShapePipeline: Pipeline {
   }
   
   init(device: MTLDevice,
-       indexBuffer: MTLBuffer,
+       indexBuffer: Buffer,
+       uniformBuffer: Buffer,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
     self.indexBuffer = indexBuffer
+    self.uniformBuffer = uniformBuffer
 
     let pipelineDescriptor = ShapePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     self.pipelineState = ShapePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
+
+    tmpBuffer = device.newBufferWithLength(500 * Vertex.dataSize, options: .CPUCacheModeDefaultCache)
+    uBuffer = device.newBufferWithLength(500 * sizeof(InstanceUniforms), options: .CPUCacheModeDefaultCache)
   }
+
+  var tmpBuffer: MTLBuffer
+  var uBuffer: MTLBuffer
 }
 
 extension ShapePipeline {
-  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
+  func encode(encoder: MTLRenderCommandEncoder, nodes: [ShapeNode]) {
     encoder.setRenderPipelineState(pipelineState)
 
     nodes.forEach {
-      $0.draw(encoder, indexBuffer: indexBuffer, sampler: sampler)
+      $0.draw(encoder, indexBuffer: indexBuffer.buffer, uniformBuffer: uniformBuffer.buffer, sampler: sampler)
     }
   }
 }

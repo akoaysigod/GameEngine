@@ -41,8 +41,6 @@ protocol Renderable: class, NodeGeometry, Tree {
    */
   var vertexBuffer: MTLBuffer { get }
 
-  var uniformBufferQueue: BufferQueue { get }
-
   /// A texture to be applied in the fragment shader.
   var texture: Texture? { get set }
   /// A color to be applied during the fragment shader. By default, this is blended with the texture.
@@ -57,13 +55,7 @@ protocol Renderable: class, NodeGeometry, Tree {
   /// whether or not the object is visible from the current view point
   var isVisible: Bool { get }
 
-  /**
-   This is used by the various `Pipeline`s to encode the objects to the `MTLCommandBuffer` to be drawn by the GPU.
-
-   - parameter renderEncoder: The command encoder to use for encoding the commands for drawing the `Renderale` to the command buffer.
-   - parameter sampler:       The sampler to use to encode how the shader should sample the texture being applied.
-   */
-  func draw(renderEncoder: MTLRenderCommandEncoder, indexBuffer: MTLBuffer, sampler: MTLSamplerState?)
+  func draw(renderEncoder: MTLRenderCommandEncoder, indexBuffer: MTLBuffer, uniformBuffer: MTLBuffer, sampler: MTLSamplerState?)
 }
 
 extension Renderable {
@@ -73,22 +65,13 @@ extension Renderable {
     return vertexBuffer
   }
 
-  func draw(renderEncoder: MTLRenderCommandEncoder, indexBuffer: MTLBuffer, sampler: MTLSamplerState?) {
+  func draw(renderEncoder: MTLRenderCommandEncoder, indexBuffer: MTLBuffer, uniformBuffer: MTLBuffer, sampler: MTLSamplerState?) {
     renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
   
-    let uniforms = Uniforms(projection: camera!.projection, view: camera!.view)
-    //var instanceUniforms = InstanceUniforms(model: parentTransform * transform, color: color.vec4)
-    let instanceUniforms = InstanceUniforms(model: model)
+    var instanceUniforms = InstanceUniforms(model: model, color: color.vec4)
 
-    let (ub, uniformOffset, ib, instanceOffset) = uniformBufferQueue.next(uniforms, instanceUniforms: instanceUniforms)
-
-    renderEncoder.setVertexBuffer(ib, offset: instanceOffset, atIndex: 1)
-    renderEncoder.setVertexBuffer(ub, offset: uniformOffset, atIndex: 2)
-    
-    //renderEncoder.setVertexBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 1)
-    //renderEncoder.setVertexBuffer(uniformBufferQueue.uniformBuffer, offset: uniformOffset, atIndex: 2)
-
-    //renderEncoder.setFragmentBuffer(uniformBufferQueue.instanceBuffer, offset: instanceOffset, atIndex: 0)
+    renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, atIndex: 2)
+    renderEncoder.setVertexBytes(&instanceUniforms, length: sizeof(InstanceUniforms), atIndex: 1)
 
     if let texture = texture?.texture, let sampler = sampler {
       renderEncoder.setFragmentTexture(texture, atIndex: 0)

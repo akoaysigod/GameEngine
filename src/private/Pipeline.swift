@@ -14,7 +14,7 @@ protocol Pipeline {
   var pipelineState: MTLRenderPipelineState { get }
   var sampler: MTLSamplerState? { get }
 
-  init(device: MTLDevice, indexBuffer: MTLBuffer, vertexProgram: String, fragmentProgram: String)
+  init(device: MTLDevice, indexBuffer: Buffer, uniformBuffer: Buffer, vertexProgram: String, fragmentProgram: String)
 }
 
 extension Pipeline {
@@ -63,12 +63,9 @@ extension Pipeline {
     vertexDescriptor.attributes[0].format = .Float4;
     vertexDescriptor.attributes[0].offset = 0;
     vertexDescriptor.attributes[0].bufferIndex = 0;
-    vertexDescriptor.attributes[1].format = .Float4;
+    vertexDescriptor.attributes[1].format = .Float2;
     vertexDescriptor.attributes[1].offset = sizeof(packed_float4);
     vertexDescriptor.attributes[1].bufferIndex = 0;
-    vertexDescriptor.attributes[2].format = .Float2;
-    vertexDescriptor.attributes[2].offset = sizeof(packed_float4) * 2;
-    vertexDescriptor.attributes[2].bufferIndex = 0;
     vertexDescriptor.layouts[0].stepFunction = .PerVertex;
     vertexDescriptor.layouts[0].stride = Quad.size;
 
@@ -99,11 +96,14 @@ extension Pipeline {
 
 final class PipelineFactory {
   private let device: MTLDevice
-  private let indexBuffer: MTLBuffer
+  private let indexBuffer: Buffer
+  private let uniformBuffer: Buffer
 
-  init(device: MTLDevice) {
+  init(device: MTLDevice, indexBuffer: Buffer, uniformBuffer: Buffer) {
     self.device = device
-    indexBuffer = device.newBufferWithBytes(Quad.indicesData, length: Quad.indicesSize, options: .CPUCacheModeDefaultCache)
+    //indexBuffer = device.newBufferWithBytes(Quad.indicesData, length: Quad.indicesSize, options: .CPUCacheModeDefaultCache)
+    self.indexBuffer = indexBuffer
+    self.uniformBuffer = uniformBuffer
   }
 
   func constructDepthStencil() -> MTLDepthStencilState {
@@ -115,14 +115,14 @@ final class PipelineFactory {
   }
 
   func constructShapePipeline() -> ShapePipeline {
-    return ShapePipeline(device: device, indexBuffer: indexBuffer)
+    return ShapePipeline(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
   }
 
   func constructSpritePipeline() -> SpritePipeline {
-    return SpritePipeline(device: device, indexBuffer: indexBuffer)
+    return SpritePipeline(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
   }
 
   func constructTextPipeline() -> TextPipeline {
-    return TextPipeline(device: device, indexBuffer: indexBuffer)
+    return TextPipeline(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
   }
 }

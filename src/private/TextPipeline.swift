@@ -12,7 +12,8 @@ final class TextPipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
 
-  private let indexBuffer: MTLBuffer
+  private let indexBuffer: Buffer
+  private let uniformBuffer: Buffer
 
   private struct Programs {
     static let Shader = "TextShaders"
@@ -21,10 +22,12 @@ final class TextPipeline: Pipeline {
   }
 
   init(device: MTLDevice,
-       indexBuffer: MTLBuffer,
+       indexBuffer: Buffer,
+       uniformBuffer: Buffer,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
     self.indexBuffer = indexBuffer
+    self.uniformBuffer = uniformBuffer
 
     let samplerDescriptor = MTLSamplerDescriptor()
     samplerDescriptor.minFilter = .Nearest
@@ -44,7 +47,7 @@ extension TextPipeline {
     encoder.setRenderPipelineState(pipelineState)
 
     nodes.forEach {
-      $0.draw(encoder, indexBuffer: indexBuffer, sampler: sampler)
+      $0.draw(encoder, indexBuffer: indexBuffer.buffer, uniformBuffer: uniformBuffer.buffer, sampler: sampler)
     }
   }
 }

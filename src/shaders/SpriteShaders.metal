@@ -12,12 +12,12 @@ using namespace metal;
 
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
-  packed_float4 color [[attribute(1)]];
-  packed_float2 texCoord [[attribute(2)]];
+  packed_float2 texCoord [[attribute(1)]];
 };
 
 struct InstanceUniforms {
   float4x4 model;
+  float4 color;
 };
 
 struct Uniforms {
@@ -34,15 +34,15 @@ struct VertexOut {
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
                               ushort iid [[instance_id]],
                               const device VertexIn* vert [[buffer(0)]],
-                              const device InstanceUniforms* instanceUniforms [[buffer(1)]],
-                              const device Uniforms& uniforms [[buffer(2)]])
+                              constant InstanceUniforms* instanceUniforms [[buffer(1)]],
+                              constant Uniforms& uniforms [[buffer(2)]])
 {
   VertexIn vertIn = vert[vid];
   InstanceUniforms instanceIn = instanceUniforms[iid];
 
   VertexOut outVertex;
   outVertex.position = uniforms.projection * uniforms.view * instanceIn.model * float4(vertIn.position);
-  outVertex.color = vertIn.color;
+  outVertex.color = instanceIn.color;
   outVertex.texCoord = vertIn.texCoord;
 
   return outVertex;
