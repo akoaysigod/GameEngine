@@ -17,15 +17,9 @@ struct Quad {
   }
   
   let vertices: Vertices
-  let indices: [UInt16]
 
   init(vertices: Vertices) {
     self.vertices = vertices
-
-    self.indices = [
-      0, 1, 2, //upper left triangle
-      2, 3, 0  //lower right triangle
-    ]
   }
 
   init(ll: Vertex, ul: Vertex, ur: Vertex, lr: Vertex) {
@@ -79,6 +73,17 @@ struct Quad {
   }
 }
 
+extension Quad {
+  static var indicesData: [UInt16] {
+    return [
+      0, 1, 2, //upper left triangle
+      2, 3, 0  //lower right triangle
+    ]
+  }
+
+  static var indicesSize: Int { return sizeof(UInt16) * indicesData.count }
+}
+
 extension CollectionType where Generator.Element == Quad {
   var vertexData: [Float] {
     return flatMap { $0.vertices.flatMap { $0.data } }
@@ -86,18 +91,5 @@ extension CollectionType where Generator.Element == Quad {
 
   var vertexSize: Int {
     return sizeof(Float) * vertexData.count
-  }
-
-  var indicesData: [UInt16] {
-    let unindexed = map { $0.indices }
-    let mIndices = (0..<unindexed.count).map { UInt16(4 * $0) } //4 == number vertices
-
-    return zip(mIndices, unindexed).flatMap { index, indices -> [UInt16] in
-      indices.map { index + $0 }
-    }
-  }
-
-  var indicesSize: Int {
-    return sizeof(UInt16) * indicesData.count
   }
 }

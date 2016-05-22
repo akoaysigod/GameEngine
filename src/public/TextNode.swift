@@ -39,7 +39,6 @@ public class TextNode: Node, Renderable {
 
   public var texture: Texture?
   public let vertexBuffer: MTLBuffer
-  public let indexBuffer: MTLBuffer
   let uniformBufferQueue = BufferQueue()
 
   public var hidden = false
@@ -64,9 +63,7 @@ public class TextNode: Node, Renderable {
     let quads = TextNode.makeTextQuads(text, color: color, fontAtlas: fontAtlas)
     self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
 
-    let (vertexBuffer, indexBuffer) = TextNode.setupBuffers(quads, device: Device.shared.device)
-    self.vertexBuffer = vertexBuffer
-    self.indexBuffer = indexBuffer
+    vertexBuffer = TextNode.setupBuffers(quads, device: Device.shared.device)
 
     super.init(size: texture!.size)
   }

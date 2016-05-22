@@ -1,5 +1,5 @@
 //
-//  GEPipeline.swift
+//  Pipeline.swift
 //  MKTest
 //
 //  Created by Anthony Green on 12/30/15.
@@ -14,8 +14,7 @@ protocol Pipeline {
   var pipelineState: MTLRenderPipelineState { get }
   var sampler: MTLSamplerState? { get }
 
-  init(device: MTLDevice, vertexProgram: String, fragmentProgram: String)
-  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T])
+  init(device: MTLDevice, indexBuffer: MTLBuffer, vertexProgram: String, fragmentProgram: String)
 }
 
 extension Pipeline {
@@ -96,21 +95,15 @@ extension Pipeline {
     
     return renderEncoder
   }
-
-  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
-    encoder.setRenderPipelineState(pipelineState)
-
-    nodes.forEach {
-      $0.draw(encoder, sampler: sampler)
-    }
-  }
 }
 
 final class PipelineFactory {
-  let device: MTLDevice
+  private let device: MTLDevice
+  private let indexBuffer: MTLBuffer
 
   init(device: MTLDevice) {
     self.device = device
+    indexBuffer = device.newBufferWithBytes(Quad.indicesData, length: Quad.indicesSize, options: .CPUCacheModeDefaultCache)
   }
 
   func constructDepthStencil() -> MTLDepthStencilState {
@@ -122,58 +115,14 @@ final class PipelineFactory {
   }
 
   func constructShapePipeline() -> ShapePipeline {
-    return ShapePipeline(device: device)
+    return ShapePipeline(device: device, indexBuffer: indexBuffer)
   }
 
   func constructSpritePipeline() -> SpritePipeline {
-    return SpritePipeline(device: device)
+    return SpritePipeline(device: device, indexBuffer: indexBuffer)
   }
 
   func constructTextPipeline() -> TextPipeline {
-    return TextPipeline(device: device)
-  }
-}
-
-final class ShapePipeline: Pipeline {
-  let pipelineState: MTLRenderPipelineState
-  let sampler: MTLSamplerState? = nil
-
-  private struct Programs {
-    static let Shader = "ColorShaders"
-    static let Vertex = "colorVertex"
-    static let Fragment = "colorFragment"
-  }
-  
-  init(device: MTLDevice,
-       vertexProgram: String = Programs.Vertex,
-       fragmentProgram: String = Programs.Fragment) {
-    let pipelineDescriptor = ShapePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-    self.pipelineState = ShapePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
-  }
-}
-
-final class TextPipeline: Pipeline {
-  let pipelineState: MTLRenderPipelineState
-  let sampler: MTLSamplerState?
-
-  private struct Programs {
-    static let Shader = "TextShaders"
-    static let Vertex = "textVertex"
-    static let Fragment = "textFragment"
-  }
-
-  init(device: MTLDevice,
-       vertexProgram: String = Programs.Vertex,
-       fragmentProgram: String = Programs.Fragment) {
-    let samplerDescriptor = MTLSamplerDescriptor()
-    samplerDescriptor.minFilter = .Nearest
-    samplerDescriptor.magFilter = .Linear
-    samplerDescriptor.sAddressMode = .ClampToZero
-    samplerDescriptor.tAddressMode = .ClampToZero
-    sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
-
-    let pipelineDescriptor = TextPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
-
-    pipelineState = TextPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
+    return TextPipeline(device: device, indexBuffer: indexBuffer)
   }
 }

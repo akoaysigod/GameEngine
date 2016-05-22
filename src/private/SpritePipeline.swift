@@ -13,6 +13,8 @@ final class SpritePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
 
+  private let indexBuffer: MTLBuffer
+
   private struct Programs {
     static let Shader = "SpriteShaders"
     static let Vertex = "spriteVertex"
@@ -20,8 +22,11 @@ final class SpritePipeline: Pipeline {
   }
 
   init(device: MTLDevice,
+       indexBuffer: MTLBuffer,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
+
+    self.indexBuffer = indexBuffer
 
     let samplerDescriptor = MTLSamplerDescriptor()
     samplerDescriptor.minFilter = .Nearest
@@ -36,7 +41,7 @@ final class SpritePipeline: Pipeline {
 
 
 
-    
+
     tmpBuffer = device.newBufferWithLength(1000 * sizeof(InstanceUniforms), options: .CPUCacheModeDefaultCache)
   }
 
@@ -65,6 +70,6 @@ final class SpritePipeline: Pipeline {
     encoder.setFragmentSamplerState(sampler, atIndex: 0)
     encoder.setFragmentTexture(texture, atIndex: 0)
 
-    encoder.drawIndexedPrimitives(.Triangle, indexCount: node.indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: node.indexBuffer, indexBufferOffset: 0, instanceCount: nodes.count)
+    encoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer, indexBufferOffset: 0, instanceCount: nodes.count)
   }
 }
