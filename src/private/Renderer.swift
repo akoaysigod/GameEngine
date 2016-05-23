@@ -20,6 +20,8 @@ final class Renderer {
   private let inflightSemaphore: dispatch_semaphore_t
 
   private let uniformBuffer: Buffer
+  private let vertexBuffer: Buffer
+  private let uiVertexBuffer: Buffer!
 
   init(device: MTLDevice, projection: Mat4) {
     //not sure where to set this up or if I even want to do it this way
@@ -37,6 +39,10 @@ final class Renderer {
     let indexBuffer = Buffer(length: Quad.indicesSize)
     var indicesData = Quad.indicesData
     indexBuffer.update(&indicesData, size: Quad.indicesSize)
+
+    vertexBuffer = Buffer(length: Quad.size)
+    
+    uiVertexBuffer = Buffer(length: Quad.size)
 
     let factory = PipelineFactory(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
     shapePipeline = factory.constructShapePipeline()

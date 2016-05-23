@@ -19,25 +19,25 @@ import UIKit
  - note: This doesn't exaclty work like other nodes and I'm still trying to figure that out. If I don't, right now and forever?, only adding a `Camera` to a scene makes sense. 
          Adding a camera to anything else is kind of undefined.
  */
-final class CameraNode: Node {
-  //maybe move this back to being a uniform and batch based on which camera the node is using
-  override var transform: Mat4 {
+public final class CameraNode: Node {
+  public override var transform: Mat4 {
     return view
+    return .identity
   }
   private(set) var view: Mat4 = .identity
 
-  var scale: Float {
+  public var scale: Float {
     return zoom
   }
 
-  var zoom: Float = 1.0 {
+  public var zoom: Float = 1.0 {
     didSet {
       updateTransform()
     }
   }
 
-  private let width: Float
-  private let height: Float
+  private var width: Float
+  private var height: Float
 
   override init(size: Size) {
     width = Float(size.width)
@@ -49,7 +49,13 @@ final class CameraNode: Node {
     updateTransform()
   }
 
-  override func addNode(node: Node) {
+  func updateSize(size: Size) {
+    width = size.width
+    height = size.height
+    updateTransform()
+  }
+
+  public override func addNode(node: Node) {
     super.addNode(node)
 
     node.camera = self

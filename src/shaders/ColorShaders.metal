@@ -29,16 +29,18 @@ struct VertexOut {
   float4 color;
 };
 
-vertex VertexOut colorVertex(uint vid [[vertex_id]],
+vertex VertexOut colorVertex(ushort vid [[vertex_id]],
+                             ushort iid [[instance_id]],
                              const device VertexIn* vert [[buffer(0)]],
-                             const device InstanceUniforms& instanceUniforms [[buffer(1)]],
+                             const device InstanceUniforms* instanceUniforms [[buffer(1)]],
                              const device Uniforms& uniforms [[buffer(2)]])
 {
   VertexIn vertIn = vert[vid];
+  InstanceUniforms instanceIn = instanceUniforms[iid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.projection * instanceUniforms.model * float4(vertIn.position);
-  outVertex.color = instanceUniforms.color;
+  outVertex.position = uniforms.projection * instanceIn.model * float4(vertIn.position);
+  outVertex.color = instanceIn.color;
 
   return outVertex;
 }

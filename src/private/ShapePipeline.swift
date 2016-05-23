@@ -14,6 +14,7 @@ final class ShapePipeline: Pipeline {
 
   private let indexBuffer: Buffer
   private let uniformBuffer: Buffer
+  private let instanceBuffer: Buffer
 
   private struct Programs {
     static let Shader = "ColorShaders"
@@ -32,20 +33,26 @@ final class ShapePipeline: Pipeline {
     let pipelineDescriptor = ShapePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     self.pipelineState = ShapePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
-    tmpBuffer = device.newBufferWithLength(500 * Vertex.dataSize, options: .CPUCacheModeDefaultCache)
-    uBuffer = device.newBufferWithLength(500 * sizeof(InstanceUniforms), options: .CPUCacheModeDefaultCache)
+    instanceBuffer = Buffer(length: 1000 * sizeof(InstanceUniforms))
   }
-
-  var tmpBuffer: MTLBuffer
-  var uBuffer: MTLBuffer
 }
 
 extension ShapePipeline {
   func encode(encoder: MTLRenderCommandEncoder, nodes: [ShapeNode]) {
+    guard let node = nodes.first else { return }
+
     encoder.setRenderPipelineState(pipelineState)
 
-    nodes.forEach {
-      $0.draw(encoder, indexBuffer: indexBuffer.buffer, uniformBuffer: uniformBuffer.buffer, sampler: sampler)
+    encoder.setVertexBytes(node.quad.data, length: node.quad.size, atIndex: 0)
+
+    for (i, node) in nodes.enumerate() {
+      var instance = InstanceUniforms(model: node.model, color: node.color.vec4)
+      instanceBuffer.update(&instance, size: sizeof(InstanceUniforms), offset: sizeof(InstanceUniforms) * i)
     }
+    encoder.setVertexBuffer(instanceBuffer.buffer, offset: 0, atIndex: 1)
+
+    encoder.setVertexBuffer(uniformBuffer.buffer, offset: 0, atIndex: 2)
+
+    encoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.buffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer.buffer, indexBufferOffset: 0, instanceCount: nodes.count)
   }
 }

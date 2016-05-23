@@ -6,20 +6,22 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
-import Foundation
-import GLKit
+import simd
 
 typealias Quads = [Quad]
 
 struct Quad {
   static var size: Int {
-    return sizeof(vector_float2) + sizeof(vector_float4)
+    return sizeof(packed_float2) + sizeof(packed_float4)
+    return 4 * sizeof(vector_float4)
   }
   
-  let vertices: Vertices
+  let data: [Float]
+  let size: Int
 
   init(vertices: Vertices) {
-    self.vertices = vertices
+    data = vertices.flatMap { $0.data }
+    size = sizeof(Float) * data.count
   }
 
   init(ll: Vertex, ul: Vertex, ur: Vertex, lr: Vertex) {
@@ -88,7 +90,7 @@ extension Quad {
 
 extension CollectionType where Generator.Element == Quad {
   var vertexData: [Float] {
-    return flatMap { $0.vertices.flatMap { $0.data } }
+    return flatMap { $0.data }
   }
 
   var vertexSize: Int {

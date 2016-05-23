@@ -22,7 +22,7 @@ struct InstanceUniforms {
 
 struct Uniforms {
   float4x4 projection;
-  float4x4 view;
+  //float4x4 view;
 };
 
 struct VertexOut {
@@ -34,6 +34,7 @@ struct VertexOut {
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
                               ushort iid [[instance_id]],
                               const device VertexIn* vert [[buffer(0)]],
+                              //const device VertexIn* texC [[buffer(3)]],
                               constant InstanceUniforms* instanceUniforms [[buffer(1)]],
                               constant Uniforms& uniforms [[buffer(2)]])
 {
@@ -41,7 +42,8 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
   InstanceUniforms instanceIn = instanceUniforms[iid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.projection * uniforms.view * instanceIn.model * float4(vertIn.position);
+//add the view back to the position calculation
+  outVertex.position = uniforms.projection * instanceIn.model * float4(vertIn.position);
   outVertex.color = instanceIn.color;
   outVertex.texCoord = vertIn.texCoord;
 
@@ -55,7 +57,3 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   return color * interpolated.color;
 }
-
-//fragment float4 passThroughFragment(VertexOut interpolated [[stage_in]]) {
-//    return interpolated.color;
-//}

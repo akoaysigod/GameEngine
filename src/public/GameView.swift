@@ -54,6 +54,8 @@ public class GameView: UIView {
   }
 
   public func presentScene(scene: Scene) {
+
+
     currentScene = scene
     scene.view = self
     scene.didMoveToView(self)
@@ -165,5 +167,6 @@ extension GameView {
 
     projection.update(newSize.size)
     renderer.updateProjection(projection.projection)
+    currentScene?.updateCameras(newSize.size)
   }
 }

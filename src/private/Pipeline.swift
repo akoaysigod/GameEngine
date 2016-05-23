@@ -13,8 +13,6 @@ import simd
 protocol Pipeline {
   var pipelineState: MTLRenderPipelineState { get }
   var sampler: MTLSamplerState? { get }
-
-  init(device: MTLDevice, indexBuffer: Buffer, uniformBuffer: Buffer, vertexProgram: String, fragmentProgram: String)
 }
 
 extension Pipeline {
@@ -60,14 +58,13 @@ extension Pipeline {
 
     //vertex stuff
     let vertexDescriptor = MTLVertexDescriptor();
-    vertexDescriptor.attributes[0].format = .Float4;
-    vertexDescriptor.attributes[0].offset = 0;
-    vertexDescriptor.attributes[0].bufferIndex = 0;
-    vertexDescriptor.attributes[1].format = .Float2;
-    vertexDescriptor.attributes[1].offset = sizeof(packed_float4);
-    vertexDescriptor.attributes[1].bufferIndex = 0;
-    vertexDescriptor.layouts[0].stepFunction = .PerVertex;
-    vertexDescriptor.layouts[0].stride = Quad.size;
+    vertexDescriptor.attributes[0].format = .Float4
+    vertexDescriptor.attributes[0].offset = 0
+    vertexDescriptor.attributes[0].bufferIndex = 0
+    vertexDescriptor.attributes[1].format = .Float2
+    vertexDescriptor.attributes[1].offset = sizeof(packed_float4)
+    vertexDescriptor.attributes[1].bufferIndex = 0
+    vertexDescriptor.layouts[0].stride = sizeof(packed_float4) + sizeof(packed_float2)
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
     
@@ -101,7 +98,7 @@ final class PipelineFactory {
 
   init(device: MTLDevice, indexBuffer: Buffer, uniformBuffer: Buffer) {
     self.device = device
-    //indexBuffer = device.newBufferWithBytes(Quad.indicesData, length: Quad.indicesSize, options: .CPUCacheModeDefaultCache)
+
     self.indexBuffer = indexBuffer
     self.uniformBuffer = uniformBuffer
   }

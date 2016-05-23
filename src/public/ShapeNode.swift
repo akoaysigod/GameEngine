@@ -19,10 +19,10 @@ public class ShapeNode: Node, Renderable {
       color = Color(color.red, color.green, color.blue, newValue)
     }
   }
-  
-  public var texture: Texture? = nil
 
-  public let vertexBuffer: MTLBuffer
+  //need to delete vertex buffer from renderable
+  var vertexBuffer: MTLBuffer = Device.shared.device.newBufferWithLength(0, options: .CPUCacheModeDefaultCache)
+  var texture: Texture? = nil
 
   public var hidden = false
   public let isVisible = true
@@ -41,8 +41,6 @@ public class ShapeNode: Node, Renderable {
   public init(width: Float, height: Float, color: Color) {
     self.color = color
     quad = Quad.rect(width, height)
-
-    vertexBuffer = ShapeNode.setupBuffers([Quad.rect(width, height)], device: Device.shared.device)
 
     super.init(size: Size(width: width, height: height))
   }

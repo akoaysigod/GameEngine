@@ -25,16 +25,16 @@ import UIKit
 public class Scene {
   public weak var view: GameView?
 
-  let camera: CameraNode
-  let uiCamera: CameraNode
+  public private(set) var camera: CameraNode
+  let tileSize: Int
+  public private(set) var uiCamera: CameraNode
+  let uiTileSize: Int
 
   public var allNodes: Nodes {
     return graphCache.allNodes
   }
 
   let graphCache = GraphCache()
-
-  var uniqueID = "1"
 
   /**
    Create a scene of a given size. This will serve as the root node to which all other nodes should be added to.
@@ -43,7 +43,10 @@ public class Scene {
 
    - returns: A new instance of `Scene`.
    */
-  public init(size: Size) {
+  public init(size: Size, tileSize: Int, uiTileSize: Int) {
+    self.tileSize = tileSize
+    self.uiTileSize = uiTileSize
+
     camera = CameraNode(size: size)
     uiCamera = CameraNode(size: size)
 
@@ -134,5 +137,12 @@ extension Scene {
     let translate = scale * (vec - camera.view.translation)
 
     return Point(x: translate.x, y: translate.y)
+  }
+}
+
+extension Scene {
+  func updateCameras(size: Size) {
+    camera.updateSize(size)
+    uiCamera.updateSize(size)
   }
 }
