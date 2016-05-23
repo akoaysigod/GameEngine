@@ -58,6 +58,7 @@ final class SpritePipeline: Pipeline {
     tmpBuffer = device.newBufferWithLength(1000 * sizeof(InstanceUniforms), options: .CPUCacheModeDefaultCache)
   }
 
+  var buffers = [Int: MTLBuffer]()
   var tmpBuffer: MTLBuffer
   var vBuffer: MTLBuffer
   var vset = false
@@ -75,22 +76,30 @@ final class SpritePipeline: Pipeline {
 //    encoder.setVertexBytes(&uniforms, length: sizeof(Uniforms), atIndex: 2)
     //memcpy(node.uniformBufferQueue.uniformBuffer.contents(), &uniforms, sizeof(Uniforms))
 
+    var buffer: MTLBuffer
+    if let b = buffers[node.hashValue] {
+      buffer = b
+    }
+    else {
+      buffer = Device.shared.device.newBufferWithLength(sizeof(InstanceUniforms) * 200, options: .CPUCacheModeDefaultCache)
+      buffers[node.hashValue] = buffer
+    }
+
     //tmp
-//    for (i, node) in nodes.enumerate() {
-//
-//      var instance = InstanceUniforms(model: node.model, color: node.color.vec4)
-//      memcpy(tmpBuffer.contents() + sizeof(InstanceUniforms) * i, &instance, sizeof(InstanceUniforms))
-//    }
+    for (i, node) in nodes.enumerate() {
+
+      var instance = InstanceUniforms(model: node.model, color: node.color.vec4)
+      memcpy(buffer.contents() + sizeof(InstanceUniforms) * i, &instance, sizeof(InstanceUniforms))
+    }
     //encoder.setVertexBuffer(vBuffer, offset: 0, atIndex: 0)
-    //encoder.setVertexBuffer(tmpBuffer, offset: 0, atIndex: 1)
-    var i_n = InstanceUniforms(model: node.model, color: node.color.vec4)
-    encoder.setVertexBytes(&i_n, length: sizeof(InstanceUniforms), atIndex: 1)
+    encoder.setVertexBuffer(buffer, offset: 0, atIndex: 1)
+    //var i_n = InstanceUniforms(model: node.model, color: node.color.vec4)
+    //encoder.setVertexBytes(&i_n, length: sizeof(InstanceUniforms), atIndex: 1)
     //
 
     encoder.setFragmentSamplerState(sampler, atIndex: 0)
     encoder.setFragmentTexture(texture, atIndex: 0)
 
-    encoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.buffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer.buffer, indexBufferOffset: 0)
-
+    encoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.buffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer.buffer, indexBufferOffset: 0, instanceCount: nodes.count)
   }
 }

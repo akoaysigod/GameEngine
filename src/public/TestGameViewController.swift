@@ -50,11 +50,14 @@ final class TestGameViewController: UIViewController {
       let stairsDown = environmentAtlas.textureNamed("StairsDown"),
       let stairsUp = environmentAtlas.textureNamed("StairsUp") {
 
+      let s = [wall, floor, openDoor, stairsDown, stairsUp]
+
       var nodes = [SpriteNode]()
       for y in (0..<20) {
         for x in (0..<20) {
-          let sp = ShapeNode(size: Size(width: 64.0, height: 64.0), color: .green)
-          //let sp = SpriteNode(texture: openDoor)
+          //let sp = ShapeNode(size: Size(width: 64.0, height: 64.0), color: .green)
+          let t = s[Int(arc4random_uniform(UInt32(s.count)))]
+          let sp = SpriteNode(texture: t)
           let x = sp.size.width * Float(x)
           let y = sp.size.height * Float(y)
           sp.position = Point(x: x, y: y)
