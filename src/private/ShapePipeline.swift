@@ -17,7 +17,7 @@ final class ShapePipeline: Pipeline {
   private let instanceBuffer: Buffer
 
   private struct Programs {
-    static let Shader = "ColorShaders"
+    static let Shader = "ShapeShaders"
     static let Vertex = "colorVertex"
     static let Fragment = "colorFragment"
   }

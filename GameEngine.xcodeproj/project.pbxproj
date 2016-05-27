@@ -76,8 +76,8 @@
 		EAA99E291C41E66C00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
 		EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */; };
 		EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
-		EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ColorShaders.metal */; };
-		EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ColorShaders.metal */; };
+		EAA99E391C41E80E00CF3246 /* ShapeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */; };
+		EAA99E3A1C41E80E00CF3246 /* ShapeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */; };
 		EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EACA166E1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
@@ -174,7 +174,7 @@
 		EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = resources/Test/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAA99E2F1C41E6BC00CF3246 /* GameEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameEngine.h; path = resources/GEFramework/GameEngine.h; sourceTree = "<group>"; };
 		EAA99E301C41E6BC00CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/GEFramework/Info.plist; sourceTree = "<group>"; };
-		EAA99E371C41E80E00CF3246 /* ColorShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ColorShaders.metal; path = src/shaders/ColorShaders.metal; sourceTree = SOURCE_ROOT; };
+		EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ShapeShaders.metal; path = src/shaders/ShapeShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EACA166D1C9F1A8C00C9119A /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Test.xcassets; path = resources/Test.xcassets; sourceTree = "<group>"; };
 		EACA16701C9F391000C9119A /* Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey.png; path = resources/Grey.png; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */,
-				EAA99E371C41E80E00CF3246 /* ColorShaders.metal */,
+				EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */,
 				EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */,
 			);
 			name = Shaders;
@@ -646,7 +646,7 @@
 				EAE6ED471CCBC1330046A5BE /* Mat3.swift in Sources */,
 				EAE6ED491CCBC1330046A5BE /* Mat4.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* CameraNode.swift in Sources */,
-				EAA99E391C41E80E00CF3246 /* ColorShaders.metal in Sources */,
+				EAA99E391C41E80E00CF3246 /* ShapeShaders.metal in Sources */,
 				EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EAA99DE31C41E52700CF3246 /* Node.swift in Sources */,
 			);
@@ -680,7 +680,7 @@
 				EAEAAC681C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */,
 				EAA99DE41C41E52700CF3246 /* Node.swift in Sources */,
-				EAA99E3A1C41E80E00CF3246 /* ColorShaders.metal in Sources */,
+				EAA99E3A1C41E80E00CF3246 /* ShapeShaders.metal in Sources */,
 				EA6B126A1CF13DB1004E4FCB /* ShapePipeline.swift in Sources */,
 				EA6C2A161CF2378900F99E1D /* Projection.swift in Sources */,
 				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,

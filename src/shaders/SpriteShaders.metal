@@ -23,7 +23,7 @@ struct InstanceUniforms {
 
 struct Uniforms {
   float4x4 projection;
-  //float4x4 view;
+  float4x4 view;
 };
 
 struct VertexOut {
@@ -36,16 +36,18 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
                               ushort iid [[instance_id]],
                               const device VertexIn* vert [[buffer(0)]],
                               //const device VertexIn* texC [[buffer(3)]],
-                              constant InstanceUniforms* instanceUniforms [[buffer(1)]],
+                              //constant InstanceUniforms* instanceUniforms [[buffer(1)]],
                               constant Uniforms& uniforms [[buffer(2)]])
 {
   VertexIn vertIn = vert[vid];
-  InstanceUniforms instanceIn = instanceUniforms[iid];
+  //InstanceUniforms instanceIn = instanceUniforms[iid];
 
   VertexOut outVertex;
 //add the view back to the position calculation
-  outVertex.position = uniforms.projection * instanceIn.model * float4(vertIn.position);
-  outVertex.color = instanceIn.color;
+  //outVertex.position = uniforms.projection * instanceIn.model * float4(vertIn.position);
+  outVertex.position = uniforms.projection * uniforms.view * float4(vertIn.position);
+  //outVertex.color = instanceIn.color;
+  outVertex.color = float4(1,1,1,1);
   outVertex.texCoord = vertIn.texCoord;
 
   return outVertex;

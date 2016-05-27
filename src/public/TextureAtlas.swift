@@ -88,7 +88,7 @@ public class TextureAtlas {
 
     let frame = TextureFrame(x: x, y: y, sWidth: width, sHeight: height, tWidth: texture.width, tHeight: texture.height)
     let ret = Texture(texture: texture.texture, frame: frame)
-    //ret.uuid = texture.uuid
+    ret.uuid = texture.uuid
     return ret
   }
 }

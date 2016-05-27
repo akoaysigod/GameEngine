@@ -41,4 +41,6 @@ protocol Renderable: class, NodeGeometry, Tree {
 
   /// whether or not the object is visible from the current view point
   var isVisible: Bool { get }
+
+  var quad: Quad { get }
 }

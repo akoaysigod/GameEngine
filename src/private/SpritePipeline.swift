@@ -39,28 +39,16 @@ final class SpritePipeline: Pipeline {
 
     let pipelineDescriptor = SpritePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
-    if let vertexDescriptor = pipelineDescriptor.vertexDescriptor {
-//      vertexDescriptor.attributes[3].format = .Flo;
-//      vertexDescriptor.attributes[3].offset = 0;
-//      vertexDescriptor.attributes[3].bufferIndex = 1;
-//      vertexDescriptor.layouts[0].stepFunction = .PerVertex;
-//      vertexDescriptor.layouts[0].stride = sizeof(packed_float4);
-    }
-
-
-
     pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
 
-
-
-    vBuffer = device.newBufferWithLength(1000 * (sizeof(packed_float4) + sizeof(packed_float2)), options: .CPUCacheModeDefaultCache)
-    tmpBuffer = device.newBufferWithLength(1000 * sizeof(InstanceUniforms), options: .CPUCacheModeDefaultCache)
+    vBuffer = device.newBufferWithLength(1600 * strideof(Vertex) * 4, options: .CPUCacheModeDefaultCache)
+    iBuffer = device.newBufferWithLength(1600 * sizeof(UInt16) * 6, options: .CPUCacheModeDefaultCache)
   }
 
   var buffers = [Int: MTLBuffer]()
-  var tmpBuffer: MTLBuffer
   var vBuffer: MTLBuffer
+  var iBuffer: MTLBuffer
   var vset = false
 
   func encode(encoder: MTLRenderCommandEncoder, nodes: [SpriteNode]) {
@@ -69,38 +57,24 @@ final class SpritePipeline: Pipeline {
 
     encoder.setRenderPipelineState(pipelineState)
 
-    //encoder.setVertexBuffer(node.vertexBuffer, offset: 0, atIndex: 0)
-    encoder.setVertexBytes(node.quad.vertices, length: node.quad.size, atIndex: 0)
+    if !vset {
+      for (i, n) in nodes.enumerate() {
+        memcpy(vBuffer.contents() + (i * n.quad.size), n.quad.vertices, n.quad.size)
+        let indicies = Quad.indicesData.map { UInt16(i * 4) + $0 }
+        memcpy(iBuffer.contents() + (i * Quad.indicesSize), indicies, Quad.indicesSize)
+      }
+      vset = true
+    }
+    encoder.setVertexBuffer(vBuffer, offset: 0, atIndex: 0)
 
+
+    var view = node.camera!.view
+    uniformBuffer.update(&view, size: sizeof(Mat4), offset: sizeof(Mat4))
     encoder.setVertexBuffer(uniformBuffer.buffer, offset: 0, atIndex: 2)
-//    var uniforms = Uniforms(projection: node.camera!.projection, view: node.camera!.view)
-//    encoder.setVertexBytes(&uniforms, length: sizeof(Uniforms), atIndex: 2)
-    //memcpy(node.uniformBufferQueue.uniformBuffer.contents(), &uniforms, sizeof(Uniforms))
-
-    var buffer: MTLBuffer
-    if let b = buffers[node.hashValue] {
-      buffer = b
-    }
-    else {
-      buffer = Device.shared.device.newBufferWithLength(sizeof(InstanceUniforms) * 200, options: .CPUCacheModeDefaultCache)
-      buffers[node.hashValue] = buffer
-    }
-
-    //tmp
-    for (i, node) in nodes.enumerate() {
-
-      var instance = InstanceUniforms(model: node.model, color: node.color.vec4)
-      memcpy(buffer.contents() + sizeof(InstanceUniforms) * i, &instance, sizeof(InstanceUniforms))
-    }
-    //encoder.setVertexBuffer(vBuffer, offset: 0, atIndex: 0)
-    encoder.setVertexBuffer(buffer, offset: 0, atIndex: 1)
-    //var i_n = InstanceUniforms(model: node.model, color: node.color.vec4)
-    //encoder.setVertexBytes(&i_n, length: sizeof(InstanceUniforms), atIndex: 1)
-    //
 
     encoder.setFragmentSamplerState(sampler, atIndex: 0)
     encoder.setFragmentTexture(texture, atIndex: 0)
 
-    encoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.buffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer.buffer, indexBufferOffset: 0, instanceCount: nodes.count)
+    encoder.drawIndexedPrimitives(.Triangle, indexCount: Quad.indicesData.count * nodes.count, indexType: .UInt16, indexBuffer: iBuffer, indexBufferOffset: 0)
   }
 }

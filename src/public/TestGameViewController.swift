@@ -53,8 +53,8 @@ final class TestGameViewController: UIViewController {
       let s = [wall, floor, openDoor, stairsDown, stairsUp]
 
       var nodes = [SpriteNode]()
-      for y in (0..<20) {
-        for x in (0..<20) {
+      for y in (0..<40) {
+        for x in (0..<40) {
           //let sp = ShapeNode(size: Size(width: 64.0, height: 64.0), color: .green)
           let t = s[Int(arc4random_uniform(UInt32(s.count)))]
           let sp = SpriteNode(texture: t)
@@ -122,8 +122,7 @@ final class TestGameViewController: UIViewController {
     let colorRect = ShapeNode(width: 64, height: 64, color: .gray)
     colorRect.name = "Gray rect"
     colorRect.anchorPoint = Point(x: 0.5, y: 0.5)
-    colorRect.x = 50
-    colorRect.y = 50
+    colorRect.position = Point(x: 50, y: 50)
 
     let action = Action.rotateBy(Float(360.0), duration: 1.0)
     //let action = Action.moveTo(100.0, y: 0.0, duration: 1.0)
@@ -131,14 +130,14 @@ final class TestGameViewController: UIViewController {
     let forever = Action.repeatForever(action)
     //colorRect.runAction(forever)
 
-    scene.addUINode(colorRect)
+    //scene.addUINode(colorRect)
 
     let colorRect2 = ShapeNode(width: 64, height: 64, color: .red)
     colorRect2.name = "Red rect"
     colorRect2.position = Point(x: -128.0, y: -64.0)
     //colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
     colorRect2.zPosition = 0
-    scene.addNode(colorRect2)
+    //scene.addNode(colorRect2)
 
 //    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
 //    colorRect3.name = "blue rect"

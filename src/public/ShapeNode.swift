@@ -25,7 +25,7 @@ public class ShapeNode: Node, Renderable {
   public var hidden = false
   public let isVisible = true
 
-  var quad: Quad
+  private(set) var quad: Quad
 
   /**
    Designated initializer. Creates a rectangular shape node of a given color.

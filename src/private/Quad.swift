@@ -18,16 +18,16 @@ struct Vertex {
     position = [x, y, z, w]
     st = [s, t]
   }
+
+  init(position: packed_float4, st: packed_float2) {
+    self.position = position
+    self.st = st
+  }
 }
 
 typealias Quads = [Quad]
 
 struct Quad {
-//  static var size: Int {
-//    return sizeof(packed_float2) + sizeof(packed_float4)
-//    return 4 * sizeof(vector_float4)
-//  }
-
   let vertices: Vertices
   let size: Int
 
@@ -37,8 +37,6 @@ struct Quad {
   }
 
   static func rect(width: Float, _ height: Float) -> Quad {
-    let st: packed_float2 = [0, 0]
-
     let ll = Vertex(x: 0, y: 0)
     let ul = Vertex(x: 0, y: height)
     let ur = Vertex(x: width, y: height)

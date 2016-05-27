@@ -21,7 +21,6 @@ import UIKit
  */
 public final class CameraNode: Node {
   public override var transform: Mat4 {
-    return view
     return .identity
   }
   private(set) var view: Mat4 = .identity
@@ -63,7 +62,6 @@ public final class CameraNode: Node {
   }
 
   override func updateTransform() {
-    view = Mat4.translate(x + (width * anchorPoint.x), y + (height * anchorPoint.y)) * Mat4.scale(zoom, zoom)
-    allNodes.forEach { $0.updateTransform() }
+    view = Mat4.translate(position.x + (width * anchorPoint.x), position.y + (height * anchorPoint.y)) * Mat4.scale(zoom, zoom)
   }
 }

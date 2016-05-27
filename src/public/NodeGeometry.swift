@@ -44,12 +44,9 @@ public protocol NodeGeometry: class {
   /// The relative position to which various calculations will be done. This is in unit coordinates in the coordinate system of the model.
   var anchorPoint: Point { get set }
 
-  /// The x position. This is relative to the parent or if the scene is a parent, then world coordinates.
-  var x: Float { get set }
-  /// The y position. This is relative to the parent or if the scene is a parent, then world coordinates.
-  var y: Float { get set }
-  /// A convenience var for getting the position variables.
+  /// The position of the node. This is relative to the parent or if the scene is a parent, then world coordinates.
   var position: Point { get set }
+
   /// This controls the rendering "depth."
   var zPosition: Int { get set }
 
@@ -97,16 +94,8 @@ public extension NodeGeometry {
     return size.height * yScale
   }
 
-  public var position: Point {
-    get { return Point(x: x, y: y) }
-    set {
-      x = newValue.x
-      y = newValue.y
-    }
-  }
-
   public var boundingRect: Rect {
-    return Rect(x: x, y: y, width: width, height: height)
+    return Rect(x: position.x, y: position.y, width: width, height: height)
   }
 
   var z: Float {

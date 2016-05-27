@@ -37,6 +37,8 @@ public class TextNode: Node, Renderable {
     }
   }
 
+  private(set) var quad: Quad
+
   public var texture: Texture?
 
   public var hidden = false
@@ -59,6 +61,8 @@ public class TextNode: Node, Renderable {
     self.color = color
 
     let quads = TextNode.makeTextQuads(text, color: color, fontAtlas: fontAtlas)
+    quad = quads.first!
+
     self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
 
     super.init(size: texture!.size)

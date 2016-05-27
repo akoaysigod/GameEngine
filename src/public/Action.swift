@@ -119,8 +119,8 @@ public final class Action {
   }
 
   private func moveTo(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
-    let dirX = x - node.x
-    let dirY = y - node.y
+    let dirX = x - node.position.x
+    let dirY = y - node.position.y
 
     moveBy(node, delta, dirX, dirY)
     actionType = .MoveBy(x: dirX, y: dirY)
@@ -130,11 +130,10 @@ public final class Action {
   var sPos: (x: Float, y: Float) = (0, 0) //tmp maybe
   private func moveBy(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     if timer == 0.0 {
-      sPos = (node.x, node.y)
+      sPos = (node.position.x, node.position.y)
     }
 
-    node.x = sPos.x + (time * x)
-    node.y = sPos.y + (time * y)
+    node.position = Point(x: sPos.x + (time * x), y: sPos.y + (time * y))
   }
 
   var sRot: Float = 0.0

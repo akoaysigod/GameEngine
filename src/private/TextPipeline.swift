@@ -46,8 +46,8 @@ extension TextPipeline {
   func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
     encoder.setRenderPipelineState(pipelineState)
 
-    nodes.forEach {
-      $0.draw(encoder, indexBuffer: indexBuffer.buffer, uniformBuffer: uniformBuffer.buffer, sampler: sampler)
+    nodes.forEach { _ in
+      //$0.draw(encoder, indexBuffer: indexBuffer.buffer, uniformBuffer: uniformBuffer.buffer, sampler: sampler)
     }
   }
 }

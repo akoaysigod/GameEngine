@@ -29,7 +29,14 @@ public class SpriteNode: Node, Renderable {
   public var hidden = false
   public let isVisible = true
 
-  let quad: Quad
+  var quad: Quad {
+    let q = texture.flatMap { Quad.spriteRect($0.frame) } ?? Quad.rect(size)
+    let vertices = q.vertices.map { vertex -> Vertex in
+      let position = transform * vertex.position
+      return Vertex(position: position, st: vertex.st)
+    }
+    return Quad(vertices: vertices)
+  }
 
   /**
    Designated initializer. Creates a new sprite object using an existing `Texture`.
@@ -43,8 +50,6 @@ public class SpriteNode: Node, Renderable {
    - returns: A new instance of `SpriteNode`.
    */
   public required init(texture: Texture, color: Color, size: Size) {
-    self.quad = Quad.spriteRect(texture.frame)
-
     self.texture = texture
     self.color = color
 
