@@ -38,7 +38,6 @@ public class TextNode: Node, Renderable {
   }
 
   public var texture: Texture?
-  public let vertexBuffer: MTLBuffer
 
   public var hidden = false
   public let isVisible = true
@@ -61,8 +60,6 @@ public class TextNode: Node, Renderable {
 
     let quads = TextNode.makeTextQuads(text, color: color, fontAtlas: fontAtlas)
     self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
-
-    vertexBuffer = TextNode.setupBuffers(quads, device: Device.shared.device)
 
     super.init(size: texture!.size)
   }

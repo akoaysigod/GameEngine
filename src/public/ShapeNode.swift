@@ -20,8 +20,6 @@ public class ShapeNode: Node, Renderable {
     }
   }
 
-  //need to delete vertex buffer from renderable
-  var vertexBuffer: MTLBuffer = Device.shared.device.newBufferWithLength(0, options: .CPUCacheModeDefaultCache)
   var texture: Texture? = nil
 
   public var hidden = false

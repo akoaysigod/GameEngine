@@ -26,8 +26,6 @@ public class SpriteNode: Node, Renderable {
   }
   public var texture: Texture?
 
-  public let vertexBuffer: MTLBuffer
-
   public var hidden = false
   public let isVisible = true
 
@@ -46,8 +44,6 @@ public class SpriteNode: Node, Renderable {
    */
   public required init(texture: Texture, color: Color, size: Size) {
     self.quad = Quad.spriteRect(texture.frame)
-
-    vertexBuffer = SpriteNode.setupBuffers([Quad.spriteRect(texture.frame)], device: Device.shared.device)
 
     self.texture = texture
     self.color = color
