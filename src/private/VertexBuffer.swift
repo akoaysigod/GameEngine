@@ -8,14 +8,14 @@
 
 import Metal
 
-final class VertexBuffer {
-  let buffer: MTLBuffer
-
-  init(quad: Quads, device: Device = Device.shared) {
-    buffer = device.device.newBufferWithBytes(quad.vertexData, length: quad.vertexSize, options: .CPUCacheModeDefaultCache)
-  }
-
-  func updateColor(color: Color) {
-
-  }
-}
+//final class VertexBuffer {
+//  let buffer: MTLBuffer
+//
+//  init(quad: Quads, device: Device = Device.shared) {
+//    buffer = device.device.newBufferWithBytes(quad.vertices, length: quad.size, options: .CPUCacheModeDefaultCache)
+//  }
+//
+//  func updateColor(color: Color) {
+//
+//  }
+//}

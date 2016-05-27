@@ -116,11 +116,11 @@ public class TextNode: Node, Renderable {
       let minT = Float(glyphInfo.topLeftTexCoord.y)
       let maxT = Float(glyphInfo.bottomRightTexCoord.y)
 
-      let ll = Vertex(s: minS, t: maxT, x: minX, y: minY)
-      let ul = Vertex(s: minS, t: minT, x: minX, y: maxY)
-      let ur = Vertex(s: maxS, t: minT, x: maxX, y: maxY)
-      let lr = Vertex(s: maxS, t: maxT, x: maxX, y: minY)
-      rects += [Quad(ll: ll, ul: ul, ur: ur, lr: lr)]
+//      let ll = Vertex(s: minS, t: maxT, x: minX, y: minY)
+//      let ul = Vertex(s: minS, t: minT, x: minX, y: maxY)
+//      let ur = Vertex(s: maxS, t: minT, x: maxX, y: maxY)
+//      let lr = Vertex(s: maxS, t: maxT, x: maxX, y: minY)
+//      rects += [Quad(ll: ll, ul: ul, ur: ur, lr: lr)]
     }
 
     return rects

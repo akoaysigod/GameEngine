@@ -13,6 +13,7 @@ using namespace metal;
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
   packed_float2 texCoord [[attribute(1)]]; //just makes it a bit easier to program this, it's not really being used
+  packed_float2 pad; //WOW so much time wasted, the stride function on the VertexDescriptor does not honor the size? so add this padding 
 };
 
 struct InstanceUniforms {

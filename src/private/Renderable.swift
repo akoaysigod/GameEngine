@@ -60,9 +60,9 @@ protocol Renderable: class, NodeGeometry, Tree {
 
 extension Renderable {
   static func setupBuffers(quads: Quads, device: MTLDevice) -> MTLBuffer {
-    let vertexBuffer = device.newBufferWithBytes(quads.vertexData, length: quads.vertexSize, options: [])
+    //let vertexBuffer = device.newBufferWithBytes(quads.vertexData, length: quads.vertexSize, options: [])
 
-    return vertexBuffer
+    return device.newBufferWithLength(0, options: [])
   }
 
   func draw(renderEncoder: MTLRenderCommandEncoder, indexBuffer: MTLBuffer, uniformBuffer: MTLBuffer, sampler: MTLSamplerState?) {

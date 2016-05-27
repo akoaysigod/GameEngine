@@ -69,7 +69,8 @@ final class SpritePipeline: Pipeline {
 
     encoder.setRenderPipelineState(pipelineState)
 
-    encoder.setVertexBuffer(node.vertexBuffer, offset: 0, atIndex: 0)
+    //encoder.setVertexBuffer(node.vertexBuffer, offset: 0, atIndex: 0)
+    encoder.setVertexBytes(node.quad.vertices, length: node.quad.size, atIndex: 0)
 
     encoder.setVertexBuffer(uniformBuffer.buffer, offset: 0, atIndex: 2)
 //    var uniforms = Uniforms(projection: node.camera!.projection, view: node.camera!.view)

@@ -35,14 +35,15 @@ final class Renderer {
 
     uniformBuffer = Buffer(length: sizeof(Uniforms))
     var projection = projection
-    uniformBuffer.update(&projection, size: sizeof(Mat4))
+    uniformBuffer.update(&projection, size: sizeof(Uniforms))
+
     let indexBuffer = Buffer(length: Quad.indicesSize)
     var indicesData = Quad.indicesData
     indexBuffer.update(&indicesData, size: Quad.indicesSize)
 
-    vertexBuffer = Buffer(length: Quad.size)
+    vertexBuffer = Buffer(length: sizeof(Vertex))
     
-    uiVertexBuffer = Buffer(length: Quad.size)
+    uiVertexBuffer = Buffer(length: sizeof(Vertex))
 
     let factory = PipelineFactory(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
     shapePipeline = factory.constructShapePipeline()

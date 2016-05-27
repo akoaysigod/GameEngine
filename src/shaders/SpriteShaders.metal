@@ -13,6 +13,7 @@ using namespace metal;
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
   packed_float2 texCoord [[attribute(1)]];
+  packed_float2 pad;
 };
 
 struct InstanceUniforms {

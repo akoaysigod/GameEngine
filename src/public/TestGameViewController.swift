@@ -119,7 +119,7 @@ final class TestGameViewController: UIViewController {
     //    testText.name = "test text"
     //    scene.addNode(testText)
     //
-    let colorRect = ShapeNode(width: 100, height: 100, color: .gray)
+    let colorRect = ShapeNode(width: 64, height: 64, color: .gray)
     colorRect.name = "Gray rect"
     colorRect.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect.x = 50
@@ -140,12 +140,12 @@ final class TestGameViewController: UIViewController {
     colorRect2.zPosition = 0
     scene.addNode(colorRect2)
 
-    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
-    colorRect3.name = "blue rect"
-    //colorRect3.position = Point(x: 100, y: 50)
-    //colorRect3.anchorPoint = Point(x: 0.5, y: 0.5)
-    colorRect3.zPosition = 0
-    colorRect2.addNode(colorRect3)
+//    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
+//    colorRect3.name = "blue rect"
+//    //colorRect3.position = Point(x: 100, y: 50)
+//    //colorRect3.anchorPoint = Point(x: 0.5, y: 0.5)
+//    colorRect3.zPosition = 0
+//    colorRect2.addNode(colorRect3)
 
     //let translate1 = Action.moveBy(150, y: 0.0, duration: 1.0)
     //let translate2 = Action.moveBy(-150, y: 0.0, duration: 1.0)

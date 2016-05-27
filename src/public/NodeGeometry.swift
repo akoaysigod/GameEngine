@@ -145,15 +145,15 @@ public extension NodeGeometry {
 
 extension NodeGeometry where Self: Renderable {
   func updateSize() {
-    let quad: Quad
-    if texture == nil {
-      quad = .rect(size)
-    }
-    else {
-      quad = .spriteRect(size)
-    }
-
-    let p = vertexBuffer.contents()
-    memcpy(p, [quad].vertexData, [quad].vertexSize)
+//    let quad: Quad
+//    if texture == nil {
+//      quad = .rect(size)
+//    }
+//    else {
+//      quad = .spriteRect(size)
+//    }
+//
+//    let p = vertexBuffer.contents()
+//    memcpy(p, [quad].vertexData, [quad].vertexSize)
   }
 }

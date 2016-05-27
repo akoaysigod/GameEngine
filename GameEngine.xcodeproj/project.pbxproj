@@ -61,8 +61,6 @@
 		EAA99DCF1C41E4F100CF3246 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DCA1C41E4F100CF3246 /* Renderer.swift */; };
 		EAA99DD01C41E4F100CF3246 /* RenderPassQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */; };
 		EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */; };
-		EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DD31C41E50200CF3246 /* Vertex.swift */; };
-		EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DD31C41E50200CF3246 /* Vertex.swift */; };
 		EAA99DDC1C41E51C00CF3246 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDB1C41E51C00CF3246 /* Action.swift */; };
 		EAA99DDD1C41E51C00CF3246 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDB1C41E51C00CF3246 /* Action.swift */; };
 		EAA99DE11C41E52700CF3246 /* ShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DDE1C41E52700CF3246 /* ShapeNode.swift */; };
@@ -164,7 +162,6 @@
 		EAA99DC91C41E4F100CF3246 /* Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipeline.swift; path = src/private/Pipeline.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DCA1C41E4F100CF3246 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = src/private/Renderer.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderPassQueue.swift; path = src/private/RenderPassQueue.swift; sourceTree = SOURCE_ROOT; };
-		EAA99DD31C41E50200CF3246 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vertex.swift; path = src/private/Vertex.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DDB1C41E51C00CF3246 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Action.swift; path = src/public/Action.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DDE1C41E52700CF3246 /* ShapeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeNode.swift; path = src/public/ShapeNode.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DDF1C41E52700CF3246 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Node.swift; path = src/public/Node.swift; sourceTree = SOURCE_ROOT; };
@@ -391,7 +388,6 @@
 			children = (
 				EAF7BB001C8CC85700258C37 /* Quad.swift */,
 				EA256A0E1CA88057008F720B /* TextureFrame.swift */,
-				EAA99DD31C41E50200CF3246 /* Vertex.swift */,
 				EA0964B81CBAD23300C03BA9 /* VertexIn.swift */,
 				EA0964C81CBAF05100C03BA9 /* Uniforms.swift */,
 			);
@@ -634,7 +630,6 @@
 				EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */,
 				EA1994271CD57B4F009DC869 /* Color.swift in Sources */,
 				EA256A121CA88082008F720B /* TextureAtlas.swift in Sources */,
-				EAA99DD61C41E50200CF3246 /* Vertex.swift in Sources */,
 				EA3236281C8B85A500DA7FCF /* Tree.swift in Sources */,
 				EA9B1E811C727625000FFDF7 /* TextNode.swift in Sources */,
 				EAE6ED4E1CCBF02E0046A5BE /* Renderable.swift in Sources */,
@@ -693,7 +688,6 @@
 				EAEF9CCE1CD684D20059832D /* Point.swift in Sources */,
 				EA1994281CD57B4F009DC869 /* Color.swift in Sources */,
 				EAE75E381C42D091001EB176 /* Scene.swift in Sources */,
-				EAA99DD71C41E50200CF3246 /* Vertex.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* CameraNode.swift in Sources */,
 				EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */,
 				EAFD769E1C836C0500ABDC50 /* Updateable.swift in Sources */,

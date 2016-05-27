@@ -64,7 +64,8 @@ extension Pipeline {
     vertexDescriptor.attributes[1].format = .Float2
     vertexDescriptor.attributes[1].offset = sizeof(packed_float4)
     vertexDescriptor.attributes[1].bufferIndex = 0
-    vertexDescriptor.layouts[0].stride = sizeof(packed_float4) + sizeof(packed_float2)
+    vertexDescriptor.layouts[0].stepFunction = .PerVertex
+    vertexDescriptor.layouts[0].stride = strideof(Vertex)
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
     
