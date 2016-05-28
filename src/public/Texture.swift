@@ -125,3 +125,14 @@ public class Texture: Hashable, Equatable {
     self.init(texture: texture)
   }
 }
+
+extension Texture {
+  static func newTexture(width: Int, height: Int, pixelFormat: MTLPixelFormat) -> MTLTexture {
+    let descriptor = MTLTextureDescriptor()
+    descriptor.width = width
+    descriptor.height = height
+    descriptor.pixelFormat = pixelFormat
+    return Device.shared.device.newTextureWithDescriptor(descriptor)
+  }
+}
+

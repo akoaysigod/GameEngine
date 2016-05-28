@@ -43,13 +43,23 @@ final class TestGameViewController: UIViewController {
     scene = Scene(size: view.size, tileSize: 64, uiTileSize: 128)
     view.presentScene(scene)
 
-    if let environmentAtlas = TextureAtlas(named: "Environment"),
+    let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown", "StairsUp"]
+
+
+//    if let environmentAtlas = TextureAtlas(named: "Environment"),
+//      let wall = environmentAtlas.textureNamed("Wall"),
+//      let floor = environmentAtlas.textureNamed("Floor"),
+//      let openDoor = environmentAtlas.textureNamed("OpenDoor"),
+//      let stairsDown = environmentAtlas.textureNamed("StairsDown"),
+//      let stairsUp = environmentAtlas.textureNamed("StairsUp")
+
+    if let environmentAtlas = TextureAtlas(imageNames: imageNames),
       let wall = environmentAtlas.textureNamed("Wall"),
       let floor = environmentAtlas.textureNamed("Floor"),
       let openDoor = environmentAtlas.textureNamed("OpenDoor"),
       let stairsDown = environmentAtlas.textureNamed("StairsDown"),
-      let stairsUp = environmentAtlas.textureNamed("StairsUp") {
-
+      let stairsUp = environmentAtlas.textureNamed("StairsUp")
+    {
       let s = [wall, floor, openDoor, stairsDown, stairsUp]
 
       var nodes = [SpriteNode]()
