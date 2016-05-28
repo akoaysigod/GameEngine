@@ -135,4 +135,3 @@ extension Texture {
     return Device.shared.device.newTextureWithDescriptor(descriptor)
   }
 }
-

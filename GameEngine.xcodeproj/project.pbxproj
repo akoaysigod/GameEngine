@@ -20,8 +20,6 @@
 		EA1ACBEE1C9E53A800878EE6 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1ACBEC1C9E53A800878EE6 /* Texture.swift */; };
 		EA1ACBF31C9E5D7000878EE6 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBF21C9E5D7000878EE6 /* error.png */; };
 		EA1ACBF41C9E5D7000878EE6 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBF21C9E5D7000878EE6 /* error.png */; };
-		EA2569FB1CA731A6008F720B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
-		EA256A0A1CA865C7008F720B /* AtlasData.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA256A091CA865C7008F720B /* AtlasData.xcassets */; };
 		EA256A0F1CA88057008F720B /* TextureFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA256A0E1CA88057008F720B /* TextureFrame.swift */; };
 		EA256A101CA88057008F720B /* TextureFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA256A0E1CA88057008F720B /* TextureFrame.swift */; };
 		EA256A121CA88082008F720B /* TextureAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA256A111CA88082008F720B /* TextureAtlas.swift */; };
@@ -72,18 +70,12 @@
 		EAA99DF01C41E57300CF3246 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DEE1C41E57300CF3246 /* GameViewController.swift */; };
 		EAA99DF21C41E57C00CF3246 /* CameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* CameraNode.swift */; };
 		EAA99DF31C41E57C00CF3246 /* CameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA99DF11C41E57C00CF3246 /* CameraNode.swift */; };
-		EAA99E281C41E66B00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
-		EAA99E291C41E66C00CF3246 /* Test2.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E271C41E65700CF3246 /* Test2.png */; };
 		EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */; };
 		EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
 		EAA99E391C41E80E00CF3246 /* ShapeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */; };
 		EAA99E3A1C41E80E00CF3246 /* ShapeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */; };
 		EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
-		EACA166E1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
-		EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACA166D1C9F1A8C00C9119A /* Test.xcassets */; };
-		EACA16711C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
-		EACA16721C9F391000C9119A /* Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EACA16701C9F391000C9119A /* Grey.png */; };
 		EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522671CF128D400A9A6D3 /* SpritePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */; };
@@ -140,7 +132,6 @@
 		EA1994261CD57B4F009DC869 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = src/public/Color.swift; sourceTree = SOURCE_ROOT; };
 		EA1ACBEC1C9E53A800878EE6 /* Texture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Texture.swift; path = src/public/Texture.swift; sourceTree = SOURCE_ROOT; };
 		EA1ACBF21C9E5D7000878EE6 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = resources/error.png; sourceTree = "<group>"; };
-		EA256A091CA865C7008F720B /* AtlasData.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AtlasData.xcassets; path = resources/AtlasData.xcassets; sourceTree = "<group>"; };
 		EA256A0E1CA88057008F720B /* TextureFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextureFrame.swift; path = src/private/TextureFrame.swift; sourceTree = SOURCE_ROOT; };
 		EA256A111CA88082008F720B /* TextureAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextureAtlas.swift; path = src/public/TextureAtlas.swift; sourceTree = SOURCE_ROOT; };
 		EA3236271C8B85A500DA7FCF /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = src/public/Tree.swift; sourceTree = SOURCE_ROOT; };
@@ -169,15 +160,12 @@
 		EAA99DEE1C41E57300CF3246 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = src/public/GameViewController.swift; sourceTree = SOURCE_ROOT; };
 		EAA99DF11C41E57C00CF3246 /* CameraNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraNode.swift; path = src/public/CameraNode.swift; sourceTree = SOURCE_ROOT; };
 		EAA99E241C41E65700CF3246 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = resources/Assets.xcassets; sourceTree = "<group>"; };
-		EAA99E271C41E65700CF3246 /* Test2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Test2.png; path = resources/Test2.png; sourceTree = "<group>"; };
 		EAA99E2C1C41E6A500CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/Test/Info.plist; sourceTree = "<group>"; };
 		EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = resources/Test/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAA99E2F1C41E6BC00CF3246 /* GameEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameEngine.h; path = resources/GEFramework/GameEngine.h; sourceTree = "<group>"; };
 		EAA99E301C41E6BC00CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/GEFramework/Info.plist; sourceTree = "<group>"; };
 		EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ShapeShaders.metal; path = src/shaders/ShapeShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
-		EACA166D1C9F1A8C00C9119A /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Test.xcassets; path = resources/Test.xcassets; sourceTree = "<group>"; };
-		EACA16701C9F391000C9119A /* Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey.png; path = resources/Grey.png; sourceTree = "<group>"; };
 		EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphCache.swift; path = src/private/GraphCache.swift; sourceTree = SOURCE_ROOT; };
 		EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpritePipeline.swift; path = src/private/SpritePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
@@ -312,11 +300,7 @@
 		EAA99E231C41E64700CF3246 /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				EA256A091CA865C7008F720B /* AtlasData.xcassets */,
-				EACA166D1C9F1A8C00C9119A /* Test.xcassets */,
 				EAA99E241C41E65700CF3246 /* Assets.xcassets */,
-				EAA99E271C41E65700CF3246 /* Test2.png */,
-				EACA16701C9F391000C9119A /* Grey.png */,
 				EA1ACBF21C9E5D7000878EE6 /* error.png */,
 				EAA99E2B1C41E68D00CF3246 /* Test */,
 				EAA99E2A1C41E68800CF3246 /* GEFramework */,
@@ -451,7 +435,6 @@
 			buildPhases = (
 				EA0363B51C31C85E00D283E3 /* Sources */,
 				EA0363B61C31C85E00D283E3 /* Frameworks */,
-				EA2569FC1CA73A6C008F720B /* Create Atlas */,
 				EA0363B71C31C85E00D283E3 /* Resources */,
 			);
 			buildRules = (
@@ -547,13 +530,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA256A0A1CA865C7008F720B /* AtlasData.xcassets in Resources */,
-				EACA16711C9F391000C9119A /* Grey.png in Resources */,
 				EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */,
-				EACA166E1C9F1A8C00C9119A /* Test.xcassets in Resources */,
 				EA1ACBF31C9E5D7000878EE6 /* error.png in Resources */,
 				EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */,
-				EAA99E291C41E66C00CF3246 /* Test2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,32 +547,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA2569FB1CA731A6008F720B /* Assets.xcassets in Resources */,
-				EAA99E281C41E66B00CF3246 /* Test2.png in Resources */,
 				EA1ACBF41C9E5D7000878EE6 /* error.png in Resources */,
-				EACA16721C9F391000C9119A /* Grey.png in Resources */,
-				EACA166F1C9F1A8C00C9119A /* Test.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		EA2569FC1CA73A6C008F720B /* Create Atlas */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Create Atlas";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${PROJECT_DIR}/resources/AtlasGen.py Assets.xcassets Test.xcassets AtlasData.xcassets";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EA0363B51C31C85E00D283E3 /* Sources */ = {

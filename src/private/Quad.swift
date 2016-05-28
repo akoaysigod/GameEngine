@@ -74,10 +74,10 @@ struct Quad {
     let tWidth = frame.tWidth
     let tHeight = frame.tHeight
 
-    let ll = Vertex(x: sWidth, y: 0, s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight)
-    let ul = Vertex(x: sWidth, y: sHeight, s: (x + sWidth) / tWidth, t: y / tHeight)
-    let ur = Vertex(x: 0, y: sHeight, s: x / tWidth, t: y / tHeight)
-    let lr = Vertex(x: 0, y: 0, s: x / tWidth, t: (y + sHeight) / tHeight)
+    let ll = Vertex(x: 0, y: sHeight, s: x / tWidth, t: (y + sHeight) / tHeight)
+    let ul = Vertex(x: 0, y: 0, s: x / tWidth, t: y / tHeight)
+    let ur = Vertex(x: sWidth, y: 0, s: (x + sWidth) / tWidth, t: y / tHeight)
+    let lr = Vertex(x: sWidth, y: sHeight, s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight)
 
     return Quad(vertices: [ll, ul, ur, lr])
   }

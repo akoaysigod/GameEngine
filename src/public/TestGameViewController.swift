@@ -62,9 +62,10 @@ final class TestGameViewController: UIViewController {
     {
       let s = [wall, floor, openDoor, stairsDown, stairsUp]
 
-      var nodes = [SpriteNode]()
-      for y in (0..<40) {
-        for x in (0..<40) {
+
+//      var nodes = [SpriteNode]()
+      for y in (0..<10) {
+        for x in (0..<10) {
           //let sp = ShapeNode(size: Size(width: 64.0, height: 64.0), color: .green)
           let t = s[Int(arc4random_uniform(UInt32(s.count)))]
           let sp = SpriteNode(texture: t)
