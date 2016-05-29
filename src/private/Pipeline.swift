@@ -11,8 +11,10 @@ import MetalKit
 import simd
 
 protocol Pipeline {
+  associatedtype NodeType
+
   var pipelineState: MTLRenderPipelineState { get }
-  var sampler: MTLSamplerState? { get }
+  func encode(encoder: MTLRenderCommandEncoder, nodes: [NodeType])
 }
 
 extension Pipeline {
@@ -61,9 +63,15 @@ extension Pipeline {
     vertexDescriptor.attributes[0].format = .Float4
     vertexDescriptor.attributes[0].offset = 0
     vertexDescriptor.attributes[0].bufferIndex = 0
+
     vertexDescriptor.attributes[1].format = .Float2
     vertexDescriptor.attributes[1].offset = sizeof(packed_float4)
     vertexDescriptor.attributes[1].bufferIndex = 0
+
+    vertexDescriptor.attributes[2].format = .Float4
+    vertexDescriptor.attributes[2].offset = sizeof(packed_float4) + sizeof(packed_float2)
+    vertexDescriptor.attributes[2].bufferIndex = 0 
+
     vertexDescriptor.layouts[0].stepFunction = .PerVertex
     vertexDescriptor.layouts[0].stride = strideof(Vertex)
 

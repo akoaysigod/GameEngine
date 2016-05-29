@@ -43,7 +43,7 @@ final class TextPipeline: Pipeline {
 }
 
 extension TextPipeline {
-  func encode<T: Renderable>(encoder: MTLRenderCommandEncoder, nodes: [T]) {
+  func encode(encoder: MTLRenderCommandEncoder, nodes: [TextNode]) {
     encoder.setRenderPipelineState(pipelineState)
 
     nodes.forEach { _ in

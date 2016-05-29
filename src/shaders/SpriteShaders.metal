@@ -13,12 +13,8 @@ using namespace metal;
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
   packed_float2 texCoord [[attribute(1)]];
+  packed_float4 color    [[attribute(2)]];
   packed_float2 pad;
-};
-
-struct InstanceUniforms {
-  float4x4 model;
-  float4 color;
 };
 
 struct Uniforms {
@@ -43,8 +39,6 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
   //InstanceUniforms instanceIn = instanceUniforms[iid];
 
   VertexOut outVertex;
-//add the view back to the position calculation
-  //outVertex.position = uniforms.projection * instanceIn.model * float4(vertIn.position);
   outVertex.position = uniforms.projection * uniforms.view * float4(vertIn.position);
   //outVertex.color = instanceIn.color;
   outVertex.color = float4(1,1,1,1);

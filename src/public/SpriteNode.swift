@@ -30,10 +30,10 @@ public class SpriteNode: Node, Renderable {
   public let isVisible = true
 
   var quad: Quad {
-    let q = texture.flatMap { Quad.spriteRect($0.frame) } ?? Quad.rect(size)
+    let q = texture.flatMap { Quad.spriteRect($0.frame, color: color) } ?? Quad.rect(size, color: color)
     let vertices = q.vertices.map { vertex -> Vertex in
       let position = transform * vertex.position
-      return Vertex(position: position, st: vertex.st)
+      return Vertex(position: position, st: vertex.st, color: color.vec4)
     }
     return Quad(vertices: vertices)
   }

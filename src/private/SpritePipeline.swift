@@ -60,10 +60,10 @@ final class SpritePipeline: Pipeline {
     if !vset {
       for (i, n) in nodes.enumerate() {
         memcpy(vBuffer.contents() + (i * n.quad.size), n.quad.vertices, n.quad.size)
-        let indicies = Quad.indicesData.map { UInt16(i * 4) + $0 }
-        memcpy(iBuffer.contents() + (i * Quad.indicesSize), indicies, Quad.indicesSize)
       }
       vset = true
+      let (i, c) = Quad.indices(nodes.count)
+      memcpy(iBuffer.contents(), i, c)
     }
     encoder.setVertexBuffer(vBuffer, offset: 0, atIndex: 0)
 

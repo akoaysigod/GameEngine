@@ -13,7 +13,8 @@ using namespace metal;
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
   packed_float2 texCoord [[attribute(1)]]; //just makes it a bit easier to program this, it's not really being used
-  packed_float2 pad; //WOW so much time wasted, the stride function on the VertexDescriptor does not honor the size? so add this padding 
+  packed_float4 color    [[attribute(2)]];
+  packed_float2 pad;
 };
 
 struct InstanceUniforms {
@@ -23,6 +24,7 @@ struct InstanceUniforms {
 
 struct Uniforms {
   float4x4 projection;
+  float4x4 view;
 };
 
 struct VertexOut {
@@ -40,7 +42,7 @@ vertex VertexOut colorVertex(ushort vid [[vertex_id]],
   InstanceUniforms instanceIn = instanceUniforms[iid];
 
   VertexOut outVertex;
-  outVertex.position = uniforms.projection * instanceIn.model * float4(vertIn.position);
+  outVertex.position = uniforms.projection * uniforms.view * instanceIn.model * float4(vertIn.position);
   outVertex.color = instanceIn.color;
 
   return outVertex;
