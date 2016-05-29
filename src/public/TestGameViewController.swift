@@ -45,16 +45,8 @@ final class TestGameViewController: UIViewController {
 
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown", "StairsUp"]
 
-
-//    if let environmentAtlas = TextureAtlas(named: "Environment"),
-//      let wall = environmentAtlas.textureNamed("Wall"),
-//      let floor = environmentAtlas.textureNamed("Floor"),
-//      let openDoor = environmentAtlas.textureNamed("OpenDoor"),
-//      let stairsDown = environmentAtlas.textureNamed("StairsDown"),
-//      let stairsUp = environmentAtlas.textureNamed("StairsUp")
-
-    if let environmentAtlas = TextureAtlas(imageNames: imageNames),
-      let wall = environmentAtlas.textureNamed("Wall"),
+    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames),
+      let wall = environmentAtlas["Wall"],
       let floor = environmentAtlas.textureNamed("Floor"),
       let openDoor = environmentAtlas.textureNamed("OpenDoor"),
       let stairsDown = environmentAtlas.textureNamed("StairsDown"),

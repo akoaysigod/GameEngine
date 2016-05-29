@@ -60,7 +60,7 @@ final class Renderer {
   }
 
   func render(nextRenderPass: NextRenderPass, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode]) {
-//    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
+    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
 
     let commandBuffer = commandQueue.commandBuffer()
     commandBuffer.label = "Frame command buffer"
@@ -68,8 +68,8 @@ final class Renderer {
     if let (renderPassDescriptor, drawable) = nextRenderPass() {
       let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
       encoder.setDepthStencilState(depthState)
-      //encoder.setFrontFacingWinding(.CounterClockwise)
-      //encoder.setCullMode(.Back)
+      encoder.setFrontFacingWinding(.CounterClockwise)
+      encoder.setCullMode(.Back)
 
       shapePipeline.encode(encoder, nodes: shapeNodes)
       for key in spriteNodes.keys {
@@ -79,9 +79,9 @@ final class Renderer {
 
       encoder.endEncoding()
 
-//      commandBuffer.addCompletedHandler { _ in
-//        dispatch_semaphore_signal(self.inflightSemaphore)
-//      }
+      commandBuffer.addCompletedHandler { _ in
+        dispatch_semaphore_signal(self.inflightSemaphore)
+      }
 
       commandBuffer.presentDrawable(drawable)
     }

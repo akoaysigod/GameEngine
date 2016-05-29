@@ -9,51 +9,60 @@
 import Foundation
 import UIKit
 
+enum AtlasCreation: ErrorType {
+  case OneImage
+  case MissingImage
+  case Dimensions
+  case TooLarge(String)
+}
 /**
  A `TextureAtlas` is an object that contains multiple textures to be loaded and used as one texture.
  
- Since this engine is tile based I wrote a rather inefficient texture packing script to be insert into the build phase. 
- It creates two new xcassets from an existing one that packs all the sprites together and creates the JSON data. 
+ This creates the atlas in memory as a `MTLTexture`.
  
- - seealso: ${PROJECT_DIR}/resources/README.md and `AtlasGen.py` in the same directory.
+ - note: Since packing stuff is hard this only works for images with the same dimensions.
  */
-public class TextureAtlas {
+public final class TextureAtlas {
   private let data: [String: Rect]
   private let texture: Texture
   public let textureNames: [String]
 
-  public init?(imageNames: [String]) {
+  /**
+   Given an array of images store in an xcasset this will create a new texture with all the textures in it.
+
+   - parameter imageNames: The name of the images to create the atlas from.
+
+   - returns: A new texture atlas.
+   */
+  public init(imageNames: [String]) throws {
+    //should probably refactor this a bit at some point
     guard imageNames.count > 1 else {
-      DLog("Kind of pointless to make an atlas with one image.")
-      return nil
+      throw AtlasCreation.OneImage
     }
 
     let images = imageNames.flatMap { Texture(named: $0) }
 
     guard images.count == imageNames.count else {
-      DLog("Missing image.")
-      return nil
+      throw AtlasCreation.MissingImage
     }
 
     guard let width = images.first?.width,
           let height = images.first?.height,
           let pixelFormat = images.first?.texture.pixelFormat where width == height else {
-        DLog("Images should have the same dimensions.")
-        return nil
+      throw AtlasCreation.Dimensions
     }
 
     let (rows, columns) = TextureAtlas.factor(images.count)
 
     guard rows * height < 4096 && columns * width < 4096 else {
-      DLog("Image probably too large. Depends on phone though probably should rethink this check.")
-      return nil
+      throw AtlasCreation.TooLarge("\(rows * height) by \(columns * width) is probably to large to load into the gpu.")
     }
     
     let tex = Texture.newTexture(columns * width, height: rows * height, pixelFormat: pixelFormat)
 
     var x = 0
     var y = 0
-    var data  = [String: Rect]() 
+    var data  = [String: Rect]()
     zip(images, imageNames).forEach { (image, name) in
       let r = MTLRegionMake2D(x, y, width, height)
 
@@ -99,6 +108,17 @@ public class TextureAtlas {
       return (div[0].0, div[0].1)
     }
     return factor(i + 1)
+  }
+
+  /**
+   "Unpack" a texture from the atlas with a given name.
+
+   - parameter name: The name of the texture to get.
+
+   - returns: A `Texture` "copy" from the atlas.
+   */
+  public subscript(name: String) -> Texture? {
+    return textureNamed(name)
   }
 
   /**
