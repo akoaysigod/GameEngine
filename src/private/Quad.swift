@@ -12,19 +12,19 @@ typealias Vertices = [Vertex]
 
 struct Vertex {
   let position: packed_float4
-  let st: packed_float2
   let color: packed_float4
+  let st: packed_float2
 
   init(x: Float, y: Float, z: Float = 0.0, w: Float = 1.0, s: Float = 0.0, t: Float = 0.0, color: packed_float4) {
     position = [x, y, z, w]
-    st = [s, t]
     self.color = color
+    st = [s, t]
   }
 
   init(position: packed_float4, st: packed_float2, color: packed_float4) {
     self.position = position
-    self.st = st
     self.color = color
+    self.st = st
   }
 }
 

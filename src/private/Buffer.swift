@@ -15,8 +15,12 @@ final class Buffer { //might change this to a protocol
     buffer = device.device.newBufferWithLength(length, options: .CPUCacheModeDefaultCache)
   }
 
-  func update(data: UnsafeMutablePointer<Void>, size: Int, offset: Int = 0) {
-    //does this need to be released? 
+  func update<T>(data: [T], size: Int, offset: Int = 0) {
+    #if DEBUG
+      if sizeof(T) != strideof(T) {
+        DLog("Possibly wrong sized data, \(T.self)")
+      }
+    #endif
     memcpy(buffer.contents() + offset, data, size)
   }
 }

@@ -140,7 +140,7 @@ final class TestGameViewController: UIViewController {
     colorRect2.position = Point(x: -128.0, y: -64.0)
     //colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
     colorRect2.zPosition = 0
-    //scene.addNode(colorRect2)
+    scene.addNode(colorRect2)
 
 //    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
 //    colorRect3.name = "blue rect"

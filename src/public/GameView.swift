@@ -29,6 +29,7 @@ public class GameView: UIView {
   public var clearColor: Color = .black
   public var paused = true
 
+  private(set) var bufferManager: BufferManager!
   private var renderer: Renderer!
   private var renderPassQueue: RenderPassQueue!
 
@@ -54,8 +55,6 @@ public class GameView: UIView {
   }
 
   public func presentScene(scene: Scene) {
-
-
     currentScene = scene
     scene.view = self
     scene.didMoveToView(self)
@@ -95,9 +94,9 @@ extension GameView {
     let height = Int(size.height)
     renderPassQueue = RenderPassQueue(depthTexture: RenderPassQueue.createDepthTexture(width, height: height, device: device))
 
-
     projection = Projection(size: size.size)
-    renderer = Renderer(device: device, projection: projection.projection)
+    bufferManager = BufferManager(projection: projection.projection)
+    renderer = Renderer(device: device, projection: projection.projection, bufferManager: bufferManager)
   }
 }
 

@@ -12,8 +12,8 @@ using namespace metal;
 
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
-  packed_float2 texCoord [[attribute(1)]];
   packed_float4 color    [[attribute(2)]];
+  packed_float2 texCoord [[attribute(1)]];
   packed_float2 pad;
 };
 
@@ -29,7 +29,6 @@ struct VertexOut {
 };
 
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
-                              ushort iid [[instance_id]],
                               const device VertexIn* vert [[buffer(0)]],
                               constant Uniforms& uniforms [[buffer(2)]])
 {

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
-		EA0964B91CBAD23300C03BA9 /* VertexIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964B81CBAD23300C03BA9 /* VertexIn.swift */; };
-		EA0964BA1CBAD23300C03BA9 /* VertexIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964B81CBAD23300C03BA9 /* VertexIn.swift */; };
 		EA0964C91CBAF05100C03BA9 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C81CBAF05100C03BA9 /* Uniforms.swift */; };
 		EA0964CA1CBAF05100C03BA9 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C81CBAF05100C03BA9 /* Uniforms.swift */; };
 		EA1993E21CD56239009DC869 /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1993E11CD56239009DC869 /* Easing.swift */; };
@@ -32,8 +30,6 @@
 		EA6B126A1CF13DB1004E4FCB /* ShapePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */; };
 		EA6B126C1CF13DDA004E4FCB /* TextPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B126B1CF13DDA004E4FCB /* TextPipeline.swift */; };
 		EA6B126D1CF13DDA004E4FCB /* TextPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B126B1CF13DDA004E4FCB /* TextPipeline.swift */; };
-		EA6B126F1CF13E74004E4FCB /* VertexBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B126E1CF13E74004E4FCB /* VertexBuffer.swift */; };
-		EA6B12701CF13E74004E4FCB /* VertexBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B126E1CF13E74004E4FCB /* VertexBuffer.swift */; };
 		EA6C2A121CF22F8600F99E1D /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C2A111CF22F8600F99E1D /* Buffer.swift */; };
 		EA6C2A131CF22F8600F99E1D /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C2A111CF22F8600F99E1D /* Buffer.swift */; };
 		EA6C2A151CF2378900F99E1D /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C2A141CF2378900F99E1D /* Projection.swift */; };
@@ -76,6 +72,8 @@
 		EAA99E3A1C41E80E00CF3246 /* ShapeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */; };
 		EAA99E3B1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
+		EABDF7471CFB8C0E00F555BF /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7461CFB8C0E00F555BF /* BufferManager.swift */; };
+		EABDF7481CFB8C0E00F555BF /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7461CFB8C0E00F555BF /* BufferManager.swift */; };
 		EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522671CF128D400A9A6D3 /* SpritePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */; };
@@ -126,7 +124,6 @@
 		EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameEngine.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA0964B81CBAD23300C03BA9 /* VertexIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VertexIn.swift; path = src/private/VertexIn.swift; sourceTree = SOURCE_ROOT; };
 		EA0964C81CBAF05100C03BA9 /* Uniforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Uniforms.swift; path = src/private/Uniforms.swift; sourceTree = SOURCE_ROOT; };
 		EA1993E11CD56239009DC869 /* Easing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Easing.swift; path = src/public/Easing.swift; sourceTree = SOURCE_ROOT; };
 		EA1994261CD57B4F009DC869 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = src/public/Color.swift; sourceTree = SOURCE_ROOT; };
@@ -138,7 +135,6 @@
 		EA3F2D2B1CE79A7200095512 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtension.swift; path = src/extensions/ArrayExtension.swift; sourceTree = SOURCE_ROOT; };
 		EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapePipeline.swift; path = src/private/ShapePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EA6B126B1CF13DDA004E4FCB /* TextPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextPipeline.swift; path = src/private/TextPipeline.swift; sourceTree = SOURCE_ROOT; };
-		EA6B126E1CF13E74004E4FCB /* VertexBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VertexBuffer.swift; path = src/private/VertexBuffer.swift; sourceTree = SOURCE_ROOT; };
 		EA6C2A111CF22F8600F99E1D /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Buffer.swift; path = src/private/Buffer.swift; sourceTree = SOURCE_ROOT; };
 		EA6C2A141CF2378900F99E1D /* Projection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Projection.swift; path = src/private/Projection.swift; sourceTree = SOURCE_ROOT; };
 		EA72451B1C8CFF6E0059B068 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = src/private/Device.swift; sourceTree = SOURCE_ROOT; };
@@ -166,6 +162,7 @@
 		EAA99E301C41E6BC00CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/GEFramework/Info.plist; sourceTree = "<group>"; };
 		EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ShapeShaders.metal; path = src/shaders/ShapeShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
+		EABDF7461CFB8C0E00F555BF /* BufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferManager.swift; path = src/private/BufferManager.swift; sourceTree = SOURCE_ROOT; };
 		EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphCache.swift; path = src/private/GraphCache.swift; sourceTree = SOURCE_ROOT; };
 		EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpritePipeline.swift; path = src/private/SpritePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
@@ -267,7 +264,6 @@
 		EA256A141CA88089008F720B /* Rendered */ = {
 			isa = PBXGroup;
 			children = (
-				EA6B126E1CF13E74004E4FCB /* VertexBuffer.swift */,
 				EAA99DDE1C41E52700CF3246 /* ShapeNode.swift */,
 				EAA99DE01C41E52700CF3246 /* SpriteNode.swift */,
 				EA9B1E801C727625000FFDF7 /* TextNode.swift */,
@@ -343,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				EA6C2A111CF22F8600F99E1D /* Buffer.swift */,
+				EABDF7461CFB8C0E00F555BF /* BufferManager.swift */,
 				EA72451B1C8CFF6E0059B068 /* Device.swift */,
 				EAA99DC91C41E4F100CF3246 /* Pipeline.swift */,
 				EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */,
@@ -372,7 +369,6 @@
 			children = (
 				EAF7BB001C8CC85700258C37 /* Quad.swift */,
 				EA256A0E1CA88057008F720B /* TextureFrame.swift */,
-				EA0964B81CBAD23300C03BA9 /* VertexIn.swift */,
 				EA0964C81CBAF05100C03BA9 /* Uniforms.swift */,
 			);
 			name = DataStructures;
@@ -567,7 +563,7 @@
 				EA6B12691CF13DB1004E4FCB /* ShapePipeline.swift in Sources */,
 				EA0964C91CBAF05100C03BA9 /* Uniforms.swift in Sources */,
 				EA256A0F1CA88057008F720B /* TextureFrame.swift in Sources */,
-				EA0964B91CBAD23300C03BA9 /* VertexIn.swift in Sources */,
+				EABDF7471CFB8C0E00F555BF /* BufferManager.swift in Sources */,
 				EAEF9CD01CD6886C0059832D /* Rect.swift in Sources */,
 				EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */,
 				EA9B1E7B1C724C3D000FFDF7 /* TextShaders.metal in Sources */,
@@ -582,7 +578,6 @@
 				EA6B126C1CF13DDA004E4FCB /* TextPipeline.swift in Sources */,
 				EA6C2A151CF2378900F99E1D /* Projection.swift in Sources */,
 				EAE75E371C42D091001EB176 /* Scene.swift in Sources */,
-				EA6B126F1CF13E74004E4FCB /* VertexBuffer.swift in Sources */,
 				EAEF9CCA1CD6811A0059832D /* Size.swift in Sources */,
 				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */,
@@ -665,11 +660,10 @@
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EAE6ED4C1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
-				EA6B12701CF13E74004E4FCB /* VertexBuffer.swift in Sources */,
 				EAA99DE61C41E52700CF3246 /* SpriteNode.swift in Sources */,
 				EAD522681CF128D400A9A6D3 /* SpritePipeline.swift in Sources */,
 				EAA99DCD1C41E4F100CF3246 /* Pipeline.swift in Sources */,
-				EA0964BA1CBAD23300C03BA9 /* VertexIn.swift in Sources */,
+				EABDF7481CFB8C0E00F555BF /* BufferManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

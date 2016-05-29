@@ -11,7 +11,7 @@ import simd
 
 final class SpritePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
-  let sampler: MTLSamplerState?
+  private let sampler: MTLSamplerState?
 
   private let indexBuffer: Buffer
   private let uniformBuffer: Buffer
@@ -68,8 +68,8 @@ final class SpritePipeline: Pipeline {
     encoder.setVertexBuffer(vBuffer, offset: 0, atIndex: 0)
 
 
-    var view = node.camera!.view
-    uniformBuffer.update(&view, size: sizeof(Mat4), offset: sizeof(Mat4))
+    let view = node.camera!.view
+    uniformBuffer.update([view], size: sizeof(Mat4), offset: sizeof(Mat4))
     encoder.setVertexBuffer(uniformBuffer.buffer, offset: 0, atIndex: 2)
 
     encoder.setFragmentSamplerState(sampler, atIndex: 0)

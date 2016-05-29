@@ -23,7 +23,7 @@ final class Renderer {
   private let vertexBuffer: Buffer
   private let uiVertexBuffer: Buffer!
 
-  init(device: MTLDevice, projection: Mat4) {
+  init(device: MTLDevice, projection: Mat4, bufferManager: BufferManager) {
     //not sure where to set this up or if I even want to do it this way
     Fonts.cache.device = device
     //-----------------------------------------------------------------
@@ -34,12 +34,11 @@ final class Renderer {
     //descriptorQueue = RenderPassQueue(view: view)
 
     uniformBuffer = Buffer(length: sizeof(Uniforms))
-    var projection = projection
-    uniformBuffer.update(&projection, size: sizeof(Uniforms))
+    uniformBuffer.update([projection], size: sizeof(Uniforms))
 
     let indexBuffer = Buffer(length: Quad.indicesSize)
-    var indicesData = Quad.indicesData
-    indexBuffer.update(&indicesData, size: Quad.indicesSize)
+    let indicesData = Quad.indicesData
+    indexBuffer.update(indicesData, size: Quad.indicesSize)
 
     vertexBuffer = Buffer(length: sizeof(Vertex))
     
@@ -55,8 +54,7 @@ final class Renderer {
   }
 
   func updateProjection(projection: Mat4) {
-    var projection = projection
-    uniformBuffer.update(&projection, size: sizeof(Mat4))
+    uniformBuffer.update([projection], size: sizeof(Mat4))
   }
 
   func render(nextRenderPass: NextRenderPass, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode]) {
