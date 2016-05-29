@@ -31,17 +31,13 @@ struct VertexOut {
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
                               ushort iid [[instance_id]],
                               const device VertexIn* vert [[buffer(0)]],
-                              //const device VertexIn* texC [[buffer(3)]],
-                              //constant InstanceUniforms* instanceUniforms [[buffer(1)]],
                               constant Uniforms& uniforms [[buffer(2)]])
 {
   VertexIn vertIn = vert[vid];
-  //InstanceUniforms instanceIn = instanceUniforms[iid];
 
   VertexOut outVertex;
   outVertex.position = uniforms.projection * uniforms.view * float4(vertIn.position);
-  //outVertex.color = instanceIn.color;
-  outVertex.color = float4(1,1,1,1);
+  outVertex.color = vertIn.color;
   outVertex.texCoord = vertIn.texCoord;
 
   return outVertex;

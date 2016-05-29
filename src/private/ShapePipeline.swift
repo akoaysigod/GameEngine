@@ -46,7 +46,7 @@ extension ShapePipeline {
     encoder.setVertexBytes(node.quad.vertices, length: node.quad.size, atIndex: 0)
 
     nodes.enumerate().forEach { (i, node) in
-      var instance = InstanceUniforms(model: node.model, color: node.color.vec4)
+      var instance = InstanceUniforms(model: node.model)
       instanceBuffer.update(&instance, size: sizeof(InstanceUniforms), offset: sizeof(InstanceUniforms) * i)
     }
     encoder.setVertexBuffer(instanceBuffer.buffer, offset: 0, atIndex: 1)

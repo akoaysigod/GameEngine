@@ -15,5 +15,4 @@ struct Uniforms {
 
 struct InstanceUniforms {
   let model: Mat4
-  let color: Vec4
 }
