@@ -133,7 +133,7 @@ final class TestGameViewController: UIViewController {
     let forever = Action.repeatForever(action)
     //colorRect.runAction(forever)
 
-    //scene.addUINode(colorRect)
+    scene.addUINode(colorRect)
 
     let colorRect2 = ShapeNode(width: 64, height: 64, color: .red)
     colorRect2.name = "Red rect"

@@ -24,6 +24,7 @@ public final class CameraNode: Node {
     return .identity
   }
   private(set) var view: Mat4 = .identity
+  private(set) var inverseView: Mat4 = .identity
 
   public var scale: Float {
     return zoom
@@ -63,5 +64,14 @@ public final class CameraNode: Node {
 
   override func updateTransform() {
     view = Mat4.translate(position.x + (width * anchorPoint.x), position.y + (height * anchorPoint.y)) * Mat4.scale(zoom, zoom)
+    inverseView = Mat4.translate(-1 * (position.x), -1 * (position.y)) * Mat4.scale(1, 1)
+
+    //need to think of a better way to update
+    //this isn't terrible
+    nodes.forEach {
+      if $0.isUINode {
+        $0.updateTransform()
+      }
+    }
   }
 }

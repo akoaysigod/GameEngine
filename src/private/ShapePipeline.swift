@@ -8,6 +8,11 @@
 
 import Metal
 
+private struct ShapeUniforms {
+  let model: Mat4
+  let color: Vec4
+}
+
 final class ShapePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
 
@@ -44,7 +49,7 @@ extension ShapePipeline {
     encoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, atIndex: 0)
 
     nodes.enumerate().forEach { (i, node) in
-      instanceBuffer.update([node.model], size: sizeof(Mat4), offset: sizeof(Mat4) * i)
+      instanceBuffer.update([ShapeUniforms(model: node.model, color: node.color.vec4)], size: sizeof(ShapeUniforms), offset: sizeof(ShapeUniforms) * i)
     }
     encoder.setVertexBuffer(instanceBuffer.buffer, offset: 0, atIndex: 1)
 

@@ -37,7 +37,11 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
   public var scene: Scene? = nil
 
   var index: Int = 0
-  var isUINode = false
+  var isUINode = false {
+    didSet {
+      updateTransform()
+    }
+  }
   
   public var size: Size {
     didSet {
@@ -218,7 +222,12 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     let rotation = Mat4.rotate(-1 * self.rotation)
     let rotationTranslate = Mat4.translate(xRot, yRot, z)
 
-    transform = worldTranslate * rotation * rotationTranslate * scale
+    var view = Mat4.identity
+    if let inverseView = camera?.inverseView where isUINode {
+      view = inverseView
+    }
+
+    transform = view * worldTranslate * rotation * rotationTranslate * scale
   }
 }
 

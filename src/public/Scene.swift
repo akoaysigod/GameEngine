@@ -31,7 +31,6 @@ public class Scene {
 
   public private(set) var camera: CameraNode
   let tileSize: Int
-  public private(set) var uiCamera: CameraNode
 
   public var allNodes: Nodes {
     return graphCache.allNodes
@@ -50,10 +49,8 @@ public class Scene {
     self.tileSize = tileSize
 
     camera = CameraNode(size: size)
-    uiCamera = CameraNode(size: size)
 
     camera.scene = self
-    uiCamera.scene = self
   }
 
   /**
@@ -77,16 +74,7 @@ public class Scene {
 
   public func addUINode(node: Node) {
     node.isUINode = true
-
-    uiCamera.addNode(node)
-
-    graphCache.addNode(node)
-  }
-
-  public func removeUINode(node: Node) {
-    if let node = uiCamera.removeNode(node) {
-      graphCache.addNode(node)
-    }
+    addNode(node)
   }
 
   func updateNode(quad: Quad, index: Int, key: Int) {
@@ -151,6 +139,5 @@ extension Scene {
 extension Scene {
   func updateCameras(size: Size) {
     camera.updateSize(size)
-    uiCamera.updateSize(size)
   }
 }

@@ -19,6 +19,7 @@ struct VertexIn {
 
 struct InstanceUniforms {
   float4x4 model;
+  float4 color;
 };
 
 struct Uniforms {
@@ -42,7 +43,7 @@ vertex VertexOut colorVertex(ushort vid [[vertex_id]],
 
   VertexOut outVertex;
   outVertex.position = uniforms.projection * uniforms.view * instanceIn.model * float4(vertIn.position);
-  outVertex.color = vertIn.color;
+  outVertex.color = instanceIn.color;
 
   return outVertex;
 }
