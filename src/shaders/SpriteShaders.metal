@@ -44,8 +44,10 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
 
 fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
                                texture2d<float> tex2D [[texture(0)]],
+                               texture2d<float> texLight [[texture(1)]],
                                sampler sampler2D [[sampler(0)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
-  return color * interpolated.color;
+  float4 light = texLight.sample(sampler2D, interpolated.texCoord);
+  return color * light * interpolated.color;
 }

@@ -44,13 +44,19 @@ final class TestGameViewController: UIViewController {
     view.presentScene(scene)
 
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown", "StairsUp"]
+    //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
-    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames),
+    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames, createLightMap: true),
       let wall = environmentAtlas["Wall"],
-      let floor = environmentAtlas.textureNamed("Floor"),
-      let openDoor = environmentAtlas.textureNamed("OpenDoor"),
-      let stairsDown = environmentAtlas.textureNamed("StairsDown"),
-      let stairsUp = environmentAtlas.textureNamed("StairsUp")
+      let floor = environmentAtlas["Floor"],
+      let openDoor = environmentAtlas["OpenDoor"],
+      let stairsDown = environmentAtlas["StairsDown"],
+      let stairsUp = environmentAtlas["StairsUp"]
+//      let wall = environmentAtlas["AngelBlue"],
+//      let floor = environmentAtlas["AngelBrown"],
+//      let openDoor = environmentAtlas["AngelGrey"],
+//      let stairsDown = environmentAtlas["AngelOrange"],
+//      let stairsUp = environmentAtlas["AngelPurple"]
     {
       let s = [wall, floor, openDoor, stairsDown, stairsUp]
 
@@ -58,7 +64,6 @@ final class TestGameViewController: UIViewController {
 //      var nodes = [SpriteNode]()
       for y in (0..<10) {
         for x in (0..<10) {
-          //let sp = ShapeNode(size: Size(width: 64.0, height: 64.0), color: .green)
           let t = s[Int(arc4random_uniform(UInt32(s.count)))]
           let sp = SpriteNode(texture: t)
           let x = sp.size.width * Float(x)
@@ -68,6 +73,7 @@ final class TestGameViewController: UIViewController {
           scene.addNode(sp)
         }
       }
+
 
 //      (0...155).forEach { _ in
 //        let sp = SpriteNode(texture: wall)

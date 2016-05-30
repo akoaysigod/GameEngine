@@ -23,6 +23,7 @@ public func ==(rhs: Texture, lhs: Texture) -> Bool {
  */
 public class Texture: Hashable, Equatable {
   let texture: MTLTexture
+  let lightMapTexture: MTLTexture?
 
   // until I can figure out a nicer way to do this
   // I'm leaving this exposed so I can treat all atlases as if they're the same texture
@@ -55,8 +56,9 @@ public class Texture: Hashable, Equatable {
 
    - returns: A new instance of `Texture`.
    */
-  init(texture: MTLTexture, callback: MTKTextureLoaderCallback? = nil) {
+  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, callback: MTKTextureLoaderCallback? = nil) {
     self.texture = texture
+    self.lightMapTexture = lightMapTexture
     self.callback = callback
 
     self.width = texture.width
@@ -76,8 +78,9 @@ public class Texture: Hashable, Equatable {
 
    - returns: A new/"copy" of `Texture`.
    */
-  init(texture: MTLTexture, frame: TextureFrame) {
+  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, frame: TextureFrame) {
     self.texture = texture
+    self.lightMapTexture = lightMapTexture
     self.width = Int(frame.sWidth)
     self.height = Int(frame.sHeight)
     self.frame = frame
@@ -104,13 +107,13 @@ public class Texture: Hashable, Equatable {
 
     guard let image = UIImage(named: named) else {
       DLog("\(named) not found")
-      self.init(texture: Texture.errorTexture)
+      self.init(texture: Texture.errorTexture, lightMapTexture: nil)
       return
     }
 
     guard let data = UIImagePNGRepresentation(image) else {
       DLog("\(named) could not be turned into NSData")
-      self.init(texture: Texture.errorTexture)
+      self.init(texture: Texture.errorTexture, lightMapTexture: nil)
       return
     }
 
@@ -122,7 +125,7 @@ public class Texture: Hashable, Equatable {
       texture = Texture.errorTexture
     }
 
-    self.init(texture: texture)
+    self.init(texture: texture, lightMapTexture: nil)
   }
 }
 

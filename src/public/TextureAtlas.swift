@@ -25,6 +25,7 @@ enum AtlasCreation: ErrorType {
 public final class TextureAtlas {
   private let data: [String: Rect]
   private let texture: Texture
+  private let lightMapTexture: Texture?
   public let textureNames: [String]
 
   /**
@@ -34,7 +35,7 @@ public final class TextureAtlas {
 
    - returns: A new texture atlas.
    */
-  public init(imageNames: [String]) throws {
+  public init(imageNames: [String], createLightMap: Bool = false) throws {
     //should probably refactor this a bit at some point
     guard imageNames.count > 1 else {
       throw AtlasCreation.OneImage
@@ -85,6 +86,8 @@ public final class TextureAtlas {
     texture = Texture(texture: tex)
     textureNames = imageNames
     self.data = data
+
+    lightMapTexture = TextureAtlas.createLightMap(createLightMap, texture: texture)
   }
 
   private static func factor(i: Int) -> (rows: Int, columns: Int) {
@@ -108,6 +111,13 @@ public final class TextureAtlas {
       return (div[0].0, div[0].1)
     }
     return factor(i + 1)
+  }
+
+  private static func createLightMap(shouldCreateLightMap: Bool, texture: Texture) -> Texture? {
+    guard shouldCreateLightMap else { return nil }
+
+    let renderer = ComputeRenderer(srcTexture: texture)
+    return renderer.generateTexture()
   }
 
   /**
@@ -140,7 +150,7 @@ public final class TextureAtlas {
                              sHeight: Int(rect.height),
                              tWidth: texture.width,
                              tHeight: texture.height)
-    let ret = Texture(texture: texture.texture, frame: frame)
+    let ret = Texture(texture: texture.texture, lightMapTexture: lightMapTexture?.texture, frame: frame)
     ret.uuid = texture.uuid
     return ret
   }

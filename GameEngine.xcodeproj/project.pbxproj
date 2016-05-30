@@ -74,8 +74,12 @@
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EABDF7471CFB8C0E00F555BF /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7461CFB8C0E00F555BF /* BufferManager.swift */; };
 		EABDF7481CFB8C0E00F555BF /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7461CFB8C0E00F555BF /* BufferManager.swift */; };
-		EABDF74A1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */; };
-		EABDF74B1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */; };
+		EABDF74A1CFCB2DA00F555BF /* LightTexturePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7491CFCB2DA00F555BF /* LightTexturePipeline.swift */; };
+		EABDF74B1CFCB2DA00F555BF /* LightTexturePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7491CFCB2DA00F555BF /* LightTexturePipeline.swift */; };
+		EABDF74D1CFCB96400F555BF /* ComputeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF74C1CFCB96400F555BF /* ComputeRenderer.swift */; };
+		EABDF74E1CFCB96400F555BF /* ComputeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF74C1CFCB96400F555BF /* ComputeRenderer.swift */; };
+		EABDF7521CFCBEAB00F555BF /* BumpShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7511CFCBEAB00F555BF /* BumpShader.metal */; };
+		EABDF7531CFCBEAB00F555BF /* BumpShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7511CFCBEAB00F555BF /* BumpShader.metal */; };
 		EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522671CF128D400A9A6D3 /* SpritePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */; };
@@ -165,7 +169,9 @@
 		EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ShapeShaders.metal; path = src/shaders/ShapeShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EABDF7461CFB8C0E00F555BF /* BufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferManager.swift; path = src/private/BufferManager.swift; sourceTree = SOURCE_ROOT; };
-		EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightTextureMap.swift; path = src/private/LightTextureMap.swift; sourceTree = SOURCE_ROOT; };
+		EABDF7491CFCB2DA00F555BF /* LightTexturePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightTexturePipeline.swift; path = src/private/LightTexturePipeline.swift; sourceTree = SOURCE_ROOT; };
+		EABDF74C1CFCB96400F555BF /* ComputeRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComputeRenderer.swift; path = src/private/ComputeRenderer.swift; sourceTree = SOURCE_ROOT; };
+		EABDF7511CFCBEAB00F555BF /* BumpShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = BumpShader.metal; path = src/shaders/BumpShader.metal; sourceTree = SOURCE_ROOT; };
 		EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphCache.swift; path = src/private/GraphCache.swift; sourceTree = SOURCE_ROOT; };
 		EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpritePipeline.swift; path = src/private/SpritePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
@@ -288,9 +294,10 @@
 		EAA99DE71C41E53800CF3246 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */,
+				EABDF7511CFCBEAB00F555BF /* BumpShader.metal */,
 				EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */,
 				EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */,
+				EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */,
 			);
 			name = Shaders;
 			path = MKTest;
@@ -325,6 +332,27 @@
 			name = Test;
 			sourceTree = "<group>";
 		};
+		EABDF74F1CFCB96800F555BF /* Compute */ = {
+			isa = PBXGroup;
+			children = (
+				EABDF74C1CFCB96400F555BF /* ComputeRenderer.swift */,
+				EABDF7491CFCB2DA00F555BF /* LightTexturePipeline.swift */,
+			);
+			name = Compute;
+			sourceTree = "<group>";
+		};
+		EABDF7501CFCB97B00F555BF /* RenderPipelines */ = {
+			isa = PBXGroup;
+			children = (
+				EAA99DCA1C41E4F100CF3246 /* Renderer.swift */,
+				EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */,
+				EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */,
+				EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */,
+				EA6B126B1CF13DDA004E4FCB /* TextPipeline.swift */,
+			);
+			name = RenderPipelines;
+			sourceTree = "<group>";
+		};
 		EAC6405A1C346D6B00B6AE68 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,16 +369,12 @@
 		EAC6405B1C34708700B6AE68 /* RenderPipelines */ = {
 			isa = PBXGroup;
 			children = (
-				EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */,
+				EABDF7501CFCB97B00F555BF /* RenderPipelines */,
+				EABDF74F1CFCB96800F555BF /* Compute */,
 				EA6C2A111CF22F8600F99E1D /* Buffer.swift */,
 				EABDF7461CFB8C0E00F555BF /* BufferManager.swift */,
 				EA72451B1C8CFF6E0059B068 /* Device.swift */,
 				EAA99DC91C41E4F100CF3246 /* Pipeline.swift */,
-				EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */,
-				EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */,
-				EA6B126B1CF13DDA004E4FCB /* TextPipeline.swift */,
-				EAA99DCA1C41E4F100CF3246 /* Renderer.swift */,
-				EAA99DCB1C41E4F100CF3246 /* RenderPassQueue.swift */,
 			);
 			name = RenderPipelines;
 			sourceTree = "<group>";
@@ -578,8 +602,9 @@
 				EAA99DCC1C41E4F100CF3246 /* Pipeline.swift in Sources */,
 				EA1993E21CD56239009DC869 /* Easing.swift in Sources */,
 				EAE6ED4B1CCBC1330046A5BE /* Math.swift in Sources */,
+				EABDF74D1CFCB96400F555BF /* ComputeRenderer.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
-				EABDF74A1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */,
+				EABDF74A1CFCB2DA00F555BF /* LightTexturePipeline.swift in Sources */,
 				EA6B126C1CF13DDA004E4FCB /* TextPipeline.swift in Sources */,
 				EA6C2A151CF2378900F99E1D /* Projection.swift in Sources */,
 				EAE75E371C42D091001EB176 /* Scene.swift in Sources */,
@@ -604,6 +629,7 @@
 				EAE6ED471CCBC1330046A5BE /* Mat3.swift in Sources */,
 				EAE6ED491CCBC1330046A5BE /* Mat4.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* CameraNode.swift in Sources */,
+				EABDF7521CFCBEAB00F555BF /* BumpShader.metal in Sources */,
 				EAA99E391C41E80E00CF3246 /* ShapeShaders.metal in Sources */,
 				EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EAA99DE31C41E52700CF3246 /* Node.swift in Sources */,
@@ -639,13 +665,14 @@
 				EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */,
 				EAA99DE41C41E52700CF3246 /* Node.swift in Sources */,
 				EAA99E3A1C41E80E00CF3246 /* ShapeShaders.metal in Sources */,
+				EABDF74E1CFCB96400F555BF /* ComputeRenderer.swift in Sources */,
 				EA6B126A1CF13DB1004E4FCB /* ShapePipeline.swift in Sources */,
 				EA6C2A161CF2378900F99E1D /* Projection.swift in Sources */,
 				EAA99DBE1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
 				EA8C82C71CDE61BE00D1E59F /* Updater.swift in Sources */,
 				EAEF9CCE1CD684D20059832D /* Point.swift in Sources */,
 				EA1994281CD57B4F009DC869 /* Color.swift in Sources */,
-				EABDF74B1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */,
+				EABDF74B1CFCB2DA00F555BF /* LightTexturePipeline.swift in Sources */,
 				EAE75E381C42D091001EB176 /* Scene.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* CameraNode.swift in Sources */,
 				EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */,
@@ -661,6 +688,7 @@
 				EA256A101CA88057008F720B /* TextureFrame.swift in Sources */,
 				EA6C2A131CF22F8600F99E1D /* Buffer.swift in Sources */,
 				EA256A131CA88082008F720B /* TextureAtlas.swift in Sources */,
+				EABDF7531CFCBEAB00F555BF /* BumpShader.metal in Sources */,
 				EAFD76981C836BF100ABDC50 /* NodeGeometry.swift in Sources */,
 				EA6B126D1CF13DDA004E4FCB /* TextPipeline.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
