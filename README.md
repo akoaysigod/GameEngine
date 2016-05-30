@@ -1,33 +1,23 @@
 # GameEngine
-A rather creatively named 2D game engine written in Swift using the Metal API.
+A rather creatively named 2D game engine written in Swift using the Metal API. I pretty much only make tile based games and this engine is very geared towards doing that efficiently.
 
-It currently only works on iOS but I have plans to extend it to tvOS and OSX at some point.
-
-It's based off of SpriteKit so if you know that API this should be pretty straight forward to use. This will end up working slightly different as I'm currently rewriting it to be much more specific to tiled graphics
-as I think I can get the performance to improve by a lot rather than trying to make a more general purpose game engine.
-
-Part of the motivation to create this engine was to (learn how to make engines and) have a game engine that had access to the lower level internals of the engine but still have a working framework that didn't require
-any lower level programming.
-
-If you are feeling adventurous or want to learn a little more about rendering stuff using Metal this will eventually have enough exposed to create a custom pipeline without needing to know enough background math
-or knowledge of the complete inner workings of Metal.
+It currently only works on iOS but I have plans to extend it to tvOS and OSX at some point. (and maybe Linux via Vulkan)
 
 # current state
-This is very close to being ready to go. It really just needs more testing and making sure the rendering makes sense and is efficient
+This is very close to being ready to go. It could technically be used now.
 
-Documentation can be [here](https://akoaysigod.github.io/GameEngine) a good portion of the public API has been documented but basically none of the rendering engine has been documented yet.
-
-It's also very much so designed around tile sprites at the moment. See this [README.md](resources/README.md) for the relavent information about how that's currently implemented. I'd definitely be ok with removing this restriction.
-Currently, the `TextureAtlas` classes is tied to this but I'd be totally ok with someone changing it to support other formats!
+Documentation can be [here](https://akoaysigod.github.io/GameEngine) a good portion of the public API has been documented.
 
 ## A few things left to do are:
-Main thing now is to get this as performant as possible.
-
 - texture animation
-- ensure that the rendering engine is as performant as it can be
-  - I'm mostly worried about how textures are being loaded at the moment but I'm sure there are other things I don't fully understand
 - fix the data structures for font rendering
 - fix up the text rendering shaders to have more options
+- fix up text rendering in general, can probably move it over to the sprite pipeline.
+- lighting system, probably will do next
+- port to Vulkan, someday
+- ensure that the rendering engine is as performant as it can be*
+
+* I'm pretty sure this is as fast as it'll ever be. It seems rather slow or maybe it's because I'm kind of new to this. I can render 100 textured quads at ~15% CPU or 1.1ms CPU/GPU frame time. At 10000 I start to lose FPS. That is way more than I'll ever need for the game I'm making.
 
 # Should you use it?
 Probably not. I was having some performance issues using SpriteKit and I think (hope) this will address those issues but I don't know what I'm doing really. This will also never be as robust as SpriteKit as I have fairly specific needs.
