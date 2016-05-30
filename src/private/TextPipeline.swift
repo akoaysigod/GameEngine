@@ -8,7 +8,7 @@
 
 import Metal
 
-final class TextPipeline: Pipeline {
+final class TextPipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
 

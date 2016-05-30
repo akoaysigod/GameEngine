@@ -13,7 +13,7 @@ private struct ShapeUniforms {
   let color: Vec4
 }
 
-final class ShapePipeline: Pipeline {
+final class ShapePipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
 
   private var didSetBuffer = false
@@ -24,7 +24,7 @@ final class ShapePipeline: Pipeline {
     static let Vertex = "colorVertex"
     static let Fragment = "colorFragment"
   }
-  
+
   init(device: MTLDevice,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {

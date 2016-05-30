@@ -74,6 +74,8 @@
 		EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */; };
 		EABDF7471CFB8C0E00F555BF /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7461CFB8C0E00F555BF /* BufferManager.swift */; };
 		EABDF7481CFB8C0E00F555BF /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7461CFB8C0E00F555BF /* BufferManager.swift */; };
+		EABDF74A1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */; };
+		EABDF74B1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */; };
 		EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522671CF128D400A9A6D3 /* SpritePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */; };
@@ -163,6 +165,7 @@
 		EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = ShapeShaders.metal; path = src/shaders/ShapeShaders.metal; sourceTree = SOURCE_ROOT; };
 		EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = SpriteShaders.metal; path = src/shaders/SpriteShaders.metal; sourceTree = SOURCE_ROOT; };
 		EABDF7461CFB8C0E00F555BF /* BufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferManager.swift; path = src/private/BufferManager.swift; sourceTree = SOURCE_ROOT; };
+		EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightTextureMap.swift; path = src/private/LightTextureMap.swift; sourceTree = SOURCE_ROOT; };
 		EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphCache.swift; path = src/private/GraphCache.swift; sourceTree = SOURCE_ROOT; };
 		EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpritePipeline.swift; path = src/private/SpritePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
@@ -338,6 +341,7 @@
 		EAC6405B1C34708700B6AE68 /* RenderPipelines */ = {
 			isa = PBXGroup;
 			children = (
+				EABDF7491CFCB2DA00F555BF /* LightTextureMap.swift */,
 				EA6C2A111CF22F8600F99E1D /* Buffer.swift */,
 				EABDF7461CFB8C0E00F555BF /* BufferManager.swift */,
 				EA72451B1C8CFF6E0059B068 /* Device.swift */,
@@ -575,6 +579,7 @@
 				EA1993E21CD56239009DC869 /* Easing.swift in Sources */,
 				EAE6ED4B1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99DBD1C41E47D00CF3246 /* CGExtensions.swift in Sources */,
+				EABDF74A1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */,
 				EA6B126C1CF13DDA004E4FCB /* TextPipeline.swift in Sources */,
 				EA6C2A151CF2378900F99E1D /* Projection.swift in Sources */,
 				EAE75E371C42D091001EB176 /* Scene.swift in Sources */,
@@ -640,6 +645,7 @@
 				EA8C82C71CDE61BE00D1E59F /* Updater.swift in Sources */,
 				EAEF9CCE1CD684D20059832D /* Point.swift in Sources */,
 				EA1994281CD57B4F009DC869 /* Color.swift in Sources */,
+				EABDF74B1CFCB2DA00F555BF /* LightTextureMap.swift in Sources */,
 				EAE75E381C42D091001EB176 /* Scene.swift in Sources */,
 				EAA99DF31C41E57C00CF3246 /* CameraNode.swift in Sources */,
 				EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */,

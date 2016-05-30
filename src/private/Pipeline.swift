@@ -11,10 +11,7 @@ import MetalKit
 import simd
 
 protocol Pipeline {
-  associatedtype NodeType
-
-  var pipelineState: MTLRenderPipelineState { get }
-  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [NodeType])
+  var label: String { get }
 }
 
 extension Pipeline {
@@ -22,19 +19,36 @@ extension Pipeline {
     return "\(Self.self)"
   }
 
-  static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
+  static func getLibrary(device: MTLDevice) -> MTLLibrary {
     #if TESTTARGET
-    let defaultLibrary = device.newDefaultLibrary()!
+    return device.newDefaultLibrary()!
     #else
-    let defaultLibrary = try! device.newLibraryWithFile(NSBundle(forClass: ShapePipeline.self).URLForResource("default", withExtension: "metallib")!.path!)
+    return try! device.newLibraryWithFile(NSBundle(forClass: ShapePipeline.self).URLForResource("default", withExtension: "metallib")!.path!)
     #endif
+  }
 
-    guard let vProgram = defaultLibrary.newFunctionWithName(vertexProgram) else {
-      fatalError("no vertex program for name: \(vertexProgram)")
+  static func newFunction(library: MTLLibrary, functionName: String) -> MTLFunction {
+    guard let function = library.newFunctionWithName(functionName) else {
+      fatalError("No function for name: \(functionName)")
     }
-    guard let fProgram = defaultLibrary.newFunctionWithName(fragmentProgram) else {
-      fatalError("no fragment program for name: \(fragmentProgram)")
-    }
+    return function
+  }
+}
+
+protocol RenderPipeline: Pipeline {
+  associatedtype NodeType
+
+  var pipelineState: MTLRenderPipelineState { get }
+  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [NodeType])
+}
+
+extension RenderPipeline {
+  static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
+    let defaultLibrary = Self.getLibrary(device)
+
+    let vProgram = Self.newFunction(defaultLibrary, functionName: vertexProgram)
+    let fProgram = Self.newFunction(defaultLibrary, functionName: fragmentProgram)
+
     return (vProgram, fProgram)
   }
 
@@ -76,7 +90,7 @@ extension Pipeline {
     vertexDescriptor.layouts[0].stride = strideof(Vertex)
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
-    
+
     return pipelineDescriptor
   }
 
@@ -95,7 +109,7 @@ extension Pipeline {
     renderEncoder.label = label
     renderEncoder.setRenderPipelineState(pipelineState)
     renderEncoder.setDepthStencilState(depthState)
-    
+
     return renderEncoder
   }
 }
@@ -111,7 +125,7 @@ final class PipelineFactory {
     let depthStateDescriptor = MTLDepthStencilDescriptor()
     depthStateDescriptor.depthCompareFunction = .GreaterEqual
     depthStateDescriptor.depthWriteEnabled = true
-    
+
     return device.newDepthStencilStateWithDescriptor(depthStateDescriptor)
   }
 

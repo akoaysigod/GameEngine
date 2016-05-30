@@ -9,7 +9,7 @@
 import Metal
 import simd
 
-final class SpritePipeline: Pipeline {
+final class SpritePipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
   private let sampler: MTLSamplerState?
 
