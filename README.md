@@ -15,9 +15,9 @@ Documentation can be [here](https://akoaysigod.github.io/GameEngine) a good port
 - fix up text rendering in general, can probably move it over to the sprite pipeline.
 - lighting system, probably will do next
 - port to Vulkan, someday
-- ensure that the rendering engine is as performant as it can be*
+- ensure that the rendering engine is as performant as it can be
 
-* I'm pretty sure this is as fast as it'll ever be. It seems rather slow or maybe it's because I'm kind of new to this. I can render 100 textured quads at ~15% CPU or 1.1ms CPU/GPU frame time. At 10000 I start to lose FPS. That is way more than I'll ever need for the game I'm making.
+I'm pretty sure this is as fast as it'll ever be. It seems rather slow or maybe it's because I'm kind of new to this. I can render 100 textured quads at ~15% CPU or 1.1ms CPU/GPU frame time. At 10000 I start to lose FPS. That is way more than I'll ever need for the game I'm making.
 
 # Should you use it?
 Probably not. I was having some performance issues using SpriteKit and I think (hope) this will address those issues but I don't know what I'm doing really. This will also never be as robust as SpriteKit as I have fairly specific needs.
