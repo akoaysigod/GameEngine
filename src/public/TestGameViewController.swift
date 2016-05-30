@@ -58,21 +58,35 @@ final class TestGameViewController: UIViewController {
 //      let stairsDown = environmentAtlas["AngelOrange"],
 //      let stairsUp = environmentAtlas["AngelPurple"]
     {
-      let s = [wall, floor, openDoor, stairsDown, stairsUp]
+      let _ = [wall, floor, openDoor, stairsDown, stairsUp]
 
-
-//      var nodes = [SpriteNode]()
-      for y in (0..<10) {
-        for x in (0..<10) {
-          let t = s[Int(arc4random_uniform(UInt32(s.count)))]
-          let sp = SpriteNode(texture: t)
-          let x = sp.size.width * Float(x)
-          let y = sp.size.height * Float(y)
-          sp.position = Point(x: x, y: y)
-          //nodes += [sp]
+      (-5..<5).forEach { y in
+        (-5..<5).forEach { x in
+          let sp: SpriteNode
+          if y == -5 || y == 4 || x == -5 || x == 4 {
+            sp = SpriteNode(texture: wall)
+          }
+          else {
+            sp = SpriteNode(texture: floor)
+          }
+          sp.position = Point(x: sp.size.width * Float(x), y: sp.size.height * Float(y))
           scene.addNode(sp)
         }
       }
+
+
+//      var nodes = [SpriteNode]()
+//      for y in (-10..<10) {
+//        for x in (-10..<10) {
+//          let t = s[Int(arc4random_uniform(UInt32(s.count)))]
+//          let sp = SpriteNode(texture: t)
+//          let x = sp.size.width * Float(x)
+//          let y = sp.size.height * Float(y)
+//          sp.position = Point(x: x, y: y)
+//          //nodes += [sp]
+//          scene.addNode(sp)
+//        }
+//      }
 
 
 //      (0...155).forEach { _ in

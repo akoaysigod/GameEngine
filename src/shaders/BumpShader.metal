@@ -18,7 +18,8 @@ kernel void bump(texture2d<half, access::sample> sTex [[texture(0)]],
 
   half4 sColor = sTex.sample(samp, st);
 
-  half avg = step((sColor.r + sColor.g + sColor.b) / 3.0, 0.5);
+  half avg = (sColor.r * 0.21) + (sColor.g * 0.72) + (sColor.b * 0.07);
   half4 color = half4(avg, avg, avg, sColor.a);
+
   dTex.write(color, gridPos);
 }
