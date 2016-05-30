@@ -23,12 +23,15 @@ import UIKit
                it will be the same camera used for each node added to the scene. Also, it probably makes little sense to add a scene as a child to another scene and may cause problems.
  */
 public class Scene {
-  public weak var view: GameView?
+  public weak var view: GameView? {
+    didSet {
+      graphCache.bufferManager = view?.bufferManager
+    }
+  }
 
   public private(set) var camera: CameraNode
   let tileSize: Int
   public private(set) var uiCamera: CameraNode
-  let uiTileSize: Int
 
   public var allNodes: Nodes {
     return graphCache.allNodes
@@ -43,9 +46,8 @@ public class Scene {
 
    - returns: A new instance of `Scene`.
    */
-  public init(size: Size, tileSize: Int, uiTileSize: Int) {
+  public init(size: Size, tileSize: Int) {
     self.tileSize = tileSize
-    self.uiTileSize = uiTileSize
 
     camera = CameraNode(size: size)
     uiCamera = CameraNode(size: size)
@@ -74,6 +76,8 @@ public class Scene {
   }
 
   public func addUINode(node: Node) {
+    node.isUINode = true
+
     uiCamera.addNode(node)
 
     graphCache.addNode(node)
@@ -83,6 +87,10 @@ public class Scene {
     if let node = uiCamera.removeNode(node) {
       graphCache.addNode(node)
     }
+  }
+
+  func updateNode(quad: Quad, index: Int, key: Int) {
+    graphCache.updateNode(quad, index: index, key: key)
   }
 
   public func update(delta: CFTimeInterval) {}

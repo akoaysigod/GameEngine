@@ -14,7 +14,7 @@ protocol Pipeline {
   associatedtype NodeType
 
   var pipelineState: MTLRenderPipelineState { get }
-  func encode(encoder: MTLRenderCommandEncoder, nodes: [NodeType])
+  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [NodeType])
 }
 
 extension Pipeline {
@@ -102,14 +102,9 @@ extension Pipeline {
 
 final class PipelineFactory {
   private let device: MTLDevice
-  private let indexBuffer: Buffer
-  private let uniformBuffer: Buffer
 
-  init(device: MTLDevice, indexBuffer: Buffer, uniformBuffer: Buffer) {
+  init(device: MTLDevice) {
     self.device = device
-
-    self.indexBuffer = indexBuffer
-    self.uniformBuffer = uniformBuffer
   }
 
   func constructDepthStencil() -> MTLDepthStencilState {
@@ -121,14 +116,14 @@ final class PipelineFactory {
   }
 
   func constructShapePipeline() -> ShapePipeline {
-    return ShapePipeline(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
+    return ShapePipeline(device: device)
   }
 
   func constructSpritePipeline() -> SpritePipeline {
-    return SpritePipeline(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
+    return SpritePipeline(device: device)
   }
 
   func constructTextPipeline() -> TextPipeline {
-    return TextPipeline(device: device, indexBuffer: indexBuffer, uniformBuffer: uniformBuffer)
+    return TextPipeline(device: device)
   }
 }

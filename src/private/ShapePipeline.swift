@@ -10,10 +10,8 @@ import Metal
 
 final class ShapePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
-  let sampler: MTLSamplerState? = nil
 
-  private let indexBuffer: Buffer
-  private let uniformBuffer: Buffer
+  private var didSetBuffer = false
   private let instanceBuffer: Buffer
 
   private struct Programs {
@@ -23,12 +21,8 @@ final class ShapePipeline: Pipeline {
   }
   
   init(device: MTLDevice,
-       indexBuffer: Buffer,
-       uniformBuffer: Buffer,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    self.indexBuffer = indexBuffer
-    self.uniformBuffer = uniformBuffer
 
     let pipelineDescriptor = ShapePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     self.pipelineState = ShapePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
@@ -38,12 +32,16 @@ final class ShapePipeline: Pipeline {
 }
 
 extension ShapePipeline {
-  func encode(encoder: MTLRenderCommandEncoder, nodes: [ShapeNode]) {
+  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [ShapeNode]) {
     guard let node = nodes.first else { return }
 
     encoder.setRenderPipelineState(pipelineState)
 
-    encoder.setVertexBytes(node.quad.vertices, length: node.quad.size, atIndex: 0)
+    if !didSetBuffer {
+      didSetBuffer = true
+      vertexBuffer.update(node.quad.vertices, size: node.quad.size)
+    }
+    encoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, atIndex: 0)
 
     nodes.enumerate().forEach { (i, node) in
       instanceBuffer.update([node.model], size: sizeof(Mat4), offset: sizeof(Mat4) * i)

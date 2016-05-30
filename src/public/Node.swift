@@ -35,6 +35,9 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
   public var name: String? = nil
 
   public var scene: Scene? = nil
+
+  var index: Int = 0
+  var isUINode = false
   
   public var size: Size {
     didSet {

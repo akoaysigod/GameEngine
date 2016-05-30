@@ -34,6 +34,8 @@ struct Quad {
   let vertices: Vertices
   let size: Int
 
+  static let size = 4 * strideof(Vertex)
+
   init(vertices: Vertices) {
     self.vertices = vertices
     size = vertices.count * strideof(Vertex)
@@ -70,7 +72,7 @@ struct Quad {
 }
 
 extension Quad {
-  static var indicesData: [UInt16] {
+  private static var indicesData: [UInt16] {
     //this is clockwise but the textures end up being anticlockwise so ff == anti 
     //which is why the Quad for ShapeNode is different from the sprite one
     return [

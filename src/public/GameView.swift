@@ -96,7 +96,7 @@ extension GameView {
 
     projection = Projection(size: size.size)
     bufferManager = BufferManager(projection: projection.projection)
-    renderer = Renderer(device: device, projection: projection.projection, bufferManager: bufferManager)
+    renderer = Renderer(device: device, bufferManager: bufferManager)
   }
 }
 
@@ -146,7 +146,7 @@ extension GameView {
 
   private func render(scene: Scene) {
     autoreleasepool {
-      renderer.render(renderPassQueue.next(self), shapeNodes: scene.graphCache.shapeNodes, spriteNodes: scene.graphCache.spriteNodes, textNodes: scene.graphCache.textNodes)
+      renderer.render(renderPassQueue.next(self), view: scene.camera.view, shapeNodes: scene.graphCache.shapeNodes, spriteNodes: scene.graphCache.spriteNodes, textNodes: scene.graphCache.textNodes)
     }
   }
 
@@ -165,7 +165,7 @@ extension GameView {
     metalLayer?.drawableSize = newSize
 
     projection.update(newSize.size)
-    renderer.updateProjection(projection.projection)
+    bufferManager.updateProjection(projection.projection)
     currentScene?.updateCameras(newSize.size)
   }
 }

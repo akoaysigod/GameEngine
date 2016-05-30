@@ -14,6 +14,8 @@ final class GraphCache {
 
   private(set) var shapeNodes = [ShapeNode]()
   private(set) var spriteNodes = [Int: [SpriteNode]]()
+  private var spriteIndex = [Int: Int]()
+  var bufferManager: BufferManager?
   private(set) var textNodes = [TextNode]()
 
   func addNode(node: Node) {
@@ -28,11 +30,25 @@ final class GraphCache {
         }
         else if let sprite = $0 as? SpriteNode {
           let key = sprite.texture?.hashValue ?? -1
-          if let arr = spriteNodes[key] {
+          if let arr = spriteNodes[key],
+             let index = spriteIndex[key],
+             let buffer = bufferManager?[key] {
+            let newIndex = index + 1
+
+            sprite.index = newIndex
+            spriteIndex.updateValue(newIndex, forKey: key)
             spriteNodes.updateValue(arr + [sprite], forKey: key)
+
+            buffer.update(sprite.quad.vertices, size: sprite.quad.size, offset: (newIndex) * sprite.quad.size)
           }
           else {
+            sprite.index = 0
+            spriteIndex.updateValue(0, forKey: key)
             spriteNodes.updateValue([sprite], forKey: key)
+
+            let buffer = Buffer(length: sprite.quad.size * 500)
+            buffer.update(sprite.quad.vertices, size: sprite.quad.size)
+            bufferManager?[key] = buffer
           }
         }
         else if let text = $0 as? TextNode {
@@ -55,6 +71,7 @@ final class GraphCache {
           var arr = arr
           arr.remove(sprite)
           spriteNodes[key] = arr
+          realignData(key)
         }
         else {
           DLog("Sprite was never cached?")
@@ -74,5 +91,22 @@ final class GraphCache {
       removeNode($0)
     }
     removeNode(node)
+  }
+
+  private func realignData(key: Int) {
+    guard let nodes = spriteNodes[key] else { return }
+    guard let buffer = bufferManager?[key] else { return }
+
+    nodes.enumerate().forEach { i, node in
+      node.index = i
+      buffer.update(node.quad.vertices, size: node.quad.size, offset: i * node.quad.size)
+    }
+    spriteIndex[key] = nodes.count
+  }
+
+  func updateNode(quad: Quad, index: Int, key: Int) {
+    guard let buffer = bufferManager?[key] else { return }
+
+    buffer.update(quad.vertices, size: quad.size, offset: quad.size * index)
   }
 }

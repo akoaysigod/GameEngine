@@ -97,4 +97,12 @@ public class SpriteNode: Node, Renderable {
   public convenience init(named: String) {
     self.init(texture: Texture(named: named))
   }
+
+  override func updateTransform() {
+    super.updateTransform()
+
+    guard let key = texture?.hashValue else { return }
+
+    scene?.updateNode(quad, index: index, key: key)
+  }
 }

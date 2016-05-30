@@ -12,9 +12,6 @@ final class TextPipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
 
-  private let indexBuffer: Buffer
-  private let uniformBuffer: Buffer
-
   private struct Programs {
     static let Shader = "TextShaders"
     static let Vertex = "textVertex"
@@ -22,13 +19,8 @@ final class TextPipeline: Pipeline {
   }
 
   init(device: MTLDevice,
-       indexBuffer: Buffer,
-       uniformBuffer: Buffer,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    self.indexBuffer = indexBuffer
-    self.uniformBuffer = uniformBuffer
-
     let samplerDescriptor = MTLSamplerDescriptor()
     samplerDescriptor.minFilter = .Nearest
     samplerDescriptor.magFilter = .Linear
@@ -43,7 +35,7 @@ final class TextPipeline: Pipeline {
 }
 
 extension TextPipeline {
-  func encode(encoder: MTLRenderCommandEncoder, nodes: [TextNode]) {
+  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [TextNode]) {
     encoder.setRenderPipelineState(pipelineState)
 
     nodes.forEach { _ in

@@ -13,9 +13,6 @@ final class SpritePipeline: Pipeline {
   let pipelineState: MTLRenderPipelineState
   private let sampler: MTLSamplerState?
 
-  private let indexBuffer: Buffer
-  private let uniformBuffer: Buffer
-
   private struct Programs {
     static let Shader = "SpriteShaders"
     static let Vertex = "spriteVertex"
@@ -23,13 +20,8 @@ final class SpritePipeline: Pipeline {
   }
 
   init(device: MTLDevice,
-       indexBuffer: Buffer,
-       uniformBuffer: Buffer,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    self.indexBuffer = indexBuffer
-    self.uniformBuffer = uniformBuffer
-
     let samplerDescriptor = MTLSamplerDescriptor()
     samplerDescriptor.minFilter = .Nearest
     samplerDescriptor.magFilter = .Nearest
@@ -50,31 +42,26 @@ final class SpritePipeline: Pipeline {
   var vBuffer: MTLBuffer
   var iBuffer: MTLBuffer
   var vset = false
+}
 
-  func encode(encoder: MTLRenderCommandEncoder, nodes: [SpriteNode]) {
+extension SpritePipeline {
+  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode]) {
     guard let node = nodes.first else { return }
-    guard let texture = nodes.first?.texture?.texture else { return }
+    guard let texture = node.texture?.texture else { return }
 
     encoder.setRenderPipelineState(pipelineState)
 
-    if !vset {
-      for (i, n) in nodes.enumerate() {
-        memcpy(vBuffer.contents() + (i * n.quad.size), n.quad.vertices, n.quad.size)
-      }
-      vset = true
-      let (i, c) = Quad.indices(nodes.count)
-      memcpy(iBuffer.contents(), i, c)
-    }
-    encoder.setVertexBuffer(vBuffer, offset: 0, atIndex: 0)
+    encoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, atIndex: 0)
 
-
-    let view = node.camera!.view
-    uniformBuffer.update([view], size: sizeof(Mat4), offset: sizeof(Mat4))
     encoder.setVertexBuffer(uniformBuffer.buffer, offset: 0, atIndex: 2)
 
     encoder.setFragmentSamplerState(sampler, atIndex: 0)
     encoder.setFragmentTexture(texture, atIndex: 0)
 
-    encoder.drawIndexedPrimitives(.Triangle, indexCount: Quad.indicesData.count * nodes.count, indexType: .UInt16, indexBuffer: iBuffer, indexBufferOffset: 0)
+    encoder.drawIndexedPrimitives(.Triangle,
+                                  indexCount: 6 * nodes.count,
+                                  indexType: .UInt16,
+                                  indexBuffer: indexBuffer.buffer,
+                                  indexBufferOffset: 0)
   }
 }
