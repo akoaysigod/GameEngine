@@ -49,6 +49,7 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
+  return normal;
 
   float2 res = float2(414, 736);
   float3 lightPos = float3(0.25, 0.25, 0.75);

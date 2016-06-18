@@ -7,6 +7,7 @@
 //
 
 import Metal
+import MetalPerformanceShaders
 
 final class ComputeRenderer {
   private let device: MTLDevice
