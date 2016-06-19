@@ -26,6 +26,7 @@ struct VertexOut {
   float4 position [[position]];
   float4 color;
   float2 texCoord;
+  float3 lightPos;
 };
 
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
@@ -39,6 +40,9 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
   outVertex.color = vertIn.color;
   outVertex.texCoord = vertIn.texCoord;
 
+  float4 lightPos = uniforms.projection * float4(0.0, 0.0, 0.0, 0.01);
+  outVertex.lightPos = lightPos.xyz;
+
   return outVertex;
 }
 
@@ -49,29 +53,22 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
-  return normal;
 
-  float2 res = float2(414, 736);
-  float3 lightPos = float3(0.25, 0.25, 0.75);
-  float3 lightDir = float3(lightPos.xy - (interpolated.position.xy / res), lightPos.z);
-  lightDir.xy *= res.x / res.y;
+  float3 lightDir = float3(interpolated.lightPos.xy - interpolated.position.xy, interpolated.lightPos.z);
 
-  float4 lightColor = float4(0.65, 0.16, 0.0, 1.0);
+  float3 lightColor = float3(1.0, 0.16, 0.0);
 
-  float d = length(lightDir);
+  float3 N = normalize(normal.xyz * 2.0 - 1.0);
+  float3 L = normalize(lightDir);
 
-  float3 N = normalize(normal.xyz);
-  float3 L = normalize(lightDir.xyz);
+  float3 diffuse = lightColor * max(dot(N, L), 0.0);
 
-  float3 diffuse = (lightColor.rgb * lightColor.a) * max(dot(N, L), 0.0);
+  float3 ambientColor = float3(0.5, 0.5, 0.5);
 
-  float4 ambientColor = float4(0.25, 0.25, 0.25, 1.0);
-  float3 ambient = ambientColor.rgb * ambientColor.a;
+  float d = length(lightDir) * 0.25;
+  float attenuation = 0.8;
 
-  float3 falloff = float3(0.3, 3, 10);
-  //float attenutation = 1.0 / (falloff.x / (falloff.x + (falloff.y * d) + (falloff.z * d * d)));
-  float attenuation = 3.0;
-  float3 intensity = ambient + diffuse * attenuation;
+  float3 intensity = ambientColor + diffuse * attenuation;
   float3 finalColor = color.rgb * intensity;
 
   return float4(finalColor, color.a);

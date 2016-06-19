@@ -27,8 +27,8 @@ final class LightTexturePipeline: MPSUnaryImageKernel, Pipeline {
 extension LightTexturePipeline {
   static func createSamplerState(device: MTLDevice) -> MTLSamplerState {
     let descriptor = MTLSamplerDescriptor()
-    descriptor.sAddressMode = .ClampToZero
-    descriptor.tAddressMode = .ClampToZero
+    descriptor.sAddressMode = .ClampToEdge
+    descriptor.tAddressMode = .ClampToEdge
     descriptor.normalizedCoordinates = false
     return device.newSamplerStateWithDescriptor(descriptor)
   }

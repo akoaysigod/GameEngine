@@ -9,6 +9,8 @@
 import Metal
 import MetalPerformanceShaders
 
+//TODO: We might have to run this prior to generating the texture maps, the edge of each image is just set to black so it'll probably make things look weird
+
 final class ComputeRenderer {
   private let device: MTLDevice
   private let srcTexture: MTLTexture
