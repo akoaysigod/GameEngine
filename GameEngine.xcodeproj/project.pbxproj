@@ -78,8 +78,8 @@
 		EABDF74B1CFCB2DA00F555BF /* LightTexturePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7491CFCB2DA00F555BF /* LightTexturePipeline.swift */; };
 		EABDF74D1CFCB96400F555BF /* ComputeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF74C1CFCB96400F555BF /* ComputeRenderer.swift */; };
 		EABDF74E1CFCB96400F555BF /* ComputeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDF74C1CFCB96400F555BF /* ComputeRenderer.swift */; };
-		EABDF7521CFCBEAB00F555BF /* BumpShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7511CFCBEAB00F555BF /* BumpShader.metal */; };
-		EABDF7531CFCBEAB00F555BF /* BumpShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7511CFCBEAB00F555BF /* BumpShader.metal */; };
+		EABDF7521CFCBEAB00F555BF /* NormalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7511CFCBEAB00F555BF /* NormalShader.metal */; };
+		EABDF7531CFCBEAB00F555BF /* NormalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EABDF7511CFCBEAB00F555BF /* NormalShader.metal */; };
 		EAD522611CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522621CF0F1A100A9A6D3 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */; };
 		EAD522671CF128D400A9A6D3 /* SpritePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */; };
@@ -171,7 +171,7 @@
 		EABDF7461CFB8C0E00F555BF /* BufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferManager.swift; path = src/private/BufferManager.swift; sourceTree = SOURCE_ROOT; };
 		EABDF7491CFCB2DA00F555BF /* LightTexturePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightTexturePipeline.swift; path = src/private/LightTexturePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EABDF74C1CFCB96400F555BF /* ComputeRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComputeRenderer.swift; path = src/private/ComputeRenderer.swift; sourceTree = SOURCE_ROOT; };
-		EABDF7511CFCBEAB00F555BF /* BumpShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = BumpShader.metal; path = src/shaders/BumpShader.metal; sourceTree = SOURCE_ROOT; };
+		EABDF7511CFCBEAB00F555BF /* NormalShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = NormalShader.metal; path = src/shaders/NormalShader.metal; sourceTree = SOURCE_ROOT; };
 		EAD522601CF0F1A100A9A6D3 /* GraphCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphCache.swift; path = src/private/GraphCache.swift; sourceTree = SOURCE_ROOT; };
 		EAD522661CF128D400A9A6D3 /* SpritePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpritePipeline.swift; path = src/private/SpritePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EAE6ED411CCBC1330046A5BE /* Mat2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat2.swift; path = src/math/Mat2.swift; sourceTree = "<group>"; };
@@ -294,7 +294,7 @@
 		EAA99DE71C41E53800CF3246 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				EABDF7511CFCBEAB00F555BF /* BumpShader.metal */,
+				EABDF7511CFCBEAB00F555BF /* NormalShader.metal */,
 				EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */,
 				EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */,
 				EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */,
@@ -629,7 +629,7 @@
 				EAE6ED471CCBC1330046A5BE /* Mat3.swift in Sources */,
 				EAE6ED491CCBC1330046A5BE /* Mat4.swift in Sources */,
 				EAA99DF21C41E57C00CF3246 /* CameraNode.swift in Sources */,
-				EABDF7521CFCBEAB00F555BF /* BumpShader.metal in Sources */,
+				EABDF7521CFCBEAB00F555BF /* NormalShader.metal in Sources */,
 				EAA99E391C41E80E00CF3246 /* ShapeShaders.metal in Sources */,
 				EAEAAC671C66995000BFB938 /* FontAtlas.swift in Sources */,
 				EAA99DE31C41E52700CF3246 /* Node.swift in Sources */,
@@ -688,7 +688,7 @@
 				EA256A101CA88057008F720B /* TextureFrame.swift in Sources */,
 				EA6C2A131CF22F8600F99E1D /* Buffer.swift in Sources */,
 				EA256A131CA88082008F720B /* TextureAtlas.swift in Sources */,
-				EABDF7531CFCBEAB00F555BF /* BumpShader.metal in Sources */,
+				EABDF7531CFCBEAB00F555BF /* NormalShader.metal in Sources */,
 				EAFD76981C836BF100ABDC50 /* NodeGeometry.swift in Sources */,
 				EA6B126D1CF13DDA004E4FCB /* TextPipeline.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,

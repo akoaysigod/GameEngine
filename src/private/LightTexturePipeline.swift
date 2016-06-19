@@ -7,10 +7,38 @@
 //
 
 import MetalPerformanceShaders
+import simd
+
+//https://en.wikipedia.org/wiki/Sobel_operator
+private struct Convolutions {
+  let dx: float2x3
+  let dy: float2x3
+
+  //Dx is left column then right column
+  //Dy is top row then bottom row
+
+  static func convolution(conv: float2x3) -> Convolutions {
+    return Convolutions(dx: conv, dy: conv)
+  }
+
+  static var sobel: Convolutions {
+    let n = float3(arrayLiteral: -1.0, -2.0, -1.0)
+    let p = float3(arrayLiteral: 1.0, 2.0, 1.0)
+
+    return convolution(float2x3([n, p]))
+  }
+
+  static var scharr: Convolutions {
+    let n = float3(arrayLiteral: -3.0, -10.0, -3.0)
+    let p = float3(arrayLiteral: 3.0, 10.0, 3.0)
+
+    return convolution(float2x3([n, p]))
+  }
+}
 
 final class LightTexturePipeline: MPSUnaryImageKernel, Pipeline {
   private struct Constants {
-    static let Function = "bump"
+    static let Function = "normal"
   }
 
   private let pipeline: MTLComputePipelineState
@@ -59,6 +87,10 @@ extension LightTexturePipeline {
     encoder.setTexture(sourceTexture, atIndex: 0)
     encoder.setTexture(destTexture, atIndex: 1)
     encoder.setSamplerState(sampler, atIndex: 0)
+
+    var convolutions = Convolutions.scharr
+    encoder.setBytes(&convolutions, length: sizeof(Convolutions), atIndex: 0)
+
     encoder.dispatchThreadgroups(threadsPerGrid, threadsPerThreadgroup: threadsPerGroup)
     encoder.endEncoding()
   }
