@@ -54,21 +54,44 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
 
-  float3 lightDir = float3(interpolated.lightPos.xy - interpolated.position.xy, interpolated.lightPos.z);
+  float2 res = float2(414, 736);
 
-  float3 lightColor = float3(1.0, 0.16, 0.0);
+  float3 lightColor = float3(0.67, 0.16, 0.0);
+  float3 lightPos = float3(0.5, 0.5, 0.01);
+  float3 lightDir = float3(lightPos.xy - (interpolated.position.xy / res), interpolated.lightPos.z);
+  lightDir.x *= res.x / res.y;
 
   float3 N = normalize(normal.xyz * 2.0 - 1.0);
   float3 L = normalize(lightDir);
 
   float3 diffuse = lightColor * max(dot(N, L), 0.0);
 
-  float3 ambientColor = float3(0.5, 0.5, 0.5);
 
-  float d = length(lightDir) * 0.25;
-  float attenuation = 0.8;
+  float3 lightColor2 = float3(0.0, 0.0, 0.5);
+  float3 lightPos2 = float3(0.0, 0.5, 0.01);
+  float3 lightDir2 = float3(lightPos2.xy - (interpolated.position.xy / res), lightPos2.z);
+  lightDir2.x *= res.x / res.y;
+  float3 L2 = normalize(lightDir2);
 
-  float3 intensity = ambientColor + diffuse * attenuation;
+  float3 lightColor3 = float3(0.0, 0.5, 0.0);
+  float3 lightPos3 = float3(0.5, 0.0, 0.01);
+  float3 lightDir3 = float3(lightPos3.xy - (interpolated.position.xy / res), lightPos3.z);
+  lightDir3.x *= res.x / res.y;
+  float3 L3 = normalize(lightDir3);
+
+
+
+  float3 ambientColor = float3(0.25, 0.25, 0.25);
+
+  float d = length(lightDir);
+  float d2 = length(lightDir2);
+  float d3 = length(lightDir3);
+  float attenuation2 = 1.0 / (0.4 + (3 * d2) + (20 * d2 * d2));
+
+//+ ((1.0 / attenuation) * (lightColor2 * max(dot(N, L2), 0.0)))
+  float3 intensity = ambientColor + (diffuse * (1.0 / (4 * d))) +
+                    ((attenuation2 * 2) * (lightColor2 * max(dot(N, L2), 0.0))) +
+                    ((1.0 / length_squared(5 * lightDir3)) * (lightColor3 * max(dot(N, L3), 0.0)));
   float3 finalColor = color.rgb * intensity;
 
   return float4(finalColor, color.a);
