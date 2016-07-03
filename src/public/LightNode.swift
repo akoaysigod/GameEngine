@@ -46,13 +46,12 @@ public final class LightNode: Node {
 
   public override func update(delta: CFTimeInterval) {
     //this does not take into account the radius of the light at the moment
-    guard let scene = scene else { return }
+    guard let scene = scene,
+          let camera = camera else { return }
 
     let screenPos = scene.convertPointFromScene(position)
 
-    relativePosition = Point(x: screenPos.x / resolution.width, y: screenPos.y / resolution.height)
-
-    print(screenPos, relativePosition)
+    relativePosition = Point(x: screenPos.x / (resolution.width / camera.scale), y: screenPos.y / (resolution.height / camera.scale))
 
     isVisible = screenPos.x < resolution.width && screenPos.x > 0.0 &&
                 screenPos.y < resolution.height && screenPos.y > 0.0
