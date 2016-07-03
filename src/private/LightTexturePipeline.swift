@@ -6,7 +6,7 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
-import MetalPerformanceShaders
+import Metal
 import simd
 
 //https://en.wikipedia.org/wiki/Sobel_operator
@@ -36,7 +36,7 @@ private struct Convolutions {
   }
 }
 
-final class LightTexturePipeline: MPSUnaryImageKernel, Pipeline {
+final class LightTexturePipeline: Pipeline {
   private struct Constants {
     static let Function = "normal"
   }
@@ -47,8 +47,6 @@ final class LightTexturePipeline: MPSUnaryImageKernel, Pipeline {
   init(device: Device = Device.shared) {
     sampler = LightTexturePipeline.createSamplerState(device.device)
     pipeline = LightTexturePipeline.createPipelineState(device.device)!
-
-    super.init(device: device.device)
   }
 }
 
@@ -74,9 +72,9 @@ extension LightTexturePipeline {
     }
   }
 
-  override func encodeToCommandBuffer(commandBuffer: MTLCommandBuffer,
-                                      sourceTexture: MTLTexture,
-                                      destinationTexture destTexture: MTLTexture) {
+  func encodeToCommandBuffer(commandBuffer: MTLCommandBuffer,
+                             sourceTexture: MTLTexture,
+                             destinationTexture destTexture: MTLTexture) {
     let threadsPerGroup = MTLSize(width: 16, height: 16, depth: 1)
 
     let widthInGroup = (destTexture.width + threadsPerGroup.width - 1) / threadsPerGroup.width

@@ -53,5 +53,5 @@ kernel void normal(texture2d<half, access::sample> sTex [[texture(0)]],
   half green = dot(half3(dl, d, dr), (half3)convolutions.dy[1]) + dot(half3(ul, u, ur), (half3)convolutions.dy[0]);
   half a = sTex.sample(samp, st).a;
 
-  dTex.write(half4(red * 0.5h + 0.5h, green * 0.5h + 0.5h, 0.5h, a), gridPos);
+  dTex.write(half4(red * 0.5h + 0.5h, green * 0.5h + 0.5h, 1.0h, a), gridPos);
 }
