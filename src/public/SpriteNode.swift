@@ -15,7 +15,7 @@ import MetalKit
 public class SpriteNode: Node, Renderable {
   public var color: Color {
     didSet {
-      //add a thing to update buffer for color
+      updateTransform()
     }
   }
   public var alpha: Float {
@@ -32,7 +32,7 @@ public class SpriteNode: Node, Renderable {
   var quad: Quad {
     let q = texture.flatMap { Quad.spriteRect($0.frame, color: color) } ?? Quad.rect(size, color: color)
     let vertices = q.vertices.map { vertex -> Vertex in
-      let position = transform * vertex.position
+      let position = model * vertex.position
       return Vertex(position: position, st: vertex.st, color: color.vec4)
     }
     return Quad(vertices: vertices)

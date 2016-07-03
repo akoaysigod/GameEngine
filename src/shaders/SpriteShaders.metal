@@ -31,7 +31,7 @@ struct VertexOut {
 
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
                               const device VertexIn* vert [[buffer(0)]],
-                              constant Uniforms& uniforms [[buffer(2)]])
+                              constant Uniforms& uniforms [[buffer(1)]])
 {
   VertexIn vertIn = vert[vid];
 
@@ -39,9 +39,6 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
   outVertex.position = uniforms.projection * uniforms.view * float4(vertIn.position);
   outVertex.color = vertIn.color;
   outVertex.texCoord = vertIn.texCoord;
-
-  float4 lightPos = uniforms.projection * float4(0.0, 0.0, 0.0, 0.01);
-  outVertex.lightPos = lightPos.xyz;
 
   return outVertex;
 }
@@ -54,9 +51,9 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
 
-  float2 res = float2(414, 736);
-
+  float2 res = float2(768, 1024);
   float3 lightColor = float3(0.67, 0.16, 0.0);
+
   float3 lightPos = float3(0.5, 0.5, 0.01);
   float3 lightDir = float3(lightPos.xy - (interpolated.position.xy / res), interpolated.lightPos.z);
   lightDir.x *= res.x / res.y;

@@ -74,6 +74,12 @@ final class TestGameViewController: UIViewController {
         }
       }
 
+      let stairs = SpriteNode(texture: stairsDown)
+      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
+      stairs.position = Point(x: 0.0, y: 0.0)
+      stairs.zPosition = 1
+      scene.addNode(stairs)
+
 
 //      var nodes = [SpriteNode]()
 //      for y in (-10..<10) {
