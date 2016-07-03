@@ -17,55 +17,56 @@ final class GraphCache {
   private var spriteIndex = [Int: Int]()
   var bufferManager: BufferManager?
   private(set) var textNodes = [TextNode]()
+  private(set) var lightNodes = [LightNode]()
 
   func addNode(node: Node) {
     let allNodes = [node] + node.allNodes
 
     updateNodes += allNodes
 
-    allNodes.forEach {
-      if $0 is Renderable {
-        if let shape = $0 as? ShapeNode {
-          shapeNodes += [shape]
+    allNodes.forEach { node in
+      switch node {
+      case let shape as ShapeNode:
+        shapeNodes += [shape]
+      case let sprite as SpriteNode:
+        let key = sprite.texture?.hashValue ?? -1
+        if let arr = spriteNodes[key],
+          let index = spriteIndex[key],
+          let buffer = bufferManager?[key] {
+          let newIndex = index + 1
+          
+          sprite.index = newIndex
+          spriteIndex.updateValue(newIndex, forKey: key)
+          spriteNodes.updateValue(arr + [sprite], forKey: key)
+          
+          buffer.update(sprite.quad.vertices, size: sprite.quad.size, offset: (newIndex) * sprite.quad.size)
         }
-        else if let sprite = $0 as? SpriteNode {
-          let key = sprite.texture?.hashValue ?? -1
-          if let arr = spriteNodes[key],
-             let index = spriteIndex[key],
-             let buffer = bufferManager?[key] {
-            let newIndex = index + 1
-
-            sprite.index = newIndex
-            spriteIndex.updateValue(newIndex, forKey: key)
-            spriteNodes.updateValue(arr + [sprite], forKey: key)
-
-            buffer.update(sprite.quad.vertices, size: sprite.quad.size, offset: (newIndex) * sprite.quad.size)
-          }
-          else {
-            sprite.index = 0
-            spriteIndex.updateValue(0, forKey: key)
-            spriteNodes.updateValue([sprite], forKey: key)
-
-            let buffer = Buffer(length: sprite.quad.size * 500)
-            buffer.update(sprite.quad.vertices, size: sprite.quad.size)
-            bufferManager?[key] = buffer
-          }
+        else {
+          sprite.index = 0
+          spriteIndex.updateValue(0, forKey: key)
+          spriteNodes.updateValue([sprite], forKey: key)
+          
+          let buffer = Buffer(length: sprite.quad.size * 500)
+          buffer.update(sprite.quad.vertices, size: sprite.quad.size)
+          bufferManager?[key] = buffer
         }
-        else if let text = $0 as? TextNode {
-          textNodes += [text]
-        }
+      case let text as TextNode:
+        textNodes += [text]
+      case let light as LightNode:
+        lightNodes += [light]
+      case _: break
       }
     }
   }
-
+  
   private func removeNode(node: Node) {
     if let index = updateNodes.find(node) {
       guard let removed = updateNodes.removeAtIndex(index) as? Renderable else { return }
-      
-      if let shape = removed as? ShapeNode {
+
+      switch removed {
+      case let shape as ShapeNode:
         shapeNodes.remove(shape)
-      }
-      else if let sprite = removed as? SpriteNode {
+      case let sprite as SpriteNode:
         let key = sprite.texture?.hashValue ?? -1
         if let arr = spriteNodes[key] {
           var arr = arr
@@ -76,9 +77,12 @@ final class GraphCache {
         else {
           DLog("Sprite was never cached?")
         }
-      }
-      else if let text = removed as? TextNode {
+        
+      case let text as TextNode:
         textNodes.remove(text)
+      case let light as LightNode:
+        lightNodes.remove(light)
+      case _: break
       }
     }
   }
@@ -86,27 +90,27 @@ final class GraphCache {
   func updateNodes<T : Node>(node: T?) {
     guard let node = node else { return }
     guard updateNodes.find(node) != nil else { return }
-
+    
     (node as Node).allNodes.forEach {
       removeNode($0)
     }
     removeNode(node)
   }
-
+  
   private func realignData(key: Int) {
     guard let nodes = spriteNodes[key] else { return }
     guard let buffer = bufferManager?[key] else { return }
-
+    
     nodes.enumerate().forEach { i, node in
       node.index = i
       buffer.update(node.quad.vertices, size: node.quad.size, offset: i * node.quad.size)
     }
     spriteIndex[key] = nodes.count
   }
-
+  
   func updateNode(quad: Quad, index: Int, key: Int) {
     guard let buffer = bufferManager?[key] else { return }
-
+    
     buffer.update(quad.vertices, size: quad.size, offset: quad.size * index)
   }
 }

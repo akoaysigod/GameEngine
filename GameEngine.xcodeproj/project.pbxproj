@@ -28,6 +28,8 @@
 		EA3F2D2D1CE79A7200095512 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F2D2B1CE79A7200095512 /* ArrayExtension.swift */; };
 		EA6629AF1D299DF30076B9C4 /* LightUniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6629AE1D299DF30076B9C4 /* LightUniforms.swift */; };
 		EA6629B01D299DF30076B9C4 /* LightUniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6629AE1D299DF30076B9C4 /* LightUniforms.swift */; };
+		EA6629B21D29B6490076B9C4 /* LightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6629B11D29B6490076B9C4 /* LightNode.swift */; };
+		EA6629B31D29B6490076B9C4 /* LightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6629B11D29B6490076B9C4 /* LightNode.swift */; };
 		EA6B12691CF13DB1004E4FCB /* ShapePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */; };
 		EA6B126A1CF13DB1004E4FCB /* ShapePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */; };
 		EA6B126C1CF13DDA004E4FCB /* TextPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B126B1CF13DDA004E4FCB /* TextPipeline.swift */; };
@@ -142,6 +144,7 @@
 		EA3236271C8B85A500DA7FCF /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = src/public/Tree.swift; sourceTree = SOURCE_ROOT; };
 		EA3F2D2B1CE79A7200095512 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtension.swift; path = src/extensions/ArrayExtension.swift; sourceTree = SOURCE_ROOT; };
 		EA6629AE1D299DF30076B9C4 /* LightUniforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightUniforms.swift; path = src/private/LightUniforms.swift; sourceTree = SOURCE_ROOT; };
+		EA6629B11D29B6490076B9C4 /* LightNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightNode.swift; path = src/public/LightNode.swift; sourceTree = SOURCE_ROOT; };
 		EA6B12681CF13DB1004E4FCB /* ShapePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapePipeline.swift; path = src/private/ShapePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EA6B126B1CF13DDA004E4FCB /* TextPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextPipeline.swift; path = src/private/TextPipeline.swift; sourceTree = SOURCE_ROOT; };
 		EA6C2A111CF22F8600F99E1D /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Buffer.swift; path = src/private/Buffer.swift; sourceTree = SOURCE_ROOT; };
@@ -276,6 +279,7 @@
 		EA256A141CA88089008F720B /* Rendered */ = {
 			isa = PBXGroup;
 			children = (
+				EA6629B11D29B6490076B9C4 /* LightNode.swift */,
 				EAA99DDE1C41E52700CF3246 /* ShapeNode.swift */,
 				EAA99DE01C41E52700CF3246 /* SpriteNode.swift */,
 				EA9B1E801C727625000FFDF7 /* TextNode.swift */,
@@ -617,6 +621,7 @@
 				EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */,
 				EA1994271CD57B4F009DC869 /* Color.swift in Sources */,
 				EA256A121CA88082008F720B /* TextureAtlas.swift in Sources */,
+				EA6629B21D29B6490076B9C4 /* LightNode.swift in Sources */,
 				EA3236281C8B85A500DA7FCF /* Tree.swift in Sources */,
 				EA9B1E811C727625000FFDF7 /* TextNode.swift in Sources */,
 				EAE6ED4E1CCBF02E0046A5BE /* Renderable.swift in Sources */,
@@ -697,6 +702,7 @@
 				EABDF7531CFCBEAB00F555BF /* NormalShader.metal in Sources */,
 				EAFD76981C836BF100ABDC50 /* NodeGeometry.swift in Sources */,
 				EA6B126D1CF13DDA004E4FCB /* TextPipeline.swift in Sources */,
+				EA6629B31D29B6490076B9C4 /* LightNode.swift in Sources */,
 				EAA99DD11C41E4F100CF3246 /* RenderPassQueue.swift in Sources */,
 				EAE6ED4C1CCBC1330046A5BE /* Math.swift in Sources */,
 				EAA99E3C1C41E80E00CF3246 /* SpriteShaders.metal in Sources */,
