@@ -17,6 +17,10 @@ public struct Size {
   /// a value representing a height
   public var height: Float
 
+  var vec2: Vec2 {
+    return Vec2(width, height)
+  }
+
   public init(width: Float, height: Float) {
     self.width = width
     self.height = height

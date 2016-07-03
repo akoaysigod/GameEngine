@@ -41,6 +41,7 @@ final class TestGameViewController: UIViewController {
     let view = self.view as! GameView
     view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
     scene = Scene(size: view.size, tileSize: 64)
+    scene.ambientLightColor = Color(0.25, 0.25, 0.25)
     view.presentScene(scene)
 
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown", "StairsUp"]
@@ -80,7 +81,8 @@ final class TestGameViewController: UIViewController {
       stairs.zPosition = 1
       scene.addNode(stairs)
 
-
+      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 1.0)
+      scene.addNode(light)
 //      var nodes = [SpriteNode]()
 //      for y in (-10..<10) {
 //        for x in (-10..<10) {

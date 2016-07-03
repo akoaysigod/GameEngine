@@ -42,7 +42,7 @@ final class Renderer {
     inflightSemaphore = dispatch_semaphore_create(BUFFER_SIZE)
   }
 
-  func render(nextRenderPass: NextRenderPass, view: Mat4, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode]) {
+  func render(nextRenderPass: NextRenderPass, view: Mat4, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode], lightNodes: [LightNode]) {
     dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
 
     let commandBuffer = commandQueue.commandBuffer()
@@ -72,7 +72,8 @@ final class Renderer {
                               vertexBuffer: vertexBuffer,
                               indexBuffer: bufferManager.indexBuffer,
                               uniformBuffer: bufferManager.uniformBuffer,
-                              nodes: spriteNodes)
+                              nodes: spriteNodes,
+                              lights: lightNodes)
       }
 
       if textNodes.count > 0 {

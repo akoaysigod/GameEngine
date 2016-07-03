@@ -77,7 +77,6 @@ final class GraphCache {
         else {
           DLog("Sprite was never cached?")
         }
-        
       case let text as TextNode:
         textNodes.remove(text)
       case let light as LightNode:

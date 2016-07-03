@@ -146,7 +146,7 @@ extension GameView {
 
   private func render(scene: Scene) {
     autoreleasepool {
-      renderer.render(renderPassQueue.next(self), view: scene.camera.view, shapeNodes: scene.graphCache.shapeNodes, spriteNodes: scene.graphCache.spriteNodes, textNodes: scene.graphCache.textNodes)
+      renderer.render(renderPassQueue.next(self), view: scene.camera.view, shapeNodes: scene.graphCache.shapeNodes, spriteNodes: scene.graphCache.spriteNodes, textNodes: scene.graphCache.textNodes, lightNodes: scene.graphCache.lightNodes)
     }
   }
 

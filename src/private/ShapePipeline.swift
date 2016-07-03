@@ -37,7 +37,7 @@ final class ShapePipeline: RenderPipeline {
 }
 
 extension ShapePipeline {
-  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [ShapeNode]) {
+  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [ShapeNode], lights: [LightNode]? = nil) {
     guard let node = nodes.first else { return }
 
     encoder.setRenderPipelineState(pipelineState)

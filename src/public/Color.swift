@@ -22,6 +22,10 @@ public struct Color {
     return Vec4(r: red, g: green, b: blue, a: alpha)
   }
 
+  var vec3: Vec3 {
+    return Vec3(red, green, blue)
+  }
+
   public init(_ red: Float, _ green: Float, _ blue: Float, _ alpha: Float = 1.0) {
     assert(red <= 1.0 && green <= 1.0 && blue <= 1.0 && alpha <= 1.0, "Color components should be less than 1.0.")
     assert(red >= 0.0 && green >= 0.0 && blue >= 0.0 && alpha >= 0.0, "Color components should be greater than 0.0.")

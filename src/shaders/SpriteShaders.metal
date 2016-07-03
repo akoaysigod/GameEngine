@@ -26,7 +26,17 @@ struct VertexOut {
   float4 position [[position]];
   float4 color;
   float2 texCoord;
-  float3 lightPos;
+};
+
+struct LightUniforms {
+  float3 ambientColor;
+  float2 resolution;
+  int lightCount;
+};
+
+struct LightData {
+  float4 position;
+  float4 color;
 };
 
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
@@ -46,50 +56,34 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
 fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
                                texture2d<float> tex2D [[texture(0)]],
                                texture2d<float> texLight [[texture(1)]],
-                               sampler sampler2D [[sampler(0)]])
+                               sampler sampler2D [[sampler(0)]],
+                               constant LightUniforms& lightUniforms [[buffer(0)]],
+                               const device LightData* lights [[buffer(1)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
 
-  float2 res = float2(768, 1024);
-  float3 lightColor = float3(0.67, 0.16, 0.0);
-
-  float3 lightPos = float3(0.5, 0.5, 0.01);
-  float3 lightDir = float3(lightPos.xy - (interpolated.position.xy / res), interpolated.lightPos.z);
-  lightDir.x *= res.x / res.y;
+  float2 resolution = lightUniforms.resolution;
 
   float3 N = normalize(normal.xyz * 2.0 - 1.0);
-  float3 L = normalize(lightDir);
 
-  float3 diffuse = lightColor * max(dot(N, L), 0.0);
+  float3 intensity = lightUniforms.ambientColor;
+  for (int i = 0; i != lightUniforms.lightCount; i++) {
+    LightData lightData = lights[i];
 
+    float3 lightDir = float3(lightData.position.xy - (interpolated.position.xy / resolution), lightData.position.z);
+    lightDir.x *= resolution.x / resolution.y;
 
-  float3 lightColor2 = float3(0.0, 0.0, 0.5);
-  float3 lightPos2 = float3(0.0, 0.5, 0.01);
-  float3 lightDir2 = float3(lightPos2.xy - (interpolated.position.xy / res), lightPos2.z);
-  lightDir2.x *= res.x / res.y;
-  float3 L2 = normalize(lightDir2);
+    float3 L = normalize(lightDir);
 
-  float3 lightColor3 = float3(0.0, 0.5, 0.0);
-  float3 lightPos3 = float3(0.5, 0.0, 0.01);
-  float3 lightDir3 = float3(lightPos3.xy - (interpolated.position.xy / res), lightPos3.z);
-  lightDir3.x *= res.x / res.y;
-  float3 L3 = normalize(lightDir3);
+    float3 diffuse = lightData.color.xyz * max(dot(N, L), 0.0);
 
+    float d = length(lightDir);
+    //float attenuation = 1.0 / (0.4 + (3.0 * d) + (20.0 * d * d));
+    float attenuation = (1.0 / (4.0 * d));
 
+    intensity += diffuse * attenuation;
+  }
 
-  float3 ambientColor = float3(0.25, 0.25, 0.25);
-
-  float d = length(lightDir);
-  float d2 = length(lightDir2);
-  float d3 = length(lightDir3);
-  float attenuation2 = 1.0 / (0.4 + (3 * d2) + (20 * d2 * d2));
-
-//+ ((1.0 / attenuation) * (lightColor2 * max(dot(N, L2), 0.0)))
-  float3 intensity = ambientColor + (diffuse * (1.0 / (4 * d))) +
-                    ((attenuation2 * 2) * (lightColor2 * max(dot(N, L2), 0.0))) +
-                    ((1.0 / length_squared(5 * lightDir3)) * (lightColor3 * max(dot(N, L3), 0.0)));
-  float3 finalColor = color.rgb * intensity;
-
-  return float4(finalColor, color.a);
+  return float4(color.rgb * intensity, color.a);
 }

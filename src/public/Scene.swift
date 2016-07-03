@@ -63,6 +63,16 @@ public class Scene {
    */
   public func didMoveToView(view: GameView) {}
 
+  /**
+   This method can be overridden to perform per frame updates.
+
+   - parameter delta: The amount of time that has passed since the last update.
+   */
+  public func update(delta: CFTimeInterval) {}
+}
+
+// MARK: Scene graph
+extension Scene {
   public func addNode(node: Node) {
     camera.addNode(node)
 
@@ -83,8 +93,6 @@ public class Scene {
   func updateNode(quad: Quad, index: Int, key: Int) {
     graphCache.updateNode(quad, index: index, key: key)
   }
-
-  public func update(delta: CFTimeInterval) {}
 }
 
 // MARK: Control related
@@ -102,10 +110,6 @@ extension Scene {
     return allNodes.filter { node -> Bool in
       let rect = node.frame
 
-//      let transform = node.parentTransform * node.transform
-//
-//      let ll = transform * Vec4(rect.origin.x, rect.origin.y, 1.0, 1.0)
-//      let ur = transform * Vec4(rect.upperRight.x, rect.upperRight.y, 1.0, 1.0)
       let ll = rect.origin
       let ur = rect.upperRight
 
@@ -124,7 +128,7 @@ extension Scene {
    */
   public func convertPointFromView(point: Point) -> Point {
     guard let height = view?.bounds.size.height else {
-      DLog("scene has not yet been present but you're trying to convert a point from view.")
+      DLog("Scene has not yet been presented but you're trying to convert a point scene coordinates.")
       return .zero
     }
 
@@ -134,6 +138,29 @@ extension Scene {
 
     let scale = 1.0 / camera.scale
     let translate = scale * (vec - camera.view.translation)
+
+    return Point(x: translate.x, y: translate.y)
+  }
+
+  /**
+   Converts a point from scene coordinates to a point in screen coordinates.
+
+   - parameter point: The point to convert to screen coordinates.
+
+   - returns: A point on the device's screen.
+   */
+  public func convertPointFromScene(point: Point) -> Point {
+    guard view != nil else {
+      DLog("Scene has not been presented but you're trying to convert a point to screen coordinates.")
+      return .zero
+    }
+
+    let x = point.x
+    let y = Float(view!.bounds.height) - point.y
+    let vec = Vec4(x, y, 1.0, 1.0)
+
+    let scale = 1.0 / camera.scale
+    let translate = scale * (float4(camera.view.translation.x + vec.x, vec.y - camera.view.translation.y, 1.0, 1.0))
 
     return Point(x: translate.x, y: translate.y)
   }

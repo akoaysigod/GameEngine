@@ -1,5 +1,5 @@
 //
-//  LightUniforms.swift
+//  LightData.swift
 //  GameEngine
 //
 //  Created by Anthony Green on 7/3/16.
@@ -8,8 +8,7 @@
 
 import simd
 
-struct LightUniforms {
-  let ambientColor: Vec3
-  let resolution: Vec2
-  let lightCount: Int
+struct LightData {
+  let position: Vec2
+  let color: Vec4
 }

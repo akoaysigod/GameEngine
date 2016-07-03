@@ -39,7 +39,7 @@ protocol RenderPipeline: Pipeline {
   associatedtype NodeType
 
   var pipelineState: MTLRenderPipelineState { get }
-  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [NodeType])
+  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [NodeType], lights: [LightNode]?)
 }
 
 extension RenderPipeline {
