@@ -60,7 +60,6 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
                                constant LightUniforms& lightUniforms [[buffer(0)]],
                                const device LightData* lights [[buffer(1)]])
 {
-  return tex2D.sample(sampler2D, interpolated.texCoord);
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
 
@@ -74,6 +73,8 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
 
     float3 lightDir = float3(lightData.position.xy - (interpolated.position.xy / resolution), lightData.position.z);
     lightDir.x *= resolution.x / resolution.y;
+    //lightDir.x /= (1000.0 / resolution.x);
+    //lightDir.y /= (1000.0 / resolution.y);
 
     float3 L = normalize(lightDir);
 

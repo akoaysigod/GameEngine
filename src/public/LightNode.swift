@@ -30,9 +30,11 @@ public final class LightNode: Node {
   private var relativePosition: Point = Point(x: 0, y: 0)
 
   var resolution: Size {
+    guard let camera = camera else { return .zero }
+
     //this needs to be in points for some reason I think
     let resolution = UIScreen.mainScreen().bounds.size
-    return Size(width: resolution.w, height: resolution.h)
+    return Size(width: resolution.w * camera.zoom, height: resolution.h * camera.zoom)
   }
 
   init(position: Point, color: Color, radius: Float) {
