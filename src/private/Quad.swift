@@ -62,6 +62,9 @@ struct Quad {
     let tWidth = frame.tWidth
     let tHeight = frame.tHeight
 
+    let halfWidth = 0.5 / tWidth
+    let halfHeight = 0.5 / tHeight
+
     let ll = Vertex(x: 0, y: sHeight, s: x / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
     let ul = Vertex(x: 0, y: 0, s: x / tWidth, t: y / tHeight, color: color.vec4)
     let ur = Vertex(x: sWidth, y: 0, s: (x + sWidth) / tWidth, t: y / tHeight, color: color.vec4)

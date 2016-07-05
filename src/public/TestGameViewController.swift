@@ -44,22 +44,22 @@ final class TestGameViewController: UIViewController {
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
     view.presentScene(scene)
 
-    let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown", "StairsUp"]
+    let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown"]
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
     if let environmentAtlas = try? TextureAtlas(imageNames: imageNames, createLightMap: true),
       let wall = environmentAtlas["Wall"],
       let floor = environmentAtlas["Floor"],
       let openDoor = environmentAtlas["OpenDoor"],
-      let stairsDown = environmentAtlas["StairsDown"],
-      let stairsUp = environmentAtlas["StairsUp"]
+      let stairsDown = environmentAtlas["StairsDown"]
+      //let stairsUp = environmentAtlas["StairsUp"]
 //      let wall = environmentAtlas["AngelBlue"],
 //      let floor = environmentAtlas["AngelBrown"],
 //      let openDoor = environmentAtlas["AngelGrey"],
 //      let stairsDown = environmentAtlas["AngelOrange"],
 //      let stairsUp = environmentAtlas["AngelPurple"]
     {
-      let _ = [wall, floor, openDoor, stairsDown, stairsUp]
+      let _ = [wall, floor, openDoor, stairsDown]
 
       (-5..<5).forEach { y in
         (-5..<5).forEach { x in

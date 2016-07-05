@@ -39,7 +39,7 @@ final class GraphCache {
           spriteIndex.updateValue(newIndex, forKey: key)
           spriteNodes.updateValue(arr + [sprite], forKey: key)
           
-          buffer.update(sprite.quad.vertices, size: sprite.quad.size, offset: (newIndex) * sprite.quad.size)
+          buffer.addData(sprite.quad.vertices, size: sprite.quad.size, offset: newIndex)
         }
         else {
           sprite.index = 0
@@ -47,7 +47,7 @@ final class GraphCache {
           spriteNodes.updateValue([sprite], forKey: key)
           
           let buffer = Buffer(length: sprite.quad.size * 500)
-          buffer.update(sprite.quad.vertices, size: sprite.quad.size)
+          buffer.addData(sprite.quad.vertices, size: sprite.quad.size)
           bufferManager?[key] = buffer
         }
       case let text as TextNode:
@@ -102,7 +102,7 @@ final class GraphCache {
     
     nodes.enumerate().forEach { i, node in
       node.index = i
-      buffer.update(node.quad.vertices, size: node.quad.size, offset: i * node.quad.size)
+      buffer.addData(node.quad.vertices, size: node.quad.size, offset: i * node.quad.size)
     }
     spriteIndex[key] = nodes.count
   }
@@ -110,6 +110,6 @@ final class GraphCache {
   func updateNode(quad: Quad, index: Int, key: Int) {
     guard let buffer = bufferManager?[key] else { return }
     
-    buffer.update(quad.vertices, size: quad.size, offset: quad.size * index)
+    buffer.addData(quad.vertices, size: quad.size, offset: index)
   }
 }

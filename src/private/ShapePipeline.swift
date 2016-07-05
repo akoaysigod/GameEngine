@@ -37,24 +37,28 @@ final class ShapePipeline: RenderPipeline {
 }
 
 extension ShapePipeline {
-  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [ShapeNode], lights: [LightNode]? = nil) {
+  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [ShapeNode], lights: [LightNode]? = nil) {
     guard let node = nodes.first else { return }
 
     encoder.setRenderPipelineState(pipelineState)
 
     if !didSetBuffer {
       didSetBuffer = true
-      vertexBuffer.update(node.quad.vertices, size: node.quad.size)
+      vertexBuffer.update(node.quad.vertices, size: node.quad.size, bufferIndex: bufferIndex)
     }
-    encoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, atIndex: 0)
+    let (vBuffer, offset) = vertexBuffer.nextBuffer(bufferIndex)
+    encoder.setVertexBuffer(vBuffer, offset: offset, atIndex: 0)
 
     nodes.enumerate().forEach { (i, node) in
-      instanceBuffer.update([ShapeUniforms(model: node.model, color: node.color.vec4)], size: sizeof(ShapeUniforms), offset: sizeof(ShapeUniforms) * i)
+      instanceBuffer.update([ShapeUniforms(model: node.model, color: node.color.vec4)], size: sizeof(ShapeUniforms), bufferIndex: bufferIndex, offset: sizeof(ShapeUniforms) * i)
     }
-    encoder.setVertexBuffer(instanceBuffer.buffer, offset: 0, atIndex: 1)
+    let (inBuffer, inOffset) = instanceBuffer.nextBuffer(bufferIndex)
+    encoder.setVertexBuffer(inBuffer, offset: inOffset, atIndex: 1)
 
-    encoder.setVertexBuffer(uniformBuffer.buffer, offset: 0, atIndex: 2)
+    let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, atIndex: 2)
 
-    encoder.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.buffer.length / sizeof(UInt16), indexType: .UInt16, indexBuffer: indexBuffer.buffer, indexBufferOffset: 0, instanceCount: nodes.count)
+    let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
+    encoder.drawIndexedPrimitives(.Triangle, indexCount: 6, indexType: .UInt16, indexBuffer: iBuffer, indexBufferOffset: iOffset, instanceCount: nodes.count)
   }
 }

@@ -60,6 +60,7 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
                                constant LightUniforms& lightUniforms [[buffer(0)]],
                                const device LightData* lights [[buffer(1)]])
 {
+  return tex2D.sample(sampler2D, interpolated.texCoord);
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
 

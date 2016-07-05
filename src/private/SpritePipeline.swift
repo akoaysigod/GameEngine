@@ -36,7 +36,7 @@ final class SpritePipeline: RenderPipeline {
 }
 
 extension SpritePipeline {
-  func encode(encoder: MTLRenderCommandEncoder, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode], lights: [LightNode]?) {
+  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode], lights: [LightNode]?) {
     guard let node = nodes.first,
           let texture = node.texture else { return }
     guard let lights = lights,
@@ -44,8 +44,10 @@ extension SpritePipeline {
 
     encoder.setRenderPipelineState(pipelineState)
 
-    encoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, atIndex: 0)
-    encoder.setVertexBuffer(uniformBuffer.buffer, offset: 0, atIndex: 1)
+    let (vBuffer, vOffset) = vertexBuffer.nextBuffer(bufferIndex)
+    encoder.setVertexBuffer(vBuffer, offset: vOffset, atIndex: 0)
+    let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, atIndex: 1)
 
     encoder.setFragmentSamplerState(sampler, atIndex: 0)
     encoder.setFragmentTexture(texture.texture, atIndex: 0)
@@ -56,10 +58,11 @@ extension SpritePipeline {
     var lightData = [light.lightData]
     encoder.setFragmentBytes(&lightData, length: strideof(LightData) * lights.count, atIndex: 1)
 
+    let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
     encoder.drawIndexedPrimitives(.Triangle,
                                   indexCount: 6 * nodes.count,
                                   indexType: .UInt16,
-                                  indexBuffer: indexBuffer.buffer,
-                                  indexBufferOffset: 0)
+                                  indexBuffer: iBuffer,
+                                  indexBufferOffset: iOffset)
   }
 }

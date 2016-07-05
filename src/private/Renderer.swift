@@ -20,6 +20,7 @@ final class Renderer {
   private let inflightSemaphore: dispatch_semaphore_t
 
   private let bufferManager: BufferManager
+  private var bufferIndex = 0
 
   init(device: MTLDevice, bufferManager: BufferManager) {
     //not sure where to set this up or if I even want to do it this way
@@ -48,20 +49,25 @@ final class Renderer {
     let commandBuffer = commandQueue.commandBuffer()
     commandBuffer.label = "Frame command buffer"
 
+    commandBuffer.addCompletedHandler { _ in
+      dispatch_semaphore_signal(self.inflightSemaphore)
+    }
+
     if let (renderPassDescriptor, drawable) = nextRenderPass() {
       let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
       encoder.setDepthStencilState(depthState)
       encoder.setFrontFacingWinding(.CounterClockwise)
       encoder.setCullMode(.Back)
 
-      bufferManager.uniformBuffer.update([view], size: sizeof(Mat4), offset: sizeof(Mat4))
+      bufferManager.uniformBuffer.update([view], size: sizeof(Mat4), bufferIndex: bufferIndex, offset: sizeof(Mat4))
 
       if shapeNodes.count > 0 {
-        shapePipeline.encode(encoder,
-                             vertexBuffer: bufferManager.shapeVertexBuffer,
-                             indexBuffer: bufferManager.shapeIndexBuffer,
-                             uniformBuffer: bufferManager.uniformBuffer,
-                             nodes: shapeNodes)
+//        shapePipeline.encode(encoder,
+//                             bufferIndex: bufferIndex,
+//                             vertexBuffer: bufferManager.shapeVertexBuffer,
+//                             indexBuffer: bufferManager.shapeIndexBuffer,
+//                             uniformBuffer: bufferManager.uniformBuffer,
+//                             nodes: shapeNodes)
       }
 
       for key in spriteNodes.keys {
@@ -69,6 +75,7 @@ final class Renderer {
         guard let vertexBuffer = bufferManager[key] else { continue }
 
         spritePipeline.encode(encoder,
+                              bufferIndex: bufferIndex,
                               vertexBuffer: vertexBuffer,
                               indexBuffer: bufferManager.indexBuffer,
                               uniformBuffer: bufferManager.uniformBuffer,
@@ -82,12 +89,10 @@ final class Renderer {
 
       encoder.endEncoding()
 
-      commandBuffer.addCompletedHandler { _ in
-        dispatch_semaphore_signal(self.inflightSemaphore)
-      }
-
       commandBuffer.presentDrawable(drawable)
     }
+
+    bufferIndex = (bufferIndex + 1) % BUFFER_SIZE
 
     commandBuffer.commit()
   }

@@ -27,16 +27,16 @@ final class BufferManager {
     self.device = device.device
 
     uniformBuffer = Buffer(length: sizeof(Mat4) * 2)
-    uniformBuffer.update([projection], size: sizeof(Mat4))
+    uniformBuffer.addData([projection], size: sizeof(Mat4))
     uiUniformBuffer = Buffer(length: sizeof(Mat4) * 2)
-    uiUniformBuffer.update([projection], size: sizeof(Mat4))
+    uiUniformBuffer.addData([projection], size: sizeof(Mat4)) //do I still need this?
 
     indexBuffer = Buffer(length: Quad.indicesSize * startSize)
     let (indexData, size) = Quad.indices(startSize)
-    indexBuffer.update(indexData, size: size)
+    indexBuffer.addData(indexData, size: size)
 
     shapeIndexBuffer = Buffer(length: Quad.indicesSize)
-    shapeIndexBuffer.update(Array(indexData[0..<6]), size: Quad.indicesSize)
+    shapeIndexBuffer.addData(Array(indexData[0..<6]), size: Quad.indicesSize)
 
     shapeVertexBuffer = Buffer(length: Quad.size)
   }
@@ -51,7 +51,7 @@ final class BufferManager {
   }
 
   func updateProjection(projection: Mat4) {
-    uniformBuffer.update([projection], size: sizeof(Mat4))
-    uiUniformBuffer.update([projection], size: sizeof(Mat4))
+    uniformBuffer.addData([projection], size: sizeof(Mat4))
+    uiUniformBuffer.addData([projection], size: sizeof(Mat4))
   }
 }
