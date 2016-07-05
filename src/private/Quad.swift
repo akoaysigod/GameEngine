@@ -55,8 +55,6 @@ struct Quad {
   }
 
   static func spriteRect(frame: TextureFrame, color: Color) -> Quad {
-    let x = frame.x
-    let y = frame.y
     let sWidth = frame.sWidth
     let sHeight = frame.sHeight
     let tWidth = frame.tWidth
@@ -64,6 +62,10 @@ struct Quad {
 
     let halfWidth = 0.5 / tWidth
     let halfHeight = 0.5 / tHeight
+
+    //hmm this was just guess work and might break in the future
+    let x = frame.x + halfWidth
+    let y = frame.y - halfHeight
 
     let ll = Vertex(x: 0, y: sHeight, s: x / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
     let ul = Vertex(x: 0, y: 0, s: x / tWidth, t: y / tHeight, color: color.vec4)
