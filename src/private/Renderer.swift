@@ -15,6 +15,7 @@ final class Renderer {
   private let shapePipeline: ShapePipeline
   private let spritePipeline: SpritePipeline
   private let textPipeline: TextPipeline
+  private let lightPipeline: LightPipeline
   private let compositionPipeline: CompositionPipeline
   private let depthState: MTLDepthStencilState
 
@@ -39,6 +40,7 @@ final class Renderer {
     shapePipeline = factory.constructShapePipeline()
     spritePipeline = factory.constructSpritePipeline()
     textPipeline = factory.constructTextPipeline()
+    lightPipeline = factory.constructLightPipeline()
     compositionPipeline = factory.constructCompositionPipeline()
     depthState = factory.constructDepthStencil()
 
@@ -91,7 +93,9 @@ final class Renderer {
         //textPipeline.encode(encoder, nodes: textNodes)
       }
 
-      compositionPipeline.encode(encoder)
+      if lightNodes.count > 0 {
+        compositionPipeline.encode(encoder)
+      }
 
       encoder.endEncoding()
 

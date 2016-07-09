@@ -149,6 +149,10 @@ final class PipelineFactory {
     return TextPipeline(device: device)
   }
 
+  func constructLightPipeline() -> LightPipeline {
+    return LightPipeline(device: device)
+  }
+
   func constructCompositionPipeline() -> CompositionPipeline {
     return CompositionPipeline(device: device)
   }

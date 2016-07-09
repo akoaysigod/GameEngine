@@ -10,11 +10,11 @@
 #include "Structures.h"
 
 using namespace metal;
+using namespace Structures;
 
 struct VertexOutput {
   float4 position [[position]];
 };
-
 
 vertex VertexOutput compositionVertex(uint vid [[vertex_id]],
                                       constant float2 *position [[buffer(0)]])

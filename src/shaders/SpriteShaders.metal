@@ -10,6 +10,7 @@
 #include "Structures.h"
 
 using namespace metal;
+using namespace Structures;
 
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
@@ -91,6 +92,8 @@ fragment FragOutput spriteFragment(VertexOut interpolated [[stage_in]],
 
   //return float4(color.rgb * intensity, color.a);
   FragOutput output;
-  output.diffuse = float4(color.rgb * intensity, color.a);
+  output.diffuse = color;
+  output.normal = normal;
+  //output.diffuse = float4(color.rgb * intensity, color.a);
   return output;
 }

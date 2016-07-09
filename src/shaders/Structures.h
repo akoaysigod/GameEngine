@@ -10,14 +10,14 @@
 #define Structures_h
 
 #include <simd/simd.h>
-
-using namespace simd;
-
-typedef struct
-{
-  float4 diffuse [[color(0)]];
-  float4 normal  [[color(1)]];
-  float4 light   [[color(2)]];
-} FragOutput;
-
+namespace Structures {
+  using namespace simd;
+  
+  typedef struct
+  {
+    float4 diffuse [[color(0)]];
+    float4 normal  [[color(1)]];
+    float4 light   [[color(2)]];
+  } FragOutput;
+}
 #endif /* Structures_h */
