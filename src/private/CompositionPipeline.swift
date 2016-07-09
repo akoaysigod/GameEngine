@@ -35,7 +35,7 @@ final class CompositionPipeline: RenderPipeline {
       -1.0, -1.0,
       -1.0, 1.0,
       1.0, 1.0,
-      1.0, -1.0,
+      1.0, -1.0
     ]
 
     let bufferSize = sizeof(Float) * quadData.count

@@ -15,6 +15,7 @@ final class Renderer {
   private let shapePipeline: ShapePipeline
   private let spritePipeline: SpritePipeline
   private let textPipeline: TextPipeline
+  private let compositionPipeline: CompositionPipeline
   private let depthState: MTLDepthStencilState
 
   private let inflightSemaphore: dispatch_semaphore_t
@@ -38,6 +39,7 @@ final class Renderer {
     shapePipeline = factory.constructShapePipeline()
     spritePipeline = factory.constructSpritePipeline()
     textPipeline = factory.constructTextPipeline()
+    compositionPipeline = factory.constructCompositionPipeline()
     depthState = factory.constructDepthStencil()
 
     inflightSemaphore = dispatch_semaphore_create(BUFFER_SIZE)
@@ -73,8 +75,8 @@ final class Renderer {
       }
 
       for key in spriteNodes.keys {
-        guard let spriteNodes = spriteNodes[key] else { continue }
-        guard let vertexBuffer = bufferManager[key] else { continue }
+        guard let spriteNodes = spriteNodes[key],
+              let vertexBuffer = bufferManager[key] else { continue }
 
         spritePipeline.encode(encoder,
                               bufferIndex: bufferIndex,
@@ -88,6 +90,8 @@ final class Renderer {
       if textNodes.count > 0 {
         //textPipeline.encode(encoder, nodes: textNodes)
       }
+
+      compositionPipeline.encode(encoder)
 
       encoder.endEncoding()
 

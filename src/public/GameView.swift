@@ -92,7 +92,7 @@ extension GameView {
     let size = getNewSize()
     let width = Int(size.width)
     let height = Int(size.height)
-    renderPassQueue = RenderPassQueue(depthTexture: RenderPassQueue.createDepthTexture(width, height: height, device: device))
+    renderPassQueue = RenderPassQueue(device: Device.shared, depthTexture: RenderPassQueue.createDepthTexture(width, height: height, device: device))
 
     projection = Projection(size: size.size)
     bufferManager = BufferManager(projection: projection.projection)
@@ -159,9 +159,6 @@ extension GameView {
 
   private func updateDrawableSize() {
     let newSize = getNewSize()
-    let width = Int(newSize.width)
-    let height = Int(newSize.height)
-    renderPassQueue.updateDepthTexture(width, height: height, device: device)
     metalLayer?.drawableSize = newSize
 
     projection.update(newSize.size)

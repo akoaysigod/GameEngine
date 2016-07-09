@@ -46,8 +46,8 @@
 		EA8C82C71CDE61BE00D1E59F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8C82C51CDE61BE00D1E59F /* Updater.swift */; };
 		EA9537851D2F76360029B741 /* park.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EA9537841D2F76360029B741 /* park.gpx */; };
 		EA9537871D318C060029B741 /* Structures.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9537861D318C060029B741 /* Structures.h */; };
-		EA9537891D31981B0029B741 /* Composition.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9537881D31981B0029B741 /* Composition.metal */; };
-		EA95378A1D31981B0029B741 /* Composition.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9537881D31981B0029B741 /* Composition.metal */; };
+		EA9537891D31981B0029B741 /* CompositionShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9537881D31981B0029B741 /* CompositionShaders.metal */; };
+		EA95378A1D31981B0029B741 /* CompositionShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9537881D31981B0029B741 /* CompositionShaders.metal */; };
 		EA95378C1D3198E40029B741 /* CompositionPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA95378B1D3198E40029B741 /* CompositionPipeline.swift */; };
 		EA95378D1D3198E40029B741 /* CompositionPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA95378B1D3198E40029B741 /* CompositionPipeline.swift */; };
 		EA9B1E7B1C724C3D000FFDF7 /* TextShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */; };
@@ -162,7 +162,7 @@
 		EA8C82C51CDE61BE00D1E59F /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updater.swift; path = src/private/Updater.swift; sourceTree = SOURCE_ROOT; };
 		EA9537841D2F76360029B741 /* park.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = park.gpx; path = ../../../Desktop/park.gpx; sourceTree = "<group>"; };
 		EA9537861D318C060029B741 /* Structures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Structures.h; path = src/shaders/Structures.h; sourceTree = SOURCE_ROOT; };
-		EA9537881D31981B0029B741 /* Composition.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Composition.metal; path = src/shaders/Composition.metal; sourceTree = SOURCE_ROOT; };
+		EA9537881D31981B0029B741 /* CompositionShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = CompositionShaders.metal; path = src/shaders/CompositionShaders.metal; sourceTree = SOURCE_ROOT; };
 		EA95378B1D3198E40029B741 /* CompositionPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompositionPipeline.swift; path = src/private/CompositionPipeline.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TextShaders.metal; path = src/shaders/TextShaders.metal; sourceTree = SOURCE_ROOT; };
 		EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = src/private/Fonts.swift; sourceTree = SOURCE_ROOT; };
@@ -316,8 +316,8 @@
 			isa = PBXGroup;
 			children = (
 				EA9537861D318C060029B741 /* Structures.h */,
-				EA9537881D31981B0029B741 /* Composition.metal */,
 				EABDF7511CFCBEAB00F555BF /* NormalShader.metal */,
+				EA9537881D31981B0029B741 /* CompositionShaders.metal */,
 				EAA99E371C41E80E00CF3246 /* ShapeShaders.metal */,
 				EAA99E381C41E80E00CF3246 /* SpriteShaders.metal */,
 				EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */,
@@ -638,7 +638,7 @@
 				EA6B126C1CF13DDA004E4FCB /* TextPipeline.swift in Sources */,
 				EA6C2A151CF2378900F99E1D /* Projection.swift in Sources */,
 				EAE75E371C42D091001EB176 /* Scene.swift in Sources */,
-				EA9537891D31981B0029B741 /* Composition.metal in Sources */,
+				EA9537891D31981B0029B741 /* CompositionShaders.metal in Sources */,
 				EAEF9CCA1CD6811A0059832D /* Size.swift in Sources */,
 				EAFD769D1C836C0500ABDC50 /* Updateable.swift in Sources */,
 				EAF7BB011C8CC85700258C37 /* Quad.swift in Sources */,
@@ -718,7 +718,7 @@
 				EA1ACBEE1C9E53A800878EE6 /* Texture.swift in Sources */,
 				EAEF9CCB1CD6811A0059832D /* Size.swift in Sources */,
 				EAA99DDD1C41E51C00CF3246 /* Action.swift in Sources */,
-				EA95378A1D31981B0029B741 /* Composition.metal in Sources */,
+				EA95378A1D31981B0029B741 /* CompositionShaders.metal in Sources */,
 				EA0964CA1CBAF05100C03BA9 /* Uniforms.swift in Sources */,
 				EA9B1E821C727625000FFDF7 /* TextNode.swift in Sources */,
 				EA1993E31CD56239009DC869 /* Easing.swift in Sources */,

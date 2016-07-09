@@ -7,6 +7,7 @@
 //
 
 #include <metal_stdlib>
+#include "Structures.h"
 
 using namespace metal;
 
@@ -53,7 +54,7 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
   return outVertex;
 }
 
-fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
+fragment FragOutput spriteFragment(VertexOut interpolated [[stage_in]],
                                texture2d<float> tex2D [[texture(0)]],
                                texture2d<float> texLight [[texture(1)]],
                                sampler sampler2D [[sampler(0)]],
@@ -88,5 +89,8 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
     intensity += diffuse * attenuation;
   //}
 
-  return float4(color.rgb * intensity, color.a);
+  //return float4(color.rgb * intensity, color.a);
+  FragOutput output;
+  output.diffuse = float4(color.rgb * intensity, color.a);
+  return output;
 }

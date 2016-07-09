@@ -43,24 +43,30 @@ protocol RenderPipeline: Pipeline {
 }
 
 extension RenderPipeline {
-  static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction) {
+  static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String?) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction?) {
     let defaultLibrary = Self.getLibrary(device)
 
     let vProgram = Self.newFunction(defaultLibrary, functionName: vertexProgram)
-    let fProgram = Self.newFunction(defaultLibrary, functionName: fragmentProgram)
+
+    let fProgram = { () -> MTLFunction? in
+      guard let fragmentProgram = fragmentProgram else { return nil }
+      return Self.newFunction(defaultLibrary, functionName: fragmentProgram)
+    }()
 
     return (vProgram, fProgram)
   }
 
   static func createPipelineDescriptor(device: MTLDevice,
                                        vertexProgram: String,
-                                       fragmentProgram: String) -> MTLRenderPipelineDescriptor {
+                                       fragmentProgram: String?) -> MTLRenderPipelineDescriptor {
     let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexProgram
     pipelineDescriptor.fragmentFunction = fragmentProgram
     pipelineDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
+    pipelineDescriptor.colorAttachments[1].pixelFormat = .BGRA8Unorm
+    pipelineDescriptor.colorAttachments[2].pixelFormat = .BGRA8Unorm
     pipelineDescriptor.depthAttachmentPixelFormat = .Depth32Float
 
     //alpha testing
@@ -100,9 +106,9 @@ extension RenderPipeline {
     do {
       return try device.newRenderPipelineStateWithDescriptor(descriptor)
     }
-    catch let error {
+    catch let error as NSError {
       //this seems to fail only on trying to pass it poorly formatted descriptors
-      fatalError("\(Self.self): Failed to create pipeline state, error \(error)")
+      fatalError("\(Self.self): Failed to create pipeline state, Error:\n" + error.description)
     }
   }
 
@@ -141,5 +147,9 @@ final class PipelineFactory {
 
   func constructTextPipeline() -> TextPipeline {
     return TextPipeline(device: device)
+  }
+
+  func constructCompositionPipeline() -> CompositionPipeline {
+    return CompositionPipeline(device: device)
   }
 }
