@@ -47,7 +47,7 @@ final class Renderer {
     dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
 
     let commandBuffer = commandQueue.commandBuffer()
-    commandBuffer.label = "Frame command buffer"
+    commandBuffer.label = "main command buffer"
 
     commandBuffer.addCompletedHandler { _ in
       dispatch_semaphore_signal(self.inflightSemaphore)
@@ -55,6 +55,8 @@ final class Renderer {
 
     if let (renderPassDescriptor, drawable) = nextRenderPass() {
       let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
+      encoder.label = "main encoder"
+
       encoder.setDepthStencilState(depthState)
       encoder.setFrontFacingWinding(.CounterClockwise)
       encoder.setCullMode(.Back)

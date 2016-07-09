@@ -44,6 +44,7 @@
 		EA72451D1C8CFF6E0059B068 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72451B1C8CFF6E0059B068 /* Device.swift */; };
 		EA8C82C61CDE61BE00D1E59F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8C82C51CDE61BE00D1E59F /* Updater.swift */; };
 		EA8C82C71CDE61BE00D1E59F /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8C82C51CDE61BE00D1E59F /* Updater.swift */; };
+		EA9537851D2F76360029B741 /* park.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EA9537841D2F76360029B741 /* park.gpx */; };
 		EA9B1E7B1C724C3D000FFDF7 /* TextShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */; };
 		EA9B1E7C1C724C3D000FFDF7 /* TextShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */; };
 		EA9B1E7E1C725EDE000FFDF7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */; };
@@ -154,6 +155,7 @@
 		EA6C2A141CF2378900F99E1D /* Projection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Projection.swift; path = src/private/Projection.swift; sourceTree = SOURCE_ROOT; };
 		EA72451B1C8CFF6E0059B068 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = src/private/Device.swift; sourceTree = SOURCE_ROOT; };
 		EA8C82C51CDE61BE00D1E59F /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Updater.swift; path = src/private/Updater.swift; sourceTree = SOURCE_ROOT; };
+		EA9537841D2F76360029B741 /* park.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = park.gpx; path = ../../../Desktop/park.gpx; sourceTree = "<group>"; };
 		EA9B1E7A1C724C3D000FFDF7 /* TextShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TextShaders.metal; path = src/shaders/TextShaders.metal; sourceTree = SOURCE_ROOT; };
 		EA9B1E7D1C725EDE000FFDF7 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = src/private/Fonts.swift; sourceTree = SOURCE_ROOT; };
 		EA9B1E801C727625000FFDF7 /* TextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextNode.swift; path = src/public/TextNode.swift; sourceTree = SOURCE_ROOT; };
@@ -228,6 +230,7 @@
 		EA0363B01C31C85E00D283E3 = {
 			isa = PBXGroup;
 			children = (
+				EA9537841D2F76360029B741 /* park.gpx */,
 				EA0363BB1C31C85E00D283E3 /* GameEngine */,
 				EAA99DE71C41E53800CF3246 /* Shaders */,
 				EAE6ED401CCBC1090046A5BE /* Math */,
@@ -569,6 +572,7 @@
 				EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */,
 				EA1ACBF31C9E5D7000878EE6 /* error.png in Resources */,
 				EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */,
+				EA9537851D2F76360029B741 /* park.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

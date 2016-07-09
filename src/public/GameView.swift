@@ -59,7 +59,7 @@ public class GameView: UIView {
     scene.view = self
     scene.didMoveToView(self)
     paused = false
-    timer.addToRunLoop(.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+    timer.addToRunLoop(.mainRunLoop(), forMode: NSRunLoopCommonModes)
   }
 }
 

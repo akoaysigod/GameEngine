@@ -30,6 +30,7 @@ final class SpritePipeline: RenderPipeline {
     sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
 
     let pipelineDescriptor = SpritePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    pipelineDescriptor.label = "sprite pipeline"
 
     pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }
@@ -38,9 +39,11 @@ final class SpritePipeline: RenderPipeline {
 extension SpritePipeline {
   func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode], lights: [LightNode]?) {
     guard let node = nodes.first,
-          let texture = node.texture else { return }
-    guard let lights = lights,
+          let texture = node.texture,
+          let lights = lights,
           let light = lights.first else { return }
+
+    encoder.pushDebugGroup("sprite encoder")
 
     encoder.setRenderPipelineState(pipelineState)
 
@@ -55,7 +58,8 @@ extension SpritePipeline {
 
     var lightUniforms = LightUniforms(ambientColor: light.ambientColor.vec3, resolution: light.resolution.vec2, lightCount: lights.count)
     encoder.setFragmentBytes(&lightUniforms, length: strideof(LightUniforms), atIndex: 0)
-    var lightData = [light.lightData]
+    //var lightData = [light.lightData]
+    var lightData = light.lightData
     encoder.setFragmentBytes(&lightData, length: strideof(LightData) * lights.count, atIndex: 1)
 
     let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
@@ -64,5 +68,7 @@ extension SpritePipeline {
                                   indexType: .UInt16,
                                   indexBuffer: iBuffer,
                                   indexBufferOffset: iOffset)
+
+    encoder.popDebugGroup()
   }
 }

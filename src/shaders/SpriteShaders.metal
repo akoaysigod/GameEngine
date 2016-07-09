@@ -31,7 +31,7 @@ struct VertexOut {
 struct LightUniforms {
   float3 ambientColor;
   float2 resolution;
-  int lightCount;
+  uint lightCount;
 };
 
 struct LightData {
@@ -58,7 +58,7 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
                                texture2d<float> texLight [[texture(1)]],
                                sampler sampler2D [[sampler(0)]],
                                constant LightUniforms& lightUniforms [[buffer(0)]],
-                               const device LightData* lights [[buffer(1)]])
+                               constant LightData& lights [[buffer(1)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
@@ -68,8 +68,9 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
   float3 N = normalize(normal.xyz * 2.0 - 1.0);
 
   float3 intensity = lightUniforms.ambientColor;
-  for (int i = 0; i != lightUniforms.lightCount; i++) {
-    LightData lightData = lights[i];
+  //for (int i = 0; i != lightUniforms.lightCount; i++) {
+    //LightData lightData = lights[i];
+  LightData lightData = lights;
 
     float3 lightDir = float3(lightData.position.xy - (interpolated.position.xy / resolution), lightData.position.z);
     lightDir.x *= resolution.x / resolution.y;
@@ -85,7 +86,7 @@ fragment float4 spriteFragment(VertexOut interpolated [[stage_in]],
     float attenuation = (1.0 / (4.0 * d));
 
     intensity += diffuse * attenuation;
-  }
+  //}
 
   return float4(color.rgb * intensity, color.a);
 }
