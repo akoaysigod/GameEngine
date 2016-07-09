@@ -12,9 +12,9 @@ final class Buffer { //might change this to a protocol
   private var buffer: MTLBuffer
   private let length: Int
 
-  init(length: Int, device: Device = Device.shared) {
+  init(length: Int, instances: Int = BUFFER_SIZE, device: Device = Device.shared) {
     self.length = length
-    buffer = device.device.newBufferWithLength(length * BUFFER_SIZE, options: .CPUCacheModeDefaultCache)
+    buffer = device.device.newBufferWithLength(length * instances, options: .CPUCacheModeDefaultCache)
   }
 
   func addData<T>(data: [T], size: Int, offset: Int = 0) {

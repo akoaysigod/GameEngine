@@ -36,10 +36,10 @@ extension Pipeline {
 }
 
 protocol RenderPipeline: Pipeline {
-  associatedtype NodeType
+  //associatedtype NodeType
 
   var pipelineState: MTLRenderPipelineState { get }
-  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [NodeType], lights: [LightNode]?)
+//  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [NodeType], lights: [LightNode]?)
 }
 
 extension RenderPipeline {
@@ -53,8 +53,8 @@ extension RenderPipeline {
   }
 
   static func createPipelineDescriptor(device: MTLDevice,
-                                               vertexProgram: String,
-                                               fragmentProgram: String) -> MTLRenderPipelineDescriptor {
+                                       vertexProgram: String,
+                                       fragmentProgram: String) -> MTLRenderPipelineDescriptor {
     let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -90,6 +90,8 @@ extension RenderPipeline {
     vertexDescriptor.layouts[0].stride = strideof(Vertex)
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
+
+    pipelineDescriptor.label = "\(Self.self)"
 
     return pipelineDescriptor
   }
