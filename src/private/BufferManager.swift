@@ -23,6 +23,9 @@ final class BufferManager {
 
   private var vertexBuffer = [Int: Buffer]()
 
+  var lightVertexBuffer: Buffer?
+  private let maxLights = 100
+
   init(projection: Mat4, device: Device = Device.shared) {
     self.device = device.device
 
@@ -39,6 +42,8 @@ final class BufferManager {
     shapeIndexBuffer.addData(Array(indexData[0..<6]), size: Quad.indicesSize)
 
     shapeVertexBuffer = Buffer(length: Quad.size)
+
+    //lightVertexBuffer = Buffer(length: maxLights * )
   }
 
   subscript(index: Int) -> Buffer? {

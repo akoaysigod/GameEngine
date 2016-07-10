@@ -18,6 +18,7 @@ final class GraphCache {
   var bufferManager: BufferManager?
   private(set) var textNodes = [TextNode]()
   private(set) var lightNodes = [LightNode]()
+  private var lightNodeIndex = 0
 
   func addNode(node: Node) {
     let allNodes = [node] + node.allNodes
@@ -53,6 +54,8 @@ final class GraphCache {
       case let text as TextNode:
         textNodes += [text]
       case let light as LightNode:
+        light.index = lightNodeIndex
+        lightNodeIndex += 1
         lightNodes += [light]
       case _: break
       }
@@ -80,7 +83,9 @@ final class GraphCache {
       case let text as TextNode:
         textNodes.remove(text)
       case let light as LightNode:
+        lightNodeIndex -= 1
         lightNodes.remove(light)
+        //realignLightNodeData
       case _: break
       }
     }

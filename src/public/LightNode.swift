@@ -38,7 +38,7 @@ public final class LightNode: Node {
   }
   public var hidden: Bool = false
   private(set) public var isVisible = true
-  public var radius: Float = 1.0
+  public var radius: Float = 0.0
   private var relativePosition: Point = Point(x: 0, y: 0)
 
   var resolution: Size {

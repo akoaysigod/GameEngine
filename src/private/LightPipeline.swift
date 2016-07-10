@@ -37,8 +37,10 @@ extension LightPipeline {
 
     encoder.setVertexBytes(light.verts, length: strideof(packed_float4) * light.verts.count, atIndex: 0)
 
+    var pos = Vec2(0.0, 0.0)
+    encoder.setVertexBytes(&pos, length: sizeof(Vec2), atIndex: 1)
     let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(uBuffer, offset: uOffset, atIndex: 1)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, atIndex: 2)
 
     var lightUniforms = LightUniforms(resolution: light.resolution.vec2)
     encoder.setFragmentBytes(&lightUniforms, length: strideof(LightUniforms), atIndex: 0)
