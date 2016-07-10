@@ -9,7 +9,5 @@
 import simd
 
 struct LightUniforms {
-  let ambientColor: Vec3
   let resolution: Vec2
-  let lightCount: Int
 }

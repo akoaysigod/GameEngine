@@ -39,7 +39,7 @@ public class Scene {
   let graphCache = GraphCache()
 
   /// the ambient color for when light nodes are present, defaults to white
-  public var ambientLightColor: Color = Color(1.0, 1.0, 1.0, 1.0)
+  public var ambientLightColor: Color = Color(1.0, 1.0, 1.0, 1.0) 
 
   /**
    Create a scene of a given size. This will serve as the root node to which all other nodes should be added to.

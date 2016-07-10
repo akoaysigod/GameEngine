@@ -93,8 +93,9 @@ final class Renderer {
         //textPipeline.encode(encoder, nodes: textNodes)
       }
 
-      if lightNodes.count > 0 {
-        compositionPipeline.encode(encoder)
+      if let lightNode = lightNodes.first {
+        lightPipeline.encode(encoder, bufferIndex: bufferIndex, uniformBuffer: bufferManager.uniformBuffer, lightNodes: lightNodes)
+        compositionPipeline.encode(encoder, ambientColor: lightNode.ambientColor)
       }
 
       encoder.endEncoding()

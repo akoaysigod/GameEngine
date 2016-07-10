@@ -14,6 +14,18 @@ public final class LightNode: Node {
     return LightData(position: Vec2(relativePosition.x, relativePosition.y), color: color.vec4)
   }
 
+  var verts: [packed_float4] {
+    return [
+      packed_float4(0.0, 0.0, 0.0, 1.0),
+      packed_float4(100.0, 0.0, 0.0, 1.0),
+      packed_float4(0.0, 100.0, 0.0, 1.0),
+
+      packed_float4(100.0, 0.0, 0.0, 1.0),
+      packed_float4(100.0, 100.0, 0.0, 1.0),
+      packed_float4(0.0, 100.0, 0.0, 1.0)
+    ]
+  }
+
   public var color: Color
   public var alpha: Float {
     get { return color.alpha }

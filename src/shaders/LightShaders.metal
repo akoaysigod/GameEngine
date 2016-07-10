@@ -12,8 +12,12 @@
 using namespace metal;
 using namespace Structures;
 
+//struct VertexIn {
+//  float4 position [[attribute(0)]];
+//};
+
 struct VertexIn {
-  float4 position [[attribute(0)]];
+  packed_float4 position [[attribute(0)]];
 };
 
 struct Uniforms {
@@ -26,7 +30,6 @@ struct VertexOut {
 };
 
 struct LightUniforms {
-  float3 ambientColor;
   float2 resolution;
 };
 
@@ -73,7 +76,7 @@ fragment FragOut lightFragment(VertexOut interpolated [[stage_in]],
   float attenuation = (1.0 / (4.0 * d));
 
   float4 light = gBuffer.light;
-  light.rgb += lightUniforms.ambientColor + (diffuse * attenuation);
+  light.rgb += diffuse * attenuation;
 
   FragOut fragOut = FragOut();
   fragOut.diffuse = gBuffer.diffuse;

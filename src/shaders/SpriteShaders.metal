@@ -56,47 +56,14 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
 }
 
 fragment FragOut spriteFragment(VertexOut interpolated [[stage_in]],
-                                   texture2d<float> tex2D [[texture(0)]],
-                                   texture2d<float> texLight [[texture(1)]],
+                                   texture2d<float> texColor [[texture(0)]],
+                                   texture2d<float> texNormal [[texture(1)]],
                                    sampler sampler2D [[sampler(0)]],
                                    constant LightUniforms& lightUniforms [[buffer(0)]],
                                    constant LightData& lights [[buffer(1)]])
 {
-  float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
-  float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
-
-  float2 resolution = lightUniforms.resolution;
-
-  float3 N = normalize(normal.xyz * 2.0 - 1.0);
-
-  float3 intensity = lightUniforms.ambientColor;
-  //for (int i = 0; i != lightUniforms.lightCount; i++) {
-    //LightData lightData = lights[i];
-  LightData lightData = lights;
-
-    float3 lightDir = float3(lightData.position.xy - (interpolated.position.xy / resolution), lightData.position.z);
-    lightDir.x *= resolution.x / resolution.y;
-    //lightDir.x /= (1000.0 / resolution.x);
-    //lightDir.y /= (1000.0 / resolution.y);
-
-    float3 L = normalize(lightDir);
-
-    float3 diffuse = lightData.color.xyz * max(dot(N, L), 0.0);
-
-    float d = length(lightDir);
-    //float attenuation = 1.0 / (0.4 + (3.0 * d) + (20.0 * d * d));
-    float attenuation = (1.0 / (4.0 * d));
-
-    intensity += diffuse * attenuation;
-  //}
-
-  float4 light = float4();
-  light.a = color.a;
-  //return float4(color.rgb * intensity, color.a);
-  FragOut output;
-  output.diffuse = color;
-  output.normal = normal;
-  output.light = light;
-  //output.diffuse = float4(color.rgb * intensity, color.a);
-  return output;
+  FragOut fragOut = FragOut();
+  fragOut.diffuse = texColor.sample(sampler2D, interpolated.texCoord);
+  fragOut.normal = texNormal.sample(sampler2D, interpolated.texCoord);
+  return fragOut;
 }

@@ -56,7 +56,7 @@ extension SpritePipeline {
     encoder.setFragmentTexture(texture.texture, atIndex: 0)
     encoder.setFragmentTexture(texture.lightMapTexture, atIndex: 1)
 
-    var lightUniforms = LightUniforms(ambientColor: light.ambientColor.vec3, resolution: light.resolution.vec2, lightCount: lights.count)
+    var lightUniforms = LightUniforms(resolution: light.resolution.vec2)
     encoder.setFragmentBytes(&lightUniforms, length: strideof(LightUniforms), atIndex: 0)
     //var lightData = [light.lightData]
     var lightData = light.lightData
