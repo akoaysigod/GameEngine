@@ -16,6 +16,7 @@ import simd
 
 public typealias Mat4 = float4x4
 public typealias Vec4 = float4
+public typealias PVec4 = packed_float4
 
 /// Vec4 is a typealias for simd's float4, this extension provides convenience methods for initializing.
 public extension Vec4 {

@@ -81,7 +81,7 @@ final class TestGameViewController: UIViewController {
       stairs.zPosition = 1
       scene.addNode(stairs)
 
-      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 1.0)
+      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
       scene.addNode(light)
 //      var nodes = [SpriteNode]()
 //      for y in (-10..<10) {

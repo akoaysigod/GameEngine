@@ -11,18 +11,24 @@ import UIKit
 
 public final class LightNode: Node {
   var lightData: LightData {
-    return LightData(position: Vec2(relativePosition.x, relativePosition.y), color: color.vec4)
+    return LightData(position: Vec2(relativePosition.x, relativePosition.y), color: color.vec4, radius: radius)
   }
 
   var verts: [packed_float4] {
+    let ll = PVec4(position.x - radius, position.y - radius, 0.0, 1.0)
+    let lr = PVec4(position.x + radius, position.y - radius, 0.0, 1.0)
+    let ul = PVec4(position.x - radius, position.y + radius, 0.0, 1.0)
+    let ur = PVec4(position.x + radius, position.y + radius, 0.0, 1.0)
+    //return [ll, lr, ul, ul, lr, ur]
+
     return [
       packed_float4(0.0, 0.0, 0.0, 1.0),
-      packed_float4(100.0, 0.0, 0.0, 1.0),
-      packed_float4(0.0, 100.0, 0.0, 1.0),
+      packed_float4(radius, 0.0, 0.0, 1.0),
+      packed_float4(0.0, radius, 0.0, 1.0),
 
-      packed_float4(100.0, 0.0, 0.0, 1.0),
-      packed_float4(100.0, 100.0, 0.0, 1.0),
-      packed_float4(0.0, 100.0, 0.0, 1.0)
+      packed_float4(radius, 0.0, 0.0, 1.0),
+      packed_float4(radius, radius, 0.0, 1.0),
+      packed_float4(0.0, radius, 0.0, 1.0)
     ]
   }
 
