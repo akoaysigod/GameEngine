@@ -25,7 +25,7 @@ vertex VertexOutput compositionVertex(uint vid [[vertex_id]],
 }
 
 fragment float4 compositionFragment(VertexOutput interpolated [[stage_in]],
-                                    FragOutput gBuffer)
+                                    FragOut gBuffer)
 {
   return gBuffer.diffuse;
 }

@@ -14,8 +14,8 @@ using namespace Structures;
 
 struct VertexIn {
   packed_float4 position [[attribute(0)]];
-  packed_float4 color    [[attribute(2)]];
-  packed_float2 texCoord [[attribute(1)]];
+  packed_float4 color    [[attribute(1)]];
+  packed_float2 texCoord [[attribute(2)]];
   packed_float2 pad;
 };
 
@@ -55,12 +55,12 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
   return outVertex;
 }
 
-fragment FragOutput spriteFragment(VertexOut interpolated [[stage_in]],
-                               texture2d<float> tex2D [[texture(0)]],
-                               texture2d<float> texLight [[texture(1)]],
-                               sampler sampler2D [[sampler(0)]],
-                               constant LightUniforms& lightUniforms [[buffer(0)]],
-                               constant LightData& lights [[buffer(1)]])
+fragment FragOut spriteFragment(VertexOut interpolated [[stage_in]],
+                                   texture2d<float> tex2D [[texture(0)]],
+                                   texture2d<float> texLight [[texture(1)]],
+                                   sampler sampler2D [[sampler(0)]],
+                                   constant LightUniforms& lightUniforms [[buffer(0)]],
+                                   constant LightData& lights [[buffer(1)]])
 {
   float4 color = tex2D.sample(sampler2D, interpolated.texCoord);
   float4 normal = texLight.sample(sampler2D, interpolated.texCoord);
@@ -90,10 +90,13 @@ fragment FragOutput spriteFragment(VertexOut interpolated [[stage_in]],
     intensity += diffuse * attenuation;
   //}
 
+  float4 light = float4();
+  light.a = color.a;
   //return float4(color.rgb * intensity, color.a);
-  FragOutput output;
+  FragOut output;
   output.diffuse = color;
   output.normal = normal;
+  output.light = light;
   //output.diffuse = float4(color.rgb * intensity, color.a);
   return output;
 }

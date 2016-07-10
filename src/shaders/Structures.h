@@ -18,6 +18,6 @@ namespace Structures {
     float4 diffuse [[color(0)]];
     float4 normal  [[color(1)]];
     float4 light   [[color(2)]];
-  } FragOutput;
+  } FragOut;
 }
 #endif /* Structures_h */
