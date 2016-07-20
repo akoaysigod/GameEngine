@@ -68,7 +68,7 @@ fragment FragOut lightFragment(VertexOut interpolated [[stage_in]],
   light.rgb += diffuse * attenuation;
 
   FragOut fragOut;
-  fragOut.diffuse = gBuffer.diffuse;
+  fragOut.diffuse = gBuffer.diffuse * light;
   fragOut.normal = gBuffer.normal;
   fragOut.light = light;
 
