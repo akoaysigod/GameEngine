@@ -19,7 +19,7 @@ public final class LightNode: Node {
     let lr = PVec4(position.x + radius, position.y - radius, 0.0, 1.0)
     let ul = PVec4(position.x - radius, position.y + radius, 0.0, 1.0)
     let ur = PVec4(position.x + radius, position.y + radius, 0.0, 1.0)
-    //return [ll, lr, ul, ul, lr, ur]
+    return [ll, lr, ul, ul, lr, ur]
 
     return [
       packed_float4(0.0, 0.0, 0.0, 1.0),

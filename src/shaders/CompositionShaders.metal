@@ -28,5 +28,5 @@ fragment float4 compositionFragment(VertexOutput interpolated [[stage_in]],
                                     constant float4& ambientColor [[buffer(0)]],
                                     FragOut gBuffer)
 {
-  return float4(gBuffer.diffuse.rgb * (ambientColor.rgb + gBuffer.light.rgb), gBuffer.diffuse.a);
+  return float4(gBuffer.diffuse.rgb * gBuffer.light.rgb, gBuffer.diffuse.a);
 }

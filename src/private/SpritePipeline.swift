@@ -39,9 +39,7 @@ final class SpritePipeline: RenderPipeline {
 extension SpritePipeline {
   func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode], lights: [LightNode]?) {
     guard let node = nodes.first,
-          let texture = node.texture,
-          let lights = lights,
-          let light = lights.first else { return }
+          let texture = node.texture else { return }
 
     encoder.pushDebugGroup("sprite encoder")
 
@@ -56,11 +54,9 @@ extension SpritePipeline {
     encoder.setFragmentTexture(texture.texture, atIndex: 0)
     encoder.setFragmentTexture(texture.lightMapTexture, atIndex: 1)
 
-    var lightUniforms = LightUniforms(resolution: light.resolution.vec2)
-    encoder.setFragmentBytes(&lightUniforms, length: strideof(LightUniforms), atIndex: 0)
-    //var lightData = [light.lightData]
-    var lightData = light.lightData
-    encoder.setFragmentBytes(&lightData, length: strideof(LightData) * lights.count, atIndex: 1)
+    //tmp
+    var lightColor = lights!.first!.ambientColor.vec4
+    encoder.setFragmentBytes(&lightColor, length: sizeof(Vec4), atIndex: 0)
 
     let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
     encoder.drawIndexedPrimitives(.Triangle,

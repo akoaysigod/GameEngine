@@ -30,17 +30,6 @@ struct VertexOut {
   float2 texCoord;
 };
 
-struct LightUniforms {
-  float3 ambientColor;
-  float2 resolution;
-  uint lightCount;
-};
-
-struct LightData {
-  float4 position;
-  float4 color;
-};
-
 vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
                               const device VertexIn* vert [[buffer(0)]],
                               constant Uniforms& uniforms [[buffer(1)]])
@@ -56,14 +45,14 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
 }
 
 fragment FragOut spriteFragment(VertexOut interpolated [[stage_in]],
-                                   texture2d<float> texColor [[texture(0)]],
-                                   texture2d<float> texNormal [[texture(1)]],
-                                   sampler sampler2D [[sampler(0)]],
-                                   constant LightUniforms& lightUniforms [[buffer(0)]],
-                                   constant LightData& lights [[buffer(1)]])
+                                texture2d<float> texColor [[texture(0)]],
+                                texture2d<float> texNormal [[texture(1)]],
+                                sampler sampler2D [[sampler(0)]],
+                                constant float4& lightColor [[buffer(0)]])
 {
-  FragOut fragOut = FragOut();
+  FragOut fragOut;
   fragOut.diffuse = texColor.sample(sampler2D, interpolated.texCoord);
   fragOut.normal = texNormal.sample(sampler2D, interpolated.texCoord);
+  fragOut.light = lightColor;
   return fragOut;
 }

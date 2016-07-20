@@ -111,15 +111,6 @@ extension RenderPipeline {
       fatalError("\(Self.self): Failed to create pipeline state, Error:\n" + error.description)
     }
   }
-
-  func createRenderEncoder(commandBuffer: MTLCommandBuffer, label: String, renderPassDescriptor: MTLRenderPassDescriptor, pipelineState: MTLRenderPipelineState, depthState: MTLDepthStencilState) -> MTLRenderCommandEncoder {
-    let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
-    renderEncoder.label = label
-    renderEncoder.setRenderPipelineState(pipelineState)
-    renderEncoder.setDepthStencilState(depthState)
-
-    return renderEncoder
-  }
 }
 
 final class PipelineFactory {

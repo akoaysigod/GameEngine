@@ -75,11 +75,11 @@ final class TestGameViewController: UIViewController {
         }
       }
 
-      let stairs = SpriteNode(texture: stairsDown)
-      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
-      stairs.position = Point(x: 0.0, y: 0.0)
-      stairs.zPosition = 1
-      scene.addNode(stairs)
+//      let stairs = SpriteNode(texture: stairsDown)
+//      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
+//      stairs.position = Point(x: 0.0, y: 0.0)
+//      stairs.zPosition = 1
+//      scene.addNode(stairs)
 
       let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
       scene.addNode(light)
