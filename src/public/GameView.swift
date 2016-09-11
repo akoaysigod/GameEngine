@@ -59,13 +59,14 @@ open class GameView: UIView {
     scene.view = self
     scene.didMoveToView(self)
     paused = false
-    timer.add(to: .main(), forMode: RunLoopMode.commonModes)
+    timer.add(to: .main, forMode: .commonModes)
   }
 }
 
 // MARK: Rendering setup
 extension GameView {
-  public override class func layerClass() -> AnyClass { return CAMetalLayer.self }
+  //TODO: what happened to this?
+  //public override static func layerClass() -> AnyClass { return CAMetalLayer.self }
 
   var currentDrawable: CAMetalDrawable? {
     return metalLayer?.nextDrawable()
@@ -79,7 +80,7 @@ extension GameView {
 
     metalLayer = layer as? CAMetalLayer
     metalLayer?.device = device
-    metalLayer?.pixelFormat = .BGRA8Unorm
+    metalLayer?.pixelFormat = .bgra8Unorm
     metalLayer?.framebufferOnly = true
     metalLayer?.frame = frame
 

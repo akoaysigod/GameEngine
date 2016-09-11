@@ -65,7 +65,7 @@ final class Renderer {
       encoder.setFrontFacing(.counterClockwise)
       encoder.setCullMode(.back)
 
-      bufferManager.uniformBuffer.update([view], size: sizeof(Mat4), bufferIndex: bufferIndex, offset: sizeof(Mat4))
+      bufferManager.uniformBuffer.update([view], size: MemoryLayout<Mat4>.size, bufferIndex: bufferIndex, offset: MemoryLayout<Mat4>.size)
 
       if shapeNodes.count > 0 {
 //        shapePipeline.encode(encoder,

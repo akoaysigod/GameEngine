@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0363D31C31C85F00D283E3 /* MKTestTests.swift */; };
 		EA0964C91CBAF05100C03BA9 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C81CBAF05100C03BA9 /* Uniforms.swift */; };
 		EA0964CA1CBAF05100C03BA9 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0964C81CBAF05100C03BA9 /* Uniforms.swift */; };
 		EA1993E21CD56239009DC869 /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1993E11CD56239009DC869 /* Easing.swift */; };
@@ -143,7 +142,6 @@
 /* Begin PBXFileReference section */
 		EA0363B91C31C85E00D283E3 /* GameEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameEngine.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA0363D31C31C85F00D283E3 /* MKTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTestTests.swift; sourceTree = "<group>"; };
 		EA0363D51C31C85F00D283E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA0964C81CBAF05100C03BA9 /* Uniforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Uniforms.swift; path = src/private/Uniforms.swift; sourceTree = SOURCE_ROOT; };
 		EA1993E11CD56239009DC869 /* Easing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Easing.swift; path = src/public/Easing.swift; sourceTree = SOURCE_ROOT; };
@@ -277,7 +275,6 @@
 		EA0363D21C31C85F00D283E3 /* GameEngineTests */ = {
 			isa = PBXGroup;
 			children = (
-				EA0363D31C31C85F00D283E3 /* MKTestTests.swift */,
 				EA0363D51C31C85F00D283E3 /* Info.plist */,
 			);
 			name = GameEngineTests;
@@ -681,7 +678,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA0363D41C31C85F00D283E3 /* MKTestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -77,7 +77,11 @@ open class TextNode: Node, Renderable {
     let texture = device.makeTexture(descriptor: texDesc)
 
     let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
-    texture.replace(region: region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
+
+    let t = fontAtlas.textureData[0..<fontAtlas.textureData.count]
+    fontAtlas.textureData.withUnsafeBytes { (bytes) in
+      texture.replace(region: region, mipmapLevel: 0, withBytes: bytes, bytesPerRow: textureSize)
+    }
 
     return Texture(texture: texture)
   }

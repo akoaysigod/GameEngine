@@ -56,7 +56,7 @@ public final class TextureAtlas {
     let (rows, columns) = TextureAtlas.factor(images.count)
 
     guard rows * height < 4096 && columns * width < 4096 else {
-      throw AtlasCreation.TooLarge("\(rows * height) by \(columns * width) is probably to large to load into the gpu.")
+      throw AtlasCreation.tooLarge("\(rows * height) by \(columns * width) is probably to large to load into the gpu.")
     }
     
     let tex = Texture.newTexture(columns * width, height: rows * height, pixelFormat: pixelFormat)
@@ -70,9 +70,9 @@ public final class TextureAtlas {
       let bytesPerRow = width * 4 //magic number sort of I'm assuming the format is 4 bytes per pixel
       var buffer = [UInt8](repeating: 0, count: width * height * 4)
       let lr = MTLRegionMake2D(0, 0, image.width, image.height)
-      image.texture.getBytes(&buffer, bytesPerRow: bytesPerRow, fromRegion: lr, mipmapLevel: 0)
+      image.texture.getBytes(&buffer, bytesPerRow: bytesPerRow, from: lr, mipmapLevel: 0)
 
-      tex.replaceRegion(r, mipmapLevel: 0, withBytes: buffer, bytesPerRow: bytesPerRow)
+      tex.replace(region: r, mipmapLevel: 0, withBytes: buffer, bytesPerRow: bytesPerRow)
 
       data[name] = Rect(x: x, y: y, width: width, height: height)
 

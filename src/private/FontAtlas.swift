@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 //maybe private
-class GlyphDescriptor: NSObject, NSCoding {
+final class GlyphDescriptor: NSObject, NSCoding {
   let glyphIndex: CGGlyph
   let topLeftTexCoord: CGPoint
   let bottomRightTexCoord: CGPoint
@@ -289,8 +289,12 @@ class FontAtlas: NSObject, NSCoding {
     }
     
     #if DEBUG
-      let contextImage = CGBitmapContextCreateImage(context)
-      debugImage = UIImage(CGImage: contextImage!)
+      if let context = context {
+        debugImage = UIImage(cgImage: context.makeImage()!)
+      }
+      else {
+        assert(false, "Failed to create debug image for font atlas.")
+      }
     #endif
     
     //maybe return [Int] instead of this pointer
@@ -450,10 +454,13 @@ class FontAtlas: NSObject, NSCoding {
 
     #if DEBUG
     let colorSpace = CGColorSpaceCreateDeviceGray()
-    let bitmapInfo = CGBitmapInfo.AlphaInfoMask.rawValue & CGImageAlphaInfo.None.rawValue
-    let context = CGBitmapContextCreate(textureArray, Int(textureSize), Int(textureSize), 8, Int(textureSize), colorSpace, bitmapInfo)
-    let contextImage = CGBitmapContextCreateImage(context)
-    debugImage = UIImage(CGImage: contextImage!)
+    let bitmapInfo = CGBitmapInfo.alphaInfoMask.rawValue & CGImageAlphaInfo.none.rawValue
+    if let context = CGContext(data: textureArray, width: Int(textureSize), height: Int(textureSize), bitsPerComponent: 8, bytesPerRow: Int(textureSize), space: colorSpace, bitmapInfo: bitmapInfo) {
+      debugImage = UIImage(cgImage: context.makeImage()!)
+    }
+    else {
+      assert(false, "Failed to create debug image for font atlas.")
+    }
     #endif
   }
 }

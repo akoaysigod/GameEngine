@@ -50,7 +50,7 @@ extension ShapePipeline {
     encoder.setVertexBuffer(vBuffer, offset: offset, at: 0)
 
     nodes.enumerated().forEach { (i, node) in
-      instanceBuffer.update([ShapeUniforms(model: node.model, color: node.color.vec4)], size: sizeof(ShapeUniforms), bufferIndex: bufferIndex, offset: sizeof(ShapeUniforms) * i)
+      instanceBuffer.update([ShapeUniforms(model: node.model, color: node.color.vec4)], size: MemoryLayout<ShapeUniforms>.size, bufferIndex: bufferIndex, offset: MemoryLayout<ShapeUniforms>.size * i)
     }
     let (inBuffer, inOffset) = instanceBuffer.nextBuffer(bufferIndex)
     encoder.setVertexBuffer(inBuffer, offset: inOffset, at: 1)

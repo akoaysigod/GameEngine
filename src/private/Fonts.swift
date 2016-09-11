@@ -23,10 +23,8 @@ final class Fonts {
   fileprivate var fontDir: URL? = nil
 
   init() {
-    if let fontDir = pathName?.appendingPathComponent(dirName),
-       let path = fontDir.path
-    {
-      if !FileManager.default.fileExists(atPath: path) {
+    if let fontDir = pathName?.appendingPathComponent(dirName) {
+      if !FileManager.default.fileExists(atPath: fontDir.path) {
         do {
           try FileManager.default.createDirectory(at: fontDir, withIntermediateDirectories: false, attributes: nil)
         }
@@ -53,25 +51,23 @@ final class Fonts {
       return atlas
     }
     
-    if let fontPath = fontDir.appendingPathComponent(font.fontName).path {
-      let fontAtlas: FontAtlas
-     // if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? GETextLabel {
-     //   fontAtlas = archive as! FontAtlas
-     // }
-     // else
-      if let archive = NSKeyedUnarchiver.unarchiveObject(withFile: fontPath) as? FontAtlas {
-        fontAtlas = archive
-      }
-      else {
-        fontAtlas = FontAtlas(font: font)
-        let data = NSKeyedArchiver.archivedData(withRootObject: fontAtlas)
-        try? data.write(to: URL(fileURLWithPath: fontPath), options: [])
-      }
-
-      fontDict[font.fontName] = fontAtlas
-
-      return fontAtlas
+    let fontPath = fontDir.appendingPathComponent(font.fontName).path
+    let fontAtlas: FontAtlas
+    // if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? GETextLabel {
+    //   fontAtlas = archive as! FontAtlas
+    // }
+    // else
+    if let archive = NSKeyedUnarchiver.unarchiveObject(withFile: fontPath) as? FontAtlas {
+      fontAtlas = archive
     }
-    assert(false, "wtf happend"); return nil
+    else {
+      fontAtlas = FontAtlas(font: font)
+      let data = NSKeyedArchiver.archivedData(withRootObject: fontAtlas)
+      try? data.write(to: URL(fileURLWithPath: fontPath), options: [])
+    }
+
+    fontDict[font.fontName] = fontAtlas
+
+    return fontAtlas
   }
 }

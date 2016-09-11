@@ -65,7 +65,7 @@ extension LightTexturePipeline {
     let function = LightTexturePipeline.newFunction(library, functionName: Constants.Function)
 
     do {
-      return try device.newComputePipelineStateWithFunction(function)
+      return try device.makeComputePipelineState(function: function)
     }
     catch {
       fatalError("Unable to create compute pipeline state.")

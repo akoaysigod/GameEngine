@@ -35,7 +35,7 @@ extension LightPipeline {
   func encode(_ encoder: MTLRenderCommandEncoder, bufferIndex: Int, uniformBuffer: Buffer, lightNodes: [LightNode]) {
     guard let light = lightNodes.first else { return }
 
-    resolutionBuffer.update([light.resolution.vec2], size: strideof(Vec2), bufferIndex: bufferIndex)
+    resolutionBuffer.update([light.resolution.vec2], size: MemoryLayout<Vec2>.stride, bufferIndex: bufferIndex)
 
     encoder.pushDebugGroup("light encoder")
 

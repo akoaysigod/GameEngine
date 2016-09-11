@@ -87,7 +87,7 @@ extension Quad {
   }
 
   static func indices(_ length: Int) -> (data: [UInt16], size: Int) {
-    let r = Repeated(count: length, repeatedValue: Quad.indicesData)
+    let r = repeatElement(Quad.indicesData, count: length)
     let i = r.enumerated().map { (i, e) in
       e.map {
         UInt16(i * 4) + $0

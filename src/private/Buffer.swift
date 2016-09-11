@@ -8,6 +8,10 @@
 
 import Metal
 
+// lol srsly wtf? fix these index variables when apple fixes them
+// for some reason the compiler doesn't like pointer + something + something 
+// parens didn't fix it
+
 final class Buffer { //might change this to a protocol 
   fileprivate var buffer: MTLBuffer
   fileprivate let length: Int
@@ -18,18 +22,21 @@ final class Buffer { //might change this to a protocol
   }
 
   func addData<T>(_ data: [T], size: Int, offset: Int = 0) {
-    memcpy(buffer.contents() + (size * offset), data, size)
-    memcpy(buffer.contents() + length + (size * offset), data, size)
-    memcpy(buffer.contents() + length * 2 + (size * offset), data, size)
+    var wtf = size * offset
+    memcpy(buffer.contents() + wtf, data, size)
+    wtf += length
+    memcpy(buffer.contents() + wtf, data, size)
+    memcpy(buffer.contents() + length * 2 + (size * offset), data, size) //LOL this is fine though?
   }
 
   func update<T>(_ data: [T], size: Int, bufferIndex: Int, offset: Int = 0) {
     #if DEBUG
-      if sizeof(T) != strideof(T) {
+      if MemoryLayout<T>.size != MemoryLayout<T>.stride {
         DLog("Possibly wrong sized data, \(T.self)")
       }
     #endif
-    memcpy(buffer.contents() + offset + (bufferIndex * length), data, size)
+    let wtf = offset + (bufferIndex * length)
+    memcpy(buffer.contents() + wtf, data, size)
   }
 
   func nextBuffer(_ bufferIndex: Int) -> (buffer: MTLBuffer, offset: Int) {
