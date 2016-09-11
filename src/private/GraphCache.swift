@@ -7,20 +7,20 @@
 //
 
 final class GraphCache {
-  private var updateNodes = Nodes()
+  fileprivate var updateNodes = Nodes()
   var allNodes: Nodes {
     return updateNodes
   }
 
-  private(set) var shapeNodes = [ShapeNode]()
-  private(set) var spriteNodes = [Int: [SpriteNode]]()
-  private var spriteIndex = [Int: Int]()
+  fileprivate(set) var shapeNodes = [ShapeNode]()
+  fileprivate(set) var spriteNodes = [Int: [SpriteNode]]()
+  fileprivate var spriteIndex = [Int: Int]()
   var bufferManager: BufferManager?
-  private(set) var textNodes = [TextNode]()
-  private(set) var lightNodes = [LightNode]()
-  private var lightNodeIndex = 0
+  fileprivate(set) var textNodes = [TextNode]()
+  fileprivate(set) var lightNodes = [LightNode]()
+  fileprivate var lightNodeIndex = 0
 
-  func addNode(node: Node) {
+  func addNode(_ node: Node) {
     let allNodes = [node] + node.allNodes
 
     updateNodes += allNodes
@@ -62,9 +62,9 @@ final class GraphCache {
     }
   }
   
-  private func removeNode(node: Node) {
+  fileprivate func removeNode(_ node: Node) {
     if let index = updateNodes.find(node) {
-      guard let removed = updateNodes.removeAtIndex(index) as? Renderable else { return }
+      guard let removed = updateNodes.remove(at: index) as? Renderable else { return }
 
       switch removed {
       case let shape as ShapeNode:
@@ -91,7 +91,7 @@ final class GraphCache {
     }
   }
   
-  func updateNodes<T : Node>(node: T?) {
+  func updateNodes<T : Node>(_ node: T?) {
     guard let node = node else { return }
     guard updateNodes.find(node) != nil else { return }
     
@@ -101,18 +101,18 @@ final class GraphCache {
     removeNode(node)
   }
   
-  private func realignData(key: Int) {
+  fileprivate func realignData(_ key: Int) {
     guard let nodes = spriteNodes[key] else { return }
     guard let buffer = bufferManager?[key] else { return }
     
-    nodes.enumerate().forEach { i, node in
+    nodes.enumerated().forEach { i, node in
       node.index = i
       buffer.addData(node.quad.vertices, size: node.quad.size, offset: i * node.quad.size)
     }
     spriteIndex[key] = nodes.count
   }
   
-  func updateNode(quad: Quad, index: Int, key: Int) {
+  func updateNode(_ quad: Quad, index: Int, key: Int) {
     guard let buffer = bufferManager?[key] else { return }
     
     buffer.addData(quad.vertices, size: quad.size, offset: index)

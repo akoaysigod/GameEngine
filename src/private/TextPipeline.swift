@@ -12,7 +12,7 @@ final class TextPipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
   let sampler: MTLSamplerState?
 
-  private struct Programs {
+  fileprivate struct Programs {
     static let Shader = "TextShaders"
     static let Vertex = "textVertex"
     static let Fragment = "textFragment"
@@ -22,11 +22,11 @@ final class TextPipeline: RenderPipeline {
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
     let samplerDescriptor = MTLSamplerDescriptor()
-    samplerDescriptor.minFilter = .Nearest
-    samplerDescriptor.magFilter = .Linear
-    samplerDescriptor.sAddressMode = .ClampToZero
-    samplerDescriptor.tAddressMode = .ClampToZero
-    sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
+    samplerDescriptor.minFilter = .nearest
+    samplerDescriptor.magFilter = .linear
+    samplerDescriptor.sAddressMode = .clampToZero
+    samplerDescriptor.tAddressMode = .clampToZero
+    sampler = device.makeSamplerState(descriptor: samplerDescriptor)
 
     let pipelineDescriptor = TextPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
 
@@ -35,7 +35,7 @@ final class TextPipeline: RenderPipeline {
 }
 
 extension TextPipeline {
-  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [TextNode], lights: [LightNode]? = nil) {
+  func encode(_ encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [TextNode], lights: [LightNode]? = nil) {
     encoder.setRenderPipelineState(pipelineState)
 
     nodes.forEach { _ in

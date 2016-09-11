@@ -60,7 +60,7 @@ public protocol NodeGeometry: class {
 
    - parameter scale: The scale to set to.
    */
-  func setScale(scale: Float)
+  func setScale(_ scale: Float)
   /// How much to scale in the x direction.
   var xScale: Float { get set }
   /// How much to scale in the y direction.
@@ -110,7 +110,7 @@ public extension NodeGeometry {
     }
   }
 
-  func setScale(scale: Float) {
+  func setScale(_ scale: Float) {
     self.scale = (scale, scale)
   }
 

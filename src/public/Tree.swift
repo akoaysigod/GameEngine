@@ -41,7 +41,7 @@ public protocol Tree: class {
 
    - parameter node: The `Node` to add to the tree.
    */
-  func addNode(node: Node)
+  func addNode(_ node: Node)
 
   /**
    Remove a node from the hiearchy and returns the `Node` removed if it was found.
@@ -51,7 +51,7 @@ public protocol Tree: class {
 
    - returns: The `Node` removed or nil if it wasn't found.
    */
-  func removeNode<T: Node>(node: T?) -> T?
+  func removeNode<T: Node>(_ node: T?) -> T?
 
   /**
    Remove calling `Node` from it's parent. 

@@ -17,7 +17,7 @@ final class Updater {
   var scene: Scene?
 
   var timestamp: CFTimeInterval = 0.0
-  @objc func update(screenRefresher: ScreenRefresher) {
+  @objc func update(_ screenRefresher: ScreenRefresher) {
     if timestamp == 0.0 {
       timestamp = screenRefresher.timestamp
     }

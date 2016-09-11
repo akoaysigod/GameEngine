@@ -10,9 +10,9 @@ import Metal
 
 final class CompositionPipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
-  private let quadBuffer: Buffer
+  fileprivate let quadBuffer: Buffer
 
-  private struct Programs {
+  fileprivate struct Programs {
     static let Shader = "CompositionShaders"
     static let Vertex = "compositionVertex"
     static let Fragment = "compositionFragment"
@@ -39,7 +39,7 @@ final class CompositionPipeline: RenderPipeline {
       Vec2(-1.0, 1.0)
     ]
 
-    let bufferSize = strideof(Vec2) * quadData.count
+    let bufferSize = MemoryLayout<Vec2>.stride * quadData.count
     let buffer = Buffer(length: bufferSize, instances: 1)
     buffer.update(quadData, size: bufferSize, bufferIndex: 0)
 
@@ -48,18 +48,18 @@ final class CompositionPipeline: RenderPipeline {
 }
 
 extension CompositionPipeline {
-  func encode(encoder: MTLRenderCommandEncoder, ambientColor: Color) {
+  func encode(_ encoder: MTLRenderCommandEncoder, ambientColor: Color) {
     encoder.pushDebugGroup("composition encoder")
 
     encoder.setRenderPipelineState(pipelineState)
 
     let (buffer, offset) = quadBuffer.nextBuffer(0)
-    encoder.setVertexBuffer(buffer, offset: offset, atIndex: 0)
+    encoder.setVertexBuffer(buffer, offset: offset, at: 0)
 
     var color = ambientColor.vec4
-    encoder.setFragmentBytes(&color, length: sizeof(Vec4), atIndex: 0)
+    encoder.setFragmentBytes(&color, length: MemoryLayout<Vec4>.size, at: 0)
 
-    encoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: 6)
+    encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
 
     encoder.popDebugGroup()
   }

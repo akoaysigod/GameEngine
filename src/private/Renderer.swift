@@ -10,19 +10,19 @@ import Foundation
 import MetalKit
 
 final class Renderer {
-  private let commandQueue: MTLCommandQueue
+  fileprivate let commandQueue: MTLCommandQueue
 
-  private let shapePipeline: ShapePipeline
-  private let spritePipeline: SpritePipeline
-  private let textPipeline: TextPipeline
-  private let lightPipeline: LightPipeline
-  private let compositionPipeline: CompositionPipeline
-  private let depthState: MTLDepthStencilState
+  fileprivate let shapePipeline: ShapePipeline
+  fileprivate let spritePipeline: SpritePipeline
+  fileprivate let textPipeline: TextPipeline
+  fileprivate let lightPipeline: LightPipeline
+  fileprivate let compositionPipeline: CompositionPipeline
+  fileprivate let depthState: MTLDepthStencilState
 
-  private let inflightSemaphore: dispatch_semaphore_t
+  fileprivate let inflightSemaphore: DispatchSemaphore
 
-  private let bufferManager: BufferManager
-  private var bufferIndex = 0
+  fileprivate let bufferManager: BufferManager
+  fileprivate var bufferIndex = 0
 
   init(device: MTLDevice, bufferManager: BufferManager) {
     //not sure where to set this up or if I even want to do it this way
@@ -31,7 +31,7 @@ final class Renderer {
 
     self.bufferManager = bufferManager
 
-    commandQueue = device.newCommandQueue()
+    commandQueue = device.makeCommandQueue()
     commandQueue.label = "main command queue"
 
     //descriptorQueue = RenderPassQueue(view: view)
@@ -44,26 +44,26 @@ final class Renderer {
     compositionPipeline = factory.constructCompositionPipeline()
     depthState = factory.constructDepthStencil()
 
-    inflightSemaphore = dispatch_semaphore_create(BUFFER_SIZE)
+    inflightSemaphore = DispatchSemaphore(value: BUFFER_SIZE)
   }
 
-  func render(nextRenderPass: NextRenderPass, view: Mat4, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode], lightNodes: [LightNode]) {
-    dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
+  func render(_ nextRenderPass: NextRenderPass, view: Mat4, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode], lightNodes: [LightNode]) {
+    inflightSemaphore.wait(timeout: DispatchTime.distantFuture)
 
-    let commandBuffer = commandQueue.commandBuffer()
+    let commandBuffer = commandQueue.makeCommandBuffer()
     commandBuffer.label = "main command buffer"
 
     commandBuffer.addCompletedHandler { _ in
-      dispatch_semaphore_signal(self.inflightSemaphore)
+      (self.inflightSemaphore).signal()
     }
 
     if let (renderPassDescriptor, drawable) = nextRenderPass() {
-      let encoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
+      let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
       encoder.label = "main encoder"
 
       encoder.setDepthStencilState(depthState)
-      encoder.setFrontFacingWinding(.CounterClockwise)
-      encoder.setCullMode(.Back)
+      encoder.setFrontFacing(.counterClockwise)
+      encoder.setCullMode(.back)
 
       bufferManager.uniformBuffer.update([view], size: sizeof(Mat4), bufferIndex: bufferIndex, offset: sizeof(Mat4))
 
@@ -100,7 +100,7 @@ final class Renderer {
 
       encoder.endEncoding()
 
-      commandBuffer.presentDrawable(drawable)
+      commandBuffer.present(drawable)
     }
 
     bufferIndex = (bufferIndex + 1) % BUFFER_SIZE
@@ -110,7 +110,7 @@ final class Renderer {
 
   deinit {
     (0..<BUFFER_SIZE).forEach { _ in
-      dispatch_semaphore_signal(inflightSemaphore)
+      inflightSemaphore.signal()
     }
   }
 }

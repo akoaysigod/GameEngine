@@ -16,29 +16,29 @@ import QuartzCore
 /**
  A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple. 
  */
-public class GameView: UIView {
-  private var currentScene: Scene?
+open class GameView: UIView {
+  fileprivate var currentScene: Scene?
 
-  private(set) var projection: Projection!
+  fileprivate(set) var projection: Projection!
 
-  private(set) var device: MTLDevice!
-  private weak var metalLayer: CAMetalLayer?
-  private var timer: CADisplayLink!
-  private var timestamp: CFTimeInterval = 0.0
+  fileprivate(set) var device: MTLDevice!
+  fileprivate weak var metalLayer: CAMetalLayer?
+  fileprivate var timer: CADisplayLink!
+  fileprivate var timestamp: CFTimeInterval = 0.0
 
-  public var clearColor: Color = .black
-  public var paused = true
+  open var clearColor: Color = .black
+  open var paused = true
 
-  private(set) var bufferManager: BufferManager!
-  private var renderer: Renderer!
-  private var renderPassQueue: RenderPassQueue!
+  fileprivate(set) var bufferManager: BufferManager!
+  fileprivate var renderer: Renderer!
+  fileprivate var renderPassQueue: RenderPassQueue!
 
   /// tmp until this is converted back to a UIView
-  public var size: Size {
+  open var size: Size {
     let cgsize = frame.size
     return Size(width: Float(cgsize.width), height: Float(cgsize.height))
   }
-  public var rect: Rect {
+  open var rect: Rect {
     return Rect(origin: Point(x: Float(frame.origin.x), y: Float(frame.origin.y)), size: size)
   }
 
@@ -54,12 +54,12 @@ public class GameView: UIView {
     sharedInit()
   }
 
-  public func presentScene(scene: Scene) {
+  open func presentScene(_ scene: Scene) {
     currentScene = scene
     scene.view = self
     scene.didMoveToView(self)
     paused = false
-    timer.addToRunLoop(.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    timer.add(to: .main(), forMode: RunLoopMode.commonModes)
   }
 }
 
@@ -88,7 +88,7 @@ extension GameView {
     timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
   }
 
-  func setupRendering(device: MTLDevice) {
+  func setupRendering(_ device: MTLDevice) {
     let size = getNewSize()
     let width = Int(size.width)
     let height = Int(size.height)
@@ -102,7 +102,7 @@ extension GameView {
 
 // MARK: Update
 extension GameView {
-  @objc private func newFrame(displayLink: CADisplayLink) {
+  @objc fileprivate func newFrame(_ displayLink: CADisplayLink) {
     if timestamp == 0.0 {
       timestamp = displayLink.timestamp
     }
@@ -138,26 +138,26 @@ extension GameView {
     render(scene)
   }
 
-  private func updateNodes(delta: CFTimeInterval, nodes: Nodes) {
+  fileprivate func updateNodes(_ delta: CFTimeInterval, nodes: Nodes) {
     nodes.forEach {
       $0.update(delta)
     }
   }
 
-  private func render(scene: Scene) {
+  fileprivate func render(_ scene: Scene) {
     autoreleasepool {
       renderer.render(renderPassQueue.next(self), view: scene.camera.view, shapeNodes: scene.graphCache.shapeNodes, spriteNodes: scene.graphCache.spriteNodes, textNodes: scene.graphCache.textNodes, lightNodes: scene.graphCache.lightNodes)
     }
   }
 
-  private func getNewSize() -> CGSize {
+  fileprivate func getNewSize() -> CGSize {
     var size = bounds.size
     size.width *= contentScaleFactor
     size.height *= contentScaleFactor
     return size
   }
 
-  private func updateDrawableSize() {
+  fileprivate func updateDrawableSize() {
     let newSize = getNewSize()
     metalLayer?.drawableSize = newSize
 

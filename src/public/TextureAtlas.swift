@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-enum AtlasCreation: ErrorType {
-  case OneImage
-  case MissingImage
-  case Dimensions
-  case TooLarge(String)
+enum AtlasCreation: Error {
+  case oneImage
+  case missingImage
+  case dimensions
+  case tooLarge(String)
 }
 /**
  A `TextureAtlas` is an object that contains multiple textures to be loaded and used as one texture.
@@ -23,9 +23,9 @@ enum AtlasCreation: ErrorType {
  - note: Since packing stuff is hard this only works for images with the same dimensions.
  */
 public final class TextureAtlas {
-  private let data: [String: Rect]
-  private let texture: Texture
-  private let lightMapTexture: Texture?
+  fileprivate let data: [String: Rect]
+  fileprivate let texture: Texture
+  fileprivate let lightMapTexture: Texture?
   public let textureNames: [String]
 
   /**
@@ -38,19 +38,19 @@ public final class TextureAtlas {
   public init(imageNames: [String], createLightMap: Bool = false) throws {
     //should probably refactor this a bit at some point
     guard imageNames.count > 1 else {
-      throw AtlasCreation.OneImage
+      throw AtlasCreation.oneImage
     }
 
     let images = imageNames.flatMap { Texture(named: $0) }
 
     guard images.count == imageNames.count else {
-      throw AtlasCreation.MissingImage
+      throw AtlasCreation.missingImage
     }
 
     guard let width = images.first?.width,
           let height = images.first?.height,
-          let pixelFormat = images.first?.texture.pixelFormat where width == height else {
-      throw AtlasCreation.Dimensions
+          let pixelFormat = images.first?.texture.pixelFormat , width == height else {
+      throw AtlasCreation.dimensions
     }
 
     let (rows, columns) = TextureAtlas.factor(images.count)
@@ -68,7 +68,7 @@ public final class TextureAtlas {
       let r = MTLRegionMake2D(x, y, width, height)
 
       let bytesPerRow = width * 4 //magic number sort of I'm assuming the format is 4 bytes per pixel
-      var buffer = [UInt8](count: width * height * 4, repeatedValue: 0)
+      var buffer = [UInt8](repeating: 0, count: width * height * 4)
       let lr = MTLRegionMake2D(0, 0, image.width, image.height)
       image.texture.getBytes(&buffer, bytesPerRow: bytesPerRow, fromRegion: lr, mipmapLevel: 0)
 
@@ -90,7 +90,7 @@ public final class TextureAtlas {
     lightMapTexture = TextureAtlas.createLightMap(createLightMap, texture: texture)
   }
 
-  private static func factor(i: Int) -> (rows: Int, columns: Int) {
+  fileprivate static func factor(_ i: Int) -> (rows: Int, columns: Int) {
     let stop = Int(Float(i) / 2.0)
     var d = 2
 
@@ -104,7 +104,7 @@ public final class TextureAtlas {
 
     if div.count > 1 {
       let mins = div.map { max($0.0, $0.1) - min($0.0, $0.1) }
-      let z = zip(mins, Array(0..<div.count)).sort { $0.0 < $0.1 }
+      let z = zip(mins, Array(0..<div.count)).sorted { $0.0 < $0.1 }
       return div[z[0].1]
     }
     else if div.count == 1 {
@@ -113,7 +113,7 @@ public final class TextureAtlas {
     return factor(i + 1)
   }
 
-  private static func createLightMap(shouldCreateLightMap: Bool, texture: Texture) -> Texture? {
+  fileprivate static func createLightMap(_ shouldCreateLightMap: Bool, texture: Texture) -> Texture? {
     guard shouldCreateLightMap else { return nil }
 
     let renderer = ComputeRenderer(srcTexture: texture)
@@ -138,7 +138,7 @@ public final class TextureAtlas {
 
    - returns: A `Texture` "copy" from the atlas.
    */
-  public func textureNamed(named: String) -> Texture? {
+  public func textureNamed(_ named: String) -> Texture? {
     guard let rect = data[named] else {
       DLog("\(named) does not exist in atlas.")
       return nil

@@ -12,9 +12,9 @@ import simd
 final class LightPipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
 
-  private let resolutionBuffer: Buffer
+  fileprivate let resolutionBuffer: Buffer
 
-  private struct Programs {
+  fileprivate struct Programs {
     static let Shader = "LightShaders"
     static let Vertex = "lightVertex"
     static let Fragment = "lightFragment"
@@ -27,12 +27,12 @@ final class LightPipeline: RenderPipeline {
 
     pipelineState = LightPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
-    resolutionBuffer = Buffer(length: strideof(Vec2))
+    resolutionBuffer = Buffer(length: MemoryLayout<Vec2>.stride)
   }
 }
 
 extension LightPipeline {
-  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, uniformBuffer: Buffer, lightNodes: [LightNode]) {
+  func encode(_ encoder: MTLRenderCommandEncoder, bufferIndex: Int, uniformBuffer: Buffer, lightNodes: [LightNode]) {
     guard let light = lightNodes.first else { return }
 
     resolutionBuffer.update([light.resolution.vec2], size: strideof(Vec2), bufferIndex: bufferIndex)
@@ -41,20 +41,20 @@ extension LightPipeline {
 
     encoder.setRenderPipelineState(pipelineState)
 
-    encoder.setVertexBytes(light.verts, length: strideof(packed_float4) * light.verts.count, atIndex: 0)
+    encoder.setVertexBytes(light.verts, length: MemoryLayout<packed_float4>.stride * light.verts.count, at: 0)
 
     var pos = Vec2(0.0, 0.0)
-    encoder.setVertexBytes(&pos, length: sizeof(Vec2), atIndex: 1)
+    encoder.setVertexBytes(&pos, length: MemoryLayout<Vec2>.size, at: 1)
     let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(uBuffer, offset: uOffset, atIndex: 2)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, at: 2)
 
     let (rBuffer, rOffset) = resolutionBuffer.nextBuffer(bufferIndex)
-    encoder.setFragmentBuffer(rBuffer, offset: rOffset, atIndex: 0)
+    encoder.setFragmentBuffer(rBuffer, offset: rOffset, at: 0)
 
     var lightData = light.lightData
-    encoder.setFragmentBytes(&lightData, length: strideof(LightData) * lightNodes.count, atIndex: 1)
+    encoder.setFragmentBytes(&lightData, length: MemoryLayout<LightData>.stride * lightNodes.count, at: 1)
 
-    encoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: 6)
+    encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
 
     encoder.popDebugGroup()
   }

@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension CollectionType where Generator.Element: Equatable {
-  func find(element: Generator.Element) -> Int? {
-    for (i, v) in enumerate() {
+extension Collection where Iterator.Element: Equatable {
+  func find(_ element: Iterator.Element) -> Int? {
+    for (i, v) in enumerated() {
       if v == element {
         return i
       }
@@ -21,9 +21,9 @@ extension CollectionType where Generator.Element: Equatable {
 }
 
 extension Array where Element: Node {
-  mutating func remove(node: Element) -> Element? {
+  mutating func remove(_ node: Element) -> Element? {
     if let index = find(node) {
-      return removeAtIndex(index)
+      return self.remove(at: index)
     }
     return nil
   }

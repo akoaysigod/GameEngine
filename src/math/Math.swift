@@ -19,7 +19,7 @@ public final class Math {
 
    - returns: The equivalent radians.
    */
-  public static func degreesToRadians(d: Float) -> Float {
+  public static func degreesToRadians(_ d: Float) -> Float {
     return (Float(M_PI) / 180.0) * d
   }
 }

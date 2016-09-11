@@ -23,8 +23,8 @@ public final class CameraNode: Node {
   public override var transform: Mat4 {
     return .identity
   }
-  private(set) var view: Mat4 = .identity
-  private(set) var inverseView: Mat4 = .identity
+  fileprivate(set) var view: Mat4 = .identity
+  fileprivate(set) var inverseView: Mat4 = .identity
 
   public var scale: Float {
     return zoom
@@ -36,8 +36,8 @@ public final class CameraNode: Node {
     }
   }
 
-  private var width: Float
-  private var height: Float
+  fileprivate var width: Float
+  fileprivate var height: Float
 
   override init(size: Size) {
     width = Float(size.width)
@@ -49,13 +49,13 @@ public final class CameraNode: Node {
     updateTransform()
   }
 
-  func updateSize(size: Size) {
+  func updateSize(_ size: Size) {
     width = size.width
     height = size.height
     updateTransform()
   }
 
-  public override func addNode(node: Node) {
+  public override func addNode(_ node: Node) {
     super.addNode(node)
 
     node.camera = self

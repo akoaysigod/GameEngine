@@ -85,7 +85,7 @@ public extension Mat4 {
 
    - returns: A new `Mat4` representing a scaling.
    */
-  public static func scale(x: Float, _ y: Float, _ z: Float = 1.0) -> Mat4 {
+  public static func scale(_ x: Float, _ y: Float, _ z: Float = 1.0) -> Mat4 {
     var m = Mat4.identity
     m[0].x = x
     m[1].y = y
@@ -100,7 +100,7 @@ public extension Mat4 {
 
    - returns: A new `Mat4` representing a 2D rotation.
    */
-  public static func rotate(degrees: Float) -> Mat4 {
+  public static func rotate(_ degrees: Float) -> Mat4 {
     return rotateAround(Vec3(0.0, 0.0, 1.0), degrees)
   }
 
@@ -112,7 +112,7 @@ public extension Mat4 {
 
    - returns: A new `Mat4` representing a rotation around an axis.
    */
-  public static func rotateAround(axis: Vec3, _ degrees: Float) -> Mat4 {
+  public static func rotateAround(_ axis: Vec3, _ degrees: Float) -> Mat4 {
     let angle = Math.degreesToRadians(degrees)
 
     let c = cos(angle)
@@ -146,7 +146,7 @@ public extension Mat4 {
 
    - returns: A new `Mat4` representing a translation.
    */
-  public static func translate(x: Float, _ y: Float, _ z: Float = 0.0) -> Mat4 {
+  public static func translate(_ x: Float, _ y: Float, _ z: Float = 0.0) -> Mat4 {
     var m = Mat4.identity
 
     m[3].x = x
@@ -167,7 +167,7 @@ public extension Mat4 {
    - discussion: I'll figure out what this is for someday. I know I used it for lighting but I forget the math and why this was required.
 
    */
-  public static func normalMatrix(m: Mat4, nonUniformScaling: Bool = true) -> Mat3 {
+  public static func normalMatrix(_ m: Mat4, nonUniformScaling: Bool = true) -> Mat3 {
     let upperLeft = m.mat3
 
     if nonUniformScaling {
@@ -186,7 +186,7 @@ public extension Mat4 {
 
    - returns: A new `Mat4` representing the view.
    */
-  public static func lookAt(eye: Vec3, center: Vec3, up: Vec3 = Vec3(x: 0.0, y: 1.0, z: 0.0)) -> Mat4 {
+  public static func lookAt(_ eye: Vec3, center: Vec3, up: Vec3 = Vec3(x: 0.0, y: 1.0, z: 0.0)) -> Mat4 {
     /*
      vec4 n = normalize(eye - at);
      vec4 u = normalize(cross(up,n));
@@ -234,7 +234,7 @@ public extension Mat4 {
 
    - returns: a `Mat4` matrix to be used for projection.
    */
-  public static func perspective(fovy: Float, aspect: Float, near: Float, far: Float) -> Mat4 {
+  public static func perspective(_ fovy: Float, aspect: Float, near: Float, far: Float) -> Mat4 {
     assert(near < far && near > 0 && far > 0, "The perspective matrix doesn't make sense.")
 
     let top = tan(fovy / 2.0) * near
@@ -266,7 +266,7 @@ public extension Mat4 {
 
    - returns: a `Mat4` matrix to be used for projection.
    */
-  public static func orthographic(left: Float = 0.0, right: Float, bottom: Float = 0.0, top: Float, near: Float = -1.0, far: Float = 1.0) -> Mat4 {
+  public static func orthographic(_ left: Float = 0.0, right: Float, bottom: Float = 0.0, top: Float, near: Float = -1.0, far: Float = 1.0) -> Mat4 {
     assert(near < far, "The orthographic projection doesn't make sense.")
 
     let ral = right + left

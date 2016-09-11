@@ -13,17 +13,17 @@ import MetalKit
 typealias NextRenderPass = () -> (MTLRenderPassDescriptor, MTLDrawable)?
 
 final class RenderPassQueue {
-  private let renderPassDescriptor: MTLRenderPassDescriptor
+  fileprivate let renderPassDescriptor: MTLRenderPassDescriptor
 
-  private let device: MTLDevice
-  private var depthTexture: MTLTexture
+  fileprivate let device: MTLDevice
+  fileprivate var depthTexture: MTLTexture
 
-  private var currentWidth: Int
-  private var currentHeight: Int
+  fileprivate var currentWidth: Int
+  fileprivate var currentHeight: Int
 
-  private var currentDescriptorIndex = 0
+  fileprivate var currentDescriptorIndex = 0
 
-  private let colorAttachmentCount = 3
+  fileprivate let colorAttachmentCount = 3
 
   init(device: Device, depthTexture: MTLTexture) {
     self.device = device.device
@@ -32,9 +32,9 @@ final class RenderPassQueue {
     renderPassDescriptor = MTLRenderPassDescriptor()
 
     renderPassDescriptor.depthAttachment.texture = depthTexture
-    renderPassDescriptor.depthAttachment.loadAction = .Clear
+    renderPassDescriptor.depthAttachment.loadAction = .clear
     renderPassDescriptor.depthAttachment.clearDepth = 0.0
-    renderPassDescriptor.depthAttachment.storeAction = .Store
+    renderPassDescriptor.depthAttachment.storeAction = .store
 
     currentWidth = depthTexture.width
     currentHeight = depthTexture.height
@@ -42,42 +42,42 @@ final class RenderPassQueue {
     updateColorAttachments(currentWidth, height: currentHeight)
   }
 
-  static func createDepthTexture(width: Int, height: Int, device: MTLDevice) -> MTLTexture {
-    let depthTexDesc = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.Depth32Float, width: width, height: height, mipmapped: false)
-    return device.newTextureWithDescriptor(depthTexDesc)
+  static func createDepthTexture(_ width: Int, height: Int, device: MTLDevice) -> MTLTexture {
+    let depthTexDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .depth32Float, width: width, height: height, mipmapped: false)
+    return device.makeTexture(descriptor: depthTexDesc)
   }
 
-  private func updateDepthTexture(width: Int, height: Int) {
+  fileprivate func updateDepthTexture(_ width: Int, height: Int) {
     depthTexture = RenderPassQueue.createDepthTexture(width, height: height, device: device)
   }
 
-  private func updateColorAttachments(width: Int, height: Int) {
+  fileprivate func updateColorAttachments(_ width: Int, height: Int) {
     (1..<colorAttachmentCount).forEach {
-      let texDesc = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.BGRA8Unorm,
+      let texDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm,
                                                                             width: width,
                                                                             height: height,
                                                                             mipmapped: false)
-      let tex = self.device.newTextureWithDescriptor(texDesc)
+      let tex = self.device.makeTexture(descriptor: texDesc)
 
       let colorAttachment = MTLRenderPassColorAttachmentDescriptor()
       colorAttachment.texture = tex
       colorAttachment.clearColor = Color.black.clearColor
-      colorAttachment.loadAction = .Clear
-      colorAttachment.storeAction = .DontCare
+      colorAttachment.loadAction = .clear
+      colorAttachment.storeAction = .dontCare
 
       self.renderPassDescriptor.colorAttachments[$0] = colorAttachment
     }
   }
 
-  func next(view: GameView) -> NextRenderPass {
+  func next(_ view: GameView) -> NextRenderPass {
     return {
       guard let drawable = view.currentDrawable else { return nil }
 
       let colorAttachment = MTLRenderPassColorAttachmentDescriptor()
       colorAttachment.texture = drawable.texture
       colorAttachment.clearColor = view.clearColor.clearColor
-      colorAttachment.loadAction = .Clear
-      colorAttachment.storeAction = .Store
+      colorAttachment.loadAction = .clear
+      colorAttachment.storeAction = .store
 
       if drawable.texture.width != self.currentWidth || drawable.texture.height != self.currentHeight {
         self.currentWidth = drawable.texture.width

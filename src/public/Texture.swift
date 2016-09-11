@@ -21,18 +21,18 @@ public func ==(rhs: Texture, lhs: Texture) -> Bool {
 
  - seealso: `TextureAtlas`
  */
-public class Texture: Hashable, Equatable {
+open class Texture: Hashable, Equatable {
   let texture: MTLTexture
   let lightMapTexture: MTLTexture?
 
   // until I can figure out a nicer way to do this
   // I'm leaving this exposed so I can treat all atlases as if they're the same texture
-  var uuid = NSUUID().UUIDString
-  public var hashValue: Int { return uuid.hashValue }
+  var uuid = UUID().uuidString
+  open var hashValue: Int { return uuid.hashValue }
 
-  public let width: Int
-  public let height: Int
-  public var size: Size {
+  open let width: Int
+  open let height: Int
+  open var size: Size {
     return Size(width: width, height: height)
   }
   let frame: TextureFrame
@@ -41,9 +41,9 @@ public class Texture: Hashable, Equatable {
   let callback: MTKTextureLoaderCallback?
 
   /// if a bad image name was given or a texture couldn't be loaded for whatever reason fallback to this error image.
-  private static var errorTexture: MTLTexture {
-    let url = NSBundle.mainBundle().URLForResource("error", withExtension: "png")!
-    return try! Device.shared.textureLoader.newTextureWithContentsOfURL(url, options: nil)
+  fileprivate static var errorTexture: MTLTexture {
+    let url = Bundle.main.url(forResource: "error", withExtension: "png")!
+    return try! Device.shared.textureLoader.newTexture(withContentsOf: url, options: nil)
   }
 
   /**
@@ -118,7 +118,7 @@ public class Texture: Hashable, Equatable {
     }
 
     do {
-      texture = try Device.shared.textureLoader.newTextureWithData(data, options: nil)
+      texture = try Device.shared.textureLoader.newTexture(with: data, options: nil)
     }
     catch let error {
       DLog("Error loading image named \(named): \(error)")
@@ -130,11 +130,11 @@ public class Texture: Hashable, Equatable {
 }
 
 extension Texture {
-  static func newTexture(width: Int, height: Int, pixelFormat: MTLPixelFormat) -> MTLTexture {
+  static func newTexture(_ width: Int, height: Int, pixelFormat: MTLPixelFormat) -> MTLTexture {
     let descriptor = MTLTextureDescriptor()
     descriptor.width = width
     descriptor.height = height
     descriptor.pixelFormat = pixelFormat
-    return Device.shared.device.newTextureWithDescriptor(descriptor)
+    return Device.shared.device.makeTexture(descriptor: descriptor)
   }
 }

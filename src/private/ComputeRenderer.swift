@@ -12,24 +12,24 @@ import MetalPerformanceShaders
 //TODO: We might have to run this prior to generating the texture maps, the edge of each image is just set to black so it'll probably make things look weird
 
 final class ComputeRenderer {
-  private let device: MTLDevice
-  private let srcTexture: MTLTexture
-  private let destTexture: MTLTexture
+  fileprivate let device: MTLDevice
+  fileprivate let srcTexture: MTLTexture
+  fileprivate let destTexture: MTLTexture
 
-  private let commandQueue: MTLCommandQueue
+  fileprivate let commandQueue: MTLCommandQueue
 
   init(srcTexture: Texture, device: Device = Device.shared) {
     self.device = device.device
     self.srcTexture = srcTexture.texture
 
-    destTexture = self.device.newTextureWithDescriptor(self.srcTexture.descriptor)
-    commandQueue = self.device.newCommandQueue()
+    destTexture = self.device.makeTexture(descriptor: self.srcTexture.descriptor)
+    commandQueue = self.device.makeCommandQueue()
     commandQueue.label = "compute command queue"
   }
 
   func generateTexture() -> Texture {
     let pipeline = LightTexturePipeline()
-    let commandBuffer = commandQueue.commandBuffer()
+    let commandBuffer = commandQueue.makeCommandBuffer()
 
     pipeline.encodeToCommandBuffer(commandBuffer,
                                    sourceTexture: srcTexture,

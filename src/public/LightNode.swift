@@ -43,15 +43,15 @@ public final class LightNode: Node {
     return scene?.ambientLightColor ?? .white
   }
   public var hidden: Bool = false
-  private(set) public var isVisible = true
+  fileprivate(set) public var isVisible = true
   public var radius: Float = 0.0
-  private var relativePosition: Point = Point(x: 0, y: 0)
+  fileprivate var relativePosition: Point = Point(x: 0, y: 0)
 
   var resolution: Size {
     guard let camera = camera else { return .zero }
 
     //this needs to be in points for some reason I think
-    let resolution = UIScreen.mainScreen().bounds.size
+    let resolution = UIScreen.main.bounds.size
     return Size(width: resolution.w * camera.zoom, height: resolution.h * camera.zoom)
   }
 
@@ -64,7 +64,7 @@ public final class LightNode: Node {
     self.position = position
   }
 
-  public override func update(delta: CFTimeInterval) {
+  public override func update(_ delta: CFTimeInterval) {
     //this does not take into account the radius of the light at the moment
     guard let scene = scene,
           let camera = camera else { return }

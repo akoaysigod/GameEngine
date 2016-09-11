@@ -24,25 +24,25 @@ import UIKit
  
  - seealso: `FontAtlas` and `Fonts` classes.
  */
-public class TextNode: Node, Renderable {
-  private typealias GlyphClosure = (glyph: CGGlyph, bounds: CGRect) -> ()
+open class TextNode: Node, Renderable {
+  fileprivate typealias GlyphClosure = (_ glyph: CGGlyph, _ bounds: CGRect) -> ()
 
-  public var text: String
+  open var text: String
   let fontAtlas: FontAtlas
-  public var color: Color
-  public var alpha: Float {
+  open var color: Color
+  open var alpha: Float {
     get { return color.alpha }
     set {
       color = Color(color.red, color.green, color.blue, newValue)
     }
   }
 
-  private(set) var quad: Quad
+  fileprivate(set) var quad: Quad
 
-  public var texture: Texture?
+  open var texture: Texture?
 
-  public var hidden = false
-  public let isVisible = true
+  open var hidden = false
+  open let isVisible = true
 
   /**
    Create a new text label node with a given font.
@@ -68,29 +68,29 @@ public class TextNode: Node, Renderable {
     super.init(size: texture!.size)
   }
 
-  static func loadTexture(fontAtlas: FontAtlas, device: MTLDevice) -> Texture {
+  static func loadTexture(_ fontAtlas: FontAtlas, device: MTLDevice) -> Texture {
     let texDesc = MTLTextureDescriptor()
     let textureSize = fontAtlas.textureSize
-    texDesc.pixelFormat = .R8Unorm
+    texDesc.pixelFormat = .r8Unorm
     texDesc.width = textureSize
     texDesc.height = textureSize
-    let texture = device.newTextureWithDescriptor(texDesc)
+    let texture = device.makeTexture(descriptor: texDesc)
 
     let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
-    texture.replaceRegion(region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
+    texture.replace(region: region, mipmapLevel: 0, withBytes: fontAtlas.textureData.bytes, bytesPerRow: textureSize)
 
     return Texture(texture: texture)
   }
 
   //need a size that fits rect sort of thing for the text
-  static func makeTextQuads(text: String, color: Color, fontAtlas: FontAtlas) -> Quads {
+  static func makeTextQuads(_ text: String, color: Color, fontAtlas: FontAtlas) -> Quads {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)
 
     let attr = [NSFontAttributeName: fontAtlas.font]
     let attrStr = NSAttributedString(string: text, attributes: attr)
 
     let strRng = CFRangeMake(0, attrStr.length)
-    let rectPath = CGPathCreateWithRect(rect, nil)
+    let rectPath = CGPath(rect: rect, transform: nil)
     let framesetter = CTFramesetterCreateWithAttributedString(attrStr)
     let frame = CTFramesetterCreateFrame(framesetter, strRng, rectPath, nil)
 
@@ -99,7 +99,7 @@ public class TextNode: Node, Renderable {
 //      $0 + CTLineGetGlyphCount($1)
 //    }
 
-    var rects = Quads()
+    let rects = Quads()
     enumerateGlyphsInFrame(frame) { glyph, glyphBounds in
       //TODO: this probably needs to change to a dictionary because I'm not pulling out all the values
       //let glyphInfo = self.fontAtlas.glyphDescriptors[Int(glyph)]
@@ -108,10 +108,10 @@ public class TextNode: Node, Renderable {
       }
       guard let glyphInfo = tmpGlyphs.first else { return }
 
-      let minX = Float(CGRectGetMinX(glyphBounds))
-      let maxX = Float(CGRectGetMaxX(glyphBounds))
-      let minY = Float(CGRectGetMinY(glyphBounds))
-      let maxY = Float(CGRectGetMaxY(glyphBounds))
+      let minX = Float(glyphBounds.minX)
+      let maxX = Float(glyphBounds.maxX)
+      let minY = Float(glyphBounds.minY)
+      let maxY = Float(glyphBounds.maxY)
       let minS = Float(glyphInfo.topLeftTexCoord.x)
       let maxS = Float(glyphInfo.bottomRightTexCoord.x)
       let minT = Float(glyphInfo.topLeftTexCoord.y)
@@ -127,40 +127,40 @@ public class TextNode: Node, Renderable {
     return rects
   }
 
-  private static func enumerateGlyphsInFrame(frame: CTFrameRef, closure: GlyphClosure) {
+  fileprivate static func enumerateGlyphsInFrame(_ frame: CTFrame, closure: @escaping GlyphClosure) {
     let entire = CFRangeMake(0, 0)
 
     let framePath = CTFrameGetPath(frame)
-    let frameBoundingRect = CGPathGetPathBoundingBox(framePath)
+    let frameBoundingRect = framePath.boundingBoxOfPath
 
     let lines = CTFrameGetLines(frame) as [AnyObject] as! [CTLine] //lol
-    let originBuffer = UnsafeMutablePointer<CGPoint>.alloc(lines.count)
-    defer { originBuffer.destroy(lines.count); originBuffer.dealloc(lines.count) }
+    let originBuffer = UnsafeMutablePointer<CGPoint>.allocate(capacity: lines.count)
+    defer { originBuffer.deinitialize(count: lines.count); originBuffer.deallocate(capacity: lines.count) }
     CTFrameGetLineOrigins(frame, entire, originBuffer)
 
     UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
     var context = UIGraphicsGetCurrentContext()
     
-    for (i, line) in lines.enumerate() {
+    for (i, line) in lines.enumerated() {
       let lineOrigin = originBuffer[i]
 
       let runs = CTLineGetGlyphRuns(line) as [AnyObject] as! [CTRun] //lol
       runs.forEach { run in
         let glyphCount = CTRunGetGlyphCount(run)
 
-        let glyphBuffer = UnsafeMutablePointer<CGGlyph>.alloc(glyphCount)
-        defer { glyphBuffer.destroy(glyphCount); glyphBuffer.dealloc(glyphCount) }
+        let glyphBuffer = UnsafeMutablePointer<CGGlyph>.allocate(capacity: glyphCount)
+        defer { glyphBuffer.deinitialize(count: glyphCount); glyphBuffer.deallocate(capacity: glyphCount) }
         CTRunGetGlyphs(run, entire, glyphBuffer)
 
         //TODO: probably don't need this anymore
-        let positionBuffer = UnsafeMutablePointer<CGPoint>.alloc(glyphCount)
-        defer { positionBuffer.destroy(); positionBuffer.dealloc(glyphCount) }
+        let positionBuffer = UnsafeMutablePointer<CGPoint>.allocate(capacity: glyphCount)
+        defer { positionBuffer.deinitialize(); positionBuffer.deallocate(capacity: glyphCount) }
         CTRunGetPositions(run, entire, positionBuffer)
 
         (0..<glyphCount).forEach { j in
           let glyph = glyphBuffer[j]
           let glyphRect = CTRunGetImageBounds(run, context, CFRangeMake(j, 1))
-          closure(glyph: glyph, bounds: glyphRect)
+          closure(glyph, glyphRect)
         }
       }
     }

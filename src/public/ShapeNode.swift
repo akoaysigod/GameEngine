@@ -11,9 +11,9 @@ import Metal
 /**
  A `ShapeNode` is a node for creating colored shapes. Currently only supports rectangular shapes.
  */
-public class ShapeNode: Node, Renderable {
-  public var color: Color
-  public var alpha: Float {
+open class ShapeNode: Node, Renderable {
+  open var color: Color
+  open var alpha: Float {
     get { return color.alpha }
     set {
       color = Color(color.red, color.green, color.blue, newValue)
@@ -22,10 +22,10 @@ public class ShapeNode: Node, Renderable {
 
   var texture: Texture? = nil
 
-  public var hidden = false
-  public let isVisible = true
+  open var hidden = false
+  open let isVisible = true
 
-  private(set) var quad: Quad
+  fileprivate(set) var quad: Quad
 
   /**
    Designated initializer. Creates a rectangular shape node of a given color.
@@ -54,7 +54,7 @@ public class ShapeNode: Node, Renderable {
 
    - returns: A new instance of `ShapeNode`.
    */
-  public convenience init<T: FloatLiteralConvertible>(width: T, height: T, color: Color) {
+  public convenience init<T: ExpressibleByFloatLiteral>(width: T, height: T, color: Color) {
     self.init(width: width, height: height, color: color)
   }
 

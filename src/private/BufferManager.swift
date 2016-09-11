@@ -9,9 +9,9 @@
 import Metal
 
 final class BufferManager {
-  private let device: MTLDevice
+  fileprivate let device: MTLDevice
 
-  private let startSize = 500
+  fileprivate let startSize = 500
 
   let uniformBuffer: Buffer
   let uiUniformBuffer: Buffer
@@ -19,19 +19,19 @@ final class BufferManager {
   let shapeIndexBuffer: Buffer
   let shapeVertexBuffer: Buffer
 
-  private(set) var indexBuffer: Buffer
+  fileprivate(set) var indexBuffer: Buffer
 
-  private var vertexBuffer = [Int: Buffer]()
+  fileprivate var vertexBuffer = [Int: Buffer]()
 
   var lightVertexBuffer: Buffer?
-  private let maxLights = 100
+  fileprivate let maxLights = 100
 
   init(projection: Mat4, device: Device = Device.shared) {
     self.device = device.device
 
-    uniformBuffer = Buffer(length: sizeof(Mat4) * 2)
+    uniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * 2)
     uniformBuffer.addData([projection], size: sizeof(Mat4))
-    uiUniformBuffer = Buffer(length: sizeof(Mat4) * 2)
+    uiUniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * 2)
     uiUniformBuffer.addData([projection], size: sizeof(Mat4)) //do I still need this?
 
     indexBuffer = Buffer(length: Quad.indicesSize * startSize)
@@ -55,7 +55,7 @@ final class BufferManager {
     }
   }
 
-  func updateProjection(projection: Mat4) {
+  func updateProjection(_ projection: Mat4) {
     uniformBuffer.addData([projection], size: sizeof(Mat4))
     uiUniformBuffer.addData([projection], size: sizeof(Mat4))
   }

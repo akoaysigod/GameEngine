@@ -22,7 +22,7 @@ class GlyphDescriptor: NSObject, NSCoding {
     self.bottomRightTexCoord = bottomRightTexCoord
   }
 
-  private struct Keys {
+  fileprivate struct Keys {
     static let GlyphIndex = "glyphindex"
     static let XLeftTex = "xlefttex"
     static let YLeftTex = "ylefttex"
@@ -31,32 +31,32 @@ class GlyphDescriptor: NSObject, NSCoding {
   }
 
   required init?(coder aDecoder: NSCoder) {
-    self.glyphIndex = UInt16(aDecoder.decodeIntForKey(Keys.GlyphIndex))
+    self.glyphIndex = UInt16(aDecoder.decodeCInt(forKey: Keys.GlyphIndex))
 
-    let lx = aDecoder.decodeFloatForKey(Keys.XLeftTex)
-    let ly = aDecoder.decodeFloatForKey(Keys.YLeftTex)
+    let lx = aDecoder.decodeFloat(forKey: Keys.XLeftTex)
+    let ly = aDecoder.decodeFloat(forKey: Keys.YLeftTex)
     self.topLeftTexCoord = CGPoint(x: lx, y: ly)
 
-    let rx = aDecoder.decodeFloatForKey(Keys.XRightTex)
-    let ry = aDecoder.decodeFloatForKey(Keys.YRightTex)
+    let rx = aDecoder.decodeFloat(forKey: Keys.XRightTex)
+    let ry = aDecoder.decodeFloat(forKey: Keys.YRightTex)
     self.bottomRightTexCoord = CGPoint(x: rx, y: ry)
   }
 
-  func encodeWithCoder(coder: NSCoder) {
-    coder.encodeInt(Int32(glyphIndex), forKey: Keys.GlyphIndex)
-    coder.encodeFloat(Float(topLeftTexCoord.x), forKey: Keys.XLeftTex)
-    coder.encodeFloat(Float(topLeftTexCoord.y), forKey: Keys.YLeftTex)
-    coder.encodeFloat(Float(bottomRightTexCoord.x), forKey: Keys.XRightTex)
-    coder.encodeFloat(Float(bottomRightTexCoord.y), forKey: Keys.YRightTex)
+  func encode(with coder: NSCoder) {
+    coder.encodeCInt(Int32(glyphIndex), forKey: Keys.GlyphIndex)
+    coder.encode(Float(topLeftTexCoord.x), forKey: Keys.XLeftTex)
+    coder.encode(Float(topLeftTexCoord.y), forKey: Keys.YLeftTex)
+    coder.encode(Float(bottomRightTexCoord.x), forKey: Keys.XRightTex)
+    coder.encode(Float(bottomRightTexCoord.y), forKey: Keys.YRightTex)
   }
 }
 
 private final class FlatArray<T> {
   var arr: [T]
-  private let width: Int
+  fileprivate let width: Int
   
   init(count: Int, repeatedValue: T, width: Int) {
-    self.arr = [T](count: count, repeatedValue: repeatedValue)
+    self.arr = [T](repeating: repeatedValue, count: count)
     self.width = width
   }
   
@@ -72,7 +72,7 @@ private final class FlatArray<T> {
 
 class FontAtlas: NSObject, NSCoding {
   //these probably have to be the same right now
-  private struct Constants {
+  fileprivate struct Constants {
     static let AtlasSizeHeightMax = 4096
     static let AtlasSizeWidthMax = 4096
     static let AsciiHeight = 4096
@@ -81,7 +81,7 @@ class FontAtlas: NSObject, NSCoding {
   
   let font: UIFont
   let textureSize: Int
-  var textureData: NSData!
+  var textureData: Data!
   var glyphDescriptors = [GlyphDescriptor]()
 
   #if DEBUG
@@ -105,7 +105,7 @@ class FontAtlas: NSObject, NSCoding {
   }
 
   //MARK: NSCODING
-  private struct Keys {
+  fileprivate struct Keys {
     static let Font = "font"
     static let FontSize = "size"
     static let Spread = "spread"
@@ -117,44 +117,44 @@ class FontAtlas: NSObject, NSCoding {
   }
 
   required init?(coder aDecoder: NSCoder) {
-    let fontName = aDecoder.decodeObjectForKey(Keys.Font) as! String
-    let fontSize = aDecoder.decodeFloatForKey(Keys.FontSize)
+    let fontName = aDecoder.decodeObject(forKey: Keys.Font) as! String
+    let fontSize = aDecoder.decodeFloat(forKey: Keys.FontSize)
     //let fontSpread = aDecoder.decodeFloatForKey(Keys.Spread)
 
     self.font = UIFont(name: fontName, size: CGFloat(fontSize))!
-    self.textureSize = Int(aDecoder.decodeIntForKey(Keys.TextureSize))
-    self.textureData = aDecoder.decodeObjectForKey(Keys.TextureData) as! NSData
-    self.glyphDescriptors = aDecoder.decodeObjectForKey(Keys.GlyphDescriptors) as! [GlyphDescriptor]
+    self.textureSize = Int(aDecoder.decodeCInt(forKey: Keys.TextureSize))
+    self.textureData = aDecoder.decodeObject(forKey: Keys.TextureData) as! Data
+    self.glyphDescriptors = aDecoder.decodeObject(forKey: Keys.GlyphDescriptors) as! [GlyphDescriptor]
     
     super.init()
   }
 
-  func encodeWithCoder(coder: NSCoder) {
-    coder.encodeObject(font.fontName, forKey: Keys.Font)
-    coder.encodeFloat(Float(font.pointSize), forKey: Keys.FontSize)
-    coder.encodeInt(Int32(textureSize), forKey: Keys.TextureSize)
-    coder.encodeObject(textureData, forKey: Keys.TextureData)
-    coder.encodeObject(glyphDescriptors, forKey: Keys.GlyphDescriptors)
+  func encode(with coder: NSCoder) {
+    coder.encode(font.fontName, forKey: Keys.Font)
+    coder.encode(Float(font.pointSize), forKey: Keys.FontSize)
+    coder.encodeCInt(Int32(textureSize), forKey: Keys.TextureSize)
+    coder.encode(textureData, forKey: Keys.TextureData)
+    coder.encode(glyphDescriptors, forKey: Keys.GlyphDescriptors)
   }
   
   //TODO: rewrite these estimates
-  private func estimateGlyphSize(font: UIFont) -> CGSize {
+  fileprivate func estimateGlyphSize(_ font: UIFont) -> CGSize {
     let exampleStr: NSString = "123ABC"
-    let exampleStrSize = exampleStr.sizeWithAttributes([NSFontAttributeName: font])
+    let exampleStrSize = exampleStr.size(attributes: [NSFontAttributeName: font])
     let averageWidth = ceil(exampleStrSize.width / CGFloat(exampleStr.length))
     let maxHeight = ceil(exampleStrSize.height)
     return CGSize(width: averageWidth, height: maxHeight)
   }
   
-  private func estimateLineWidth(font: UIFont) -> CGFloat {
-    let estimatedWidth = ("!" as NSString).sizeWithAttributes([NSFontAttributeName: font]).width
+  fileprivate func estimateLineWidth(_ font: UIFont) -> CGFloat {
+    let estimatedWidth = ("!" as NSString).size(attributes: [NSFontAttributeName: font]).width
     return ceil(estimatedWidth)
   }
   
-  private func willLikelyFitInAtlasRect(font: UIFont, size: CGFloat, rect: CGRect) -> Bool {
+  fileprivate func willLikelyFitInAtlasRect(_ font: UIFont, size: CGFloat, rect: CGRect) -> Bool {
     let textureArea = rect.size.width * rect.size.height
     let testFont = UIFont(name: font.fontName, size: size)!
-    let testCTFont = CTFontCreateWithName(font.fontName, size, nil)
+    let testCTFont = CTFontCreateWithName(font.fontName as CFString?, size, nil)
     let fontCount = glyphIndices(testCTFont).count//CTFontGetGlyphCount(testCTFont)
     
     let margin = self.estimateLineWidth(testFont)
@@ -165,7 +165,7 @@ class FontAtlas: NSObject, NSCoding {
     return estimatedTotalArea < textureArea
   }
   
-  private func pointSizeThatFitsForFont(font: UIFont, atlasRect: CGRect) -> CGFloat {
+  fileprivate func pointSizeThatFitsForFont(_ font: UIFont, atlasRect: CGRect) -> CGFloat {
     var fittedSize = font.pointSize
     
     while self.willLikelyFitInAtlasRect(font, size: fittedSize, rect: atlasRect) {
@@ -179,21 +179,21 @@ class FontAtlas: NSObject, NSCoding {
     return fittedSize
   }
   
-  private func glyphIndices(ctFont: CTFont) -> [UInt16] {
+  fileprivate func glyphIndices(_ ctFont: CTFont) -> [UInt16] {
     if !asciiOnly {
       let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
       return Array(0..<fontCount)
     }
     
-    let asciiGlyphs = UnsafeMutablePointer<UniChar>.alloc(128)
-    defer { asciiGlyphs.destroy(128); asciiGlyphs.dealloc(128) }
+    let asciiGlyphs = UnsafeMutablePointer<UniChar>.allocate(capacity: 128)
+    defer { asciiGlyphs.deinitialize(count: 128); asciiGlyphs.deallocate(capacity: 128) }
     
     for i in (0...127) {
       asciiGlyphs[i] = UniChar(i)
     }
     
-    var glyphIndices = UnsafeMutablePointer<CGGlyph>.alloc(128)
-    defer { glyphIndices.destroy(128); glyphIndices.dealloc(128) }
+    var glyphIndices = UnsafeMutablePointer<CGGlyph>.allocate(capacity: 128)
+    defer { glyphIndices.deinitialize(count: 128); glyphIndices.deallocate(capacity: 128) }
     CTFontGetGlyphsForCharacters(ctFont, asciiGlyphs, glyphIndices, 128)
     
     return (0...127).map {
@@ -203,31 +203,31 @@ class FontAtlas: NSObject, NSCoding {
     }
   }
   
-  func createAtlasForFont(font: UIFont, _ width: Int, _ height: Int) -> (UnsafeMutablePointer<UInt8>, dataSize: Int) {
+  func createAtlasForFont(_ font: UIFont, _ width: Int, _ height: Int) -> (UnsafeMutablePointer<UInt8>, dataSize: Int) {
     let dataSize = width * height
-    let imageData = UnsafeMutablePointer<UInt8>.alloc(dataSize)
+    let imageData = UnsafeMutablePointer<UInt8>.allocate(capacity: dataSize)
     
     let colorSpace = CGColorSpaceCreateDeviceGray()
-    let bitmapInfo = CGBitmapInfo.AlphaInfoMask.rawValue & CGImageAlphaInfo.None.rawValue
+    let bitmapInfo = CGBitmapInfo.alphaInfoMask.rawValue & CGImageAlphaInfo.none.rawValue
     
-    let context = CGBitmapContextCreate(imageData, Int(width), Int(height), 8, Int(width), colorSpace, bitmapInfo)
-    CGContextSetAllowsAntialiasing(context, false)
-    CGContextTranslateCTM(context, 0, CGFloat(height))
-    CGContextScaleCTM(context, 1, -1)
-    CGContextSetRGBFillColor(context, 0, 0, 0, 1)
+    let context = CGContext(data: imageData, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: Int(width), space: colorSpace, bitmapInfo: bitmapInfo)
+    context?.setAllowsAntialiasing(false)
+    context?.translateBy(x: 0, y: CGFloat(height))
+    context?.scaleBy(x: 1, y: -1)
+    context?.setFillColor(red: 0, green: 0, blue: 0, alpha: 1)
     
     let atlasRect = CGRect(x: 0.0, y: 0.0, width: Double(width), height: Double(height))
     
-    CGContextFillRect(context, atlasRect)
+    context?.fill(atlasRect)
     
     let fontPointSize = self.pointSizeThatFitsForFont(font, atlasRect: atlasRect) //property
-    let ctFont = CTFontCreateWithName(font.fontName, fontPointSize, nil)
+    let ctFont = CTFontCreateWithName(font.fontName as CFString?, fontPointSize, nil)
     let parentFont = UIFont(name: font.fontName, size: fontPointSize) //property
     
     //let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
     let margin = self.estimateLineWidth(font)
 
-    CGContextSetRGBFillColor(context, 1, 1, 1, 1)
+    context?.setFillColor(red: 1, green: 1, blue: 1, alpha: 1)
 
     //can probably just return this maybe
     glyphDescriptors.removeAll()
@@ -240,52 +240,52 @@ class FontAtlas: NSObject, NSCoding {
     
     //TODO: refactor this
     glyphIndices(ctFont).forEach { glyph in //look into this bug in swift-mode need parens around this for smie, .forEach is worse
-      var rect = UnsafeMutablePointer<CGRect>.alloc(1)
-      defer { rect.destroy(); rect.dealloc(1) }
+      var rect = UnsafeMutablePointer<CGRect>.allocate(capacity: 1)
+      defer { rect.deinitialize(); rect.deallocate(capacity: 1) }
       
-      let unsafeGlyph = UnsafeMutablePointer<CGGlyph>.alloc(1)
-      defer { unsafeGlyph.destroy(); unsafeGlyph.dealloc(1) }
+      let unsafeGlyph = UnsafeMutablePointer<CGGlyph>.allocate(capacity: 1)
+      defer { unsafeGlyph.deinitialize(); unsafeGlyph.deallocate(capacity: 1) }
       unsafeGlyph[0] = glyph
       
-      CTFontGetBoundingRectsForGlyphs(ctFont, .Horizontal, unsafeGlyph, rect, 1)
+      CTFontGetBoundingRectsForGlyphs(ctFont, .horizontal, unsafeGlyph, rect, 1)
       
-      if origin.x + CGRectGetMaxX(rect.memory) + margin > CGFloat(width) {
+      if origin.x + rect.pointee.maxX + margin > CGFloat(width) {
         origin.x = 0
         origin.y = maxYCoordForLine + margin + fontDescent
       }
       
-      if origin.y + CGRectGetMaxY(rect.memory) > maxYCoordForLine {
-        maxYCoordForLine = origin.y + CGRectGetMaxY(rect.memory)
+      if origin.y + rect.pointee.maxY > maxYCoordForLine {
+        maxYCoordForLine = origin.y + rect.pointee.maxY
       }
       
-      let glyphOriginX = origin.x - rect.memory.origin.x + (margin * 0.5)
+      let glyphOriginX = origin.x - rect.pointee.origin.x + (margin * 0.5)
       let glyphOriginY = origin.y + (margin * 0.5)
       
       var transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: glyphOriginX, ty: glyphOriginY)
-      var unsafeTransform = UnsafeMutablePointer<CGAffineTransform>.alloc(1)
-      defer { unsafeTransform.destroy(); unsafeTransform.dealloc(1) }
+      var unsafeTransform = UnsafeMutablePointer<CGAffineTransform>.allocate(capacity: 1)
+      defer { unsafeTransform.deinitialize(); unsafeTransform.deallocate(capacity: 1) }
       unsafeTransform[0] = transform
       
       let path = CTFontCreatePathForGlyph(ctFont, glyph, unsafeTransform)
-      CGContextAddPath(context, path)
-      CGContextFillPath(context)
+      context?.addPath(path!)
+      context?.fillPath()
       
-      var pathBoundingRect = CGPathGetPathBoundingBox(path)
-      if CGRectEqualToRect(pathBoundingRect, CGRectNull) {
-        pathBoundingRect = CGRectZero
+      var pathBoundingRect = path?.boundingBoxOfPath
+      if (pathBoundingRect?.equalTo(CGRect.null))! {
+        pathBoundingRect = CGRect.zero
       }
       
-      let texCoordLeft = pathBoundingRect.origin.x / CGFloat(width)
-      let texCoordRight = (pathBoundingRect.origin.x + pathBoundingRect.size.width) / CGFloat(width)
-      let texCoordTop = pathBoundingRect.origin.y / CGFloat(height)
-      let texCoordBottom = (pathBoundingRect.origin.y + pathBoundingRect.size.height) / CGFloat(height)
+      let texCoordLeft = (pathBoundingRect?.origin.x)! / CGFloat(width)
+      let texCoordRight = ((pathBoundingRect?.origin.x)! + (pathBoundingRect?.size.width)!) / CGFloat(width)
+      let texCoordTop = (pathBoundingRect?.origin.y)! / CGFloat(height)
+      let texCoordBottom = ((pathBoundingRect?.origin.y)! + (pathBoundingRect?.size.height)!) / CGFloat(height)
       
       let topLeftTexCoord = CGPoint(x: texCoordLeft, y: texCoordTop)
       let bottomRightTexCoord = CGPoint(x: texCoordRight, y: texCoordBottom)
       let descriptor = GlyphDescriptor(glyphIndex: glyph, topLeftTexCoord: topLeftTexCoord, bottomRightTexCoord: bottomRightTexCoord)
       glyphDescriptors.append(descriptor)
       
-      origin.x += CGRectGetWidth(rect.memory) + margin
+      origin.x += rect.pointee.width + margin
     }
     
     #if DEBUG
@@ -298,7 +298,7 @@ class FontAtlas: NSObject, NSCoding {
     return (imageData, dataSize)
   }
 
-  private func computeSignedDistanceFields(imageData: UnsafeMutablePointer<UInt8>, _ width: Int, _ height: Int) -> FlatArray<Float> {
+  fileprivate func computeSignedDistanceFields(_ imageData: UnsafeMutablePointer<UInt8>, _ width: Int, _ height: Int) -> FlatArray<Float> {
     let ihypot = { (x: Int,  y: Int) -> Float in
       return hypot(Float(x), Float(y))
     }
@@ -352,8 +352,8 @@ class FontAtlas: NSObject, NSCoding {
       }
     }
     
-    (1...height - 2).reverse().forEach { y in
-      (1...width - 2).reverse().forEach { x in
+    (1...height - 2).reversed().forEach { y in
+      (1...width - 2).reversed().forEach { x in
         let newDistance = ihypot(x - boundaryPoints[x, y].x, y - boundaryPoints[x, y].y)
         
         if distances[x + 1, y] + 1.0 < distances[x, y] {
@@ -389,7 +389,7 @@ class FontAtlas: NSObject, NSCoding {
     return distances
   }
 
-  private func createResampledData(distances: FlatArray<Float>, _ width: Int, _ height: Int, scaleFactor: Int) -> FlatArray<Float> {
+  fileprivate func createResampledData(_ distances: FlatArray<Float>, _ width: Int, _ height: Int, scaleFactor: Int) -> FlatArray<Float> {
     assert(width % scaleFactor == 0 && height % scaleFactor == 0)
 
     let scaledWidth = width / scaleFactor
@@ -397,8 +397,8 @@ class FontAtlas: NSObject, NSCoding {
 
     let scaledData: FlatArray<Float> = FlatArray(count: scaledWidth * scaledHeight, repeatedValue: 0.0, width: scaledWidth)
 
-    0.stride(to: height, by: scaleFactor).forEach { y in
-      0.stride(to: width, by: scaleFactor).forEach { x in
+    stride(from: 0, to: height, by: scaleFactor).forEach { y in
+      stride(from: 0, to: width, by: scaleFactor).forEach { x in
         var accum: Float = 0.0
         (0..<scaleFactor).forEach { yy in
           (0..<scaleFactor).forEach { xx in
@@ -415,8 +415,8 @@ class FontAtlas: NSObject, NSCoding {
     return scaledData
   }
 
-  private func createQuantizedDistanceField(distances: FlatArray<Float>, _ width: Int, _ height: Int, normalizationFactor: Float) -> UnsafeMutablePointer<UInt8> {
-    let quanitized = UnsafeMutablePointer<UInt8>.alloc(width * height)
+  fileprivate func createQuantizedDistanceField(_ distances: FlatArray<Float>, _ width: Int, _ height: Int, normalizationFactor: Float) -> UnsafeMutablePointer<UInt8> {
+    let quanitized = UnsafeMutablePointer<UInt8>.allocate(capacity: width * height)
 
     (0..<height).forEach { y in
       (0..<width).forEach { x in
@@ -430,12 +430,12 @@ class FontAtlas: NSObject, NSCoding {
     return quanitized
   }
 
-  private func createTextureData() {
+  fileprivate func createTextureData() {
     let width = asciiOnly ? Constants.AsciiHeight : Constants.AtlasSizeHeightMax
     let height = asciiOnly ? Constants.AsciiWidth : Constants.AtlasSizeHeightMax
 
     let (atlasData, dataSize) = createAtlasForFont(font, width, height)
-    defer { atlasData.destroy(dataSize); atlasData.dealloc(dataSize) }
+    defer { atlasData.deinitialize(count: dataSize); atlasData.deallocate(capacity: dataSize) }
 
     let distanceFields = computeSignedDistanceFields(atlasData, width, height)
 
@@ -446,7 +446,7 @@ class FontAtlas: NSObject, NSCoding {
     let textureArray = createQuantizedDistanceField(scaledFields, textureSize, textureSize, normalizationFactor: spread)
 
     let byteCount = textureSize * textureSize
-    textureData = NSData(bytesNoCopy: textureArray, length: byteCount, freeWhenDone: true) //do I free textureArray?
+    textureData = Data(bytesNoCopy: UnsafeMutablePointer<UInt8>(textureArray), count: byteCount, deallocator: .free) //do I free textureArray?
 
     #if DEBUG
     let colorSpace = CGColorSpaceCreateDeviceGray()

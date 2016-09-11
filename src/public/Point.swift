@@ -6,7 +6,7 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
-public func +=(inout p: Point, rhs: Point) {
+public func +=(p: inout Point, rhs: Point) {
   p.x += rhs.x
   p.y += rhs.y
 }

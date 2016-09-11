@@ -31,10 +31,10 @@ public func ==(rhs: Node, lhs: Node) -> Bool {
  - TextNode
  - Camera
  */
-public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
-  public var name: String? = nil
+open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
+  open var name: String? = nil
 
-  public var scene: Scene? = nil
+  open var scene: Scene? = nil
 
   var index: Int = 0
   var isUINode = false {
@@ -43,14 +43,14 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     }
   }
   
-  public var size: Size {
+  open var size: Size {
     didSet {
       updateSize()
       updateTransform()
     }
   }
 
-  public var frame: Rect {
+  open var frame: Rect {
     var ret = boundingRect
     allParents.forEach { parent in
       ret.x += parent.position.x - (parent.width * parent.anchorPoint.x)
@@ -61,38 +61,38 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     return ret
   }
 
-  public var anchorPoint = Point(x: 0.0, y: 0.0) {
+  open var anchorPoint = Point(x: 0.0, y: 0.0) {
     didSet { updateTransform() }
   }
 
-  public var position = Point(x: 0, y: 0) {
+  open var position = Point(x: 0, y: 0) {
     didSet { updateTransform() }
   }
 
-  public var zPosition: Int = 0 {
+  open var zPosition: Int = 0 {
     didSet { updateTransform() }
   }
 
-  public var rotation: Float = 0.0 {
+  open var rotation: Float = 0.0 {
     didSet { updateTransform() }
   }
 
-  public var xScale: Float = 1.0 {
+  open var xScale: Float = 1.0 {
     didSet { updateTransform() }
   }
-  public var yScale: Float = 1.0 {
+  open var yScale: Float = 1.0 {
     didSet { updateTransform() }
   }
 
-  public private(set) var transform: Mat4 = .identity
+  open fileprivate(set) var transform: Mat4 = .identity
 
   weak var camera: CameraNode?
 
   //tree related
-  private let uuid = NSUUID().UUIDString
-  public var hashValue: Int { return uuid.hashValue }
-  public private(set) var nodes = Nodes()
-  public private(set) var parent: Node? = nil
+  fileprivate let uuid = UUID().uuidString
+  open var hashValue: Int { return uuid.hashValue }
+  open fileprivate(set) var nodes = Nodes()
+  open fileprivate(set) var parent: Node? = nil
 
   /**
    Designated initializer. 
@@ -114,7 +114,7 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
 
    - parameter delta: The amount of time that's passed since this function was last called.
    */
-  public func update(delta: CFTimeInterval) {
+  open func update(_ delta: CFTimeInterval) {
     guard let action = self.action else { return }
 
     if !action.completed {
@@ -127,10 +127,10 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
 
   //MARK: Actions
 
-  private(set) public var action: Action? = nil
+  fileprivate(set) open var action: Action? = nil
 
   /// True if this `Node` or any of it's parents' `Node` is currently running an action.
-  public var hasAction: Bool {
+  open var hasAction: Bool {
     guard action == nil else { return true }
     let parentActions = allParents.filter { $0.hasAction }
     return parentActions.count > 0
@@ -141,18 +141,18 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
    
    - parameter action: The action to perform on the node.
    */
-  public func runAction(action: Action) {
+  open func runAction(_ action: Action) {
     self.action = action
   }
 
-  public func stopAction() {
+  open func stopAction() {
     action?.stopAction()
     action = nil
   }
 
   //MARK: Tree stuff
 
-  public func addNode(node: Node) {
+  open func addNode(_ node: Node) {
     guard node.parent == nil else {
       DLog("Node already has parent node.")
       return
@@ -181,7 +181,7 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     nodes += [node]
   }
 
-  public func removeNode<T: Node>(node: T?) -> T? {
+  open func removeNode<T: Node>(_ node: T?) -> T? {
     guard let node = node else { return nil }
     guard let index = nodes.find(node) else { return nil }
 
@@ -189,14 +189,14 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
       scene.removeNode(node)
     }
 
-    return nodes.removeAtIndex(index) as? T
+    return nodes.remove(at: index) as? T
   }
 
   //MARK: transform caching
   
   var hasTransformUpdate = false
-  private var cachedModel: Mat4 = .identity
-  public var model: Mat4 {
+  fileprivate var cachedModel: Mat4 = .identity
+  open var model: Mat4 {
     if !hasTransformUpdate {
       return cachedModel
     }
@@ -223,7 +223,7 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     let rotationTranslate = Mat4.translate(xRot, yRot, z)
 
     var view = Mat4.identity
-    if let inverseView = camera?.inverseView where isUINode {
+    if let inverseView = camera?.inverseView , isUINode {
       view = inverseView
     }
 
@@ -233,7 +233,7 @@ public class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
 
 extension Node: CustomDebugStringConvertible {
   public var debugDescription: String {
-    let name = self.name ?? "\(self.dynamicType)"
+    let name = self.name ?? "\(type(of: self))"
     return name
   }
 }

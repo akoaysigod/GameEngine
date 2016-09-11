@@ -52,7 +52,7 @@ public struct Rect {
 
    - returns: True if the rectangles are overlapping, false otherwise.
    */
-  public func intersects(rect: Rect) -> Bool {
+  public func intersects(_ rect: Rect) -> Bool {
     let toRight = self.x > rect.x + rect.width  
     let toLeft = self.x + width < rect.x        
     let above = self.y > rect.y + rect.height   
@@ -67,7 +67,7 @@ public struct Rect {
 
    - returns: True if the point is inside the `Rect`, false otherwise.
    */
-  public func containsPoint(point: Point) -> Bool {
+  public func containsPoint(_ point: Point) -> Bool {
     let pX = point.x
     let pY = point.y
     return pX > x && pX < upperRight.x && pY > y && pY < upperRight.y

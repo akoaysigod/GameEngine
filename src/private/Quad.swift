@@ -34,14 +34,14 @@ struct Quad {
   let vertices: Vertices
   let size: Int
 
-  static let size = 4 * strideof(Vertex)
+  static let size = 4 * MemoryLayout<Vertex>.stride
 
   init(vertices: Vertices) {
     self.vertices = vertices
-    size = vertices.count * strideof(Vertex)
+    size = vertices.count * MemoryLayout<Vertex>.stride
   }
 
-  static func rect(width: Float, _ height: Float, color: Color) -> Quad {
+  static func rect(_ width: Float, _ height: Float, color: Color) -> Quad {
     let ll = Vertex(x: 0, y: 0, color: color.vec4)
     let ul = Vertex(x: 0, y: height, color: color.vec4)
     let ur = Vertex(x: width, y: height, color: color.vec4)
@@ -50,11 +50,11 @@ struct Quad {
     return Quad(vertices: [ul, ll, lr, ur])
   }
 
-  static func rect(size: Size, color: Color) -> Quad {
+  static func rect(_ size: Size, color: Color) -> Quad {
     return rect(size.width, size.height, color: color)
   }
 
-  static func spriteRect(frame: TextureFrame, color: Color) -> Quad {
+  static func spriteRect(_ frame: TextureFrame, color: Color) -> Quad {
     let sWidth = frame.sWidth
     let sHeight = frame.sHeight
     let tWidth = frame.tWidth
@@ -77,7 +77,7 @@ struct Quad {
 }
 
 extension Quad {
-  private static var indicesData: [UInt16] {
+  fileprivate static var indicesData: [UInt16] {
     //this is clockwise but the textures end up being anticlockwise so ff == anti 
     //which is why the Quad for ShapeNode is different from the sprite one
     return [
@@ -86,15 +86,15 @@ extension Quad {
     ]
   }
 
-  static func indices(length: Int) -> (data: [UInt16], size: Int) {
-    let r = Repeat(count: length, repeatedValue: Quad.indicesData)
-    let i = r.enumerate().map { (i, e) in
+  static func indices(_ length: Int) -> (data: [UInt16], size: Int) {
+    let r = Repeated(count: length, repeatedValue: Quad.indicesData)
+    let i = r.enumerated().map { (i, e) in
       e.map {
         UInt16(i * 4) + $0
       }
-    }.flatten()
-    return (Array(i), i.count * sizeof(UInt16))
+    }.joined()
+    return (Array(i), i.count * MemoryLayout<UInt16>.size)
   }
 
-  static var indicesSize: Int { return sizeof(UInt16) * indicesData.count }
+  static var indicesSize: Int { return MemoryLayout<UInt16>.size * indicesData.count }
 }

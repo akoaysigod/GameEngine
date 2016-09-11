@@ -13,12 +13,12 @@ public enum EaseFunction {
   case EaseIn
   case EaseOut
   case EaseInOut
-  case Custom(c1: (x: Double, y: Double), c2: (x: Double, y: Double))
+  case custom(c1: (x: Double, y: Double), c2: (x: Double, y: Double))
 
-  private static let linear = Easing.linear()
-  private static let easeIn = Easing.easeIn()
-  private static let easeOut = Easing.easeOut()
-  private static let easeInOut = Easing.easeInOut()
+  fileprivate static let linear = Easing.linear()
+  fileprivate static let easeIn = Easing.easeIn()
+  fileprivate static let easeOut = Easing.easeOut()
+  fileprivate static let easeInOut = Easing.easeInOut()
 
   public var function: Easing {
     switch self {
@@ -26,7 +26,7 @@ public enum EaseFunction {
     case .EaseIn: return EaseFunction.easeIn
     case .EaseOut: return EaseFunction.easeOut
     case .EaseInOut: return EaseFunction.easeInOut
-    case .Custom(let c1, let c2):
+    case .custom(let c1, let c2):
       return Easing(c1: c1, c2: c2)
     }
   }
@@ -44,7 +44,7 @@ public final class Easing {
     self.c2 = c2
   }
 
-  public func pointAtTime(t: Double) -> Double {
+  public func pointAtTime(_ t: Double) -> Double {
     assert(t >= 0.0 && t <= 1.0, "bezier parameter is out of bounds")
 
     let oneminust = (1.0 - t)
@@ -76,7 +76,7 @@ public final class Easing {
   }
 }
 
-infix operator ** {}
+infix operator **
 private func **(lhs: Double, rhs: Int) -> Double {
   return pow(lhs, Double(rhs))
 }

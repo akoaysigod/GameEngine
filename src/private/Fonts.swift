@@ -16,19 +16,19 @@ final class Fonts {
 
   var device: MTLDevice!
 
-  private var fontDict: [String: FontAtlas] = [:]
+  fileprivate var fontDict: [String: FontAtlas] = [:]
 
-  private let pathName = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
-  private let dirName = "gameengine.font.atlases"
-  private var fontDir: NSURL? = nil
+  fileprivate let pathName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+  fileprivate let dirName = "gameengine.font.atlases"
+  fileprivate var fontDir: URL? = nil
 
   init() {
-    if let fontDir = pathName?.URLByAppendingPathComponent(dirName),
+    if let fontDir = pathName?.appendingPathComponent(dirName),
        let path = fontDir.path
     {
-      if !NSFileManager.defaultManager().fileExistsAtPath(path) {
+      if !FileManager.default.fileExists(atPath: path) {
         do {
-          try NSFileManager.defaultManager().createDirectoryAtURL(fontDir, withIntermediateDirectories: false, attributes: nil)
+          try FileManager.default.createDirectory(at: fontDir, withIntermediateDirectories: false, attributes: nil)
         }
         catch let error {
           DLog("\(error) creating dir")
@@ -38,7 +38,7 @@ final class Fonts {
     }
   }
   
-  func fontForString(fontName: String, size: CGFloat) -> FontAtlas? {
+  func fontForString(_ fontName: String, size: CGFloat) -> FontAtlas? {
     if let font = UIFont(name: fontName, size: size) {
       return fontForUIFont(font)
     }
@@ -46,26 +46,26 @@ final class Fonts {
     return nil
   }
   
-  func fontForUIFont(font: UIFont) -> FontAtlas? {
+  func fontForUIFont(_ font: UIFont) -> FontAtlas? {
     guard let fontDir = fontDir else { DLog("font directory doesn't exist"); return nil }
 
     if let atlas = fontDict[font.fontName] {
       return atlas
     }
     
-    if let fontPath = fontDir.URLByAppendingPathComponent(font.fontName).path {
+    if let fontPath = fontDir.appendingPathComponent(font.fontName).path {
       let fontAtlas: FontAtlas
      // if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? GETextLabel {
      //   fontAtlas = archive as! FontAtlas
      // }
      // else
-      if let archive = NSKeyedUnarchiver.unarchiveObjectWithFile(fontPath) as? FontAtlas {
+      if let archive = NSKeyedUnarchiver.unarchiveObject(withFile: fontPath) as? FontAtlas {
         fontAtlas = archive
       }
       else {
         fontAtlas = FontAtlas(font: font)
-        let data = NSKeyedArchiver.archivedDataWithRootObject(fontAtlas)
-        data.writeToFile(fontPath, atomically: false)
+        let data = NSKeyedArchiver.archivedData(withRootObject: fontAtlas)
+        try? data.write(to: URL(fileURLWithPath: fontPath), options: [])
       }
 
       fontDict[font.fontName] = fontAtlas

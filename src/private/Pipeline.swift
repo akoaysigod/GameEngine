@@ -19,16 +19,16 @@ extension Pipeline {
     return "\(Self.self)"
   }
 
-  static func getLibrary(device: MTLDevice) -> MTLLibrary {
+  static func getLibrary(_ device: MTLDevice) -> MTLLibrary {
     #if TESTTARGET
     return device.newDefaultLibrary()!
     #else
-    return try! device.newLibraryWithFile(NSBundle(forClass: ShapePipeline.self).URLForResource("default", withExtension: "metallib")!.path!)
+    return try! device.makeLibrary(filepath: Bundle(for: ShapePipeline.self).url(forResource: "default", withExtension: "metallib")!.path)
     #endif
   }
 
-  static func newFunction(library: MTLLibrary, functionName: String) -> MTLFunction {
-    guard let function = library.newFunctionWithName(functionName) else {
+  static func newFunction(_ library: MTLLibrary, functionName: String) -> MTLFunction {
+    guard let function = library.makeFunction(name: functionName) else {
       fatalError("No function for name: \(functionName)")
     }
     return function
@@ -43,7 +43,7 @@ protocol RenderPipeline: Pipeline {
 }
 
 extension RenderPipeline {
-  static func getPrograms(device: MTLDevice, vertexProgram: String, fragmentProgram: String?) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction?) {
+  static func getPrograms(_ device: MTLDevice, vertexProgram: String, fragmentProgram: String?) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction?) {
     let defaultLibrary = Self.getLibrary(device)
 
     let vProgram = Self.newFunction(defaultLibrary, functionName: vertexProgram)
@@ -56,7 +56,7 @@ extension RenderPipeline {
     return (vProgram, fProgram)
   }
 
-  static func createPipelineDescriptor(device: MTLDevice,
+  static func createPipelineDescriptor(_ device: MTLDevice,
                                        vertexProgram: String,
                                        fragmentProgram: String?) -> MTLRenderPipelineDescriptor {
     let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
@@ -64,36 +64,36 @@ extension RenderPipeline {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexProgram
     pipelineDescriptor.fragmentFunction = fragmentProgram
-    pipelineDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
-    pipelineDescriptor.colorAttachments[1].pixelFormat = .BGRA8Unorm
-    pipelineDescriptor.colorAttachments[2].pixelFormat = .BGRA8Unorm
-    pipelineDescriptor.depthAttachmentPixelFormat = .Depth32Float
+    pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+    pipelineDescriptor.colorAttachments[1].pixelFormat = .bgra8Unorm
+    pipelineDescriptor.colorAttachments[2].pixelFormat = .bgra8Unorm
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
     //alpha testing
-    pipelineDescriptor.colorAttachments[0].blendingEnabled = true
-    pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .SourceAlpha
-    pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .OneMinusSourceAlpha
-    pipelineDescriptor.colorAttachments[0].rgbBlendOperation = .Add
-    pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .SourceAlpha
-    pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .OneMinusSourceAlpha
-    pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .Add
+    pipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
+    pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
+    pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
+    pipelineDescriptor.colorAttachments[0].rgbBlendOperation = .add
+    pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
+    pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+    pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .add
 
     //vertex stuff
     let vertexDescriptor = MTLVertexDescriptor()
-    vertexDescriptor.attributes[0].format = .Float4
+    vertexDescriptor.attributes[0].format = .float4
     vertexDescriptor.attributes[0].offset = 0
     vertexDescriptor.attributes[0].bufferIndex = 0
 
-    vertexDescriptor.attributes[1].format = .Float4
-    vertexDescriptor.attributes[1].offset = sizeof(packed_float4)
+    vertexDescriptor.attributes[1].format = .float4
+    vertexDescriptor.attributes[1].offset = MemoryLayout<packed_float4>.size
     vertexDescriptor.attributes[1].bufferIndex = 0
 
-    vertexDescriptor.attributes[2].format = .Float2
-    vertexDescriptor.attributes[2].offset = sizeof(packed_float4) * 2
+    vertexDescriptor.attributes[2].format = .float2
+    vertexDescriptor.attributes[2].offset = MemoryLayout<packed_float4>.size * 2
     vertexDescriptor.attributes[2].bufferIndex = 0
 
-    vertexDescriptor.layouts[0].stepFunction = .PerVertex
-    vertexDescriptor.layouts[0].stride = strideof(Vertex)
+    vertexDescriptor.layouts[0].stepFunction = .perVertex
+    vertexDescriptor.layouts[0].stride = MemoryLayout<Vertex>.stride
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
 
@@ -102,9 +102,9 @@ extension RenderPipeline {
     return pipelineDescriptor
   }
 
-  static func createPipelineState(device: MTLDevice, descriptor: MTLRenderPipelineDescriptor) -> MTLRenderPipelineState? {
+  static func createPipelineState(_ device: MTLDevice, descriptor: MTLRenderPipelineDescriptor) -> MTLRenderPipelineState? {
     do {
-      return try device.newRenderPipelineStateWithDescriptor(descriptor)
+      return try device.makeRenderPipelineState(descriptor: descriptor)
     }
     catch let error as NSError {
       //this seems to fail only on trying to pass it poorly formatted descriptors
@@ -114,7 +114,7 @@ extension RenderPipeline {
 }
 
 final class PipelineFactory {
-  private let device: MTLDevice
+  fileprivate let device: MTLDevice
 
   init(device: MTLDevice) {
     self.device = device
@@ -122,10 +122,10 @@ final class PipelineFactory {
 
   func constructDepthStencil() -> MTLDepthStencilState {
     let depthStateDescriptor = MTLDepthStencilDescriptor()
-    depthStateDescriptor.depthCompareFunction = .GreaterEqual
-    depthStateDescriptor.depthWriteEnabled = true
+    depthStateDescriptor.depthCompareFunction = .greaterEqual
+    depthStateDescriptor.isDepthWriteEnabled = true
 
-    return device.newDepthStencilStateWithDescriptor(depthStateDescriptor)
+    return device.makeDepthStencilState(descriptor: depthStateDescriptor)
   }
 
   func constructShapePipeline() -> ShapePipeline {

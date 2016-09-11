@@ -26,10 +26,10 @@ import UIKit
 final class TestGameViewController: UIViewController {
   var scene: Scene!
 
-  private var currentTime = 0.0
+  fileprivate var currentTime = 0.0
 
   override func loadView() {
-    view = GameView(frame: UIScreen.mainScreen().bounds)
+    view = GameView(frame: UIScreen.main.bounds)
   }
 
   override func viewDidLoad() {
@@ -221,8 +221,8 @@ extension TestGameViewController {
     view.addGestureRecognizer(pinch)
   }
 
-  func tap(t: UITapGestureRecognizer) {
-    let p = t.locationInView(view)
+  func tap(_ t: UITapGestureRecognizer) {
+    let p = t.location(in: view)
     let r = scene.convertPointFromView(p.point)
 
     scene.nodesAtPoint(r).forEach {
@@ -231,17 +231,17 @@ extension TestGameViewController {
     }
   }
 
-  func panCamera(p: UIPanGestureRecognizer) {
-    var pos = p.translationInView(view)
+  func panCamera(_ p: UIPanGestureRecognizer) {
+    var pos = p.translation(in: view)
     pos.x *= CGFloat(scene.camera.xScale)
     pos.y *= CGFloat(scene.camera.yScale)
     pos.x *= -1.0
     
     scene.camera.position += pos.point
-    p.setTranslation(.zero, inView: view)
+    p.setTranslation(.zero, in: view)
   }
 
-  func zoomCamera(p: UIPinchGestureRecognizer) {
+  func zoomCamera(_ p: UIPinchGestureRecognizer) {
     let scale = self.scene.camera.scale * Float(p.scale)
     let realScale = max(0.5, min(scale, 5.0));
     scene.camera.zoom = realScale

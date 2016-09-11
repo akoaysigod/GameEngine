@@ -12,22 +12,22 @@ import MetalKit
 /**
  A `SpriteNode` is a node that can be rendered with a `Texture`. The applied texture can also be blended with a color.
  */
-public class SpriteNode: Node, Renderable {
-  public var color: Color {
+open class SpriteNode: Node, Renderable {
+  open var color: Color {
     didSet {
       updateTransform()
     }
   }
-  public var alpha: Float {
+  open var alpha: Float {
     get { return color.alpha }
     set {
       color = Color(color.red, color.green, color.blue, newValue)
     }
   }
-  public var texture: Texture?
+  open var texture: Texture?
 
-  public var hidden = false
-  public let isVisible = true
+  open var hidden = false
+  open let isVisible = true
 
   var quad: Quad {
     let q = texture.flatMap { Quad.spriteRect($0.frame, color: color) } ?? Quad.rect(size, color: color)

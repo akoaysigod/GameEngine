@@ -9,21 +9,21 @@
 import Metal
 
 final class Buffer { //might change this to a protocol 
-  private var buffer: MTLBuffer
-  private let length: Int
+  fileprivate var buffer: MTLBuffer
+  fileprivate let length: Int
 
   init(length: Int, instances: Int = BUFFER_SIZE, device: Device = Device.shared) {
     self.length = length
-    buffer = device.device.newBufferWithLength(length * instances, options: .CPUCacheModeDefaultCache)
+    buffer = device.device.makeBuffer(length: length * instances, options: MTLResourceOptions())
   }
 
-  func addData<T>(data: [T], size: Int, offset: Int = 0) {
+  func addData<T>(_ data: [T], size: Int, offset: Int = 0) {
     memcpy(buffer.contents() + (size * offset), data, size)
     memcpy(buffer.contents() + length + (size * offset), data, size)
     memcpy(buffer.contents() + length * 2 + (size * offset), data, size)
   }
 
-  func update<T>(data: [T], size: Int, bufferIndex: Int, offset: Int = 0) {
+  func update<T>(_ data: [T], size: Int, bufferIndex: Int, offset: Int = 0) {
     #if DEBUG
       if sizeof(T) != strideof(T) {
         DLog("Possibly wrong sized data, \(T.self)")
@@ -32,7 +32,7 @@ final class Buffer { //might change this to a protocol
     memcpy(buffer.contents() + offset + (bufferIndex * length), data, size)
   }
 
-  func nextBuffer(bufferIndex: Int) -> (buffer: MTLBuffer, offset: Int) {
+  func nextBuffer(_ bufferIndex: Int) -> (buffer: MTLBuffer, offset: Int) {
     return (buffer, bufferIndex * length)
   }
 }

@@ -22,24 +22,24 @@ import UIKit
  - discussion: Unlike other `Node` types it's safe to force unwrap the `Camera` object on a scene. It will always have a default value and unless no other cameras are created
                it will be the same camera used for each node added to the scene. Also, it probably makes little sense to add a scene as a child to another scene and may cause problems.
  */
-public class Scene {
-  public weak var view: GameView? {
+open class Scene {
+  open weak var view: GameView? {
     didSet {
       graphCache.bufferManager = view?.bufferManager
     }
   }
 
-  public private(set) var camera: CameraNode
+  open fileprivate(set) var camera: CameraNode
   let tileSize: Int
 
-  public var allNodes: Nodes {
+  open var allNodes: Nodes {
     return graphCache.allNodes
   }
 
   let graphCache = GraphCache()
 
   /// the ambient color for when light nodes are present, defaults to white
-  public var ambientLightColor: Color = Color(1.0, 1.0, 1.0, 1.0) 
+  open var ambientLightColor: Color = Color(1.0, 1.0, 1.0, 1.0) 
 
   /**
    Create a scene of a given size. This will serve as the root node to which all other nodes should be added to.
@@ -61,36 +61,36 @@ public class Scene {
    
    - parameter view: The `GameView` that owns the `Scene`.
    */
-  public func didMoveToView(view: GameView) {}
+  open func didMoveToView(_ view: GameView) {}
 
   /**
    This method can be overridden to perform per frame updates.
 
    - parameter delta: The amount of time that has passed since the last update.
    */
-  public func update(delta: CFTimeInterval) {}
+  open func update(_ delta: CFTimeInterval) {}
 }
 
 // MARK: Scene graph
 extension Scene {
-  public func addNode(node: Node) {
+  public func addNode(_ node: Node) {
     camera.addNode(node)
 
     graphCache.addNode(node)
   }
 
-  public func removeNode<T : Node>(node: T?) {
+  public func removeNode<T : Node>(_ node: T?) {
     if let node = camera.removeNode(node) {
       graphCache.updateNodes(node)
     }
   }
 
-  public func addUINode(node: Node) {
+  public func addUINode(_ node: Node) {
     node.isUINode = true
     addNode(node)
   }
 
-  func updateNode(quad: Quad, index: Int, key: Int) {
+  func updateNode(_ quad: Quad, index: Int, key: Int) {
     graphCache.updateNode(quad, index: index, key: key)
   }
 }
@@ -106,7 +106,7 @@ extension Scene {
 
    - returns: An array of Nodes at a given point or an empty array if no nodes at point.
    */
-  public func nodesAtPoint(point: Point) -> Nodes {
+  public func nodesAtPoint(_ point: Point) -> Nodes {
     return allNodes.filter { node -> Bool in
       let rect = node.frame
 
@@ -126,7 +126,7 @@ extension Scene {
 
    - returns: A point in the `Scene`.
    */
-  public func convertPointFromView(point: Point) -> Point {
+  public func convertPointFromView(_ point: Point) -> Point {
     guard let height = view?.bounds.size.height else {
       DLog("Scene has not yet been presented but you're trying to convert a point scene coordinates.")
       return .zero
@@ -149,7 +149,7 @@ extension Scene {
 
    - returns: A point on the device's screen.
    */
-  public func convertPointFromScene(point: Point) -> Point {
+  public func convertPointFromScene(_ point: Point) -> Point {
     guard view != nil else {
       DLog("Scene has not been presented but you're trying to convert a point to screen coordinates.")
       return .zero
@@ -167,7 +167,7 @@ extension Scene {
 }
 
 extension Scene {
-  func updateCameras(size: Size) {
+  func updateCameras(_ size: Size) {
     camera.updateSize(size)
   }
 }

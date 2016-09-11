@@ -11,9 +11,9 @@ import simd
 
 final class SpritePipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
-  private let sampler: MTLSamplerState?
+  fileprivate let sampler: MTLSamplerState?
 
-  private struct Programs {
+  fileprivate struct Programs {
     static let Shader = "SpriteShaders"
     static let Vertex = "spriteVertex"
     static let Fragment = "spriteFragment"
@@ -23,11 +23,11 @@ final class SpritePipeline: RenderPipeline {
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
     let samplerDescriptor = MTLSamplerDescriptor()
-    samplerDescriptor.minFilter = .Nearest
-    samplerDescriptor.magFilter = .Nearest
-    samplerDescriptor.sAddressMode = .ClampToEdge
-    samplerDescriptor.tAddressMode = .ClampToEdge
-    sampler = device.newSamplerStateWithDescriptor(samplerDescriptor)
+    samplerDescriptor.minFilter = .nearest
+    samplerDescriptor.magFilter = .nearest
+    samplerDescriptor.sAddressMode = .clampToEdge
+    samplerDescriptor.tAddressMode = .clampToEdge
+    sampler = device.makeSamplerState(descriptor: samplerDescriptor)
 
     let pipelineDescriptor = SpritePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     pipelineDescriptor.label = "sprite pipeline"
@@ -37,7 +37,7 @@ final class SpritePipeline: RenderPipeline {
 }
 
 extension SpritePipeline {
-  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode], lights: [LightNode]?) {
+  func encode(_ encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode], lights: [LightNode]?) {
     guard let node = nodes.first,
           let texture = node.texture else { return }
 
@@ -46,22 +46,22 @@ extension SpritePipeline {
     encoder.setRenderPipelineState(pipelineState)
 
     let (vBuffer, vOffset) = vertexBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(vBuffer, offset: vOffset, atIndex: 0)
+    encoder.setVertexBuffer(vBuffer, offset: vOffset, at: 0)
     let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(uBuffer, offset: uOffset, atIndex: 1)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, at: 1)
 
-    encoder.setFragmentSamplerState(sampler, atIndex: 0)
-    encoder.setFragmentTexture(texture.texture, atIndex: 0)
-    encoder.setFragmentTexture(texture.lightMapTexture, atIndex: 1)
+    encoder.setFragmentSamplerState(sampler, at: 0)
+    encoder.setFragmentTexture(texture.texture, at: 0)
+    encoder.setFragmentTexture(texture.lightMapTexture, at: 1)
 
     //tmp
     var lightColor = lights!.first!.ambientColor.vec4
-    encoder.setFragmentBytes(&lightColor, length: sizeof(Vec4), atIndex: 0)
+    encoder.setFragmentBytes(&lightColor, length: MemoryLayout<Vec4>.size, at: 0)
 
     let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
-    encoder.drawIndexedPrimitives(.Triangle,
+    encoder.drawIndexedPrimitives(type: .triangle,
                                   indexCount: 6 * nodes.count,
-                                  indexType: .UInt16,
+                                  indexType: .uint16,
                                   indexBuffer: iBuffer,
                                   indexBufferOffset: iOffset)
 

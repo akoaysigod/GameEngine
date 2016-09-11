@@ -21,7 +21,7 @@ private final class ActionSequence {
   }
 
   func getNextAction() -> Action? {
-    guard let currentAction = currentAction where !currentAction.completed else {
+    guard let currentAction = currentAction , !currentAction.completed else {
       if forever && index + 1 < sequence.count {
         index += 1
       }
@@ -29,7 +29,7 @@ private final class ActionSequence {
         index = 0
       }
 
-      if let action = self.currentAction where forever {
+      if let action = self.currentAction , forever {
         action.completed = false
         action.timer = 0.0
       }
@@ -51,22 +51,22 @@ private final class ActionSequence {
  Any action applied to a `Node` will also be applied to any of it's child nodes.
  */
 public final class Action {
-  private enum ActionType {
-    case MoveTo(x: Float, y: Float)
-    case MoveBy(x: Float, y: Float)
-    case RotateBy(degrees: Float)
-    case ScaleBy(scale: Float)
-    case ScaleByXY(x: Float, y: Float)
-    case ScaleTo(x: Float, y: Float)
-    case Sequence(sequence: ActionSequence)
-    case Group(actions: Actions)
+  fileprivate enum ActionType {
+    case moveTo(x: Float, y: Float)
+    case moveBy(x: Float, y: Float)
+    case rotateBy(degrees: Float)
+    case scaleBy(scale: Float)
+    case scaleByXY(x: Float, y: Float)
+    case scaleTo(x: Float, y: Float)
+    case sequence(sequence: ActionSequence)
+    case group(actions: Actions)
   }
 
-  private var actionType: ActionType
-  private(set) public var duration: Double
-  private var timer: Double = 0.0
-  private let forever: Bool
-  private var completion: ActionCompletion? = nil
+  fileprivate var actionType: ActionType
+  fileprivate(set) public var duration: Double
+  fileprivate var timer: Double = 0.0
+  fileprivate let forever: Bool
+  fileprivate var completion: ActionCompletion? = nil
   public var completed = false
 
   public var easingFunction: EaseFunction = .Linear
@@ -75,7 +75,7 @@ public final class Action {
     return Float(easingFunction.function.pointAtTime(normalized))
   }
 
-  private init(actionType: ActionType, duration: Double, forever: Bool = false, completion: ActionCompletion? = nil) {
+  fileprivate init(actionType: ActionType, duration: Double, forever: Bool = false, completion: ActionCompletion? = nil) {
     self.actionType = actionType
     self.duration = duration
     self.forever = forever
@@ -87,23 +87,23 @@ public final class Action {
     completion?()
   }
 
-  func run(node: Node, delta: Double) {
+  func run(_ node: Node, delta: Double) {
     switch actionType {
-    case .MoveTo(let x, let y):
+    case .moveTo(let x, let y):
       moveTo(node, delta, x, y)
-    case .MoveBy(let x, let y):
+    case .moveBy(let x, let y):
       moveBy(node, delta, x, y)
-    case .RotateBy(let degrees):
+    case .rotateBy(let degrees):
       rotateBy(node, delta, degrees)
-    case .ScaleBy(let scale):
+    case .scaleBy(let scale):
       scaleBy(node, delta, scale)
-    case .ScaleByXY(let x, let y):
+    case .scaleByXY(let x, let y):
       scaleByXY(node, delta, x, y)
-    case .ScaleTo(let x, let y):
+    case .scaleTo(let x, let y):
       scaleTo(node, delta, x, y)
-    case .Sequence(let sequence):
+    case .sequence(let sequence):
       sequenceActions(node, delta, sequence)
-    case .Group(let actions):
+    case .group(let actions):
       groupActions(node, delta, actions)
     }
 
@@ -118,17 +118,17 @@ public final class Action {
     }
   }
 
-  private func moveTo(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
+  fileprivate func moveTo(_ node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     let dirX = x - node.position.x
     let dirY = y - node.position.y
 
     moveBy(node, delta, dirX, dirY)
-    actionType = .MoveBy(x: dirX, y: dirY)
+    actionType = .moveBy(x: dirX, y: dirY)
   }
 
 
   var sPos: (x: Float, y: Float) = (0, 0) //tmp maybe
-  private func moveBy(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
+  fileprivate func moveBy(_ node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     if timer == 0.0 {
       sPos = (node.position.x, node.position.y)
     }
@@ -137,14 +137,14 @@ public final class Action {
   }
 
   var sRot: Float = 0.0
-  private func rotateBy(node: Node, _ delta: Double, _ degrees: Float) {
+  fileprivate func rotateBy(_ node: Node, _ delta: Double, _ degrees: Float) {
     if timer == 0.0 {
       sRot = node.rotation
     }
     node.rotation = sRot + (time * degrees)
   }
 
-  private func scaleTo(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
+  fileprivate func scaleTo(_ node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     var xScale: Float = max(x, node.xScale) - min(x, node.xScale)
     if node.xScale > x {
       xScale *= -1.0
@@ -156,16 +156,16 @@ public final class Action {
     }
 
     scaleByXY(node, delta, xScale, yScale)
-    actionType = .ScaleByXY(x: xScale, y: yScale)
+    actionType = .scaleByXY(x: xScale, y: yScale)
   }
 
-  private func scaleBy(node: Node, _ delta: Double, _ scale: Float) {
+  fileprivate func scaleBy(_ node: Node, _ delta: Double, _ scale: Float) {
     scaleByXY(node, delta, scale, scale)
-    actionType = .ScaleByXY(x: scale, y: scale)
+    actionType = .scaleByXY(x: scale, y: scale)
   }
 
   var sScale: (x: Float, y: Float) = (0, 0)
-  private func scaleByXY(node: Node, _ delta: Double, _ x: Float, _ y: Float) {
+  fileprivate func scaleByXY(_ node: Node, _ delta: Double, _ x: Float, _ y: Float) {
     if timer == 0.0 {
       sScale = (node.xScale, node.yScale)
     }
@@ -173,13 +173,13 @@ public final class Action {
     node.yScale = sScale.y + (time * y)
   }
 
-  private func sequenceActions(node: Node, _ delta: Double, _ sequence: ActionSequence) {
+  fileprivate func sequenceActions(_ node: Node, _ delta: Double, _ sequence: ActionSequence) {
     if let action = sequence.getNextAction() {
       action.run(node, delta: delta)
     }
   }
 
-  private func groupActions(node: Node, _ delta: Double, _ actions: Actions) {
+  fileprivate func groupActions(_ node: Node, _ delta: Double, _ actions: Actions) {
     actions.forEach { action in
       action.run(node, delta: delta)
     }
@@ -199,8 +199,8 @@ extension Action {
 
    - returns: A new instance of `Action` that moves a node to a point.
    */
-  public static func moveTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .MoveTo(x: x, y: y), duration: duration, completion: completion)
+  public static func moveTo(_ x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .moveTo(x: x, y: y), duration: duration, completion: completion)
   }
 
   /**
@@ -214,7 +214,7 @@ extension Action {
 
    - returns: A new instance of `Action` that moves a node to a point.
    */
-  public static func moveTo(to: Point, duration: Double, completion: ActionCompletion? = nil) -> Action {
+  public static func moveTo(_ to: Point, duration: Double, completion: ActionCompletion? = nil) -> Action {
     return Action.moveTo(Float(to.x), y: Float(to.y), duration: duration, completion: completion)
   }
 
@@ -230,8 +230,8 @@ extension Action {
 
    - returns: A new instance of `Action` that moves a node by a given amount.
    */
-  public static func moveBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .MoveBy(x: x, y: y), duration: duration)
+  public static func moveBy(_ x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .moveBy(x: x, y: y), duration: duration)
   }
 
   /**
@@ -245,8 +245,8 @@ extension Action {
 
    - returns: A new instance of `Action` that rotates a node by a given amount.
    */
-  public static func rotateBy(degrees: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .RotateBy(degrees: degrees), duration: duration)
+  public static func rotateBy(_ degrees: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .rotateBy(degrees: degrees), duration: duration)
   }
 
   /**
@@ -261,8 +261,8 @@ extension Action {
 
    - returns: A new instance of `Action` that scales a node to a given amount.
    */
-  public static func scaleTo(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .ScaleTo(x: x, y: y), duration: duration, completion: completion)
+  public static func scaleTo(_ x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .scaleTo(x: x, y: y), duration: duration, completion: completion)
   }
 
   /**
@@ -276,8 +276,8 @@ extension Action {
 
    - returns: A new instance of `Action` that scales a node by a given amount.
    */
-  public static func scaleBy(scale: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .ScaleBy(scale: scale), duration: duration, completion: completion)
+  public static func scaleBy(_ scale: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .scaleBy(scale: scale), duration: duration, completion: completion)
   }
 
   /**
@@ -292,8 +292,8 @@ extension Action {
 
    - returns: A new instance of `Action` that scales a node by a given amount.
    */
-  public static func scaleBy(x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
-    return Action(actionType: .ScaleByXY(x: x, y: y), duration: duration, completion: completion)
+  public static func scaleBy(_ x: Float, y: Float, duration: Double, completion: ActionCompletion? = nil) -> Action {
+    return Action(actionType: .scaleByXY(x: x, y: y), duration: duration, completion: completion)
   }
 
   /**
@@ -304,9 +304,9 @@ extension Action {
 
    - returns: A new instance of `Action` with a sequence of `Action`s.
    */
-  public static func sequence(sequence: Actions, completion: ActionCompletion? = nil) -> Action {
-    let duration = sequence.map { $0.duration }.reduce(0.0, combine: +)
-    return Action(actionType: .Sequence(sequence: ActionSequence(sequence: sequence)), duration: duration, completion: completion)
+  public static func sequence(_ sequence: Actions, completion: ActionCompletion? = nil) -> Action {
+    let duration = sequence.map { $0.duration }.reduce(0.0, +)
+    return Action(actionType: .sequence(sequence: ActionSequence(sequence: sequence)), duration: duration, completion: completion)
   }
 
   /**
@@ -317,11 +317,11 @@ extension Action {
 
    - returns: A new instance of `Action` with a group of `Action`s.
    */
-  public static func group(group: Actions, completion: ActionCompletion? = nil) -> Action {
+  public static func group(_ group: Actions, completion: ActionCompletion? = nil) -> Action {
     let maxDuration = group.map {
       $0.duration
-    }.maxElement() ?? 0.0
-    return Action(actionType: .Group(actions: group), duration: maxDuration, completion: completion)
+    }.max() ?? 0.0
+    return Action(actionType: .group(actions: group), duration: maxDuration, completion: completion)
   }
 
   /**
@@ -331,11 +331,11 @@ extension Action {
 
    - returns: A new instance of `Action` that will run forever.
    */
-  public static func repeatForever(action: Action) -> Action {
+  public static func repeatForever(_ action: Action) -> Action {
     switch action.actionType {
-    case .Sequence(let seq):
+    case .sequence(let seq):
       seq.forever = true
-      action.actionType = .Sequence(sequence: seq)
+      action.actionType = .sequence(sequence: seq)
     case _: break
     }
 
