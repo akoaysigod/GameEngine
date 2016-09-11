@@ -21,15 +21,15 @@ public final class LightNode: Node {
     let ur = PVec4(position.x + radius, position.y + radius, 0.0, 1.0)
     return [ll, lr, ul, ul, lr, ur]
 
-    return [
-      packed_float4(0.0, 0.0, 0.0, 1.0),
-      packed_float4(radius, 0.0, 0.0, 1.0),
-      packed_float4(0.0, radius, 0.0, 1.0),
-
-      packed_float4(radius, 0.0, 0.0, 1.0),
-      packed_float4(radius, radius, 0.0, 1.0),
-      packed_float4(0.0, radius, 0.0, 1.0)
-    ]
+//    return [ 
+//      packed_float4(0.0, 0.0, 0.0, 1.0),
+//      packed_float4(radius, 0.0, 0.0, 1.0),
+//      packed_float4(0.0, radius, 0.0, 1.0),
+//
+//      packed_float4(radius, 0.0, 0.0, 1.0),
+//      packed_float4(radius, radius, 0.0, 1.0),
+//      packed_float4(0.0, radius, 0.0, 1.0)
+//    ]
   }
 
   public var color: Color

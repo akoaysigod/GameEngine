@@ -48,7 +48,7 @@ final class Renderer {
   }
 
   func render(_ nextRenderPass: NextRenderPass, view: Mat4, shapeNodes: [ShapeNode], spriteNodes: [Int: [SpriteNode]], textNodes: [TextNode], lightNodes: [LightNode]) {
-    inflightSemaphore.wait(timeout: DispatchTime.distantFuture)
+    _ = inflightSemaphore.wait(timeout: DispatchTime.distantFuture)
 
     let commandBuffer = commandQueue.makeCommandBuffer()
     commandBuffer.label = "main command buffer"
