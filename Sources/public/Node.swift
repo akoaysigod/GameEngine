@@ -186,7 +186,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     guard let index = nodes.find(node) else { return nil }
 
     if let scene = node.scene {
-      scene.removeNode(node)
+      return scene.removeNode(node)
     }
 
     return nodes.remove(at: index) as? T

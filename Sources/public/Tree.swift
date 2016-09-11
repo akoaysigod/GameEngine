@@ -65,7 +65,7 @@ public func +(lhs: Node, rhs: Node) {
 }
 
 public func -(lhs: Node, rhs: Node) {
-  lhs.removeNode(rhs)
+  _ = lhs.removeNode(rhs)
 }
 
 extension Tree {
@@ -94,6 +94,6 @@ extension Tree {
   }
 
   public func removeFromParent() {
-    parent?.removeNode(self as? Node)
+    _ = parent?.removeNode(self as? Node)
   }
 }

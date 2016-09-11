@@ -79,10 +79,12 @@ extension Scene {
     graphCache.addNode(node)
   }
 
-  public func removeNode<T : Node>(_ node: T?) {
+  public func removeNode<T : Node>(_ node: T?) -> T? {
     if let node = camera.removeNode(node) {
       graphCache.updateNodes(node)
+      return node
     }
+    return nil
   }
 
   public func addUINode(_ node: Node) {

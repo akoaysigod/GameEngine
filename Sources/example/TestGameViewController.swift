@@ -155,10 +155,10 @@ final class TestGameViewController: UIViewController {
     colorRect.anchorPoint = Point(x: 0.5, y: 0.5)
     colorRect.position = Point(x: 50, y: 50)
 
-    let action = Action.rotateBy(Float(360.0), duration: 1.0)
+    //let action = Action.rotateBy(Float(360.0), duration: 1.0)
     //let action = Action.moveTo(100.0, y: 0.0, duration: 1.0)
     //let action = Action.moveTo(CGPoint(x: 0.0, y: 0.0), duration: 1.0)
-    let forever = Action.repeatForever(action)
+    //let forever = Action.repeatForever(action)
     //colorRect.runAction(forever)
 
     scene.addUINode(colorRect)

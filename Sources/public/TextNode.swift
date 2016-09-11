@@ -78,7 +78,6 @@ open class TextNode: Node, Renderable {
 
     let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
 
-    let t = fontAtlas.textureData[0..<fontAtlas.textureData.count]
     fontAtlas.textureData.withUnsafeBytes { (bytes) in
       texture.replace(region: region, mipmapLevel: 0, withBytes: bytes, bytesPerRow: textureSize)
     }
@@ -112,14 +111,15 @@ open class TextNode: Node, Renderable {
       }
       guard let glyphInfo = tmpGlyphs.first else { return }
 
-      let minX = Float(glyphBounds.minX)
-      let maxX = Float(glyphBounds.maxX)
-      let minY = Float(glyphBounds.minY)
-      let maxY = Float(glyphBounds.maxY)
-      let minS = Float(glyphInfo.topLeftTexCoord.x)
-      let maxS = Float(glyphInfo.bottomRightTexCoord.x)
-      let minT = Float(glyphInfo.topLeftTexCoord.y)
-      let maxT = Float(glyphInfo.bottomRightTexCoord.y)
+      //TODO: fix this soon 
+//      let minX = Float(glyphBounds.minX)
+//      let maxX = Float(glyphBounds.maxX)
+//      let minY = Float(glyphBounds.minY)
+//      let maxY = Float(glyphBounds.maxY)
+//      let minS = Float(glyphInfo.topLeftTexCoord.x)
+//      let maxS = Float(glyphInfo.bottomRightTexCoord.x)
+//      let minT = Float(glyphInfo.topLeftTexCoord.y)
+//      let maxT = Float(glyphInfo.bottomRightTexCoord.y)
 
 //      let ll = Vertex(s: minS, t: maxT, x: minX, y: minY)
 //      let ul = Vertex(s: minS, t: minT, x: minX, y: maxY)

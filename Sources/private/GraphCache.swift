@@ -68,12 +68,12 @@ final class GraphCache {
 
       switch removed {
       case let shape as ShapeNode:
-        shapeNodes.remove(shape)
+        _ = shapeNodes.remove(shape)
       case let sprite as SpriteNode:
         let key = sprite.texture?.hashValue ?? -1
         if let arr = spriteNodes[key] {
           var arr = arr
-          arr.remove(sprite)
+          _ = arr.remove(sprite)
           spriteNodes[key] = arr
           realignData(key)
         }
@@ -81,10 +81,10 @@ final class GraphCache {
           DLog("Sprite was never cached?")
         }
       case let text as TextNode:
-        textNodes.remove(text)
+        _ = textNodes.remove(text)
       case let light as LightNode:
         lightNodeIndex -= 1
-        lightNodes.remove(light)
+        _ = lightNodes.remove(light)
         //realignLightNodeData
       case _: break
       }
