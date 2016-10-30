@@ -15,6 +15,7 @@ enum AtlasCreation: Error {
   case dimensions
   case tooLarge(String)
 }
+
 /**
  A `TextureAtlas` is an object that contains multiple textures to be loaded and used as one texture.
  
@@ -35,21 +36,20 @@ public final class TextureAtlas {
 
    - returns: A new texture atlas.
    */
-  public init(imageNames: [String], createLightMap: Bool = false) throws {
+  public init(imageNames: [String], contentScale: CGFloat, createLightMap: Bool = false) throws {
     //should probably refactor this a bit at some point
     guard imageNames.count > 1 else {
       throw AtlasCreation.oneImage
     }
 
-    let images = imageNames.flatMap { Texture(named: $0) }
+    let images = imageNames.flatMap { Texture(named: $0, contentScale: contentScale) }
 
     guard images.count == imageNames.count else {
       throw AtlasCreation.missingImage
     }
 
     guard let width = images.first?.width,
-          let height = images.first?.height,
-          let pixelFormat = images.first?.texture.pixelFormat , width == height else {
+          let height = images.first?.height, width == height else {
       throw AtlasCreation.dimensions
     }
 
@@ -59,7 +59,7 @@ public final class TextureAtlas {
       throw AtlasCreation.tooLarge("\(rows * height) by \(columns * width) is probably to large to load into the gpu.")
     }
     
-    let tex = Texture.newTexture(columns * width, height: rows * height, pixelFormat: pixelFormat)
+    let tex = Texture.newTexture(columns * width, height: rows * height)
 
     var x = 0
     var y = 0
@@ -113,7 +113,7 @@ public final class TextureAtlas {
     return factor(i + 1)
   }
 
-  fileprivate static func createLightMap(_ shouldCreateLightMap: Bool, texture: Texture) -> Texture? {
+  static func createLightMap(_ shouldCreateLightMap: Bool, texture: Texture) -> Texture? {
     guard shouldCreateLightMap else { return nil }
 
     let renderer = ComputeRenderer(srcTexture: texture)

@@ -102,26 +102,20 @@ open class Texture: Hashable, Equatable {
 
    - returns: A new instance of `Texture`.
    */
-  public convenience init(named: String) {
+  //there is a way to use a xcassets to load images but for some reason half of them won't load and the error isn't very helpful
+  //I'll try again at another point so I'll just leave the contentScale argument here for fun
+  public convenience init(named: String, contentScale: CGFloat = 1.0) {
     let texture: MTLTexture
 
-    guard let image = UIImage(named: named) else {
-      DLog("\(named) not found")
-      self.init(texture: Texture.errorTexture, lightMapTexture: nil)
-      return
-    }
-
-    guard let data = UIImagePNGRepresentation(image) else {
-      DLog("\(named) could not be turned into NSData")
-      self.init(texture: Texture.errorTexture, lightMapTexture: nil)
-      return
+    guard let url = Bundle.main.url(forResource: named, withExtension: "png") else {
+      fatalError("Image \(named) not found in bundle.") //should probably just assert on a failable init
     }
 
     do {
-      texture = try Device.shared.textureLoader.newTexture(with: data, options: nil)
+      texture = try Device.shared.textureLoader.newTexture(withContentsOf: url, options: nil)
     }
     catch let error {
-      DLog("Error loading image named \(named): \(error)")
+      DLog("Error loading image named \(named): \(error.localizedDescription)")
       texture = Texture.errorTexture
     }
 
@@ -130,7 +124,7 @@ open class Texture: Hashable, Equatable {
 }
 
 extension Texture {
-  static func newTexture(_ width: Int, height: Int, pixelFormat: MTLPixelFormat) -> MTLTexture {
+  static func newTexture(_ width: Int, height: Int, pixelFormat: MTLPixelFormat = .bgra8Unorm) -> MTLTexture {
     let descriptor = MTLTextureDescriptor()
     descriptor.width = width
     descriptor.height = height

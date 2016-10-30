@@ -47,7 +47,7 @@ final class TestGameViewController: UIViewController {
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown"]
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
-    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames, createLightMap: true),
+    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames, contentScale: view.contentScaleFactor, createLightMap: true),
       let wall = environmentAtlas["Wall"],
       let floor = environmentAtlas["Floor"],
       let openDoor = environmentAtlas["OpenDoor"],
@@ -68,6 +68,7 @@ final class TestGameViewController: UIViewController {
             sp = SpriteNode(texture: wall)
           }
           else {
+            //sp = SpriteNode(named: "Floor")
             sp = SpriteNode(texture: floor)
           }
           sp.position = Point(x: sp.size.width * Float(x), y: sp.size.height * Float(y))

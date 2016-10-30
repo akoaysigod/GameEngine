@@ -124,6 +124,11 @@
 		EA5903FA1D85D54A007E0B12 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903F71D85D54A007E0B12 /* FontAtlas.swift */; };
 		EA5903FB1D85D54A007E0B12 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903F81D85D54A007E0B12 /* Fonts.swift */; };
 		EA5903FC1D85D54A007E0B12 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903F81D85D54A007E0B12 /* Fonts.swift */; };
+		EA8F00B71DC6AFAF00D9BB60 /* Floor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F00B21DC6AFAF00D9BB60 /* Floor.png */; };
+		EA8F00B81DC6AFAF00D9BB60 /* OpenDoor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F00B31DC6AFAF00D9BB60 /* OpenDoor.png */; };
+		EA8F00B91DC6AFAF00D9BB60 /* StairsDown.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F00B41DC6AFAF00D9BB60 /* StairsDown.png */; };
+		EA8F00BA1DC6AFAF00D9BB60 /* StairsUp.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F00B51DC6AFAF00D9BB60 /* StairsUp.png */; };
+		EA8F00BB1DC6AFAF00D9BB60 /* Wall.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F00B61DC6AFAF00D9BB60 /* Wall.png */; };
 		EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */; };
 		EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
 		EAE249291D85DBBB008DDA4C /* Vec3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE249281D85DBBB008DDA4C /* Vec3.swift */; };
@@ -212,6 +217,11 @@
 		EA5903EE1D85D51A007E0B12 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = Sources/math/Math.swift; sourceTree = "<group>"; };
 		EA5903F71D85D54A007E0B12 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAtlas.swift; path = Sources/private/FontAtlas.swift; sourceTree = SOURCE_ROOT; };
 		EA5903F81D85D54A007E0B12 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Sources/private/Fonts.swift; sourceTree = SOURCE_ROOT; };
+		EA8F00B21DC6AFAF00D9BB60 /* Floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Floor.png; path = resources/environ/Floor.png; sourceTree = "<group>"; };
+		EA8F00B31DC6AFAF00D9BB60 /* OpenDoor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = OpenDoor.png; path = resources/environ/OpenDoor.png; sourceTree = "<group>"; };
+		EA8F00B41DC6AFAF00D9BB60 /* StairsDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StairsDown.png; path = resources/environ/StairsDown.png; sourceTree = "<group>"; };
+		EA8F00B51DC6AFAF00D9BB60 /* StairsUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StairsUp.png; path = resources/environ/StairsUp.png; sourceTree = "<group>"; };
+		EA8F00B61DC6AFAF00D9BB60 /* Wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Wall.png; path = resources/environ/Wall.png; sourceTree = "<group>"; };
 		EAA99D781C41E10900CF3246 /* GameEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GameEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA99E241C41E65700CF3246 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = resources/Assets.xcassets; sourceTree = "<group>"; };
 		EAA99E2C1C41E6A500CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/Test/Info.plist; sourceTree = "<group>"; };
@@ -342,6 +352,18 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
+		EA8F00A71DC6AF5F00D9BB60 /* Environ */ = {
+			isa = PBXGroup;
+			children = (
+				EA8F00B21DC6AFAF00D9BB60 /* Floor.png */,
+				EA8F00B31DC6AFAF00D9BB60 /* OpenDoor.png */,
+				EA8F00B41DC6AFAF00D9BB60 /* StairsDown.png */,
+				EA8F00B51DC6AFAF00D9BB60 /* StairsUp.png */,
+				EA8F00B61DC6AFAF00D9BB60 /* Wall.png */,
+			);
+			name = Environ;
+			sourceTree = "<group>";
+		};
 		EAA99DE71C41E53800CF3246 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +382,7 @@
 		EAA99E231C41E64700CF3246 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				EA8F00A71DC6AF5F00D9BB60 /* Environ */,
 				EAA99E241C41E65700CF3246 /* Assets.xcassets */,
 				EA1ACBF21C9E5D7000878EE6 /* error.png */,
 				EAA99E2B1C41E68D00CF3246 /* Test */,
@@ -618,8 +641,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA8F00BA1DC6AFAF00D9BB60 /* StairsUp.png in Resources */,
 				EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */,
 				EA1ACBF31C9E5D7000878EE6 /* error.png in Resources */,
+				EA8F00BB1DC6AFAF00D9BB60 /* Wall.png in Resources */,
+				EA8F00B71DC6AFAF00D9BB60 /* Floor.png in Resources */,
+				EA8F00B91DC6AFAF00D9BB60 /* StairsDown.png in Resources */,
+				EA8F00B81DC6AFAF00D9BB60 /* OpenDoor.png in Resources */,
 				EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -894,7 +922,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = A9PBWT52W8;
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DTESTTARGET -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = solarjetmen.GameEngine;
@@ -912,7 +940,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = A9PBWT52W8;
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DTESTTARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = solarjetmen.GameEngine;

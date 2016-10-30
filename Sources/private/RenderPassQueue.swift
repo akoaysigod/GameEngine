@@ -54,9 +54,9 @@ final class RenderPassQueue {
   fileprivate func updateColorAttachments(_ width: Int, height: Int) {
     (1..<colorAttachmentCount).forEach {
       let texDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm,
-                                                                            width: width,
-                                                                            height: height,
-                                                                            mipmapped: false)
+                                                             width: width,
+                                                             height: height,
+                                                             mipmapped: false)
       let tex = self.device.makeTexture(descriptor: texDesc)
 
       let colorAttachment = MTLRenderPassColorAttachmentDescriptor()

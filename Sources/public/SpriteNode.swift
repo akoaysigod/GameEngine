@@ -95,7 +95,9 @@ open class SpriteNode: Node, Renderable {
    - returns: A new instance of `SpriteNote`.
    */
   public convenience init(named: String) {
-    self.init(texture: Texture(named: named))
+    let texture = Texture(named: named, contentScale: 3.0) //fix this
+    let lightTexture = TextureAtlas.createLightMap(true, texture: texture)
+    self.init(texture: Texture(texture: texture.texture, lightMapTexture: lightTexture?.texture, frame: texture.frame))
   }
 
   override func updateTransform() {

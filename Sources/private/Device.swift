@@ -9,7 +9,7 @@
 import Metal
 import MetalKit
 
-class Device {
+final class Device {
   static let shared = Device()
 
   let device: MTLDevice
