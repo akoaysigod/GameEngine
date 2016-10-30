@@ -126,6 +126,16 @@
 		EA5903FC1D85D54A007E0B12 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903F81D85D54A007E0B12 /* Fonts.swift */; };
 		EAA99E311C41E6D600CF3246 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */; };
 		EAA99E331C41E6E500CF3246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA99E241C41E65700CF3246 /* Assets.xcassets */; };
+		EAE249291D85DBBB008DDA4C /* Vec3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE249281D85DBBB008DDA4C /* Vec3.swift */; };
+		EAE2492A1D85DBBB008DDA4C /* Vec3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE249281D85DBBB008DDA4C /* Vec3.swift */; };
+		EAE2492C1D85DCE5008DDA4C /* Vec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2492B1D85DCE5008DDA4C /* Vec.swift */; };
+		EAE2492D1D85DCE5008DDA4C /* Vec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2492B1D85DCE5008DDA4C /* Vec.swift */; };
+		EAE2492F1D85DEA0008DDA4C /* Vec4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2492E1D85DEA0008DDA4C /* Vec4.swift */; };
+		EAE249301D85DEA0008DDA4C /* Vec4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE2492E1D85DEA0008DDA4C /* Vec4.swift */; };
+		EAE249321D85DED0008DDA4C /* Vec2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE249311D85DED0008DDA4C /* Vec2.swift */; };
+		EAE249331D85DED0008DDA4C /* Vec2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE249311D85DED0008DDA4C /* Vec2.swift */; };
+		EAE249351D85DF04008DDA4C /* Mat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE249341D85DF04008DDA4C /* Mat.swift */; };
+		EAE249361D85DF04008DDA4C /* Mat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE249341D85DF04008DDA4C /* Mat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +218,11 @@
 		EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = resources/Test/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAA99E2F1C41E6BC00CF3246 /* GameEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameEngine.h; path = resources/GEFramework/GameEngine.h; sourceTree = "<group>"; };
 		EAA99E301C41E6BC00CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/GEFramework/Info.plist; sourceTree = "<group>"; };
+		EAE249281D85DBBB008DDA4C /* Vec3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vec3.swift; path = Sources/math/Vec3.swift; sourceTree = "<group>"; };
+		EAE2492B1D85DCE5008DDA4C /* Vec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vec.swift; path = Sources/math/Vec.swift; sourceTree = "<group>"; };
+		EAE2492E1D85DEA0008DDA4C /* Vec4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vec4.swift; path = Sources/math/Vec4.swift; sourceTree = "<group>"; };
+		EAE249311D85DED0008DDA4C /* Vec2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vec2.swift; path = Sources/math/Vec2.swift; sourceTree = "<group>"; };
+		EAE249341D85DF04008DDA4C /* Mat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mat.swift; path = Sources/math/Mat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -447,8 +462,13 @@
 		EAE6ED401CCBC1090046A5BE /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				EAE249341D85DF04008DDA4C /* Mat.swift */,
+				EAE2492B1D85DCE5008DDA4C /* Vec.swift */,
+				EAE249311D85DED0008DDA4C /* Vec2.swift */,
 				EA5903EB1D85D51A007E0B12 /* Mat2.swift */,
+				EAE249281D85DBBB008DDA4C /* Vec3.swift */,
 				EA5903EC1D85D51A007E0B12 /* Mat3.swift */,
+				EAE2492E1D85DEA0008DDA4C /* Vec4.swift */,
 				EA5903ED1D85D51A007E0B12 /* Mat4.swift */,
 				EA5903EE1D85D51A007E0B12 /* Math.swift */,
 			);
@@ -560,7 +580,7 @@
 				TargetAttributes = {
 					EA0363B81C31C85E00D283E3 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = TVJM564TQF;
+						DevelopmentTeam = A9PBWT52W8;
 						LastSwiftMigration = 0800;
 					};
 					EA0363CE1C31C85F00D283E3 = {
@@ -627,6 +647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA59035E1D85D40D007E0B12 /* TextNode.swift in Sources */,
+				EAE249291D85DBBB008DDA4C /* Vec3.swift in Sources */,
 				EA5903911D85D47B007E0B12 /* GraphCache.swift in Sources */,
 				EA5903681D85D425007E0B12 /* Renderable.swift in Sources */,
 				EA5903951D85D47B007E0B12 /* Updater.swift in Sources */,
@@ -639,7 +660,9 @@
 				EA59035C1D85D40D007E0B12 /* SpriteNode.swift in Sources */,
 				EA5903C01D85D4BC007E0B12 /* Device.swift in Sources */,
 				EA5903F11D85D51A007E0B12 /* Mat3.swift in Sources */,
+				EAE2492F1D85DEA0008DDA4C /* Vec4.swift in Sources */,
 				EA5903C61D85D4D2007E0B12 /* ArrayExtension.swift in Sources */,
+				EAE249351D85DF04008DDA4C /* Mat.swift in Sources */,
 				EA5903AC1D85D4A1007E0B12 /* ShapePipeline.swift in Sources */,
 				EA5903CB1D85D4DA007E0B12 /* Rect.swift in Sources */,
 				EA59039B1D85D47B007E0B12 /* Scene.swift in Sources */,
@@ -651,6 +674,7 @@
 				EA59034E1D85D3DA007E0B12 /* TestGameViewController.swift in Sources */,
 				EA5903D11D85D4EC007E0B12 /* Size.swift in Sources */,
 				EA59036C1D85D425007E0B12 /* Tree.swift in Sources */,
+				EAE2492C1D85DCE5008DDA4C /* Vec.swift in Sources */,
 				EA5903E11D85D503007E0B12 /* NormalShader.metal in Sources */,
 				EA59037B1D85D448007E0B12 /* LightData.swift in Sources */,
 				EA5903811D85D448007E0B12 /* TextureFrame.swift in Sources */,
@@ -670,6 +694,7 @@
 				EA5903581D85D40D007E0B12 /* LightNode.swift in Sources */,
 				EA59035A1D85D40D007E0B12 /* ShapeNode.swift in Sources */,
 				EA5903CE1D85D4E5007E0B12 /* Color.swift in Sources */,
+				EAE249321D85DED0008DDA4C /* Vec2.swift in Sources */,
 				EA5903B41D85D4AE007E0B12 /* ComputeRenderer.swift in Sources */,
 				EA5903741D85D432007E0B12 /* Easing.swift in Sources */,
 				EA5903621D85D40D007E0B12 /* TextureAtlas.swift in Sources */,
@@ -698,7 +723,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAE2492D1D85DCE5008DDA4C /* Vec.swift in Sources */,
 				EA5903511D85D3EC007E0B12 /* Globals.swift in Sources */,
+				EAE249301D85DEA0008DDA4C /* Vec4.swift in Sources */,
 				EA5903F01D85D51A007E0B12 /* Mat2.swift in Sources */,
 				EA59037C1D85D448007E0B12 /* LightData.swift in Sources */,
 				EA5903BF1D85D4BC007E0B12 /* BufferManager.swift in Sources */,
@@ -726,12 +753,15 @@
 				EA5903AB1D85D4A1007E0B12 /* RenderPassQueue.swift in Sources */,
 				EA5903AD1D85D4A1007E0B12 /* ShapePipeline.swift in Sources */,
 				EA5903A91D85D4A1007E0B12 /* Renderer.swift in Sources */,
+				EAE2492A1D85DBBB008DDA4C /* Vec3.swift in Sources */,
 				EA5903961D85D47B007E0B12 /* Updater.swift in Sources */,
 				EA5903611D85D40D007E0B12 /* Texture.swift in Sources */,
+				EAE249361D85DF04008DDA4C /* Mat.swift in Sources */,
 				EA5903FA1D85D54A007E0B12 /* FontAtlas.swift in Sources */,
 				EA59036B1D85D425007E0B12 /* NodeGeometry.swift in Sources */,
 				EA5903981D85D47B007E0B12 /* GameView.swift in Sources */,
 				EA5903CF1D85D4E5007E0B12 /* Color.swift in Sources */,
+				EAE249331D85DED0008DDA4C /* Vec2.swift in Sources */,
 				EA5903B51D85D4AE007E0B12 /* ComputeRenderer.swift in Sources */,
 				EA5903E41D85D503007E0B12 /* ShapeShaders.metal in Sources */,
 				EA5903A71D85D4A1007E0B12 /* LightPipeline.swift in Sources */,
@@ -862,6 +892,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = A9PBWT52W8;
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -879,6 +910,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = A9PBWT52W8;
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Test/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

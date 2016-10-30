@@ -70,7 +70,7 @@ private final class FlatArray<T> {
   }
 }
 
-class FontAtlas: NSObject, NSCoding {
+final class FontAtlas: NSObject, NSCoding {
   //these probably have to be the same right now
   fileprivate struct Constants {
     static let AtlasSizeHeightMax = 4096

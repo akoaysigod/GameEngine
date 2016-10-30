@@ -9,4 +9,4 @@
 import Foundation
 import simd
 
-public typealias Vec2 = float2
+public typealias Mat2 = float2x2

@@ -65,8 +65,7 @@ open class GameView: UIView {
 
 // MARK: Rendering setup
 extension GameView {
-  //TODO: what happened to this?
-  //public override static func layerClass() -> AnyClass { return CAMetalLayer.self }
+  open static override var layerClass: AnyClass { return CAMetalLayer.self }
 
   var currentDrawable: CAMetalDrawable? {
     return metalLayer?.nextDrawable()
