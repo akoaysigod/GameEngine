@@ -38,11 +38,12 @@ open class GameView: UIView {
     let cgsize = frame.size
     return Size(width: Float(cgsize.width), height: Float(cgsize.height))
   }
+
   open var rect: Rect {
     return Rect(origin: Point(x: Float(frame.origin.x), y: Float(frame.origin.y)), size: size)
   }
 
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
 
     sharedInit()

@@ -55,7 +55,7 @@ public final class LightNode: Node {
     return Size(width: resolution.w * camera.zoom, height: resolution.h * camera.zoom)
   }
 
-  init(position: Point, color: Color, radius: Float) {
+  public init(position: Point, color: Color, radius: Float) {
     self.color = color
     self.radius = radius
 

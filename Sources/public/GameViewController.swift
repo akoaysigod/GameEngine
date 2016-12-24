@@ -23,14 +23,14 @@ import UIKit
  view.presentScene(scene)
  ````
  */
-public class GameViewController: UIViewController {
+open class GameViewController: UIViewController {
   public var scene: Scene!
 
-  override public func loadView() {
+  override open func loadView() {
     view = GameView(frame: UIScreen.main.bounds)
   }
 
-  override public func viewDidLoad() {
+  override open func viewDidLoad() {
     super.viewDidLoad()
     
     let view = self.view as! GameView
