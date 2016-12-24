@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EAA99D771C41E10900CF3246"
-               BuildableName = "GameEngine.framework"
-               BlueprintName = "GameEngine"
+               BuildableName = "GameEngine_iOS.framework"
+               BlueprintName = "GameEngine_iOS"
                ReferencedContainer = "container:GameEngine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EAA99D771C41E10900CF3246"
-            BuildableName = "GameEngine.framework"
-            BlueprintName = "GameEngine"
+            BuildableName = "GameEngine_iOS.framework"
+            BlueprintName = "GameEngine_iOS"
             ReferencedContainer = "container:GameEngine.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EAA99D771C41E10900CF3246"
-            BuildableName = "GameEngine.framework"
-            BlueprintName = "GameEngine"
+            BuildableName = "GameEngine_iOS.framework"
+            BlueprintName = "GameEngine_iOS"
             ReferencedContainer = "container:GameEngine.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -7,14 +7,14 @@
     "253C6FFC800D7E68DA548202B4CCFB7FD2F5BCE4" : 9223372036854775807,
     "933D8849FB194F2F77F2A47428BA52CEDA62A9CF" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "93E9B8EF-F305-4D85-A4E3-D94EF1239936",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A3D29AF7-3442-45A4-B0AF-E9E0220CBC84",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "253C6FFC800D7E68DA548202B4CCFB7FD2F5BCE4" : "",
     "933D8849FB194F2F77F2A47428BA52CEDA62A9CF" : "GameEngine\/"
   },
-  "DVTSourceControlWorkspaceBlueprintNameKey" : "GameEngine",
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "GameEngine-macOS",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "GameEngine.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Examples\/GameEngine-macOS\/GameEngine-macOS.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "solarjetmen.com:\/home\/git\/Rogue",
