@@ -10,7 +10,11 @@ import Foundation
 import Metal
 import QuartzCore
 import simd
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
 
 typealias Renderables = [Renderable]
 

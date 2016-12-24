@@ -7,7 +7,11 @@
 //
 
 import Foundation
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
 
 enum AtlasCreation: Error {
   case oneImage

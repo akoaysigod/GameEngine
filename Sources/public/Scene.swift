@@ -9,7 +9,11 @@
 import Foundation
 import Metal
 import simd
+#if os(iOS)
 import UIKit
+#else
+import Cocoa
+#endif
 
 /**
  A `Scene` is a node object that holds everything on screen as the root of the node tree. Anything that needs to be displayed must be added to 

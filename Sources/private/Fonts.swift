@@ -8,7 +8,11 @@
 
 import Foundation
 import Metal
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
 
 final class Fonts {
   //maybe add this to GEFonts at run time but need to preload somehow
@@ -37,14 +41,14 @@ final class Fonts {
   }
   
   func fontForString(_ fontName: String, size: CGFloat) -> FontAtlas? {
-    if let font = UIFont(name: fontName, size: size) {
+    if let font = Font(name: fontName, size: size) {
       return fontForUIFont(font)
     }
     assert(false, fontName + " does not exist.")
     return nil
   }
   
-  func fontForUIFont(_ font: UIFont) -> FontAtlas? {
+  func fontForUIFont(_ font: Font) -> FontAtlas? {
     guard let fontDir = fontDir else { DLog("font directory doesn't exist"); return nil }
 
     if let atlas = fontDict[font.fontName] {

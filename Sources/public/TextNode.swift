@@ -10,7 +10,11 @@
 
 import CoreText
 import Metal
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
 
 /**
  A `TextNode` creates a "string" sprite essentially. 
@@ -55,7 +59,7 @@ open class TextNode: Node, Renderable {
 
    - returns: A new instance of `TextNode`.
    */
-  public init(text: String, font: UIFont, color: Color) {
+  public init(text: String, font: Font, color: Color) {
     self.text = text
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color

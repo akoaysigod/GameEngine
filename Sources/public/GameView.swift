@@ -10,20 +10,29 @@ import Foundation
 import Metal
 import MetalKit
 import QuartzCore
+#if os(iOS)
+  import UIKit
+  public typealias View = UIView
+  typealias DisplayLink = CADisplayLink
+#else
+  import Cocoa
+  public typealias View = NSView
+  typealias DisplayLink = CVDisplayLink
+#endif
 
 //TODO: switch this back to a a regular UIView and layer setup using CADisplayLink
 
 /**
  A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple. 
  */
-open class GameView: UIView {
+open class GameView: MTKView {
   fileprivate var currentScene: Scene?
 
   fileprivate(set) var projection: Projection!
 
   fileprivate(set) var device: MTLDevice!
   fileprivate weak var metalLayer: CAMetalLayer?
-  fileprivate var timer: CADisplayLink!
+  fileprivate var timer: DisplayLink!
   fileprivate var timestamp: CFTimeInterval = 0.0
 
   open var clearColor: Color = .black
@@ -43,17 +52,17 @@ open class GameView: UIView {
     return Rect(origin: Point(x: Float(frame.origin.x), y: Float(frame.origin.y)), size: size)
   }
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-
-    sharedInit()
-  }
-
-  public required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-
-    sharedInit()
-  }
+//  public override init(frame: CGRect) {
+//    super.init(frame: frame)
+//
+//    sharedInit()
+//  }
+//
+//  public required init?(coder aDecoder: NSCoder) {
+//    super.init(coder: aDecoder)
+//
+//    sharedInit()
+//  }
 
   open func presentScene(_ scene: Scene) {
     currentScene = scene
@@ -86,7 +95,7 @@ extension GameView {
 
     setupRendering(device)
 
-    timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
+    timer = DisplayLink(target: self, selector: #selector(newFrame(_:)))
   }
 
   func setupRendering(_ device: MTLDevice) {
@@ -103,7 +112,7 @@ extension GameView {
 
 // MARK: Update
 extension GameView {
-  @objc fileprivate func newFrame(_ displayLink: CADisplayLink) {
+  @objc fileprivate func newFrame(_ displayLink: DisplayLink) {
     if timestamp == 0.0 {
       timestamp = displayLink.timestamp
     }

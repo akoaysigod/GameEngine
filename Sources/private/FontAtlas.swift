@@ -8,7 +8,15 @@
 
 import CoreText
 import Foundation
-import UIKit
+#if os(iOS)
+  import UIKit
+  public typealias Font = UIFont
+  public typealias Image = UIImage
+#else
+  import Cocoa
+  public typealias Font = NSFont
+  public typealias Image = NSImage
+#endif
 
 //maybe private
 final class GlyphDescriptor: NSObject, NSCoding {
@@ -79,18 +87,18 @@ final class FontAtlas: NSObject, NSCoding {
     static let AsciiWidth = 4096
   }
   
-  let font: UIFont
+  let font: Font
   let textureSize: Int
   var textureData: Data!
   var glyphDescriptors = [GlyphDescriptor]()
 
   #if DEBUG
-  var debugImage: UIImage?
+  var debugImage: Image?
   #endif
   
   var asciiOnly = true
   
-  init(font: UIFont, textureSize: Int) {
+  init(font: Font, textureSize: Int) {
     self.font = font
     self.textureSize = textureSize
 
@@ -100,7 +108,7 @@ final class FontAtlas: NSObject, NSCoding {
   }
 
   //not sure yet
-  convenience init(font: UIFont) {
+  convenience init(font: Font) {
     self.init(font: font, textureSize: Constants.AsciiWidth / 2)
   }
 
@@ -121,7 +129,7 @@ final class FontAtlas: NSObject, NSCoding {
     let fontSize = aDecoder.decodeFloat(forKey: Keys.FontSize)
     //let fontSpread = aDecoder.decodeFloatForKey(Keys.Spread)
 
-    self.font = UIFont(name: fontName, size: CGFloat(fontSize))!
+    self.font = Font(name: fontName, size: CGFloat(fontSize))!
     self.textureSize = Int(aDecoder.decodeCInt(forKey: Keys.TextureSize))
     self.textureData = aDecoder.decodeObject(forKey: Keys.TextureData) as! Data
     self.glyphDescriptors = aDecoder.decodeObject(forKey: Keys.GlyphDescriptors) as! [GlyphDescriptor]
@@ -138,7 +146,7 @@ final class FontAtlas: NSObject, NSCoding {
   }
   
   //TODO: rewrite these estimates
-  fileprivate func estimateGlyphSize(_ font: UIFont) -> CGSize {
+  fileprivate func estimateGlyphSize(_ font: Font) -> CGSize {
     let exampleStr: NSString = "123ABC"
     let exampleStrSize = exampleStr.size(attributes: [NSFontAttributeName: font])
     let averageWidth = ceil(exampleStrSize.width / CGFloat(exampleStr.length))
@@ -146,14 +154,14 @@ final class FontAtlas: NSObject, NSCoding {
     return CGSize(width: averageWidth, height: maxHeight)
   }
   
-  fileprivate func estimateLineWidth(_ font: UIFont) -> CGFloat {
+  fileprivate func estimateLineWidth(_ font: Font) -> CGFloat {
     let estimatedWidth = ("!" as NSString).size(attributes: [NSFontAttributeName: font]).width
     return ceil(estimatedWidth)
   }
   
-  fileprivate func willLikelyFitInAtlasRect(_ font: UIFont, size: CGFloat, rect: CGRect) -> Bool {
+  fileprivate func willLikelyFitInAtlasRect(_ font: Font, size: CGFloat, rect: CGRect) -> Bool {
     let textureArea = rect.size.width * rect.size.height
-    let testFont = UIFont(name: font.fontName, size: size)!
+    let testFont = Font(name: font.fontName, size: size)!
     let testCTFont = CTFontCreateWithName(font.fontName as CFString?, size, nil)
     let fontCount = glyphIndices(testCTFont).count//CTFontGetGlyphCount(testCTFont)
     
@@ -165,7 +173,7 @@ final class FontAtlas: NSObject, NSCoding {
     return estimatedTotalArea < textureArea
   }
   
-  fileprivate func pointSizeThatFitsForFont(_ font: UIFont, atlasRect: CGRect) -> CGFloat {
+  fileprivate func pointSizeThatFitsForFont(_ font: Font, atlasRect: CGRect) -> CGFloat {
     var fittedSize = font.pointSize
     
     while self.willLikelyFitInAtlasRect(font, size: fittedSize, rect: atlasRect) {
@@ -203,7 +211,7 @@ final class FontAtlas: NSObject, NSCoding {
     }
   }
   
-  func createAtlasForFont(_ font: UIFont, _ width: Int, _ height: Int) -> (UnsafeMutablePointer<UInt8>, dataSize: Int) {
+  func createAtlasForFont(_ font: Font, _ width: Int, _ height: Int) -> (UnsafeMutablePointer<UInt8>, dataSize: Int) {
     let dataSize = width * height
     let imageData = UnsafeMutablePointer<UInt8>.allocate(capacity: dataSize)
     
@@ -222,7 +230,7 @@ final class FontAtlas: NSObject, NSCoding {
     
     let fontPointSize = self.pointSizeThatFitsForFont(font, atlasRect: atlasRect) //property
     let ctFont = CTFontCreateWithName(font.fontName as CFString?, fontPointSize, nil)
-    let parentFont = UIFont(name: font.fontName, size: fontPointSize) //property
+    let parentFont = Font(name: font.fontName, size: fontPointSize) //property
     
     //let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))
     let margin = self.estimateLineWidth(font)
@@ -290,7 +298,7 @@ final class FontAtlas: NSObject, NSCoding {
     
     #if DEBUG
       if let context = context {
-        debugImage = UIImage(cgImage: context.makeImage()!)
+        debugImage = Image(cgImage: context.makeImage()!)
       }
       else {
         assert(false, "Failed to create debug image for font atlas.")
@@ -456,7 +464,7 @@ final class FontAtlas: NSObject, NSCoding {
     let colorSpace = CGColorSpaceCreateDeviceGray()
     let bitmapInfo = CGBitmapInfo.alphaInfoMask.rawValue & CGImageAlphaInfo.none.rawValue
     if let context = CGContext(data: textureArray, width: Int(textureSize), height: Int(textureSize), bitsPerComponent: 8, bytesPerRow: Int(textureSize), space: colorSpace, bitmapInfo: bitmapInfo) {
-      debugImage = UIImage(cgImage: context.makeImage()!)
+      debugImage = Image(cgImage: context.makeImage()!)
     }
     else {
       assert(false, "Failed to create debug image for font atlas.")

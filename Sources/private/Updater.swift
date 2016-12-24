@@ -46,5 +46,6 @@ final class Updater {
 }
 
 // MARK: iOS
+#if os(iOS)
 extension CADisplayLink: ScreenRefresher {}
-
+#endif

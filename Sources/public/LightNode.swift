@@ -7,7 +7,11 @@
 //
 
 import simd
+#if os(iOS)
 import UIKit
+#else
+import Cocoa
+#endif
 
 public final class LightNode: Node {
   var lightData: LightData {
@@ -51,7 +55,8 @@ public final class LightNode: Node {
     guard let camera = camera else { return .zero }
 
     //this needs to be in points for some reason I think
-    let resolution = UIScreen.main.bounds.size
+    //let resolution = UIScreen.main.bounds.size
+    let resolution = CGRect(x: 0, y: 0, width: 0, height: 0).size
     return Size(width: resolution.w * camera.zoom, height: resolution.h * camera.zoom)
   }
 

@@ -6,7 +6,11 @@
 //  Copyright © 2016 Anthony Green. All rights reserved.
 //
 
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
 
 public extension Float {
   var cg: CGFloat {

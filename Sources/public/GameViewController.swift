@@ -7,7 +7,17 @@
 //
 
 import Metal
-import UIKit
+import MetalKit
+
+#if os(iOS)
+  import UIKit
+  public typealias ViewController = UIViewController
+  public typealias Screen = UIScreen
+#else
+  import Cocoa
+  public typealias ViewController = NSViewController
+  //public typealias Screen = NSScreen
+#endif
 
 /**
  The `GameViewController` is a controller for stuff. It probably won't do much but it's required for iOS. Pretty much just 
@@ -23,11 +33,11 @@ import UIKit
  view.presentScene(scene)
  ````
  */
-open class GameViewController: UIViewController {
+open class GameViewController: ViewController {
   public var scene: Scene!
 
   override open func loadView() {
-    view = GameView(frame: UIScreen.main.bounds)
+    view = GameView(frame: Screen.main.bounds)
   }
 
   override open func viewDidLoad() {
@@ -35,5 +45,22 @@ open class GameViewController: UIViewController {
     
     let view = self.view as! GameView
     view.clearColor = Color(0.0, 0.5, 0.0)
+    
+  }
+
+  open func update() {
+
+  }
+}
+
+extension GameViewController: MTKViewDelegate {
+  public func draw(in view: MTKView) {
+    update()
+
+
+  }
+
+  public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+
   }
 }

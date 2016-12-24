@@ -8,7 +8,11 @@
 
 import Foundation
 import simd
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
 
 /**
  The `CameraNode` changes the view port of any nodes attached to it. Basically, rendering the positions, scale, etc., based on the `CameraNode`'s location in the scene.
