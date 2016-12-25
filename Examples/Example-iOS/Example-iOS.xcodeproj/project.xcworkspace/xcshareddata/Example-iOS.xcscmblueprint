@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "933D8849FB194F2F77F2A47428BA52CEDA62A9CF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "253C6FFC800D7E68DA548202B4CCFB7FD2F5BCE4" : 9223372036854775807,
+    "933D8849FB194F2F77F2A47428BA52CEDA62A9CF" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C2966F3B-E6F7-486E-9489-8176765B6EA2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "253C6FFC800D7E68DA548202B4CCFB7FD2F5BCE4" : "",
+    "933D8849FB194F2F77F2A47428BA52CEDA62A9CF" : "GameEngine\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Example-iOS",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Examples\/Example-iOS\/Example-iOS.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "solarjetmen.com:\/home\/git\/Rogue",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "253C6FFC800D7E68DA548202B4CCFB7FD2F5BCE4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "solarjetmen.com:\/home\/git\/GameEngine",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "933D8849FB194F2F77F2A47428BA52CEDA62A9CF"
+    }
+  ]
+}

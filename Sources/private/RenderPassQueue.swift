@@ -75,7 +75,7 @@ final class RenderPassQueue {
 
       let colorAttachment = MTLRenderPassColorAttachmentDescriptor()
       colorAttachment.texture = drawable.texture
-      colorAttachment.clearColor = view.clearColor.clearColor
+      colorAttachment.clearColor = view.clearColor
       colorAttachment.loadAction = .clear
       colorAttachment.storeAction = .store
 

@@ -14,7 +14,7 @@ public struct Color {
   public var blue: Float
   public var alpha: Float = 1.0
 
-  var clearColor: MTLClearColor {
+  public var clearColor: MTLClearColor {
     return MTLClearColor(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
   }
 

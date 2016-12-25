@@ -13,11 +13,9 @@ import QuartzCore
 #if os(iOS)
   import UIKit
   public typealias View = UIView
-  typealias DisplayLink = CADisplayLink
 #else
   import Cocoa
   public typealias View = NSView
-  typealias DisplayLink = CVDisplayLink
 #endif
 
 //TODO: switch this back to a a regular UIView and layer setup using CADisplayLink
@@ -30,13 +28,14 @@ open class GameView: MTKView {
 
   fileprivate(set) var projection: Projection!
 
-  fileprivate(set) var device: MTLDevice!
+  //fileprivate(set) var device: MTLDevice!
   fileprivate weak var metalLayer: CAMetalLayer?
-  fileprivate var timer: DisplayLink!
-  fileprivate var timestamp: CFTimeInterval = 0.0
+  fileprivate var timestamp = 0.0
 
-  open var clearColor: Color = .black
-  open var paused = true
+  //open var clearColor: Color = .black
+
+  
+  //open var paused = true
 
   fileprivate(set) var bufferManager: BufferManager!
   fileprivate var renderer: Renderer!
@@ -52,40 +51,14 @@ open class GameView: MTKView {
     return Rect(origin: Point(x: Float(frame.origin.x), y: Float(frame.origin.y)), size: size)
   }
 
-//  public override init(frame: CGRect) {
-//    super.init(frame: frame)
-//
-//    sharedInit()
-//  }
-//
-//  public required init?(coder aDecoder: NSCoder) {
-//    super.init(coder: aDecoder)
-//
-//    sharedInit()
-//  }
-
-  open func presentScene(_ scene: Scene) {
-    currentScene = scene
-    scene.view = self
-    scene.didMoveToView(self)
-    paused = false
-    timer.add(to: .main, forMode: .commonModes)
-  }
-}
-
-// MARK: Rendering setup
-extension GameView {
-  open static override var layerClass: AnyClass { return CAMetalLayer.self }
-
-  var currentDrawable: CAMetalDrawable? {
-    return metalLayer?.nextDrawable()
-  }
-
-  func sharedInit() {
+  public init(frame: CGRect) {
     guard let device = MTLCreateSystemDefaultDevice() else {
       fatalError("Metal not supported.")
     }
-    self.device = device
+
+    super.init(frame: frame, device: device)
+
+    isPaused = true
 
     metalLayer = layer as? CAMetalLayer
     metalLayer?.device = device
@@ -94,9 +67,40 @@ extension GameView {
     metalLayer?.frame = frame
 
     setupRendering(device)
-
-    timer = DisplayLink(target: self, selector: #selector(newFrame(_:)))
   }
+  
+  public required init(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  open func presentScene(_ scene: Scene) {
+    currentScene = scene
+    scene.view = self
+    scene.didMoveToView(self)
+    isPaused = false
+  }
+}
+
+// MARK: Rendering setup
+extension GameView {
+//  open static override var layerClass: AnyClass { return CAMetalLayer.self }
+
+//  var currentDrawable: CAMetalDrawable? {
+//    return metalLayer?.nextDrawable()
+//  }
+
+//  func sharedInit() {
+//    isPaused = true
+//
+//    metalLayer = layer as? CAMetalLayer
+//    metalLayer?.device = device
+//    metalLayer?.pixelFormat = .bgra8Unorm
+//    metalLayer?.framebufferOnly = true
+//    metalLayer?.frame = frame
+//
+//    setupRendering(device)
+//
+//  }
 
   func setupRendering(_ device: MTLDevice) {
     let size = getNewSize()
@@ -112,12 +116,12 @@ extension GameView {
 
 // MARK: Update
 extension GameView {
-  @objc fileprivate func newFrame(_ displayLink: DisplayLink) {
+  func update(time: Double) {
     if timestamp == 0.0 {
-      timestamp = displayLink.timestamp
+      timestamp = time
     }
 
-    let delta = displayLink.timestamp - self.timestamp
+    let delta = time - self.timestamp
     //not sure how to deal with this if you hit a break point the timer gets off making it difficult to figure out what's going on
     #if DEBUG
 //    if showFPS {
@@ -135,13 +139,13 @@ extension GameView {
 //    }
     #endif
     
-    timestamp = displayLink.timestamp
+    timestamp = time
 
     guard let scene = currentScene else {
       return
     }
 
-    if !paused {
+    if !isPaused {
       updateNodes(delta, nodes: scene.allNodes)
       scene.update(delta)
     }

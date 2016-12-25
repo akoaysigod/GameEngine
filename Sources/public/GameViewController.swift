@@ -35,6 +35,7 @@ import MetalKit
  */
 open class GameViewController: ViewController {
   public var scene: Scene!
+  fileprivate var timestamp = 0.0
 
   override open func loadView() {
     view = GameView(frame: Screen.main.bounds)
@@ -44,20 +45,14 @@ open class GameViewController: ViewController {
     super.viewDidLoad()
     
     let view = self.view as! GameView
-    view.clearColor = Color(0.0, 0.5, 0.0)
-    
-  }
-
-  open func update() {
-
+    view.clearColor = Color(0.0, 0.5, 0.0).clearColor
+    view.delegate = self
   }
 }
 
 extension GameViewController: MTKViewDelegate {
   public func draw(in view: MTKView) {
-    update()
-
-
+    (self.view as! GameView).update(time: CACurrentMediaTime())
   }
 
   public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
