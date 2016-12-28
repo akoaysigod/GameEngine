@@ -47,12 +47,12 @@ vertex VertexOut spriteVertex(ushort vid [[vertex_id]],
 fragment FragOut spriteFragment(VertexOut interpolated [[stage_in]],
                                 texture2d<float> texColor [[texture(0)]],
                                 texture2d<float> texNormal [[texture(1)]],
-                                sampler sampler2D [[sampler(0)]],
-                                constant float4& lightColor [[buffer(0)]])
+                                sampler sampler2D [[sampler(0)]])
+                                //constant float4& lightColor [[buffer(0)]]) //why is this being passed in here? 
 {
   FragOut fragOut;
   fragOut.diffuse = texColor.sample(sampler2D, interpolated.texCoord);
   fragOut.normal = texNormal.sample(sampler2D, interpolated.texCoord);
-  fragOut.light = lightColor;
+  //fragOut.light = lightColor;
   return fragOut;
 }

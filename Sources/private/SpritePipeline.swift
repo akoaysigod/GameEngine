@@ -54,9 +54,9 @@ extension SpritePipeline {
     encoder.setFragmentTexture(texture.texture, at: 0)
     encoder.setFragmentTexture(texture.lightMapTexture, at: 1)
 
-    //tmp
-    var lightColor = lights!.first!.ambientColor.vec4
-    encoder.setFragmentBytes(&lightColor, length: MemoryLayout<Vec4>.size, at: 0)
+    //tmp I don't remember why this is here
+//    var lightColor = lights!.first!.ambientColor.vec4
+//    encoder.setFragmentBytes(&lightColor, length: MemoryLayout<Vec4>.size, at: 0)
 
     let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
     encoder.drawIndexedPrimitives(type: .triangle,

@@ -30,14 +30,13 @@ open class GameView: View {
 
   fileprivate(set) var device: MTLDevice
   fileprivate weak var metalLayer: CAMetalLayer?
-  //tmp
-  #if os(iOS)
-  fileprivate var timer: CADisplayLink!
-  #endif
-  fileprivate var timestamp: CFTimeInterval = 0.0
 
-  open var clearColor: Color = .black
-  open var paused = true
+  private var updater: Updater!
+
+  /// The background color of the view, ignore the backgroundColor property for now it doesn't do anything but might someday
+  public var clearColor: Color = .black
+  /// Pauses rendering, automatically starts when a scene is presented
+  public var paused = true
 
   fileprivate(set) var bufferManager: BufferManager!
   fileprivate var renderer: Renderer!
@@ -45,7 +44,12 @@ open class GameView: View {
 
   #if os(iOS)
   open static override var layerClass: AnyClass { return CAMetalLayer.self }
+  #else
+  open override func makeBackingLayer() -> CALayer {
+    return CAMetalLayer()
+  }
   #endif
+
 
   /// tmp until this is converted back to a UIView
   open var size: Size {
@@ -64,19 +68,21 @@ open class GameView: View {
 
     super.init(frame: frame)
 
+    #if os(macOS)
+    wantsLayer = true
+    #endif
+
     metalLayer = layer as? CAMetalLayer
     metalLayer?.device = device
     metalLayer?.pixelFormat = .bgra8Unorm
     metalLayer?.framebufferOnly = true
     metalLayer?.frame = frame
 
-    #if os(iOS)
-    timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
-    #endif
+    updater = Updater(gameView: self)
 
     setupRendering(device: device)
   }
-  
+
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -86,10 +92,6 @@ open class GameView: View {
     scene.view = self
     scene.didMoveToView(self)
     paused = false
-    //tmp
-    #if os(iOS)
-    timer.add(to: .main, forMode: .commonModes)
-    #endif
   }
 }
 
@@ -113,32 +115,22 @@ extension GameView {
 
 // MARK: Update
 extension GameView {
-  //tmp
-  #if os(iOS)
-  @objc fileprivate func newFrame(_ displayLink: CADisplayLink) {
-    if timestamp == 0.0 {
-      timestamp = displayLink.timestamp
-    }
-
-    let delta = displayLink.timestamp - self.timestamp
-    //not sure how to deal with this if you hit a break point the timer gets off making it difficult to figure out what's going on
+  func update(delta: Double) {
     #if DEBUG
-//    if showFPS {
-//      let comeBackToThis = 1
+      //    if showFPS {
+      //      let comeBackToThis = 1
       //need to figure out how to "animate" text changes for this singular purpose
 
-//      let time = delta > 0.0 ? elapsedTime : 1.0
-//      currentScene.fpsText.text = "\(Int(1.0 / time))"
-//      currentScene.fpsText.buildMesh(device!)
-//      currentScene.fpsText.updateVertices(device!)
-//    }
-//
-//    if delta >= 0.02 {
-//      delta = 1.0 / 60.0
-//    }
+      //      let time = delta > 0.0 ? elapsedTime : 1.0
+      //      currentScene.fpsText.text = "\(Int(1.0 / time))"
+      //      currentScene.fpsText.buildMesh(device!)
+      //      currentScene.fpsText.updateVertices(device!)
+      //    }
+      //
+      //    if delta >= 0.02 {
+      //      delta = 1.0 / 60.0
+      //    }
     #endif
-    
-    timestamp = displayLink.timestamp
 
     guard let scene = currentScene else {
       return
@@ -150,8 +142,7 @@ extension GameView {
     }
     render(scene)
   }
-  #endif
-
+  
   fileprivate func updateNodes(_ delta: CFTimeInterval, nodes: Nodes) {
     nodes.forEach {
       $0.update(delta)

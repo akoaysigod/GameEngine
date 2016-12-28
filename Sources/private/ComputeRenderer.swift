@@ -54,8 +54,7 @@ private extension MTLTexture {
 
     d.cpuCacheMode = cpuCacheMode
     d.storageMode = storageMode
-    //d.usage = usage //worked on iOS
-    d.usage = .shaderWrite
+    d.usage = [.shaderWrite, .shaderRead]
 
     return d
   }
