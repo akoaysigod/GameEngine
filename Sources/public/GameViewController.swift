@@ -7,7 +7,11 @@
 //
 
 import Metal
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
 
 /**
  The `GameViewController` is a controller for stuff. It probably won't do much but it's required for iOS. Pretty much just 

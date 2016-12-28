@@ -8,20 +8,27 @@
 
 import Foundation
 import Metal
-import MetalKit
 import QuartzCore
+//tmp typealiases maybe come back to this
+#if os(iOS)
+  import UIKit
+  public typealias View = UIView
+#else
+  import Cocoa
+  public typealias View = NSView
+#endif
 
 //TODO: switch this back to a a regular UIView and layer setup using CADisplayLink
 
 /**
- A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple. 
+ A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple.
  */
-open class GameView: UIView {
+open class GameView: View {
   fileprivate var currentScene: Scene?
 
   fileprivate(set) var projection: Projection!
 
-  fileprivate(set) var device: MTLDevice!
+  fileprivate(set) var device: MTLDevice
   fileprivate weak var metalLayer: CAMetalLayer?
   fileprivate var timer: CADisplayLink!
   fileprivate var timestamp: CFTimeInterval = 0.0
@@ -33,6 +40,10 @@ open class GameView: UIView {
   fileprivate var renderer: Renderer!
   fileprivate var renderPassQueue: RenderPassQueue!
 
+  #if os(iOS)
+  open static override var layerClass: AnyClass { return CAMetalLayer.self }
+  #endif
+
   /// tmp until this is converted back to a UIView
   open var size: Size {
     let cgsize = frame.size
@@ -43,9 +54,22 @@ open class GameView: UIView {
   }
 
   override init(frame: CGRect) {
+    guard let device = MTLCreateSystemDefaultDevice() else {
+      fatalError("Metal not supported.")
+    }
+    self.device = device
+
     super.init(frame: frame)
 
-    sharedInit()
+    metalLayer = layer as? CAMetalLayer
+    metalLayer?.device = device
+    metalLayer?.pixelFormat = .bgra8Unorm
+    metalLayer?.framebufferOnly = true
+    metalLayer?.frame = frame
+
+    timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
+
+    setupRendering(device: device)
   }
   
   public required init?(coder aDecoder: NSCoder) {
@@ -63,30 +87,11 @@ open class GameView: UIView {
 
 // MARK: Rendering setup
 extension GameView {
-  open static override var layerClass: AnyClass { return CAMetalLayer.self }
-
   var currentDrawable: CAMetalDrawable? {
     return metalLayer?.nextDrawable()
   }
 
-  func sharedInit() {
-    guard let device = MTLCreateSystemDefaultDevice() else {
-      fatalError("Metal not supported.")
-    }
-    self.device = device
-
-    metalLayer = layer as? CAMetalLayer
-    metalLayer?.device = device
-    metalLayer?.pixelFormat = .bgra8Unorm
-    metalLayer?.framebufferOnly = true
-    metalLayer?.frame = frame
-
-    setupRendering(device)
-
-    timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
-  }
-
-  func setupRendering(_ device: MTLDevice) {
+  func setupRendering(device: MTLDevice) {
     let size = getNewSize()
     let width = Int(size.width)
     let height = Int(size.height)
@@ -150,6 +155,7 @@ extension GameView {
 
   fileprivate func getNewSize() -> CGSize {
     var size = bounds.size
+    //this should be nativeScale from UIScreen I have no idea why it's this or when this stopped being correct? 
     size.width *= contentScaleFactor
     size.height *= contentScaleFactor
     return size
