@@ -55,8 +55,8 @@ public final class LightNode: Node {
     guard let camera = camera else { return .zero }
 
     //this needs to be in points for some reason I think
-    //let resolution = UIScreen.main.bounds.size
-    let resolution = CGRect(x: 0, y: 0, width: 0, height: 0).size
+    //NO IT DOESNT OMG I don't know when this happened
+    let resolution = UIScreen.main.bounds.size
     return Size(width: resolution.w * camera.zoom, height: resolution.h * camera.zoom)
   }
 
