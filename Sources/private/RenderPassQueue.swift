@@ -44,6 +44,7 @@ final class RenderPassQueue {
 
   static func createDepthTexture(_ width: Int, height: Int, device: MTLDevice) -> MTLTexture {
     let depthTexDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .depth32Float, width: width, height: height, mipmapped: false)
+    depthTexDesc.storageMode = .private
     return device.makeTexture(descriptor: depthTexDesc)
   }
 

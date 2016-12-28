@@ -146,32 +146,33 @@ open class TextNode: Node, Renderable {
     defer { originBuffer.deinitialize(count: lines.count); originBuffer.deallocate(capacity: lines.count) }
     CTFrameGetLineOrigins(frame, entire, originBuffer)
 
-    UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
-    var context = UIGraphicsGetCurrentContext()
-    
-    for (i, line) in lines.enumerated() {
-      let lineOrigin = originBuffer[i]
-
-      let runs = CTLineGetGlyphRuns(line) as [AnyObject] as! [CTRun] //lol
-      runs.forEach { run in
-        let glyphCount = CTRunGetGlyphCount(run)
-
-        let glyphBuffer = UnsafeMutablePointer<CGGlyph>.allocate(capacity: glyphCount)
-        defer { glyphBuffer.deinitialize(count: glyphCount); glyphBuffer.deallocate(capacity: glyphCount) }
-        CTRunGetGlyphs(run, entire, glyphBuffer)
-
-        //TODO: probably don't need this anymore
-        let positionBuffer = UnsafeMutablePointer<CGPoint>.allocate(capacity: glyphCount)
-        defer { positionBuffer.deinitialize(); positionBuffer.deallocate(capacity: glyphCount) }
-        CTRunGetPositions(run, entire, positionBuffer)
-
-        (0..<glyphCount).forEach { j in
-          let glyph = glyphBuffer[j]
-          let glyphRect = CTRunGetImageBounds(run, context, CFRangeMake(j, 1))
-          closure(glyph, glyphRect)
-        }
-      }
-    }
-    UIGraphicsEndImageContext()
+    //tmp
+//    UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+//    var context = UIGraphicsGetCurrentContext()
+//    
+//    for (i, line) in lines.enumerated() {
+//      let lineOrigin = originBuffer[i]
+//
+//      let runs = CTLineGetGlyphRuns(line) as [AnyObject] as! [CTRun] //lol
+//      runs.forEach { run in
+//        let glyphCount = CTRunGetGlyphCount(run)
+//
+//        let glyphBuffer = UnsafeMutablePointer<CGGlyph>.allocate(capacity: glyphCount)
+//        defer { glyphBuffer.deinitialize(count: glyphCount); glyphBuffer.deallocate(capacity: glyphCount) }
+//        CTRunGetGlyphs(run, entire, glyphBuffer)
+//
+//        //TODO: probably don't need this anymore
+//        let positionBuffer = UnsafeMutablePointer<CGPoint>.allocate(capacity: glyphCount)
+//        defer { positionBuffer.deinitialize(); positionBuffer.deallocate(capacity: glyphCount) }
+//        CTRunGetPositions(run, entire, positionBuffer)
+//
+//        (0..<glyphCount).forEach { j in
+//          let glyph = glyphBuffer[j]
+//          let glyphRect = CTRunGetImageBounds(run, context, CFRangeMake(j, 1))
+//          closure(glyph, glyphRect)
+//        }
+//      }
+//    }
+//    UIGraphicsEndImageContext()
   }
 }

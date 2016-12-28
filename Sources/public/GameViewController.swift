@@ -7,10 +7,13 @@
 //
 
 import Metal
+//tmp typealias stuff I think
 #if os(iOS)
   import UIKit
+  public typealias VC = UIViewController
 #else
   import Cocoa
+  public typealias VC = NSViewController
 #endif
 
 /**
@@ -27,7 +30,7 @@ import Metal
  view.presentScene(scene)
  ````
  */
-public class GameViewController: UIViewController {
+public class GameViewController: VC {
   public var scene: Scene!
 
   override public func loadView() {

@@ -11,9 +11,13 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-
+  var window: NSWindow?
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    //self.window = NSWindow(frame: Screen.main.bounds)
+    //self.window?.makeKeyAndVisible()
+
+    //self.window?.rootViewController = TestGameViewController()
     // Insert code here to initialize your application
   }
 

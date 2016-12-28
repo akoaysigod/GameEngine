@@ -11,8 +11,6 @@
 		EA0C9EF51E0F17DC00CCD0B8 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0C9EF41E0F17DC00CCD0B8 /* Metal.framework */; };
 		EA0C9F4D1E0F21E900CCD0B8 /* GameEngine-macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EA0C9F4B1E0F21E900CCD0B8 /* GameEngine-macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA1ACBF41C9E5D7000878EE6 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBF21C9E5D7000878EE6 /* error.png */; };
-		EA23A1FC1E144FE100D22762 /* CompositionShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA5903D61D85D503007E0B12 /* CompositionShaders.metal */; };
-		EA23A1FD1E144FE100D22762 /* LightShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA5903D71D85D503007E0B12 /* LightShaders.metal */; };
 		EA23A1FE1E144FE100D22762 /* NormalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA5903D81D85D503007E0B12 /* NormalShader.metal */; };
 		EA23A1FF1E144FE100D22762 /* ShapeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA5903D91D85D503007E0B12 /* ShapeShaders.metal */; };
 		EA23A2001E144FE100D22762 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EA5903DA1D85D503007E0B12 /* SpriteShaders.metal */; };
@@ -31,6 +29,9 @@
 		EA23A20E1E1450A400D22762 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA23A20C1E1450A400D22762 /* Screen.swift */; };
 		EA23A20F1E1450A400D22762 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA23A20C1E1450A400D22762 /* Screen.swift */; };
 		EA23A2101E1450A400D22762 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA23A20C1E1450A400D22762 /* Screen.swift */; };
+		EA23A2111E14604000D22762 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DCA111E0F421B000FCF02 /* AppDelegate.swift */; };
+		EA23A2121E14604700D22762 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DCA131E0F421B000FCF02 /* ViewController.swift */; };
+		EA23A2161E14613B00D22762 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA23A2151E14613B00D22762 /* Main.storyboard */; };
 		EA5903511D85D3EC007E0B12 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59034F1D85D3EC007E0B12 /* Globals.swift */; };
 		EA5903591D85D40D007E0B12 /* LightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903521D85D40D007E0B12 /* LightNode.swift */; };
 		EA59035B1D85D40D007E0B12 /* ShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903531D85D40D007E0B12 /* ShapeNode.swift */; };
@@ -287,6 +288,7 @@
 		EA0C9F4C1E0F21E900CCD0B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA1ACBF21C9E5D7000878EE6 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = resources/error.png; sourceTree = "<group>"; };
 		EA23A20C1E1450A400D22762 /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Screen.swift; path = Sources/extensions/Screen.swift; sourceTree = SOURCE_ROOT; };
+		EA23A2151E14613B00D22762 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EA59034F1D85D3EC007E0B12 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = Sources/private/Globals.swift; sourceTree = SOURCE_ROOT; };
 		EA5903521D85D40D007E0B12 /* LightNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightNode.swift; path = Sources/public/LightNode.swift; sourceTree = SOURCE_ROOT; };
 		EA5903531D85D40D007E0B12 /* ShapeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeNode.swift; path = Sources/public/ShapeNode.swift; sourceTree = SOURCE_ROOT; };
@@ -357,7 +359,6 @@
 		EA9DCA111E0F421B000FCF02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA9DCA131E0F421B000FCF02 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA9DCA151E0F421B000FCF02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EA9DCA181E0F421B000FCF02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA9DCA1A1E0F421B000FCF02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA9DCA231E0F427A000FCF02 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA9DCA241E0F427A000FCF02 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -551,8 +552,8 @@
 			children = (
 				EA9DCA111E0F421B000FCF02 /* AppDelegate.swift */,
 				EA9DCA131E0F421B000FCF02 /* ViewController.swift */,
+				EA23A2151E14613B00D22762 /* Main.storyboard */,
 				EA9DCA151E0F421B000FCF02 /* Assets.xcassets */,
-				EA9DCA171E0F421B000FCF02 /* Main.storyboard */,
 				EA9DCA1A1E0F421B000FCF02 /* Info.plist */,
 			);
 			path = "Example-macOS";
@@ -930,6 +931,7 @@
 				EA9DCA1F1E0F4236000FCF02 /* OpenDoor.png in Resources */,
 				EA9DCA201E0F4236000FCF02 /* StairsDown.png in Resources */,
 				EA9DCA211E0F4236000FCF02 /* StairsUp.png in Resources */,
+				EA23A2161E14613B00D22762 /* Main.storyboard in Resources */,
 				EA9DCA221E0F4236000FCF02 /* Wall.png in Resources */,
 				EA9DCA161E0F421B000FCF02 /* Assets.xcassets in Resources */,
 			);
@@ -1092,8 +1094,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA23A1FC1E144FE100D22762 /* CompositionShaders.metal in Sources */,
-				EA23A1FD1E144FE100D22762 /* LightShaders.metal in Sources */,
 				EA23A1FE1E144FE100D22762 /* NormalShader.metal in Sources */,
 				EA23A1FF1E144FE100D22762 /* ShapeShaders.metal in Sources */,
 				EA23A2001E144FE100D22762 /* SpriteShaders.metal in Sources */,
@@ -1116,6 +1116,7 @@
 				EA9DCA2C1E0F4299000FCF02 /* Texture.swift in Sources */,
 				EA9DCA2D1E0F4299000FCF02 /* TextureAtlas.swift in Sources */,
 				EA9DCA2E1E0F4299000FCF02 /* Renderable.swift in Sources */,
+				EA23A2111E14604000D22762 /* AppDelegate.swift in Sources */,
 				EA9DCA2F1E0F4299000FCF02 /* NodeGeometry.swift in Sources */,
 				EA9DCA301E0F4299000FCF02 /* Tree.swift in Sources */,
 				EA9DCA311E0F4299000FCF02 /* Updateable.swift in Sources */,
@@ -1132,6 +1133,7 @@
 				EA9DCA3C1E0F4299000FCF02 /* CompositionPipeline.swift in Sources */,
 				EA9DCA3D1E0F4299000FCF02 /* LightPipeline.swift in Sources */,
 				EA9DCA3E1E0F4299000FCF02 /* Renderer.swift in Sources */,
+				EA23A2121E14604700D22762 /* ViewController.swift in Sources */,
 				EA9DCA3F1E0F4299000FCF02 /* RenderPassQueue.swift in Sources */,
 				EA9DCA401E0F4299000FCF02 /* ShapePipeline.swift in Sources */,
 				EA9DCA411E0F4299000FCF02 /* SpritePipeline.swift in Sources */,
@@ -1230,14 +1232,6 @@
 				EA9DCA051E0F41ED000FCF02 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		EA9DCA171E0F421B000FCF02 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EA9DCA181E0F421B000FCF02 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

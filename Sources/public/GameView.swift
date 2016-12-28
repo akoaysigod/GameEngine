@@ -30,7 +30,10 @@ open class GameView: View {
 
   fileprivate(set) var device: MTLDevice
   fileprivate weak var metalLayer: CAMetalLayer?
+  //tmp
+  #if os(iOS)
   fileprivate var timer: CADisplayLink!
+  #endif
   fileprivate var timestamp: CFTimeInterval = 0.0
 
   open var clearColor: Color = .black
@@ -67,7 +70,9 @@ open class GameView: View {
     metalLayer?.framebufferOnly = true
     metalLayer?.frame = frame
 
+    #if os(iOS)
     timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
+    #endif
 
     setupRendering(device: device)
   }
@@ -81,7 +86,10 @@ open class GameView: View {
     scene.view = self
     scene.didMoveToView(self)
     paused = false
+    //tmp
+    #if os(iOS)
     timer.add(to: .main, forMode: .commonModes)
+    #endif
   }
 }
 
@@ -105,6 +113,8 @@ extension GameView {
 
 // MARK: Update
 extension GameView {
+  //tmp
+  #if os(iOS)
   @objc fileprivate func newFrame(_ displayLink: CADisplayLink) {
     if timestamp == 0.0 {
       timestamp = displayLink.timestamp
@@ -140,6 +150,7 @@ extension GameView {
     }
     render(scene)
   }
+  #endif
 
   fileprivate func updateNodes(_ delta: CFTimeInterval, nodes: Nodes) {
     nodes.forEach {
@@ -156,8 +167,11 @@ extension GameView {
   fileprivate func getNewSize() -> CGSize {
     var size = bounds.size
     //this should be nativeScale from UIScreen I have no idea why it's this or when this stopped being correct?
+    //tmp
+    #if os(iOS)
     size.width *= contentScaleFactor
     size.height *= contentScaleFactor
+    #endif
     return size
   }
 

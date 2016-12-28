@@ -34,7 +34,8 @@ struct Screen {
     screen = UIScreen.main
     #else
     guard let mainScreen = NSScreen.main() else {
-      assertionFailure("No screen available?"); return
+      //assertionFailure("No screen available?"); return
+      fatalError("no screen tmp error")
     }
     screen = mainScreen
     #endif

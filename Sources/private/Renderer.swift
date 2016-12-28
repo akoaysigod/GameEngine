@@ -15,8 +15,10 @@ final class Renderer {
   fileprivate let shapePipeline: ShapePipeline
   fileprivate let spritePipeline: SpritePipeline
   fileprivate let textPipeline: TextPipeline
+  #if os(iOS)
   fileprivate let lightPipeline: LightPipeline
   fileprivate let compositionPipeline: CompositionPipeline
+  #endif //tmp
   fileprivate let depthState: MTLDepthStencilState
 
   fileprivate let inflightSemaphore: DispatchSemaphore
@@ -40,8 +42,11 @@ final class Renderer {
     shapePipeline = factory.constructShapePipeline()
     spritePipeline = factory.constructSpritePipeline()
     textPipeline = factory.constructTextPipeline()
+    //tmp
+    #if os(iOS)
     lightPipeline = factory.constructLightPipeline()
     compositionPipeline = factory.constructCompositionPipeline()
+    #endif
     depthState = factory.constructDepthStencil()
 
     inflightSemaphore = DispatchSemaphore(value: BUFFER_SIZE)
@@ -93,10 +98,12 @@ final class Renderer {
         //textPipeline.encode(encoder, nodes: textNodes)
       }
 
+      #if os(iOS) //tmp
       if let lightNode = lightNodes.first {
         lightPipeline.encode(encoder, bufferIndex: bufferIndex, uniformBuffer: bufferManager.uniformBuffer, lightNodes: lightNodes)
         compositionPipeline.encode(encoder, ambientColor: lightNode.ambientColor)
       }
+      #endif
 
       encoder.endEncoding()
 

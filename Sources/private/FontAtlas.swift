@@ -8,6 +8,7 @@
 
 import CoreText
 import Foundation
+//tmp
 #if os(iOS)
   import UIKit
   public typealias Font = UIFont
@@ -148,14 +149,23 @@ final class FontAtlas: NSObject, NSCoding {
   //TODO: rewrite these estimates
   fileprivate func estimateGlyphSize(_ font: Font) -> CGSize {
     let exampleStr: NSString = "123ABC"
-    let exampleStrSize = exampleStr.size(attributes: [NSFontAttributeName: font])
+    //tmp maybe
+    #if os(iOS)
+      let exampleStrSize = exampleStr.size(attributes: [NSFontAttributeName: font])
+    #else
+      let exampleStrSize = exampleStr.size(withAttributes: [NSFontAttributeName: font])
+    #endif
     let averageWidth = ceil(exampleStrSize.width / CGFloat(exampleStr.length))
     let maxHeight = ceil(exampleStrSize.height)
     return CGSize(width: averageWidth, height: maxHeight)
   }
   
   fileprivate func estimateLineWidth(_ font: Font) -> CGFloat {
-    let estimatedWidth = ("!" as NSString).size(attributes: [NSFontAttributeName: font]).width
+    #if os(iOS)
+      let estimatedWidth = ("!" as NSString).size(attributes: [NSFontAttributeName: font]).width
+    #else
+      let estimatedWidth = ("!" as NSString).size(withAttributes: [NSFontAttributeName: font]).width
+    #endif
     return ceil(estimatedWidth)
   }
   
@@ -296,7 +306,7 @@ final class FontAtlas: NSObject, NSCoding {
       origin.x += rect.pointee.width + margin
     }
     
-    #if DEBUG
+    #if DEBUG && os(iOS) //tmp
       if let context = context {
         debugImage = Image(cgImage: context.makeImage()!)
       }
@@ -460,7 +470,7 @@ final class FontAtlas: NSObject, NSCoding {
     let byteCount = textureSize * textureSize
     textureData = Data(bytesNoCopy: UnsafeMutablePointer<UInt8>(textureArray), count: byteCount, deallocator: .free) //do I free textureArray?
 
-    #if DEBUG
+    #if DEBUG && os(iOS) //tmp
     let colorSpace = CGColorSpaceCreateDeviceGray()
     let bitmapInfo = CGBitmapInfo.alphaInfoMask.rawValue & CGImageAlphaInfo.none.rawValue
     if let context = CGContext(data: textureArray, width: Int(textureSize), height: Int(textureSize), bitsPerComponent: 8, bytesPerRow: Int(textureSize), space: colorSpace, bitmapInfo: bitmapInfo) {
