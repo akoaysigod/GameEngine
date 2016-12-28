@@ -56,7 +56,7 @@ public final class LightNode: Node {
 
     //this needs to be in points for some reason I think
     //NO IT DOESNT OMG I don't know when this happened
-    let resolution = UIScreen.main.bounds.size
+    let resolution = Screen.main.bounds.size
     return Size(width: resolution.w * camera.zoom, height: resolution.h * camera.zoom)
   }
 

@@ -31,7 +31,7 @@ public class GameViewController: UIViewController {
   public var scene: Scene!
 
   override public func loadView() {
-    view = GameView(frame: UIScreen.main.bounds)
+    view = GameView(frame: Screen.main.bounds)
   }
 
   override public func viewDidLoad() {

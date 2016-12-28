@@ -155,7 +155,7 @@ extension GameView {
 
   fileprivate func getNewSize() -> CGSize {
     var size = bounds.size
-    //this should be nativeScale from UIScreen I have no idea why it's this or when this stopped being correct? 
+    //this should be nativeScale from UIScreen I have no idea why it's this or when this stopped being correct?
     size.width *= contentScaleFactor
     size.height *= contentScaleFactor
     return size
