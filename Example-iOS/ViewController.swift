@@ -15,10 +15,6 @@
 import UIKit
 
 final class TestGameViewController: GameViewController {
-  //var scene: Scene!
-
-  fileprivate var currentTime = 0.0
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -26,10 +22,11 @@ final class TestGameViewController: GameViewController {
 
 
     let view = self.view as! GameView
-    view.clearColor = Color(0.0, 0.5, 0.0, 1.0).clearColor
+    view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
     scene = Scene(size: view.size, tileSize: 64)
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
-
+    view.presentScene(scene)
+    
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown"]
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
@@ -191,7 +188,6 @@ final class TestGameViewController: GameViewController {
 
     //scene.removeNode(sp2)
 
-    view.presentScene(scene)
     addGestures()
   }
 }

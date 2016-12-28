@@ -37,7 +37,7 @@ struct LightData {
 
 vertex VertexOut lightVertex(ushort vid [[vertex_id]],
                              const device VertexIn* vert [[buffer(0)]],
-                             constant Uniforms& uniforms [[buffer(2)]]) {
+                             constant Uniforms& uniforms [[buffer(1)]]) {
   VertexIn vertIn = vert[vid];
 
   VertexOut outVertex;

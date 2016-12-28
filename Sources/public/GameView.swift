@@ -10,32 +10,24 @@ import Foundation
 import Metal
 import MetalKit
 import QuartzCore
-#if os(iOS)
-  import UIKit
-  public typealias View = UIView
-#else
-  import Cocoa
-  public typealias View = NSView
-#endif
 
 //TODO: switch this back to a a regular UIView and layer setup using CADisplayLink
 
 /**
  A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple. 
  */
-open class GameView: MTKView {
+open class GameView: UIView {
   fileprivate var currentScene: Scene?
 
   fileprivate(set) var projection: Projection!
 
-  //fileprivate(set) var device: MTLDevice!
+  fileprivate(set) var device: MTLDevice!
   fileprivate weak var metalLayer: CAMetalLayer?
-  fileprivate var timestamp = 0.0
+  fileprivate var timer: CADisplayLink!
+  fileprivate var timestamp: CFTimeInterval = 0.0
 
-  //open var clearColor: Color = .black
-
-  
-  //open var paused = true
+  open var clearColor: Color = .black
+  open var paused = true
 
   fileprivate(set) var bufferManager: BufferManager!
   fileprivate var renderer: Renderer!
@@ -46,19 +38,42 @@ open class GameView: MTKView {
     let cgsize = frame.size
     return Size(width: Float(cgsize.width), height: Float(cgsize.height))
   }
-
   open var rect: Rect {
     return Rect(origin: Point(x: Float(frame.origin.x), y: Float(frame.origin.y)), size: size)
   }
 
-  public init(frame: CGRect) {
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    sharedInit()
+  }
+  
+  public required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  open func presentScene(_ scene: Scene) {
+    currentScene = scene
+    scene.view = self
+    scene.didMoveToView(self)
+    paused = false
+    timer.add(to: .main, forMode: .commonModes)
+  }
+}
+
+// MARK: Rendering setup
+extension GameView {
+  open static override var layerClass: AnyClass { return CAMetalLayer.self }
+
+  var currentDrawable: CAMetalDrawable? {
+    return metalLayer?.nextDrawable()
+  }
+
+  func sharedInit() {
     guard let device = MTLCreateSystemDefaultDevice() else {
       fatalError("Metal not supported.")
     }
-
-    super.init(frame: frame, device: device)
-
-    isPaused = true
+    self.device = device
 
     metalLayer = layer as? CAMetalLayer
     metalLayer?.device = device
@@ -67,40 +82,9 @@ open class GameView: MTKView {
     metalLayer?.frame = frame
 
     setupRendering(device)
+
+    timer = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
   }
-  
-  public required init(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  open func presentScene(_ scene: Scene) {
-    currentScene = scene
-    scene.view = self
-    scene.didMoveToView(self)
-    isPaused = false
-  }
-}
-
-// MARK: Rendering setup
-extension GameView {
-//  open static override var layerClass: AnyClass { return CAMetalLayer.self }
-
-//  var currentDrawable: CAMetalDrawable? {
-//    return metalLayer?.nextDrawable()
-//  }
-
-//  func sharedInit() {
-//    isPaused = true
-//
-//    metalLayer = layer as? CAMetalLayer
-//    metalLayer?.device = device
-//    metalLayer?.pixelFormat = .bgra8Unorm
-//    metalLayer?.framebufferOnly = true
-//    metalLayer?.frame = frame
-//
-//    setupRendering(device)
-//
-//  }
 
   func setupRendering(_ device: MTLDevice) {
     let size = getNewSize()
@@ -116,12 +100,12 @@ extension GameView {
 
 // MARK: Update
 extension GameView {
-  func update(time: Double) {
+  @objc fileprivate func newFrame(_ displayLink: CADisplayLink) {
     if timestamp == 0.0 {
-      timestamp = time
+      timestamp = displayLink.timestamp
     }
 
-    let delta = time - self.timestamp
+    let delta = displayLink.timestamp - self.timestamp
     //not sure how to deal with this if you hit a break point the timer gets off making it difficult to figure out what's going on
     #if DEBUG
 //    if showFPS {
@@ -139,13 +123,13 @@ extension GameView {
 //    }
     #endif
     
-    timestamp = time
+    timestamp = displayLink.timestamp
 
     guard let scene = currentScene else {
       return
     }
 
-    if !isPaused {
+    if !paused {
       updateNodes(delta, nodes: scene.allNodes)
       scene.update(delta)
     }
