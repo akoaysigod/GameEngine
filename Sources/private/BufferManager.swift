@@ -26,12 +26,20 @@ final class BufferManager {
   var lightVertexBuffer: Buffer?
   fileprivate let maxLights = 100
 
+  // I need to look into this more but for whatever macOS only accepts buffers in sizes of 256?
+  // this adds padding to the uniform buffer which are only 128 bytes in size 
+  #if !os(macOS)
+    private let uniformPad = 2
+  #else
+    private let uniformPad = 4
+  #endif
+
   init(projection: Mat4, device: Device = Device.shared) {
     self.device = device.device
 
-    uniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * 2)
+    uniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * uniformPad)
     uniformBuffer.addData([projection], size: MemoryLayout<Mat4>.size)
-    uiUniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * 2)
+    uiUniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * uniformPad)
     uiUniformBuffer.addData([projection], size: MemoryLayout<Mat4>.size) //do I still need this?
 
     indexBuffer = Buffer(length: Quad.indicesSize * startSize)

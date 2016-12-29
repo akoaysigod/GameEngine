@@ -1,21 +1,19 @@
 # GameEngine
 A rather creatively named 2D game engine written in Swift using the Metal API. I pretty much only make tile based games and this engine is very geared towards doing that efficiently.
 
-It currently only works on iOS but I have plans to extend it to tvOS and OSX at some point. (and maybe Linux via Vulkan)
+It currently only works on iOS and partially on macOS, still need to test tvOS to see what needs to be done. I had plans to port it to Linux/Vulkan but swift linux is not fun and my video card is too old at the moment to even run Vulkan so I'll be putting that on hold indefinitely.
 
 # current state
 This is very close to being ready to go. It could technically be used now.
 
 Documentation can be [here](https://akoaysigod.github.io/GameEngine) a good portion of the public API has been documented.
 
-## A few things left to do are:
+## A ton of things left to do including:
 - texture animation
 - fix the data structures for font rendering
 - fix up the text rendering shaders to have more options
 - fix up text rendering in general, can probably move it over to the sprite pipeline.
-- lighting system, probably will do next
-- port to Vulkan, someday
-- ensure that the rendering engine is as performant as it can be
+- lighting system, probably will do next, needs to be redone again as macOS does not support buffer access like iOS does
 
 I'm pretty sure this is as fast as it'll ever be. It seems rather slow or maybe it's because I'm kind of new to this. I can render 100 textured quads at ~15% CPU or 1.1ms CPU/GPU frame time. At 10000 I start to lose FPS. That is way more than I'll ever need for the game I'm making.
 
