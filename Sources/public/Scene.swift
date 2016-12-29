@@ -34,7 +34,6 @@ open class Scene {
   }
 
   open fileprivate(set) var camera: CameraNode
-  let tileSize: Int
 
   open var allNodes: Nodes {
     return graphCache.allNodes
@@ -52,9 +51,7 @@ open class Scene {
 
    - returns: A new instance of `Scene`.
    */
-  public init(size: Size, tileSize: Int) {
-    self.tileSize = tileSize
-
+  public init(size: Size) {
     camera = CameraNode(size: size)
 
     camera.scene = self

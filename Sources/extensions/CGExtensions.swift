@@ -54,11 +54,13 @@ public extension CGSize {
   public var w: Float {
     return Float(width)
   }
+  
   /// Get the height as a `Float`
   public var h: Float {
     return Float(height)
   }
 
+  /// Convenience for hiding the CGFloat sizes
   public var size: Size {
     return Size(width: w, height: h)
   }

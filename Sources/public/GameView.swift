@@ -9,21 +9,19 @@
 import Foundation
 import Metal
 import QuartzCore
-//tmp typealiases maybe come back to this
+
 #if os(iOS)
   import UIKit
-  public typealias View = UIView
+  public typealias V = UIView
 #else
   import Cocoa
-  public typealias View = NSView
+  public typealias V = NSView
 #endif
-
-//TODO: switch this back to a a regular UIView and layer setup using CADisplayLink
 
 /**
  A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple.
  */
-open class GameView: View {
+open class GameView: V {
   fileprivate var currentScene: Scene?
 
   fileprivate(set) var projection: Projection!
@@ -42,23 +40,11 @@ open class GameView: View {
   fileprivate let renderer: Renderer
   fileprivate let renderPassQueue: RenderPassQueue
 
-  #if os(iOS)
-  open static override var layerClass: AnyClass { return CAMetalLayer.self }
+  #if !os(macOS)
+    open static override var layerClass: AnyClass { return CAMetalLayer.self }
   #else
-  open override func makeBackingLayer() -> CALayer {
-    return CAMetalLayer()
-  }
+    open override func makeBackingLayer() -> CALayer { return CAMetalLayer() }
   #endif
-
-
-  /// tmp until this is converted back to a UIView
-  open var size: Size {
-    let cgsize = frame.size
-    return Size(width: Float(cgsize.width), height: Float(cgsize.height))
-  }
-  open var rect: Rect {
-    return Rect(origin: Point(x: Float(frame.origin.x), y: Float(frame.origin.y)), size: size)
-  }
 
   override init(frame: CGRect) {
     guard let device = MTLCreateSystemDefaultDevice() else {
@@ -77,7 +63,7 @@ open class GameView: View {
     super.init(frame: frame)
 
     #if os(macOS)
-    wantsLayer = true
+      wantsLayer = true
     #endif
 
     metalLayer = layer as? CAMetalLayer
