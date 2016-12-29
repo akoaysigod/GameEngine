@@ -7,7 +7,7 @@
 //
 
 import Foundation
-#if os(iOS)
+#if !os(macOS)
   import UIKit
 #else
   import Cocoa
@@ -15,22 +15,34 @@ import Foundation
 
 struct Screen {
   static let main = Screen()
-  #if os(iOS)
+  #if !os(macOS)
   let screen: UIScreen
   #else
   let screen: NSScreen
   #endif
 
   var bounds: CGRect {
-    #if os(iOS)
-    return screen.bounds
+    #if !os(macOS)
+      return screen.bounds
     #else
-    return screen.frame
+      return screen.frame
+    #endif
+  }
+
+  var nativeBounds: CGRect {
+    #if !os(macOS)
+      let scale = screen.nativeScale
+      var bounds = self.bounds
+      bounds.size.width *= scale
+      bounds.size.height *= scale
+      return bounds
+    #else
+      return screen.frame
     #endif
   }
 
   init() {
-    #if os(iOS)
+    #if !os(macOS)
     screen = UIScreen.main
     #else
     guard let mainScreen = NSScreen.main() else {

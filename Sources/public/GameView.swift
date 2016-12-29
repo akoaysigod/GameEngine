@@ -38,9 +38,9 @@ open class GameView: View {
   /// Pauses rendering, automatically starts when a scene is presented
   public var paused = true
 
-  fileprivate(set) var bufferManager: BufferManager!
-  fileprivate var renderer: Renderer!
-  fileprivate var renderPassQueue: RenderPassQueue!
+  let bufferManager: BufferManager
+  fileprivate let renderer: Renderer
+  fileprivate let renderPassQueue: RenderPassQueue
 
   #if os(iOS)
   open static override var layerClass: AnyClass { return CAMetalLayer.self }
@@ -66,6 +66,14 @@ open class GameView: View {
     }
     self.device = device
 
+    let width = Int(frame.size.width)
+    let height = Int(frame.size.height)
+    renderPassQueue = RenderPassQueue(device: Device.shared, depthTexture: RenderPassQueue.createDepthTexture(width, height: height, device: device))
+
+    projection = Projection(size: Size(width: width, height: height))
+    bufferManager = BufferManager(projection: projection.projection)
+    renderer = Renderer(device: device, bufferManager: bufferManager)
+
     super.init(frame: frame)
 
     #if os(macOS)
@@ -79,8 +87,6 @@ open class GameView: View {
     metalLayer?.frame = frame
 
     updater = Updater(gameView: self)
-
-    setupRendering(device: device)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -95,26 +101,12 @@ open class GameView: View {
   }
 }
 
-// MARK: Rendering setup
+// MARK: Update
 extension GameView {
   var currentDrawable: CAMetalDrawable? {
     return metalLayer?.nextDrawable()
   }
 
-  func setupRendering(device: MTLDevice) {
-    let size = getNewSize()
-    let width = Int(size.width)
-    let height = Int(size.height)
-    renderPassQueue = RenderPassQueue(device: Device.shared, depthTexture: RenderPassQueue.createDepthTexture(width, height: height, device: device))
-
-    projection = Projection(size: size.size)
-    bufferManager = BufferManager(projection: projection.projection)
-    renderer = Renderer(device: device, bufferManager: bufferManager)
-  }
-}
-
-// MARK: Update
-extension GameView {
   func update(delta: Double) {
     #if DEBUG
       //    if showFPS {
@@ -155,19 +147,21 @@ extension GameView {
     }
   }
 
-  fileprivate func getNewSize() -> CGSize {
-    var size = bounds.size
-    //this should be nativeScale from UIScreen I have no idea why it's this or when this stopped being correct?
-    //tmp
-    #if os(iOS)
-    size.width *= contentScaleFactor
-    size.height *= contentScaleFactor
-    #endif
-    return size
-  }
+//  fileprivate func getNewSize() -> CGSize {
+//    return Screen.main.nativeBounds.size
+//    var size = bounds.size
+//    //this should be nativeScale from UIScreen I have no idea why it's this or when this stopped being correct?
+//    //tmp
+//    #if os(iOS)
+//    size.width *= contentScaleFactor
+//    size.height *= contentScaleFactor
+//    #endif
+//    return size
+//  }
 
+  //not currently being used for anything
   fileprivate func updateDrawableSize() {
-    let newSize = getNewSize()
+    let newSize = Screen.main.nativeBounds.size
     metalLayer?.drawableSize = newSize
 
     projection.update(newSize.size)
