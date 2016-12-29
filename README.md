@@ -3,12 +3,16 @@ A rather creatively named 2D game engine written in Swift using the Metal API. I
 
 It currently only works on iOS and partially on macOS, still need to test tvOS to see what needs to be done. I had plans to port it to Linux/Vulkan but swift linux is not fun and my video card is too old at the moment to even run Vulkan so I'll be putting that on hold indefinitely.
 
+Currently, the example projects are built into the main project because for whatever reason you can't debug metal externally if it's bundled into a framework. Maybe I just didn't do it correctly.
+
 # current state
-This is very close to being ready to go. It could technically be used now.
+This is probably not close to being ready to go. It could technically be used now though.
 
 Documentation can be [here](https://akoaysigod.github.io/GameEngine) a good portion of the public API has been documented.
 
 ## A ton of things left to do including:
+- fix project layout I don't think I need two frameworks
+- create separate example projects for testing
 - texture animation
 - fix the data structures for font rendering
 - fix up the text rendering shaders to have more options
