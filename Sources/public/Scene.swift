@@ -33,9 +33,9 @@ open class Scene {
     }
   }
 
-  open fileprivate(set) var camera: CameraNode
+  public fileprivate(set) var camera: CameraNode
 
-  open var allNodes: Nodes {
+  public var allNodes: Nodes {
     return graphCache.allNodes
   }
 
@@ -69,7 +69,7 @@ open class Scene {
 
    - parameter delta: The amount of time that has passed since the last update.
    */
-  open func update(_ delta: CFTimeInterval) {}
+  open func update(_ delta: Double) {}
 }
 
 // MARK: Scene graph
