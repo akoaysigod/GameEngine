@@ -36,9 +36,9 @@ public func ==(rhs: Node, lhs: Node) -> Bool {
  - Camera
  */
 open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
-  open var name: String? = nil
+  public var name: String? = nil
 
-  open var scene: Scene? = nil
+  public var scene: Scene? = nil
 
   var index: Int = 0
   var isUINode = false {
@@ -47,14 +47,14 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     }
   }
   
-  open var size: Size {
+  public var size: Size {
     didSet {
       updateSize()
       updateTransform()
     }
   }
 
-  open var frame: Rect {
+  public var frame: Rect {
     var ret = boundingRect
     allParents.forEach { parent in
       ret.x += parent.position.x - (parent.width * parent.anchorPoint.x)
@@ -65,38 +65,39 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     return ret
   }
 
-  open var anchorPoint = Point(x: 0.0, y: 0.0) {
+  public var anchorPoint = Point(x: 0.0, y: 0.0) {
     didSet { updateTransform() }
   }
 
-  open var position = Point(x: 0, y: 0) {
+  public var position = Point(x: 0, y: 0) {
     didSet { updateTransform() }
   }
 
-  open var zPosition: Int = 0 {
+  public var zPosition: Int = 0 {
     didSet { updateTransform() }
   }
 
-  open var rotation: Float = 0.0 {
+  public var rotation: Float = 0.0 {
     didSet { updateTransform() }
   }
 
-  open var xScale: Float = 1.0 {
+  public var xScale: Float = 1.0 {
     didSet { updateTransform() }
   }
-  open var yScale: Float = 1.0 {
+  
+  public var yScale: Float = 1.0 {
     didSet { updateTransform() }
   }
 
-  open fileprivate(set) var transform: Mat4 = .identity
+  public fileprivate(set) var transform: Mat4 = .identity
 
   weak var camera: CameraNode?
 
   //tree related
   fileprivate let uuid = UUID().uuidString
-  open var hashValue: Int { return uuid.hashValue }
-  open fileprivate(set) var nodes = Nodes()
-  open fileprivate(set) var parent: Node? = nil
+  public var hashValue: Int { return uuid.hashValue }
+  public fileprivate(set) var nodes = Nodes()
+  public fileprivate(set) var parent: Node? = nil
 
   /**
    Designated initializer. 
@@ -131,10 +132,10 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
 
   //MARK: Actions
 
-  fileprivate(set) open var action: Action? = nil
+  fileprivate(set) public var action: Action? = nil
 
   /// True if this `Node` or any of it's parents' `Node` is currently running an action.
-  open var hasAction: Bool {
+  public var hasAction: Bool {
     guard action == nil else { return true }
     let parentActions = allParents.filter { $0.hasAction }
     return parentActions.count > 0
@@ -200,7 +201,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
   
   var hasTransformUpdate = false
   fileprivate var cachedModel: Mat4 = .identity
-  open var model: Mat4 {
+  public var model: Mat4 {
     if !hasTransformUpdate {
       return cachedModel
     }

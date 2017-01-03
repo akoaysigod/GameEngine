@@ -31,10 +31,10 @@ import Metal
 open class TextNode: Node, Renderable {
   fileprivate typealias GlyphClosure = (_ glyph: CGGlyph, _ bounds: CGRect) -> ()
 
-  open var text: String
+  public var text: String
   let fontAtlas: FontAtlas
-  open var color: Color
-  open var alpha: Float {
+  public var color: Color
+  public var alpha: Float {
     get { return color.alpha }
     set {
       color = Color(color.red, color.green, color.blue, newValue)
@@ -43,10 +43,10 @@ open class TextNode: Node, Renderable {
 
   fileprivate(set) var quad: Quad
 
-  open var texture: Texture?
+  public var texture: Texture?
 
-  open var hidden = false
-  open let isVisible = true
+  public var hidden = false
+  public let isVisible = true
 
   /**
    Create a new text label node with a given font.

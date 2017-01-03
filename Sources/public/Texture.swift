@@ -28,11 +28,11 @@ open class Texture: Hashable, Equatable {
   // until I can figure out a nicer way to do this
   // I'm leaving this exposed so I can treat all atlases as if they're the same texture
   var uuid = UUID().uuidString
-  open var hashValue: Int { return uuid.hashValue }
+  public var hashValue: Int { return uuid.hashValue }
 
-  open let width: Int
-  open let height: Int
-  open var size: Size {
+  public let width: Int
+  public let height: Int
+  public var size: Size {
     return Size(width: width, height: height)
   }
   let frame: TextureFrame

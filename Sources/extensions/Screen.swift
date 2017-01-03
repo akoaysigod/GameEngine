@@ -9,17 +9,15 @@
 import Foundation
 #if !os(macOS)
   import UIKit
+  fileprivate typealias _Screen = UIScreen
 #else
   import Cocoa
+  fileprivate typealias _Screen = NSScreen
 #endif
 
 struct Screen {
   static let main = Screen()
-  #if !os(macOS)
-  let screen: UIScreen
-  #else
-  let screen: NSScreen
-  #endif
+  private let screen: _Screen
 
   var bounds: CGRect {
     #if !os(macOS)
@@ -43,13 +41,12 @@ struct Screen {
 
   init() {
     #if !os(macOS)
-    screen = UIScreen.main
+      screen = UIScreen.main
     #else
-    guard let mainScreen = NSScreen.main() else {
-      //assertionFailure("No screen available?"); return
-      fatalError("no screen tmp error")
-    }
-    screen = mainScreen
+      guard let mainScreen = NSScreen.main() else {
+        fatalError("no screen tmp error, no idea why this would happen?")
+      }
+      screen = mainScreen
     #endif
   }
 }
