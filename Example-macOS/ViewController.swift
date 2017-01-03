@@ -17,7 +17,7 @@ final class ViewController: GameViewController {
 
     let view = self.view as! GameView
     view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
-    scene = Scene(size: view.size)
+    scene = Scene(size: view.bounds.size.size)
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
     view.presentScene(scene)
 
