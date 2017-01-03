@@ -36,11 +36,4 @@ public class GameViewController: VC {
   override public func loadView() {
     view = GameView(frame: Screen.main.nativeBounds)
   }
-
-  override public func viewDidLoad() {
-    super.viewDidLoad()
-    
-    let view = self.view as! GameView
-    view.clearColor = Color(0.0, 0.5, 0.0)
-  }
 }

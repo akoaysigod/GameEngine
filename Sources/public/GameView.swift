@@ -54,7 +54,8 @@ open class GameView: V {
 
     let width = Int(frame.size.width)
     let height = Int(frame.size.height)
-    renderPassQueue = RenderPassQueue(device: Device.shared, depthTexture: RenderPassQueue.createDepthTexture(width, height: height, device: device))
+    renderPassQueue = RenderPassQueue(device: Device.shared,
+                                      depthTexture: RenderPassQueue.createDepthTexture(width: width, height: height, device: device))
 
     projection = Projection(size: Size(width: width, height: height))
     bufferManager = BufferManager(projection: projection.projection)
@@ -115,38 +116,31 @@ extension GameView {
     }
 
     if !paused {
-      updateNodes(delta, nodes: scene.allNodes)
+      updateNodes(delta: delta, nodes: scene.allNodes)
       scene.update(delta)
     }
     render(scene)
   }
   
-  fileprivate func updateNodes(_ delta: CFTimeInterval, nodes: Nodes) {
+  private func updateNodes(delta: CFTimeInterval, nodes: Nodes) {
     nodes.forEach {
       $0.update(delta)
     }
   }
 
-  fileprivate func render(_ scene: Scene) {
+  private func render(_ scene: Scene) {
     autoreleasepool {
-      renderer.render(renderPassQueue.next(self), view: scene.camera.view, shapeNodes: scene.graphCache.shapeNodes, spriteNodes: scene.graphCache.spriteNodes, textNodes: scene.graphCache.textNodes, lightNodes: scene.graphCache.lightNodes)
+      renderer.render(nextRenderPass: renderPassQueue.next(drawable: currentDrawable, clearColor: clearColor.clearColor),
+                      view: scene.camera.view,
+                      shapeNodes: scene.graphCache.shapeNodes,
+                      spriteNodes: scene.graphCache.spriteNodes,
+                      textNodes: scene.graphCache.textNodes,
+                      lightNodes: scene.graphCache.lightNodes)
     }
   }
 
-//  fileprivate func getNewSize() -> CGSize {
-//    return Screen.main.nativeBounds.size
-//    var size = bounds.size
-//    //this should be nativeScale from UIScreen I have no idea why it's this or when this stopped being correct?
-//    //tmp
-//    #if os(iOS)
-//    size.width *= contentScaleFactor
-//    size.height *= contentScaleFactor
-//    #endif
-//    return size
-//  }
-
   //not currently being used for anything
-  fileprivate func updateDrawableSize() {
+  private func updateDrawableSize() {
     let newSize = Screen.main.nativeBounds.size
     metalLayer?.drawableSize = newSize
 

@@ -13,17 +13,17 @@ import MetalKit
 typealias NextRenderPass = () -> (MTLRenderPassDescriptor, MTLDrawable)?
 
 final class RenderPassQueue {
-  fileprivate let renderPassDescriptor: MTLRenderPassDescriptor
+  private let renderPassDescriptor: MTLRenderPassDescriptor
 
-  fileprivate let device: MTLDevice
-  fileprivate var depthTexture: MTLTexture
+  private let device: MTLDevice
+  private var depthTexture: MTLTexture
 
-  fileprivate var currentWidth: Int
-  fileprivate var currentHeight: Int
+  private var currentWidth: Int
+  private var currentHeight: Int
 
-  fileprivate var currentDescriptorIndex = 0
+  private var currentDescriptorIndex = 0
 
-  fileprivate let colorAttachmentCount = 3
+  private let colorAttachmentCount = 3
 
   init(device: Device, depthTexture: MTLTexture) {
     self.device = device.device
@@ -39,21 +39,21 @@ final class RenderPassQueue {
     currentWidth = depthTexture.width
     currentHeight = depthTexture.height
 
-    updateColorAttachments(currentWidth, height: currentHeight)
+    updateColorAttachments(width: currentWidth, height: currentHeight)
   }
 
-  static func createDepthTexture(_ width: Int, height: Int, device: MTLDevice) -> MTLTexture {
+  static func createDepthTexture(width: Int, height: Int, device: MTLDevice) -> MTLTexture {
     let depthTexDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .depth32Float, width: width, height: height, mipmapped: false)
     depthTexDesc.storageMode = .private
     depthTexDesc.usage = .renderTarget
     return device.makeTexture(descriptor: depthTexDesc)
   }
 
-  fileprivate func updateDepthTexture(_ width: Int, height: Int) {
-    depthTexture = RenderPassQueue.createDepthTexture(width, height: height, device: device)
+  private func updateDepthTexture(width: Int, height: Int) {
+    depthTexture = RenderPassQueue.createDepthTexture(width: width, height: height, device: device)
   }
 
-  fileprivate func updateColorAttachments(_ width: Int, height: Int) {
+  private func updateColorAttachments(width: Int, height: Int) {
     (1..<colorAttachmentCount).forEach {
       let texDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm,
                                                              width: width,
@@ -72,13 +72,13 @@ final class RenderPassQueue {
     }
   }
 
-  func next(_ view: GameView) -> NextRenderPass {
+  func next(drawable: CAMetalDrawable?, clearColor: MTLClearColor) -> NextRenderPass {
     return {
-      guard let drawable = view.currentDrawable else { return nil }
+      guard let drawable = drawable else { return nil }
 
       let colorAttachment = MTLRenderPassColorAttachmentDescriptor()
       colorAttachment.texture = drawable.texture
-      colorAttachment.clearColor = view.clearColor.clearColor
+      colorAttachment.clearColor = clearColor
       colorAttachment.loadAction = .clear
       colorAttachment.storeAction = .store
 
@@ -86,8 +86,8 @@ final class RenderPassQueue {
         self.currentWidth = drawable.texture.width
         self.currentHeight = drawable.texture.height
 
-        self.updateDepthTexture(self.currentWidth, height: self.currentHeight)
-        self.updateColorAttachments(self.currentWidth, height: self.currentHeight)
+        self.updateDepthTexture(width: self.currentWidth, height: self.currentHeight)
+        self.updateColorAttachments(width: self.currentWidth, height: self.currentHeight)
       }
 
       self.renderPassDescriptor.colorAttachments[0] = colorAttachment
