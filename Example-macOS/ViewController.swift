@@ -24,7 +24,7 @@ final class ViewController: GameViewController {
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown"]
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
-    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames, contentScale: 1.0, createLightMap: true), //view.contentScaleFactor, createLightMap: true),
+    if let environmentAtlas = try? view.textureLoader.makeTextureAtlas(imageNames: imageNames, contentScale: 1.0, createLightMap: true), //view.contentScaleFactor, createLightMap: true),
       let wall = environmentAtlas["Wall"],
       let floor = environmentAtlas["Floor"],
       let openDoor = environmentAtlas["OpenDoor"],
