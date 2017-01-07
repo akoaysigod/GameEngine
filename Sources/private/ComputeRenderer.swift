@@ -18,8 +18,8 @@ final class ComputeRenderer {
 
   fileprivate let commandQueue: MTLCommandQueue
 
-  init(srcTexture: Texture, device: Device = Device.shared) {
-    self.device = device.device
+  init(device: MTLDevice, srcTexture: Texture) {
+    self.device = device
     self.srcTexture = srcTexture.texture
 
     destTexture = self.device.makeTexture(descriptor: self.srcTexture.descriptor)
@@ -28,7 +28,7 @@ final class ComputeRenderer {
   }
 
   func generateTexture() -> Texture {
-    let pipeline = LightTexturePipeline()
+    let pipeline = LightTexturePipeline(device: device)
     let commandBuffer = commandQueue.makeCommandBuffer()
 
     pipeline.encodeToCommandBuffer(commandBuffer,

@@ -13,7 +13,7 @@ import Foundation
   import Cocoa
 #endif
 
-enum AtlasCreation: Error {
+public enum AtlasCreation: Error {
   case oneImage
   case missingImage
   case dimensions
@@ -40,35 +40,30 @@ public final class TextureAtlas {
 
    - returns: A new texture atlas.
    */
-  public init(imageNames: [String], contentScale: CGFloat, createLightMap: Bool = false) throws {
+  init(device: MTLDevice, imageNames: [String], textures: [Texture], createLightMap: Bool = false) throws {
     //should probably refactor this a bit at some point
     guard imageNames.count > 1 else {
       throw AtlasCreation.oneImage
     }
 
-    let images = imageNames.flatMap { Texture(named: $0, contentScale: contentScale) }
-
-    guard images.count == imageNames.count else {
-      throw AtlasCreation.missingImage
-    }
-
-    guard let width = images.first?.width,
-          let height = images.first?.height, width == height else {
+    //TODO: need to remove this requirement
+    guard let width = textures.first?.width,
+          let height = textures.first?.height, width == height else {
       throw AtlasCreation.dimensions
     }
 
-    let (rows, columns) = TextureAtlas.factor(images.count)
+    let (rows, columns) = TextureAtlas.factor(textures.count)
 
     guard rows * height < 4096 && columns * width < 4096 else {
       throw AtlasCreation.tooLarge("\(rows * height) by \(columns * width) is probably to large to load into the gpu.")
     }
     
-    let tex = Texture.newTexture(columns * width, height: rows * height)
+    let tex = TextureAtlas.newTexture(device: device, width: columns * width, height: rows * height)
 
     var x = 0
     var y = 0
     var data  = [String: Rect]()
-    zip(images, imageNames).forEach { (image, name) in
+    zip(textures, imageNames).forEach { (image, name) in
       let r = MTLRegionMake2D(x, y, width, height)
 
       let bytesPerRow = width * 4 //magic number sort of I'm assuming the format is 4 bytes per pixel
@@ -87,41 +82,15 @@ public final class TextureAtlas {
       }
     }
 
-    texture = Texture(texture: tex)
+    texture = Texture(texture: tex, uuid: textures.first!.uuid)
     textureNames = imageNames
     self.data = data
 
-    lightMapTexture = TextureAtlas.createLightMap(createLightMap, texture: texture)
-  }
-
-  fileprivate static func factor(_ i: Int) -> (rows: Int, columns: Int) {
-    let stop = Int(Float(i) / 2.0)
-    var d = 2
-
-    var div = [(Int, Int)]()
-    while d < stop {
-      if i % d == 0 {
-        div += [(d, i / d)]
-      }
-      d += 1
+    guard createLightMap else {
+      lightMapTexture = nil
+      return
     }
-
-    if div.count > 1 {
-      let mins = div.map { max($0.0, $0.1) - min($0.0, $0.1) }
-      let z = zip(mins, Array(0..<div.count)).sorted { $0.0 < $0.1 }
-      return div[z[0].1]
-    }
-    else if div.count == 1 {
-      return (div[0].0, div[0].1)
-    }
-    return factor(i + 1)
-  }
-
-  static func createLightMap(_ shouldCreateLightMap: Bool, texture: Texture) -> Texture? {
-    guard shouldCreateLightMap else { return nil }
-
-    let renderer = ComputeRenderer(srcTexture: texture)
-    return renderer.generateTexture()
+    lightMapTexture = TextureAtlas.makeLightMap(device: device, texture: texture)
   }
 
   /**
@@ -154,8 +123,46 @@ public final class TextureAtlas {
                              sHeight: Int(rect.height),
                              tWidth: texture.width,
                              tHeight: texture.height)
-    let ret = Texture(texture: texture.texture, lightMapTexture: lightMapTexture?.texture, frame: frame)
-    ret.uuid = texture.uuid
-    return ret
+    return Texture(texture: texture.texture, lightMapTexture: lightMapTexture?.texture, frame: frame, uuid: texture.uuid)
   }
+}
+
+//helper methods
+extension TextureAtlas {
+  //this is broken 
+  fileprivate static func factor(_ i: Int) -> (rows: Int, columns: Int) {
+    let stop = Int(Float(i) / 2.0)
+    var d = 2
+
+    var div = [(Int, Int)]()
+    while d < stop {
+      if i % d == 0 {
+        div += [(d, i / d)]
+      }
+      d += 1
+    }
+
+    if div.count > 1 {
+      let mins = div.map { max($0.0, $0.1) - min($0.0, $0.1) }
+      let z = zip(mins, Array(0..<div.count)).sorted { $0.0 < $0.1 }
+      return div[z[0].1]
+    }
+    else if div.count == 1 {
+      return (div[0].0, div[0].1)
+    }
+    return factor(i + 1)
+  }
+  
+  fileprivate static func makeLightMap(device: MTLDevice, texture: Texture) -> Texture? {
+    let renderer = ComputeRenderer(device: device, srcTexture: texture)
+    return renderer.generateTexture()
+  }
+  
+  fileprivate static func newTexture(device: MTLDevice, width: Int, height: Int, pixelFormat: MTLPixelFormat = .bgra8Unorm) -> MTLTexture {
+    let descriptor = MTLTextureDescriptor()
+    descriptor.width = width
+    descriptor.height = height
+    descriptor.pixelFormat = pixelFormat
+    return device.makeTexture(descriptor: descriptor)
+  } 
 }

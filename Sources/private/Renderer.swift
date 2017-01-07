@@ -10,21 +10,21 @@ import Foundation
 import MetalKit
 
 final class Renderer {
-  fileprivate let commandQueue: MTLCommandQueue
+  private let commandQueue: MTLCommandQueue
 
-  fileprivate let shapePipeline: ShapePipeline
-  fileprivate let spritePipeline: SpritePipeline
-  fileprivate let textPipeline: TextPipeline
+  private let shapePipeline: ShapePipeline
+  private let spritePipeline: SpritePipeline
+  private let textPipeline: TextPipeline
   #if os(iOS)
-  fileprivate let lightPipeline: LightPipeline
-  fileprivate let compositionPipeline: CompositionPipeline
+  private let lightPipeline: LightPipeline
+  private let compositionPipeline: CompositionPipeline
   #endif //tmp
-  fileprivate let depthState: MTLDepthStencilState
+  private let depthState: MTLDepthStencilState
 
-  fileprivate let inflightSemaphore: DispatchSemaphore
+  private let inflightSemaphore: DispatchSemaphore
 
-  fileprivate let bufferManager: BufferManager
-  fileprivate var bufferIndex = 0
+  private let bufferManager: BufferManager
+  private var bufferIndex = 0
 
   init(device: MTLDevice, bufferManager: BufferManager) {
     //not sure where to set this up or if I even want to do it this way

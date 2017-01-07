@@ -27,7 +27,7 @@ open class Texture: Hashable, Equatable {
 
   // until I can figure out a nicer way to do this
   // I'm leaving this exposed so I can treat all atlases as if they're the same texture
-  var uuid = UUID().uuidString
+  let uuid: String
   public var hashValue: Int { return uuid.hashValue }
 
   public let width: Int
@@ -40,12 +40,6 @@ open class Texture: Hashable, Equatable {
   //for asnych loading, there's a different method on MTKTextureLoader for doing asynch stuff
   let callback: MTKTextureLoaderCallback?
 
-  /// if a bad image name was given or a texture couldn't be loaded for whatever reason fallback to this error image.
-  fileprivate static var errorTexture: MTLTexture {
-    let url = Bundle.main.url(forResource: "error", withExtension: "png")!
-    return try! Device.shared.textureLoader.newTexture(withContentsOf: url, options: nil)
-  }
-
   /**
    Designated initalizer. 
    
@@ -56,13 +50,14 @@ open class Texture: Hashable, Equatable {
 
    - returns: A new instance of `Texture`.
    */
-  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, callback: MTKTextureLoaderCallback? = nil) {
+  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, callback: MTKTextureLoaderCallback? = nil, uuid: String = UUID().uuidString) {
     self.texture = texture
     self.lightMapTexture = lightMapTexture
     self.callback = callback
 
     self.width = texture.width
     self.height = texture.height
+    self.uuid = uuid
 
     self.frame = TextureFrame(x: 0, y: 0, sWidth: texture.width, sHeight: texture.height, tWidth: texture.width, tHeight: texture.height)
   }
@@ -78,12 +73,13 @@ open class Texture: Hashable, Equatable {
 
    - returns: A new/"copy" of `Texture`.
    */
-  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, frame: TextureFrame) {
+  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, frame: TextureFrame, uuid: String) {
     self.texture = texture
     self.lightMapTexture = lightMapTexture
     self.width = Int(frame.sWidth)
     self.height = Int(frame.sHeight)
     self.frame = frame
+    self.uuid = uuid
 
     self.callback = nil
   }
@@ -104,31 +100,21 @@ open class Texture: Hashable, Equatable {
    */
   //there is a way to use a xcassets to load images but for some reason half of them won't load and the error isn't very helpful
   //I'll try again at another point so I'll just leave the contentScale argument here for fun
-  public convenience init(named: String, contentScale: CGFloat = 1.0) {
-    let texture: MTLTexture
-
-    guard let url = Bundle.main.url(forResource: named, withExtension: "png") else {
-      fatalError("Image \(named) not found in bundle.") //should probably just assert on a failable init
-    }
-
-    do {
-      texture = try Device.shared.textureLoader.newTexture(withContentsOf: url, options: nil)
-    }
-    catch let error {
-      DLog("Error loading image named \(named): \(error.localizedDescription)")
-      texture = Texture.errorTexture
-    }
-
-    self.init(texture: texture, lightMapTexture: nil)
-  }
-}
-
-extension Texture {
-  static func newTexture(_ width: Int, height: Int, pixelFormat: MTLPixelFormat = .bgra8Unorm) -> MTLTexture {
-    let descriptor = MTLTextureDescriptor()
-    descriptor.width = width
-    descriptor.height = height
-    descriptor.pixelFormat = pixelFormat
-    return Device.shared.device.makeTexture(descriptor: descriptor)
-  }
+//  convenience init(named: String, contentScale: CGFloat = 1.0) {
+//    let texture: MTLTexture
+//
+//    guard let url = Bundle.main.url(forResource: named, withExtension: "png") else {
+//      fatalError("Image \(named) not found in bundle.") //should probably just assert on a failable init
+//    }
+//
+//    do {
+//      texture = try Device.shared.textureLoader.newTexture(withContentsOf: url, options: nil)
+//    }
+//    catch let error {
+//      DLog("Error loading image named \(named): \(error.localizedDescription)")
+//      texture = Texture.errorTexture
+//    }
+//
+//    self.init(texture: texture, lightMapTexture: nil)
+//  }
 }

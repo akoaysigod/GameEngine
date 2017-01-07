@@ -32,7 +32,7 @@ final class ShapePipeline: RenderPipeline {
     let pipelineDescriptor = ShapePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
     self.pipelineState = ShapePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
-    instanceBuffer = Buffer(length: 1000 * MemoryLayout<Mat4>.size)
+    instanceBuffer = Buffer(device: device, length: 1000 * MemoryLayout<Mat4>.size)
   }
 }
 

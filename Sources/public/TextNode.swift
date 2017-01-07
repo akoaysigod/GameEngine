@@ -67,7 +67,7 @@ open class TextNode: Node, Renderable {
     let quads = TextNode.makeTextQuads(text, color: color, fontAtlas: fontAtlas)
     quad = quads.first!
 
-    self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
+    //self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
 
     super.init(size: texture!.size)
   }

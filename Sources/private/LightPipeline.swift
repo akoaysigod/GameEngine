@@ -27,7 +27,7 @@ final class LightPipeline: RenderPipeline {
 
     pipelineState = LightPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
-    resolutionBuffer = Buffer(length: MemoryLayout<Vec2>.stride)
+    resolutionBuffer = Buffer(device: device, length: MemoryLayout<Vec2>.stride)
   }
 }
 

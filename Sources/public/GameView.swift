@@ -26,7 +26,7 @@ open class GameView: V {
 
   fileprivate(set) var projection: Projection!
 
-  fileprivate(set) var device: MTLDevice
+  private let device: MTLDevice
   fileprivate weak var metalLayer: CAMetalLayer?
 
   private var updater: Updater!
@@ -39,6 +39,8 @@ open class GameView: V {
   let bufferManager: BufferManager
   fileprivate let renderer: Renderer
   fileprivate let renderPassQueue: RenderPassQueue
+
+  public let textureLoader: TextureLoader
 
   #if !os(macOS)
     open static override var layerClass: AnyClass { return CAMetalLayer.self }
@@ -54,12 +56,14 @@ open class GameView: V {
 
     let width = Int(frame.size.width)
     let height = Int(frame.size.height)
-    renderPassQueue = RenderPassQueue(device: Device.shared,
+    renderPassQueue = RenderPassQueue(device: device,
                                       depthTexture: RenderPassQueue.createDepthTexture(width: width, height: height, device: device))
 
     projection = Projection(size: Size(width: width, height: height))
-    bufferManager = BufferManager(projection: projection.projection)
+    bufferManager = BufferManager(device: device, projection: projection.projection)
     renderer = Renderer(device: device, bufferManager: bufferManager)
+
+    textureLoader = TextureLoader(device: device)
 
     super.init(frame: frame)
 

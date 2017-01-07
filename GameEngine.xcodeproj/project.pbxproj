@@ -27,6 +27,9 @@
 		EA23A2111E14604000D22762 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DCA111E0F421B000FCF02 /* AppDelegate.swift */; };
 		EA23A2121E14604700D22762 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DCA131E0F421B000FCF02 /* ViewController.swift */; };
 		EA23A2161E14613B00D22762 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA23A2151E14613B00D22762 /* Main.storyboard */; };
+		EA41C29B1E1C5E5A00047E74 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA41C29A1E1C5E5A00047E74 /* TextureLoader.swift */; };
+		EA41C29C1E1C5E5A00047E74 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA41C29A1E1C5E5A00047E74 /* TextureLoader.swift */; };
+		EA41C29D1E1C5E5A00047E74 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA41C29A1E1C5E5A00047E74 /* TextureLoader.swift */; };
 		EA9DC9311E0F240B000FCF02 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59034F1D85D3EC007E0B12 /* Globals.swift */; };
 		EA9DC9321E0F240F000FCF02 /* LightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903521D85D40D007E0B12 /* LightNode.swift */; };
 		EA9DC9331E0F2414000FCF02 /* ShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903531D85D40D007E0B12 /* ShapeNode.swift */; };
@@ -59,7 +62,6 @@
 		EA9DC94E1E0F249E000FCF02 /* LightTexturePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B31D85D4AE007E0B12 /* LightTexturePipeline.swift */; };
 		EA9DC94F1E0F24A2000FCF02 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B81D85D4BC007E0B12 /* Buffer.swift */; };
 		EA9DC9501E0F24A5000FCF02 /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B91D85D4BC007E0B12 /* BufferManager.swift */; };
-		EA9DC9511E0F24A8000FCF02 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903BA1D85D4BC007E0B12 /* Device.swift */; };
 		EA9DC9521E0F24AD000FCF02 /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903BB1D85D4BC007E0B12 /* Pipeline.swift */; };
 		EA9DC9531E0F24B0000FCF02 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59038B1D85D47B007E0B12 /* GraphCache.swift */; };
 		EA9DC9541E0F24B3000FCF02 /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59038C1D85D47B007E0B12 /* Projection.swift */; };
@@ -125,7 +127,6 @@
 		EA9DCA441E0F4299000FCF02 /* LightTexturePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B31D85D4AE007E0B12 /* LightTexturePipeline.swift */; };
 		EA9DCA451E0F4299000FCF02 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B81D85D4BC007E0B12 /* Buffer.swift */; };
 		EA9DCA461E0F4299000FCF02 /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B91D85D4BC007E0B12 /* BufferManager.swift */; };
-		EA9DCA471E0F4299000FCF02 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903BA1D85D4BC007E0B12 /* Device.swift */; };
 		EA9DCA481E0F4299000FCF02 /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903BB1D85D4BC007E0B12 /* Pipeline.swift */; };
 		EA9DCA491E0F4299000FCF02 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59038B1D85D47B007E0B12 /* GraphCache.swift */; };
 		EA9DCA4A1E0F4299000FCF02 /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59038C1D85D47B007E0B12 /* Projection.swift */; };
@@ -172,7 +173,6 @@
 		EA9DCA791E0F4805000FCF02 /* LightTexturePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B31D85D4AE007E0B12 /* LightTexturePipeline.swift */; };
 		EA9DCA7A1E0F4805000FCF02 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B81D85D4BC007E0B12 /* Buffer.swift */; };
 		EA9DCA7B1E0F4805000FCF02 /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903B91D85D4BC007E0B12 /* BufferManager.swift */; };
-		EA9DCA7C1E0F4805000FCF02 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903BA1D85D4BC007E0B12 /* Device.swift */; };
 		EA9DCA7D1E0F4805000FCF02 /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5903BB1D85D4BC007E0B12 /* Pipeline.swift */; };
 		EA9DCA7E1E0F4805000FCF02 /* GraphCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59038B1D85D47B007E0B12 /* GraphCache.swift */; };
 		EA9DCA7F1E0F4805000FCF02 /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA59038C1D85D47B007E0B12 /* Projection.swift */; };
@@ -220,6 +220,7 @@
 		EA1ACBF21C9E5D7000878EE6 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = resources/error.png; sourceTree = "<group>"; };
 		EA23A20C1E1450A400D22762 /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Screen.swift; path = Sources/extensions/Screen.swift; sourceTree = SOURCE_ROOT; };
 		EA23A2151E14613B00D22762 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		EA41C29A1E1C5E5A00047E74 /* TextureLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextureLoader.swift; path = Sources/public/TextureLoader.swift; sourceTree = SOURCE_ROOT; };
 		EA59034F1D85D3EC007E0B12 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = Sources/private/Globals.swift; sourceTree = SOURCE_ROOT; };
 		EA5903521D85D40D007E0B12 /* LightNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightNode.swift; path = Sources/public/LightNode.swift; sourceTree = SOURCE_ROOT; };
 		EA5903531D85D40D007E0B12 /* ShapeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeNode.swift; path = Sources/public/ShapeNode.swift; sourceTree = SOURCE_ROOT; };
@@ -256,7 +257,6 @@
 		EA5903B31D85D4AE007E0B12 /* LightTexturePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightTexturePipeline.swift; path = Sources/private/LightTexturePipeline.swift; sourceTree = SOURCE_ROOT; };
 		EA5903B81D85D4BC007E0B12 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Buffer.swift; path = Sources/private/Buffer.swift; sourceTree = SOURCE_ROOT; };
 		EA5903B91D85D4BC007E0B12 /* BufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferManager.swift; path = Sources/private/BufferManager.swift; sourceTree = SOURCE_ROOT; };
-		EA5903BA1D85D4BC007E0B12 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = Sources/private/Device.swift; sourceTree = SOURCE_ROOT; };
 		EA5903BB1D85D4BC007E0B12 /* Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipeline.swift; path = Sources/private/Pipeline.swift; sourceTree = SOURCE_ROOT; };
 		EA5903C41D85D4D2007E0B12 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtension.swift; path = Sources/extensions/ArrayExtension.swift; sourceTree = SOURCE_ROOT; };
 		EA5903C51D85D4D2007E0B12 /* CGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGExtensions.swift; path = Sources/extensions/CGExtensions.swift; sourceTree = SOURCE_ROOT; };
@@ -367,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				EA59034F1D85D3EC007E0B12 /* Globals.swift */,
+				EA41C2991E1C5E4A00047E74 /* Texture Loading */,
 				EAC6405A1C346D6B00B6AE68 /* Nodes */,
 				EAE75E391C42D096001EB176 /* Views */,
 				EAC640A01C34B17A00B6AE68 /* Extensions */,
@@ -414,6 +415,14 @@
 				EA5903571D85D40D007E0B12 /* TextureAtlas.swift */,
 			);
 			name = Rendered;
+			sourceTree = "<group>";
+		};
+		EA41C2991E1C5E4A00047E74 /* Texture Loading */ = {
+			isa = PBXGroup;
+			children = (
+				EA41C29A1E1C5E5A00047E74 /* TextureLoader.swift */,
+			);
+			name = "Texture Loading";
 			sourceTree = "<group>";
 		};
 		EA4A58571C38823D00D39F17 /* Animation */ = {
@@ -557,7 +566,6 @@
 				EABDF74F1CFCB96800F555BF /* Compute */,
 				EA5903B81D85D4BC007E0B12 /* Buffer.swift */,
 				EA5903B91D85D4BC007E0B12 /* BufferManager.swift */,
-				EA5903BA1D85D4BC007E0B12 /* Device.swift */,
 				EA5903BB1D85D4BC007E0B12 /* Pipeline.swift */,
 			);
 			name = RenderPipelines;
@@ -830,7 +838,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA9DC9511E0F24A8000FCF02 /* Device.swift in Sources */,
 				EA9DC94C1E0F2491000FCF02 /* TextPipeline.swift in Sources */,
 				EA9DC96C1E0F24F1000FCF02 /* Vec4.swift in Sources */,
 				EA9DC9671E0F24F1000FCF02 /* Vec.swift in Sources */,
@@ -859,6 +866,7 @@
 				EA9DC9691E0F24F1000FCF02 /* Mat2.swift in Sources */,
 				EA9DC9371E0F2427000FCF02 /* TextureAtlas.swift in Sources */,
 				EA9DC96A1E0F24F1000FCF02 /* Vec3.swift in Sources */,
+				EA41C29B1E1C5E5A00047E74 /* TextureLoader.swift in Sources */,
 				EA9DC94A1E0F2488000FCF02 /* ShapePipeline.swift in Sources */,
 				EA9DC93A1E0F2434000FCF02 /* Tree.swift in Sources */,
 				EA9DC9401E0F2458000FCF02 /* TextureFrame.swift in Sources */,
@@ -931,11 +939,11 @@
 				EA9DCA761E0F4805000FCF02 /* SpritePipeline.swift in Sources */,
 				EA9DCA771E0F4805000FCF02 /* TextPipeline.swift in Sources */,
 				EA9DCA781E0F4805000FCF02 /* ComputeRenderer.swift in Sources */,
+				EA41C29C1E1C5E5A00047E74 /* TextureLoader.swift in Sources */,
 				EA9DCA791E0F4805000FCF02 /* LightTexturePipeline.swift in Sources */,
 				EA23A20F1E1450A400D22762 /* Screen.swift in Sources */,
 				EA9DCA7A1E0F4805000FCF02 /* Buffer.swift in Sources */,
 				EA9DCA7B1E0F4805000FCF02 /* BufferManager.swift in Sources */,
-				EA9DCA7C1E0F4805000FCF02 /* Device.swift in Sources */,
 				EA9DCA7D1E0F4805000FCF02 /* Pipeline.swift in Sources */,
 				EA9DCA7E1E0F4805000FCF02 /* GraphCache.swift in Sources */,
 				EA9DCA7F1E0F4805000FCF02 /* Projection.swift in Sources */,
@@ -1007,12 +1015,12 @@
 				EA9DCA441E0F4299000FCF02 /* LightTexturePipeline.swift in Sources */,
 				EA9DCA451E0F4299000FCF02 /* Buffer.swift in Sources */,
 				EA9DCA461E0F4299000FCF02 /* BufferManager.swift in Sources */,
-				EA9DCA471E0F4299000FCF02 /* Device.swift in Sources */,
 				EA9DCA481E0F4299000FCF02 /* Pipeline.swift in Sources */,
 				EA9DCA491E0F4299000FCF02 /* GraphCache.swift in Sources */,
 				EA9DCA4A1E0F4299000FCF02 /* Projection.swift in Sources */,
 				EA9DCA4B1E0F4299000FCF02 /* Updater.swift in Sources */,
 				EA9DCA4C1E0F4299000FCF02 /* GameView.swift in Sources */,
+				EA41C29D1E1C5E5A00047E74 /* TextureLoader.swift in Sources */,
 				EA9DCA4D1E0F4299000FCF02 /* GameViewController.swift in Sources */,
 				EA9DCA4E1E0F4299000FCF02 /* Scene.swift in Sources */,
 				EA9DCA4F1E0F4299000FCF02 /* ArrayExtension.swift in Sources */,

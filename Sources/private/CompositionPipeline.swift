@@ -25,10 +25,10 @@ final class CompositionPipeline: RenderPipeline {
 
     pipelineState = CompositionPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
-    quadBuffer = CompositionPipeline.createQuad()
+    quadBuffer = CompositionPipeline.createQuad(device: device)
   }
 
-  static func createQuad() -> Buffer {
+  static func createQuad(device: MTLDevice) -> Buffer {
     let quadData: [Vec2] = [
       Vec2(-1.0, -1.0),
       Vec2(1.0, -1.0),
@@ -40,7 +40,7 @@ final class CompositionPipeline: RenderPipeline {
     ]
 
     let bufferSize = MemoryLayout<Vec2>.stride * quadData.count
-    let buffer = Buffer(length: bufferSize, instances: 1)
+    let buffer = Buffer(device: device, length: bufferSize, instances: 1)
     buffer.update(quadData, size: bufferSize, bufferIndex: 0)
 
     return buffer
