@@ -10,10 +10,10 @@
 using namespace metal;
 
 struct VertexIn {
-  packed_float4 position [[attribute(0)]];
-  packed_float4 color    [[attribute(1)]];
-  packed_float2 texCoord [[attribute(2)]];
-  packed_float2 pad;
+  float4 position [[attribute(0)]];
+  float4 color    [[attribute(1)]];
+  float2 texCoord [[attribute(2)]];
+  float2 pad;
 };
 
 struct Uniforms {

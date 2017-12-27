@@ -151,7 +151,7 @@ final class FontAtlas: NSObject, NSCoding {
     let exampleStr: NSString = "123ABC"
     //tmp maybe
     #if os(iOS)
-      let exampleStrSize = exampleStr.size(attributes: [NSFontAttributeName: font])
+      let exampleStrSize = exampleStr.size(withAttributes: [NSAttributedStringKey.font: font])
     #else
       let exampleStrSize = exampleStr.size(withAttributes: [NSAttributedStringKey.font: font])
     #endif
@@ -162,7 +162,7 @@ final class FontAtlas: NSObject, NSCoding {
   
   fileprivate func estimateLineWidth(_ font: Font) -> CGFloat {
     #if os(iOS)
-      let estimatedWidth = ("!" as NSString).size(attributes: [NSFontAttributeName: font]).width
+      let estimatedWidth = ("!" as NSString).size(withAttributes: [NSAttributedStringKey.font: font]).width
     #else
       let estimatedWidth = ("!" as NSString).size(withAttributes: [NSAttributedStringKey.font: font]).width
     #endif

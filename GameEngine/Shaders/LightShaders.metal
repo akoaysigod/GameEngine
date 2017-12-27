@@ -17,7 +17,7 @@ using namespace Structures;
 //};
 
 struct VertexIn {
-  packed_float4 position [[attribute(0)]];
+  float4 position [[attribute(0)]];
 };
 
 struct Uniforms {
