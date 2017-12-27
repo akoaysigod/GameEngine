@@ -133,8 +133,7 @@ public extension Mat4 {
     let upperLeft = m.mat3
 
     if nonUniformScaling {
-      let z = matrix_transpose(matrix_invert(upperLeft.cmatrix))
-      return Mat3(z)
+      return upperLeft.inverse.transpose
     }
     return upperLeft
   }

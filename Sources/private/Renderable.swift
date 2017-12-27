@@ -18,7 +18,7 @@ import simd
 
 typealias Renderables = [Renderable]
 
-protocol Renderable: class, NodeGeometry, Tree {
+protocol Renderable: NodeGeometry, Tree {
   var texture: Texture? { get set }
 
   var color: Color { get set }
