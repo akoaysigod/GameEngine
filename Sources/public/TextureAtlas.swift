@@ -108,7 +108,7 @@ public final class TextureAtlas {
 
     if div.count > 1 {
       let mins = div.map { max($0.0, $0.1) - min($0.0, $0.1) }
-      let z = zip(mins, Array(0..<div.count)).sorted { $0.0 < $0.1 }
+      let z = zip(mins, Array(0..<div.count)).sorted(by: <)
       return div[z[0].1]
     }
     else if div.count == 1 {

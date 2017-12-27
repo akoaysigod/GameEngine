@@ -43,7 +43,7 @@ struct Screen {
     #if !os(macOS)
       screen = UIScreen.main
     #else
-      guard let mainScreen = NSScreen.main() else {
+      guard let mainScreen = NSScreen.main else {
         fatalError("no screen tmp error, no idea why this would happen?")
       }
       screen = mainScreen

@@ -47,16 +47,16 @@ extension ShapePipeline {
       vertexBuffer.update(node.quad.vertices, size: node.quad.size, bufferIndex: bufferIndex)
     }
     let (vBuffer, offset) = vertexBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(vBuffer, offset: offset, at: 0)
+    encoder.setVertexBuffer(vBuffer, offset: offset, index: 0)
 
     nodes.enumerated().forEach { (i, node) in
       instanceBuffer.update([ShapeUniforms(model: node.model, color: node.color.vec4)], size: MemoryLayout<ShapeUniforms>.size, bufferIndex: bufferIndex, offset: MemoryLayout<ShapeUniforms>.size * i)
     }
     let (inBuffer, inOffset) = instanceBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(inBuffer, offset: inOffset, at: 1)
+    encoder.setVertexBuffer(inBuffer, offset: inOffset, index: 1)
 
     let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(uBuffer, offset: uOffset, at: 2)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, index: 2)
 
     let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
     encoder.drawIndexedPrimitives(type: .triangle, indexCount: 6, indexType: .uint16, indexBuffer: iBuffer, indexBufferOffset: iOffset, instanceCount: nodes.count)

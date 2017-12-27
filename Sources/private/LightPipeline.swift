@@ -41,18 +41,18 @@ extension LightPipeline {
 
     encoder.setRenderPipelineState(pipelineState)
 
-    encoder.setVertexBytes(light.verts, length: MemoryLayout<packed_float4>.stride * light.verts.count, at: 0)
+    encoder.setVertexBytes(light.verts, length: MemoryLayout<packed_float4>.stride * light.verts.count, index: 0)
 
 //    var pos = Vec2(0.0, 0.0)
 //    encoder.setVertexBytes(&pos, length: MemoryLayout<Vec2>.size, at: 1)
     let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(uBuffer, offset: uOffset, at: 1)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, index: 1)
 
     let (rBuffer, rOffset) = resolutionBuffer.nextBuffer(bufferIndex)
-    encoder.setFragmentBuffer(rBuffer, offset: rOffset, at: 0)
+    encoder.setFragmentBuffer(rBuffer, offset: rOffset, index: 0)
 
     var lightData = light.lightData
-    encoder.setFragmentBytes(&lightData, length: MemoryLayout<LightData>.stride * lightNodes.count, at: 1)
+    encoder.setFragmentBytes(&lightData, length: MemoryLayout<LightData>.stride * lightNodes.count, index: 1)
 
     encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
 

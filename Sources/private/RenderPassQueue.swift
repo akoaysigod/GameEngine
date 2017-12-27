@@ -46,7 +46,7 @@ final class RenderPassQueue {
     let depthTexDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .depth32Float, width: width, height: height, mipmapped: false)
     depthTexDesc.storageMode = .private
     depthTexDesc.usage = .renderTarget
-    return device.makeTexture(descriptor: depthTexDesc)
+    return device.makeTexture(descriptor: depthTexDesc)!
   }
 
   private func updateDepthTexture(width: Int, height: Int) {

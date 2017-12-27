@@ -125,7 +125,7 @@ final class PipelineFactory {
     depthStateDescriptor.depthCompareFunction = .greaterEqual
     depthStateDescriptor.isDepthWriteEnabled = true
 
-    return device.makeDepthStencilState(descriptor: depthStateDescriptor)
+    return device.makeDepthStencilState(descriptor: depthStateDescriptor)!
   }
 
   func constructShapePipeline() -> ShapePipeline {

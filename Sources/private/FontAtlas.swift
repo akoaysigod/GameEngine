@@ -153,7 +153,7 @@ final class FontAtlas: NSObject, NSCoding {
     #if os(iOS)
       let exampleStrSize = exampleStr.size(attributes: [NSFontAttributeName: font])
     #else
-      let exampleStrSize = exampleStr.size(withAttributes: [NSFontAttributeName: font])
+      let exampleStrSize = exampleStr.size(withAttributes: [NSAttributedStringKey.font: font])
     #endif
     let averageWidth = ceil(exampleStrSize.width / CGFloat(exampleStr.length))
     let maxHeight = ceil(exampleStrSize.height)
@@ -164,7 +164,7 @@ final class FontAtlas: NSObject, NSCoding {
     #if os(iOS)
       let estimatedWidth = ("!" as NSString).size(attributes: [NSFontAttributeName: font]).width
     #else
-      let estimatedWidth = ("!" as NSString).size(withAttributes: [NSFontAttributeName: font]).width
+      let estimatedWidth = ("!" as NSString).size(withAttributes: [NSAttributedStringKey.font: font]).width
     #endif
     return ceil(estimatedWidth)
   }
@@ -172,7 +172,7 @@ final class FontAtlas: NSObject, NSCoding {
   fileprivate func willLikelyFitInAtlasRect(_ font: Font, size: CGFloat, rect: CGRect) -> Bool {
     let textureArea = rect.size.width * rect.size.height
     let testFont = Font(name: font.fontName, size: size)!
-    let testCTFont = CTFontCreateWithName(font.fontName as CFString?, size, nil)
+    let testCTFont = CTFontCreateWithName((font.fontName as CFString?)!, size, nil)
     let fontCount = glyphIndices(testCTFont).count//CTFontGetGlyphCount(testCTFont)
     
     let margin = self.estimateLineWidth(testFont)
@@ -239,7 +239,7 @@ final class FontAtlas: NSObject, NSCoding {
     context?.fill(atlasRect)
     
     let fontPointSize = self.pointSizeThatFitsForFont(font, atlasRect: atlasRect) //property
-    let ctFont = CTFontCreateWithName(font.fontName as CFString?, fontPointSize, nil)
+    let ctFont = CTFontCreateWithName((font.fontName as CFString?)!, fontPointSize, nil)
     let parentFont = Font(name: font.fontName, size: fontPointSize) //property
     
     //let fontCount: CGGlyph = UInt16(CTFontGetGlyphCount(ctFont))

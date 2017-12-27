@@ -83,17 +83,17 @@ open class TextNode: Node, Renderable {
     let region = MTLRegionMake2D(0, 0, textureSize, textureSize)
 
     fontAtlas.textureData.withUnsafeBytes { (bytes) in
-      texture.replace(region: region, mipmapLevel: 0, withBytes: bytes, bytesPerRow: textureSize)
+      texture?.replace(region: region, mipmapLevel: 0, withBytes: bytes, bytesPerRow: textureSize)
     }
 
-    return Texture(texture: texture)
+    return Texture(texture: texture!)
   }
 
   //need a size that fits rect sort of thing for the text
   static func makeTextQuads(_ text: String, color: Color, fontAtlas: FontAtlas) -> Quads {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)
 
-    let attr = [NSFontAttributeName: fontAtlas.font]
+    let attr = [NSAttributedStringKey.font: fontAtlas.font]
     let attrStr = NSAttributedString(string: text, attributes: attr)
 
     let strRng = CFRangeMake(0, attrStr.length)

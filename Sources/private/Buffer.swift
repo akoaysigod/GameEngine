@@ -18,7 +18,7 @@ final class Buffer { //might change this to a protocol
 
   init(length: Int, instances: Int = BUFFER_SIZE, device: Device = Device.shared) {
     self.length = length
-    buffer = device.device.makeBuffer(length: length * instances, options: MTLResourceOptions())
+    buffer = device.device.makeBuffer(length: length * instances, options: MTLResourceOptions())!
   }
 
   func addData<T>(_ data: [T], size: Int, offset: Int = 0) {

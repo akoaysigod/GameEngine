@@ -22,8 +22,8 @@ final class ComputeRenderer {
     self.device = device.device
     self.srcTexture = srcTexture.texture
 
-    destTexture = self.device.makeTexture(descriptor: self.srcTexture.descriptor)
-    commandQueue = self.device.makeCommandQueue()
+    destTexture = self.device.makeTexture(descriptor: self.srcTexture.descriptor)!
+    commandQueue = self.device.makeCommandQueue()!
     commandQueue.label = "compute command queue"
   }
 
@@ -31,10 +31,10 @@ final class ComputeRenderer {
     let pipeline = LightTexturePipeline()
     let commandBuffer = commandQueue.makeCommandBuffer()
 
-    pipeline.encodeToCommandBuffer(commandBuffer,
+    pipeline.encodeToCommandBuffer(commandBuffer!,
                                    sourceTexture: srcTexture,
                                    destinationTexture: destTexture)
-    commandBuffer.commit()
+    commandBuffer?.commit()
 
     return Texture(texture: destTexture)
   }

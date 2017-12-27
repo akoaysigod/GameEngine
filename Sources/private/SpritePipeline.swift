@@ -46,13 +46,13 @@ extension SpritePipeline {
     encoder.setRenderPipelineState(pipelineState)
 
     let (vBuffer, vOffset) = vertexBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(vBuffer, offset: vOffset, at: 0)
+    encoder.setVertexBuffer(vBuffer, offset: vOffset, index: 0)
     let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
-    encoder.setVertexBuffer(uBuffer, offset: uOffset, at: 1)
+    encoder.setVertexBuffer(uBuffer, offset: uOffset, index: 1)
 
-    encoder.setFragmentSamplerState(sampler, at: 0)
-    encoder.setFragmentTexture(texture.texture, at: 0)
-    encoder.setFragmentTexture(texture.lightMapTexture, at: 1)
+    encoder.setFragmentSamplerState(sampler, index: 0)
+    encoder.setFragmentTexture(texture.texture, index: 0)
+    encoder.setFragmentTexture(texture.lightMapTexture, index: 1)
 
     //tmp I don't remember why this is here
 //    var lightColor = lights!.first!.ambientColor.vec4

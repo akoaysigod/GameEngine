@@ -14,9 +14,9 @@ public func +(lhs: Vec3, rhs: Vec3) -> Vec3 {
   return Vec3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z)
 }
 
-public func -(lhs: Vec3, rhs: Vec3) -> Vec3 {
-  return Vec3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z)
-}
+//public func -(lhs: Vec3, rhs: Vec3) -> Vec3 {
+//  return Vec3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z)
+//}
 
 public func *(lhs: Vec3, rhs: Vec3) -> Vec3 {
   return Vec3(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z)
@@ -57,5 +57,9 @@ public extension Vec3 {
       self.y * vec.z - self.z * vec.y,
       -(self.x * vec.z - self.z * vec.x),
       self.x * vec.y - self.y * vec.x)
+  }
+
+  public static func -(lhs: Vec3, rhs: Vec3) -> Vec3 {
+    return Vec3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z)
   }
 }

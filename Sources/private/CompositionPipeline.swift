@@ -54,10 +54,10 @@ extension CompositionPipeline {
     encoder.setRenderPipelineState(pipelineState)
 
     let (buffer, offset) = quadBuffer.nextBuffer(0)
-    encoder.setVertexBuffer(buffer, offset: offset, at: 0)
+    encoder.setVertexBuffer(buffer, offset: offset, index: 0)
 
     var color = ambientColor.vec4
-    encoder.setFragmentBytes(&color, length: MemoryLayout<Vec4>.size, at: 0)
+    encoder.setFragmentBytes(&color, length: MemoryLayout<Vec4>.size, index: 0)
 
     encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
 

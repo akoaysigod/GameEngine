@@ -56,7 +56,7 @@ extension LightTexturePipeline {
     descriptor.sAddressMode = .clampToEdge
     descriptor.tAddressMode = .clampToEdge
     descriptor.normalizedCoordinates = false
-    return device.makeSamplerState(descriptor: descriptor)
+    return device.makeSamplerState(descriptor: descriptor)!
   }
 
   static func createPipelineState(_ device: MTLDevice) -> MTLComputePipelineState? {
@@ -81,15 +81,15 @@ extension LightTexturePipeline {
     let heightInGroup = (destTexture.height + threadsPerGroup.height - 1) / threadsPerGroup.height
     let threadsPerGrid = MTLSize(width: widthInGroup, height: heightInGroup, depth: 1)
     let encoder = commandBuffer.makeComputeCommandEncoder()
-    encoder.setComputePipelineState(pipeline)
-    encoder.setTexture(sourceTexture, at: 0)
-    encoder.setTexture(destTexture, at: 1)
-    encoder.setSamplerState(sampler, at: 0)
+    encoder?.setComputePipelineState(pipeline)
+    encoder?.setTexture(sourceTexture, index: 0)
+    encoder?.setTexture(destTexture, index: 1)
+    encoder?.setSamplerState(sampler, index: 0)
 
     var convolutions = Convolutions.scharr
-    encoder.setBytes(&convolutions, length: MemoryLayout<Convolutions>.size, at: 0)
+    encoder?.setBytes(&convolutions, length: MemoryLayout<Convolutions>.size, index: 0)
 
-    encoder.dispatchThreadgroups(threadsPerGrid, threadsPerThreadgroup: threadsPerGroup)
-    encoder.endEncoding()
+    encoder?.dispatchThreadgroups(threadsPerGrid, threadsPerThreadgroup: threadsPerGroup)
+    encoder?.endEncoding()
   }
 }

@@ -38,12 +38,12 @@ open class Texture: Hashable, Equatable {
   let frame: TextureFrame
 
   //for asnych loading, there's a different method on MTKTextureLoader for doing asynch stuff
-  let callback: MTKTextureLoaderCallback?
+  let callback: MTKTextureLoader.Callback?
 
   /// if a bad image name was given or a texture couldn't be loaded for whatever reason fallback to this error image.
   fileprivate static var errorTexture: MTLTexture {
     let url = Bundle.main.url(forResource: "error", withExtension: "png")!
-    return try! Device.shared.textureLoader.newTexture(withContentsOf: url, options: nil)
+    return try! Device.shared.textureLoader.newTexture(URL: url, options: nil)
   }
 
   /**
@@ -56,7 +56,7 @@ open class Texture: Hashable, Equatable {
 
    - returns: A new instance of `Texture`.
    */
-  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, callback: MTKTextureLoaderCallback? = nil) {
+  init(texture: MTLTexture, lightMapTexture: MTLTexture? = nil, callback: MTKTextureLoader.Callback? = nil) {
     self.texture = texture
     self.lightMapTexture = lightMapTexture
     self.callback = callback
@@ -112,7 +112,7 @@ open class Texture: Hashable, Equatable {
     }
 
     do {
-      texture = try Device.shared.textureLoader.newTexture(withContentsOf: url, options: nil)
+      texture = try Device.shared.textureLoader.newTexture(URL: url, options: nil)
     }
     catch let error {
       DLog("Error loading image named \(named): \(error.localizedDescription)")
@@ -129,6 +129,6 @@ extension Texture {
     descriptor.width = width
     descriptor.height = height
     descriptor.pixelFormat = pixelFormat
-    return Device.shared.device.makeTexture(descriptor: descriptor)
+    return Device.shared.device.makeTexture(descriptor: descriptor)!
   }
 }

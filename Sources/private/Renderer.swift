@@ -33,7 +33,7 @@ final class Renderer {
 
     self.bufferManager = bufferManager
 
-    commandQueue = device.makeCommandQueue()
+    commandQueue = device.makeCommandQueue()!
     commandQueue.label = "main command queue"
 
     //descriptorQueue = RenderPassQueue(view: view)
@@ -61,19 +61,19 @@ final class Renderer {
     _ = inflightSemaphore.wait(timeout: DispatchTime.distantFuture)
 
     let commandBuffer = commandQueue.makeCommandBuffer()
-    commandBuffer.label = "main command buffer"
+    commandBuffer?.label = "main command buffer"
 
-    commandBuffer.addCompletedHandler { _ in
+    commandBuffer?.addCompletedHandler { _ in
       (self.inflightSemaphore).signal()
     }
 
     if let (renderPassDescriptor, drawable) = nextRenderPass() {
-      let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-      encoder.label = "main encoder"
+      let encoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
+      encoder?.label = "main encoder"
 
-      encoder.setDepthStencilState(depthState)
-      encoder.setFrontFacing(.counterClockwise)
-      encoder.setCullMode(.back)
+      encoder?.setDepthStencilState(depthState)
+      encoder?.setFrontFacing(.counterClockwise)
+      encoder?.setCullMode(.back)
 
       bufferManager.uniformBuffer.update([view], size: MemoryLayout<Mat4>.size, bufferIndex: bufferIndex, offset: MemoryLayout<Mat4>.size)
 
@@ -90,7 +90,7 @@ final class Renderer {
         guard let spriteNodes = spriteNodes[key],
               let vertexBuffer = bufferManager[key] else { continue }
 
-        spritePipeline.encode(encoder,
+        spritePipeline.encode(encoder!,
                               bufferIndex: bufferIndex,
                               vertexBuffer: vertexBuffer,
                               indexBuffer: bufferManager.indexBuffer,
@@ -110,14 +110,14 @@ final class Renderer {
       }
       #endif
 
-      encoder.endEncoding()
+      encoder?.endEncoding()
 
-      commandBuffer.present(drawable)
+      commandBuffer?.present(drawable)
     }
 
     bufferIndex = (bufferIndex + 1) % BUFFER_SIZE
 
-    commandBuffer.commit()
+    commandBuffer?.commit()
   }
 
   deinit {
