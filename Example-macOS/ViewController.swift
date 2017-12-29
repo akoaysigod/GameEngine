@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import GameEngine
 
 final class ViewController: GameViewController {
   override func viewDidLoad() {

@@ -10,10 +10,6 @@ import Foundation
 import Metal
 import MetalKit
 
-public func ==(rhs: Texture, lhs: Texture) -> Bool {
-  return rhs.hashValue == lhs.hashValue
-}
-
 /**
  A `Texture` holds an image, essentially, to be applied to a `SpriteNode`.
 
@@ -21,7 +17,7 @@ public func ==(rhs: Texture, lhs: Texture) -> Bool {
 
  - seealso: `TextureAtlas`
  */
-open class Texture: Hashable, Equatable {
+public class Texture: Hashable {
   let texture: MTLTexture
   let lightMapTexture: MTLTexture?
 
@@ -39,12 +35,6 @@ open class Texture: Hashable, Equatable {
 
   //for asnych loading, there's a different method on MTKTextureLoader for doing asynch stuff
   let callback: MTKTextureLoader.Callback?
-
-  /// if a bad image name was given or a texture couldn't be loaded for whatever reason fallback to this error image.
-  fileprivate static var errorTexture: MTLTexture {
-    let url = Bundle.main.url(forResource: "error", withExtension: "png")!
-    return try! Device.shared.textureLoader.newTexture(URL: url, options: nil)
-  }
 
   /**
    Designated initalizer. 
@@ -87,48 +77,10 @@ open class Texture: Hashable, Equatable {
 
     self.callback = nil
   }
-
-  /**
-   Creates a new `Texture` object given a name of an image.
-   
-   - warning: not sure why but if you pass in an empty string it uses the last value used somehow
-              I still need to figure this weirdness out.
-   
-   - discussion: This is loading a `UIImage` to create a texture so passing it names from an xcasset will work.
-                 I'm not sure if there is a better way to do this as `UIImage` get cached and you should be handlin the caching of 
-                 these `Texture` objects manually.
-
-   - parameter named: The name of the texture to be used.
-
-   - returns: A new instance of `Texture`.
-   */
-  //there is a way to use a xcassets to load images but for some reason half of them won't load and the error isn't very helpful
-  //I'll try again at another point so I'll just leave the contentScale argument here for fun
-  public convenience init(named: String, contentScale: CGFloat = 1.0) {
-    let texture: MTLTexture
-
-    guard let url = Bundle.main.url(forResource: named, withExtension: "png") else {
-      fatalError("Image \(named) not found in bundle.") //should probably just assert on a failable init
-    }
-
-    do {
-      texture = try Device.shared.textureLoader.newTexture(URL: url, options: nil)
-    }
-    catch let error {
-      DLog("Error loading image named \(named): \(error.localizedDescription)")
-      texture = Texture.errorTexture
-    }
-
-    self.init(texture: texture, lightMapTexture: nil)
-  }
 }
 
-extension Texture {
-  static func newTexture(_ width: Int, height: Int, pixelFormat: MTLPixelFormat = .bgra8Unorm) -> MTLTexture {
-    let descriptor = MTLTextureDescriptor()
-    descriptor.width = width
-    descriptor.height = height
-    descriptor.pixelFormat = pixelFormat
-    return Device.shared.device.makeTexture(descriptor: descriptor)!
+extension Texture: Equatable {
+  public static func ==(rhs: Texture, lhs: Texture) -> Bool {
+    return rhs.hashValue == lhs.hashValue
   }
 }

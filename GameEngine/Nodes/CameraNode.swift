@@ -59,8 +59,8 @@ public final class CameraNode: Node {
     updateTransform()
   }
 
-  public override func addNode(_ node: Node) {
-    super.addNode(node)
+  public override func add(node: Node) {
+    super.add(node: node)
 
     node.camera = self
     node.allNodes.forEach { $0.camera = self }

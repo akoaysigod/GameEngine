@@ -70,7 +70,7 @@ public final class LightNode: Node {
     self.position = position
   }
 
-  public override func update(_ delta: CFTimeInterval) {
+  public override func update(delta: CFTimeInterval) {
     //this does not take into account the radius of the light at the moment
     guard let scene = scene,
           let camera = camera else { return }

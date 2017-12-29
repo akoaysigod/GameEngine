@@ -62,11 +62,11 @@ public final class Action {
     case group(actions: Actions)
   }
 
-  fileprivate var actionType: ActionType
-  fileprivate(set) public var duration: Double
+  private var actionType: ActionType
+  private(set) public var duration: Double
   fileprivate var timer: Double = 0.0
-  fileprivate let forever: Bool
-  fileprivate var completion: ActionCompletion? = nil
+  private let forever: Bool
+  private var completion: ActionCompletion? = nil
   public var completed = false
 
   public var easingFunction: EaseFunction = .Linear

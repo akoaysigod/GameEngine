@@ -21,14 +21,16 @@ final class CompositionPipeline: RenderPipeline {
   init(device: MTLDevice,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    let pipelineDescriptor = CompositionPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    let pipelineDescriptor = CompositionPipeline.makePipelineDescriptor(device: device,
+                                                                        vertexProgram: vertexProgram,
+                                                                        fragmentProgram: fragmentProgram)
 
     pipelineState = CompositionPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
-    quadBuffer = CompositionPipeline.createQuad()
+    quadBuffer = CompositionPipeline.makeQuad(device: device)
   }
 
-  static func createQuad() -> Buffer {
+  private static func makeQuad(device: MTLDevice) -> Buffer {
     let quadData: [Vec2] = [
       Vec2(-1.0, -1.0),
       Vec2(1.0, -1.0),
@@ -40,15 +42,15 @@ final class CompositionPipeline: RenderPipeline {
     ]
 
     let bufferSize = MemoryLayout<Vec2>.stride * quadData.count
-    let buffer = Buffer(length: bufferSize, instances: 1)
-    buffer.update(quadData, size: bufferSize, bufferIndex: 0)
+    let buffer = Buffer(device: device, length: bufferSize, instances: 1)
+    buffer.update(data: quadData, size: bufferSize, bufferIndex: 0)
 
     return buffer
   }
 }
 
 extension CompositionPipeline {
-  func encode(_ encoder: MTLRenderCommandEncoder, ambientColor: Color) {
+  func encode(encoder: MTLRenderCommandEncoder, ambientColor: Color) {
     encoder.pushDebugGroup("composition encoder")
 
     encoder.setRenderPipelineState(pipelineState)

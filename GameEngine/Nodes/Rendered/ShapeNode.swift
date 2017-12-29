@@ -38,7 +38,7 @@ open class ShapeNode: Node, Renderable {
    */
   public init(width: Float, height: Float, color: Color) {
     self.color = color
-    quad = Quad.rect(width, height, color: color)
+    quad = Quad.rect(width: width, height: height, color: color)
 
     super.init(size: Size(width: width, height: height))
   }

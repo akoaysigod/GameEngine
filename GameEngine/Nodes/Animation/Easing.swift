@@ -15,10 +15,10 @@ public enum EaseFunction {
   case EaseInOut
   case custom(c1: (x: Double, y: Double), c2: (x: Double, y: Double))
 
-  fileprivate static let linear = Easing.linear()
-  fileprivate static let easeIn = Easing.easeIn()
-  fileprivate static let easeOut = Easing.easeOut()
-  fileprivate static let easeInOut = Easing.easeInOut()
+  private static let linear = Easing.linear()
+  private static let easeIn = Easing.easeIn()
+  private static let easeOut = Easing.easeOut()
+  private static let easeInOut = Easing.easeInOut()
 
   public var function: Easing {
     switch self {

@@ -41,7 +41,7 @@ struct Quad {
     size = vertices.count * MemoryLayout<Vertex>.stride
   }
 
-  static func rect(_ width: Float, _ height: Float, color: Color) -> Quad {
+  static func rect(width: Float, height: Float, color: Color) -> Quad {
     let ll = Vertex(x: 0, y: 0, color: color.vec4)
     let ul = Vertex(x: 0, y: height, color: color.vec4)
     let ur = Vertex(x: width, y: height, color: color.vec4)
@@ -50,11 +50,11 @@ struct Quad {
     return Quad(vertices: [ul, ll, lr, ur])
   }
 
-  static func rect(_ size: Size, color: Color) -> Quad {
-    return rect(size.width, size.height, color: color)
+  static func rect(size: Size, color: Color) -> Quad {
+    return rect(width: size.width, height: size.height, color: color)
   }
 
-  static func spriteRect(_ frame: TextureFrame, color: Color) -> Quad {
+  static func spriteRect(frame: TextureFrame, color: Color) -> Quad {
     let sWidth = frame.sWidth
     let sHeight = frame.sHeight
     let tWidth = frame.tWidth

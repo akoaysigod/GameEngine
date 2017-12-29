@@ -22,12 +22,12 @@ import QuartzCore
  A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple.
  */
 open class GameView: V {
-  fileprivate var currentScene: Scene?
+  private var currentScene: Scene?
 
-  fileprivate(set) var projection: Projection!
+  private(set) var projection: Projection!
 
-  fileprivate(set) var device: MTLDevice
-  fileprivate weak var metalLayer: CAMetalLayer?
+  private(set) var device: MTLDevice
+  private weak var metalLayer: CAMetalLayer?
 
   private var updater: Updater!
 
@@ -37,8 +37,11 @@ open class GameView: V {
   public var paused = true
 
   let bufferManager: BufferManager
-  fileprivate let renderer: Renderer
-  fileprivate let renderPassQueue: RenderPassQueue
+  private let renderer: Renderer
+  private let renderPassQueue: RenderPassQueue
+
+  /// Use to load textures/atlases for `SpriteNode`s.
+  public let textureLoader: TextureLoader
 
   #if !os(macOS)
     open static override var layerClass: AnyClass { return CAMetalLayer.self }
@@ -54,12 +57,15 @@ open class GameView: V {
 
     let width = Int(frame.size.width)
     let height = Int(frame.size.height)
-    renderPassQueue = RenderPassQueue(device: Device.shared,
-                                      depthTexture: RenderPassQueue.createDepthTexture(width: width, height: height, device: device))
+    renderPassQueue = RenderPassQueue(device: device,
+                                      depthTexture: RenderPassQueue.createDepthTexture(width: width,
+                                                                                       height: height,
+                                                                                       device: device))
 
     projection = Projection(size: Size(width: width, height: height))
-    bufferManager = BufferManager(projection: projection.projection)
+    bufferManager = BufferManager(projection: projection.projection, device: device)
     renderer = Renderer(device: device, bufferManager: bufferManager)
+    textureLoader = TextureLoader(device: device)
 
     super.init(frame: frame)
 
@@ -80,7 +86,7 @@ open class GameView: V {
     fatalError("init(coder:) has not been implemented")
   }
 
-  open func presentScene(_ scene: Scene) {
+  open func present(scene: Scene) {
     currentScene = scene
     scene.view = self
     scene.didMoveToView(self)
@@ -119,16 +125,16 @@ extension GameView {
       updateNodes(delta: delta, nodes: scene.allNodes)
       scene.update(delta)
     }
-    render(scene)
+    render(scene: scene)
   }
   
   private func updateNodes(delta: CFTimeInterval, nodes: Nodes) {
     nodes.forEach {
-      $0.update(delta)
+      $0.update(delta: delta)
     }
   }
 
-  private func render(_ scene: Scene) {
+  private func render(scene: Scene) {
     autoreleasepool {
       renderer.render(nextRenderPass: renderPassQueue.next(drawable: currentDrawable, clearColor: clearColor.clearColor),
                       view: scene.camera.view,

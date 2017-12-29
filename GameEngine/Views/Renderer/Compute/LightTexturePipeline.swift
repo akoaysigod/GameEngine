@@ -44,14 +44,14 @@ final class LightTexturePipeline: Pipeline {
   fileprivate let pipeline: MTLComputePipelineState
   fileprivate let sampler: MTLSamplerState
 
-  init(device: Device = Device.shared) {
-    sampler = LightTexturePipeline.createSamplerState(device.device)
-    pipeline = LightTexturePipeline.createPipelineState(device.device)!
+  init(device: MTLDevice) {
+    sampler = LightTexturePipeline.makeSamplerState(device: device)
+    pipeline = LightTexturePipeline.makePipelineState(device: device)!
   }
 }
 
 extension LightTexturePipeline {
-  static func createSamplerState(_ device: MTLDevice) -> MTLSamplerState {
+  static func makeSamplerState(device: MTLDevice) -> MTLSamplerState {
     let descriptor = MTLSamplerDescriptor()
     descriptor.sAddressMode = .clampToEdge
     descriptor.tAddressMode = .clampToEdge
@@ -59,10 +59,10 @@ extension LightTexturePipeline {
     return device.makeSamplerState(descriptor: descriptor)!
   }
 
-  static func createPipelineState(_ device: MTLDevice) -> MTLComputePipelineState? {
-    let library = LightTexturePipeline.getLibrary(device)
+  static func makePipelineState(device: MTLDevice) -> MTLComputePipelineState? {
+    let library = LightTexturePipeline.getLibrary(device: device)
 
-    let function = LightTexturePipeline.newFunction(library, functionName: Constants.Function)
+    let function = LightTexturePipeline.newFunction(library: library, functionName: Constants.Function)
 
     do {
       return try device.makeComputePipelineState(function: function)

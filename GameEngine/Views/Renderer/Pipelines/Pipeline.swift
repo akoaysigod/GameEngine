@@ -19,7 +19,7 @@ extension Pipeline {
     return "\(Self.self)"
   }
 
-  static func getLibrary(_ device: MTLDevice) -> MTLLibrary {
+  static func getLibrary(device: MTLDevice) -> MTLLibrary {
     #if TESTTARGET
     return device.newDefaultLibrary()!
     #else
@@ -27,7 +27,7 @@ extension Pipeline {
     #endif
   }
 
-  static func newFunction(_ library: MTLLibrary, functionName: String) -> MTLFunction {
+  static func newFunction(library: MTLLibrary, functionName: String) -> MTLFunction {
     guard let function = library.makeFunction(name: functionName) else {
       fatalError("No function for name: \(functionName)")
     }
@@ -43,23 +43,27 @@ protocol RenderPipeline: Pipeline {
 }
 
 extension RenderPipeline {
-  static func getPrograms(_ device: MTLDevice, vertexProgram: String, fragmentProgram: String?) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction?) {
-    let defaultLibrary = Self.getLibrary(device)
+  private static func getPrograms(device: MTLDevice,
+                                  vertexProgram: String,
+                                  fragmentProgram: String?) -> (vertexProgram: MTLFunction, fragmentProgram: MTLFunction?) {
+    let defaultLibrary = Self.getLibrary(device: device)
 
-    let vProgram = Self.newFunction(defaultLibrary, functionName: vertexProgram)
+    let vProgram = Self.newFunction(library: defaultLibrary, functionName: vertexProgram)
 
     let fProgram = { () -> MTLFunction? in
       guard let fragmentProgram = fragmentProgram else { return nil }
-      return Self.newFunction(defaultLibrary, functionName: fragmentProgram)
+      return Self.newFunction(library: defaultLibrary, functionName: fragmentProgram)
     }()
 
     return (vProgram, fProgram)
   }
 
-  static func createPipelineDescriptor(_ device: MTLDevice,
-                                       vertexProgram: String,
-                                       fragmentProgram: String?) -> MTLRenderPipelineDescriptor {
-    let (vertexProgram, fragmentProgram) = getPrograms(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+  static func makePipelineDescriptor(device: MTLDevice,
+                                     vertexProgram: String,
+                                     fragmentProgram: String?) -> MTLRenderPipelineDescriptor {
+    let (vertexProgram, fragmentProgram) = getPrograms(device: device,
+                                                       vertexProgram: vertexProgram,
+                                                       fragmentProgram: fragmentProgram)
 
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexProgram
@@ -120,7 +124,7 @@ final class PipelineFactory {
     self.device = device
   }
 
-  func constructDepthStencil() -> MTLDepthStencilState {
+  func makeDepthStencil() -> MTLDepthStencilState {
     let depthStateDescriptor = MTLDepthStencilDescriptor()
     depthStateDescriptor.depthCompareFunction = .greaterEqual
     depthStateDescriptor.isDepthWriteEnabled = true
@@ -128,23 +132,23 @@ final class PipelineFactory {
     return device.makeDepthStencilState(descriptor: depthStateDescriptor)!
   }
 
-  func constructShapePipeline() -> ShapePipeline {
+  func makeShapePipeline() -> ShapePipeline {
     return ShapePipeline(device: device)
   }
 
-  func constructSpritePipeline() -> SpritePipeline {
+  func makeSpritePipeline() -> SpritePipeline {
     return SpritePipeline(device: device)
   }
 
-  func constructTextPipeline() -> TextPipeline {
+  func makeTextPipeline() -> TextPipeline {
     return TextPipeline(device: device)
   }
 
-  func constructLightPipeline() -> LightPipeline {
+  func makeLightPipeline() -> LightPipeline {
     return LightPipeline(device: device)
   }
 
-  func constructCompositionPipeline() -> CompositionPipeline {
+  func makeCompositionPipeline() -> CompositionPipeline {
     return CompositionPipeline(device: device)
   }
 }

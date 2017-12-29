@@ -12,15 +12,15 @@ final class GraphCache {
     return updateNodes
   }
 
-  fileprivate(set) var shapeNodes = [ShapeNode]()
-  fileprivate(set) var spriteNodes = [Int: [SpriteNode]]()
-  fileprivate var spriteIndex = [Int: Int]()
+  private(set) var shapeNodes = [ShapeNode]()
+  private(set) var spriteNodes = [Int: [SpriteNode]]()
+  private var spriteIndex = [Int: Int]()
   var bufferManager: BufferManager?
-  fileprivate(set) var textNodes = [TextNode]()
-  fileprivate(set) var lightNodes = [LightNode]()
-  fileprivate var lightNodeIndex = 0
+  private(set) var textNodes = [TextNode]()
+  private(set) var lightNodes = [LightNode]()
+  private var lightNodeIndex = 0
 
-  func addNode(_ node: Node) {
+  func add(node: Node) {
     let allNodes = [node] + node.allNodes
 
     updateNodes += allNodes
@@ -40,16 +40,20 @@ final class GraphCache {
           spriteIndex.updateValue(newIndex, forKey: key)
           spriteNodes.updateValue(arr + [sprite], forKey: key)
           
-          buffer.addData(sprite.quad.vertices, size: sprite.quad.size, offset: newIndex)
+          buffer.add(data: sprite.quad.vertices, size: sprite.quad.size, offset: newIndex)
         }
         else {
           sprite.index = 0
           spriteIndex.updateValue(0, forKey: key)
           spriteNodes.updateValue([sprite], forKey: key)
-          
-          let buffer = Buffer(length: sprite.quad.size * 500)
-          buffer.addData(sprite.quad.vertices, size: sprite.quad.size)
-          bufferManager?[key] = buffer
+
+          //FIX THIS
+          //bufferManager will definitely exist or this whole object is broken,
+          //this api sucks though
+          if let buffer = bufferManager?.makeBuffer(length: sprite.quad.size * 500) {
+            buffer.add(data: sprite.quad.vertices, size: sprite.quad.size)
+            bufferManager?[key] = buffer
+          }
         }
       case let text as TextNode:
         textNodes += [text]
@@ -62,7 +66,7 @@ final class GraphCache {
     }
   }
   
-  fileprivate func removeNode(_ node: Node) {
+  private func remove(node: Node) {
     if let index = updateNodes.find(node) {
       guard let removed = updateNodes.remove(at: index) as? Renderable else { return }
 
@@ -75,7 +79,7 @@ final class GraphCache {
           var arr = arr
           _ = arr.remove(sprite)
           spriteNodes[key] = arr
-          realignData(key)
+          realignData(key: key)
         }
         else {
           DLog("Sprite was never cached?")
@@ -91,30 +95,30 @@ final class GraphCache {
     }
   }
   
-  func updateNodes<T : Node>(_ node: T?) {
+  func update<T : Node>(node: T?) {
     guard let node = node else { return }
     guard updateNodes.find(node) != nil else { return }
     
     (node as Node).allNodes.forEach {
-      removeNode($0)
+      remove(node: $0)
     }
-    removeNode(node)
+    remove(node: node)
   }
   
-  fileprivate func realignData(_ key: Int) {
+  private func realignData(key: Int) {
     guard let nodes = spriteNodes[key] else { return }
     guard let buffer = bufferManager?[key] else { return }
     
     nodes.enumerated().forEach { i, node in
       node.index = i
-      buffer.addData(node.quad.vertices, size: node.quad.size, offset: i * node.quad.size)
+      buffer.add(data: node.quad.vertices, size: node.quad.size, offset: i * node.quad.size)
     }
     spriteIndex[key] = nodes.count
   }
   
-  func updateNode(_ quad: Quad, index: Int, key: Int) {
+  func updateNode(quad: Quad, index: Int, key: Int) {
     guard let buffer = bufferManager?[key] else { return }
     
-    buffer.addData(quad.vertices, size: quad.size, offset: index)
+    buffer.add(data: quad.vertices, size: quad.size, offset: index)
   }
 }

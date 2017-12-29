@@ -13,15 +13,15 @@ import Metal
 // parens didn't fix it
 
 final class Buffer { //might change this to a protocol 
-  fileprivate var buffer: MTLBuffer
-  fileprivate let length: Int
+  private var buffer: MTLBuffer
+  private let length: Int
 
-  init(length: Int, instances: Int = BUFFER_SIZE, device: Device = Device.shared) {
+  init(device: MTLDevice, length: Int, instances: Int = BUFFER_SIZE) {
     self.length = length
-    buffer = device.device.makeBuffer(length: length * instances, options: MTLResourceOptions())!
+    buffer = device.makeBuffer(length: length * instances, options: MTLResourceOptions())!
   }
 
-  func addData<T>(_ data: [T], size: Int, offset: Int = 0) {
+  func add<T>(data: [T], size: Int, offset: Int = 0) {
     var wtf = size * offset
     memcpy(buffer.contents() + wtf, data, size)
     wtf += length
@@ -29,7 +29,7 @@ final class Buffer { //might change this to a protocol
     memcpy(buffer.contents() + length * 2 + (size * offset), data, size) //LOL this is fine though?
   }
 
-  func update<T>(_ data: [T], size: Int, bufferIndex: Int, offset: Int = 0) {
+  func update<T>(data: [T], size: Int, bufferIndex: Int, offset: Int = 0) {
     #if DEBUG
       if MemoryLayout<T>.size != MemoryLayout<T>.stride {
         DLog("Possibly wrong sized data, \(T.self)")

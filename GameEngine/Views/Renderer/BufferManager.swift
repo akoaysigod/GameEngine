@@ -34,22 +34,22 @@ final class BufferManager {
     private let uniformPad = 4
   #endif
 
-  init(projection: Mat4, device: Device = Device.shared) {
-    self.device = device.device
+  init(projection: Mat4, device: MTLDevice) {
+    self.device = device
 
-    uniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * uniformPad)
-    uniformBuffer.addData([projection], size: MemoryLayout<Mat4>.size)
-    uiUniformBuffer = Buffer(length: MemoryLayout<Mat4>.size * uniformPad)
-    uiUniformBuffer.addData([projection], size: MemoryLayout<Mat4>.size) //do I still need this?
+    uniformBuffer = Buffer(device: device, length: MemoryLayout<Mat4>.size * uniformPad)
+    uniformBuffer.add(data: [projection], size: MemoryLayout<Mat4>.size)
+    uiUniformBuffer = Buffer(device: device, length: MemoryLayout<Mat4>.size * uniformPad)
+    uiUniformBuffer.add(data: [projection], size: MemoryLayout<Mat4>.size) //do I still need this?
 
-    indexBuffer = Buffer(length: Quad.indicesSize * startSize)
+    indexBuffer = Buffer(device: device, length: Quad.indicesSize * startSize)
     let (indexData, size) = Quad.indices(startSize)
-    indexBuffer.addData(indexData, size: size)
+    indexBuffer.add(data: indexData, size: size)
 
-    shapeIndexBuffer = Buffer(length: Quad.indicesSize)
-    shapeIndexBuffer.addData(Array(indexData[0..<6]), size: Quad.indicesSize)
+    shapeIndexBuffer = Buffer(device: device, length: Quad.indicesSize)
+    shapeIndexBuffer.add(data: Array(indexData[0..<6]), size: Quad.indicesSize)
 
-    shapeVertexBuffer = Buffer(length: Quad.size)
+    shapeVertexBuffer = Buffer(device: device, length: Quad.size)
 
     //lightVertexBuffer = Buffer(length: maxLights * )
   }
@@ -64,7 +64,11 @@ final class BufferManager {
   }
 
   func updateProjection(_ projection: Mat4) {
-    uniformBuffer.addData([projection], size: MemoryLayout<Mat4>.size)
-    uiUniformBuffer.addData([projection], size: MemoryLayout<Mat4>.size)
+    uniformBuffer.add(data: [projection], size: MemoryLayout<Mat4>.size)
+    uiUniformBuffer.add(data: [projection], size: MemoryLayout<Mat4>.size)
+  }
+
+  func makeBuffer(length: Int) -> Buffer {
+    return Buffer(device: device, length: length)
   }
 }

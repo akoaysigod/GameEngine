@@ -28,6 +28,7 @@ import Metal
  
  - seealso: `FontAtlas` and `Fonts` classes.
  */
+//this whole thing needs to be rethought/refactored/etc
 open class TextNode: Node, Renderable {
   fileprivate typealias GlyphClosure = (_ glyph: CGGlyph, _ bounds: CGRect) -> ()
 
@@ -59,7 +60,7 @@ open class TextNode: Node, Renderable {
 
    - returns: A new instance of `TextNode`.
    */
-  public init(text: String, font: Font, color: Color) {
+  init(text: String, font: Font, color: Color, device: MTLDevice) {
     self.text = text
     self.fontAtlas = Fonts.cache.fontForUIFont(font)!
     self.color = color
@@ -67,7 +68,7 @@ open class TextNode: Node, Renderable {
     let quads = TextNode.makeTextQuads(text, color: color, fontAtlas: fontAtlas)
     quad = quads.first!
 
-    self.texture = TextNode.loadTexture(fontAtlas, device: Device.shared.device)
+    self.texture = TextNode.loadTexture(fontAtlas, device: device)
 
     super.init(size: texture!.size)
   }

@@ -28,7 +28,9 @@ final class TextPipeline: RenderPipeline {
     samplerDescriptor.tAddressMode = .clampToZero
     sampler = device.makeSamplerState(descriptor: samplerDescriptor)
 
-    let pipelineDescriptor = TextPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    let pipelineDescriptor = TextPipeline.makePipelineDescriptor(device: device,
+                                                                 vertexProgram: vertexProgram,
+                                                                 fragmentProgram: fragmentProgram)
 
     pipelineState = TextPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
   }

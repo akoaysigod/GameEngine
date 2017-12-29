@@ -10,31 +10,6 @@ import simd
 
 public typealias Vec3 = float3
 
-public func +(lhs: Vec3, rhs: Vec3) -> Vec3 {
-  return Vec3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z)
-}
-
-//public func -(lhs: Vec3, rhs: Vec3) -> Vec3 {
-//  return Vec3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z)
-//}
-
-public func *(lhs: Vec3, rhs: Vec3) -> Vec3 {
-  return Vec3(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z)
-}
-
-public func *(lhs: Float, rhs: Vec3) -> Vec3 {
-  return Vec3(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z)
-}
-
-public func /(lhs: Vec3, rhs: Vec3) -> Vec3 {
-  return Vec3(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z)
-}
-
-public func /(lhs: Vec3, rhs: Float) -> Vec3 {
-  return Vec3(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs)
-}
-
-
 /**
  Vec3 is a typealias for simd's float3
 
@@ -59,7 +34,27 @@ public extension Vec3 {
       self.x * vec.y - self.y * vec.x)
   }
 
+  public static func +(lhs: Vec3, rhs: Vec3) -> Vec3 {
+    return Vec3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z)
+  }
+
   public static func -(lhs: Vec3, rhs: Vec3) -> Vec3 {
     return Vec3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z)
+  }
+
+  public static func *(lhs: Vec3, rhs: Vec3) -> Vec3 {
+    return Vec3(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z)
+  }
+
+  public static func *(lhs: Float, rhs: Vec3) -> Vec3 {
+    return Vec3(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z)
+  }
+
+  public static func /(lhs: Vec3, rhs: Vec3) -> Vec3 {
+    return Vec3(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z)
+  }
+
+  public static func /(lhs: Vec3, rhs: Float) -> Vec3 {
+    return Vec3(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs)
   }
 }

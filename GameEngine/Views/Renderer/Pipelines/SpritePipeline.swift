@@ -29,7 +29,9 @@ final class SpritePipeline: RenderPipeline {
     samplerDescriptor.tAddressMode = .clampToEdge
     sampler = device.makeSamplerState(descriptor: samplerDescriptor)
 
-    let pipelineDescriptor = SpritePipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    let pipelineDescriptor = SpritePipeline.makePipelineDescriptor(device: device,
+                                                                   vertexProgram: vertexProgram,
+                                                                   fragmentProgram: fragmentProgram)
     pipelineDescriptor.label = "sprite pipeline"
 
     pipelineState = SpritePipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
@@ -37,7 +39,13 @@ final class SpritePipeline: RenderPipeline {
 }
 
 extension SpritePipeline {
-  func encode(_ encoder: MTLRenderCommandEncoder, bufferIndex: Int, vertexBuffer: Buffer, indexBuffer: Buffer, uniformBuffer: Buffer, nodes: [SpriteNode], lights: [LightNode]?) {
+  func encode(encoder: MTLRenderCommandEncoder,
+              bufferIndex: Int,
+              vertexBuffer: Buffer,
+              indexBuffer: Buffer,
+              uniformBuffer: Buffer,
+              nodes: [SpriteNode],
+              lights: [LightNode]?) {
     guard let node = nodes.first,
           let texture = node.texture else { return }
 

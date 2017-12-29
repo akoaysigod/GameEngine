@@ -74,27 +74,27 @@ open class Scene {
 
 // MARK: Scene graph
 extension Scene {
-  public func addNode(_ node: Node) {
-    camera.addNode(node)
+  public func add(node: Node) {
+    camera.add(node: node)
 
-    graphCache.addNode(node)
+    graphCache.add(node: node)
   }
 
-  public func removeNode<T : Node>(_ node: T?) -> T? {
-    if let node = camera.removeNode(node) {
-      graphCache.updateNodes(node)
+  public func remove<T : Node>(node: T?) -> T? {
+    if let node = camera.remove(node: node) {
+      graphCache.update(node: node)
       return node
     }
     return nil
   }
 
-  public func addUINode(_ node: Node) {
+  public func addUI(node: Node) {
     node.isUINode = true
-    addNode(node)
+    add(node: node)
   }
 
-  func updateNode(_ quad: Quad, index: Int, key: Int) {
-    graphCache.updateNode(quad, index: index, key: key)
+  func updateNode(quad: Quad, index: Int, key: Int) {
+    graphCache.updateNode(quad: quad, index: index, key: key)
   }
 }
 

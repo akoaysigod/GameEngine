@@ -27,6 +27,9 @@
 		EA9DCA8E1E0F4817000FCF02 /* StairsUp.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F00B51DC6AFAF00D9BB60 /* StairsUp.png */; };
 		EA9DCA8F1E0F4817000FCF02 /* Wall.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F00B61DC6AFAF00D9BB60 /* Wall.png */; };
 		EA9DCA901E0F4817000FCF02 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBF21C9E5D7000878EE6 /* error.png */; };
+		EAC0AD261FF5AB0B007B4339 /* GameEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0C9F491E0F21E900CCD0B8 /* GameEngine.framework */; };
+		EAC0AD271FF5AB0B007B4339 /* GameEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA0C9F491E0F21E900CCD0B8 /* GameEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EAC0AD2C1FF5BB9B007B4339 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC0AD2B1FF5BB9B007B4339 /* TextureLoader.swift */; };
 		EAC34A211FF4469300C60330 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A201FF4469300C60330 /* Globals.swift */; };
 		EAC34A3B1FF446AA00C60330 /* TextureFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A261FF446AA00C60330 /* TextureFrame.swift */; };
 		EAC34A3C1FF446AA00C60330 /* LightData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A271FF446AA00C60330 /* LightData.swift */; };
@@ -60,7 +63,6 @@
 		EAC34A721FF446C400C60330 /* ComputeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A5C1FF446C400C60330 /* ComputeRenderer.swift */; };
 		EAC34A731FF446C400C60330 /* LightTexturePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A5D1FF446C400C60330 /* LightTexturePipeline.swift */; };
 		EAC34A741FF446C400C60330 /* BufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A5E1FF446C400C60330 /* BufferManager.swift */; };
-		EAC34A751FF446C400C60330 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A5F1FF446C400C60330 /* Device.swift */; };
 		EAC34A761FF446C400C60330 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A601FF446C400C60330 /* GameViewController.swift */; };
 		EAC34A771FF446C400C60330 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A611FF446C400C60330 /* Updater.swift */; };
 		EAC34A781FF446C400C60330 /* FontAtlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34A631FF446C400C60330 /* FontAtlas.swift */; };
@@ -85,12 +87,34 @@
 		EAC34AAF1FF4484300C60330 /* Mat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC34AA61FF4484300C60330 /* Mat.swift */; };
 		EAC34AC21FF4486F00C60330 /* NormalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34ABC1FF4486E00C60330 /* NormalShader.metal */; };
 		EAC34AC31FF4486F00C60330 /* TextShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34ABD1FF4486E00C60330 /* TextShaders.metal */; };
-		EAC34AC41FF4486F00C60330 /* CompositionShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34ABE1FF4486E00C60330 /* CompositionShaders.metal */; };
 		EAC34AC51FF4486F00C60330 /* ShapeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34ABF1FF4486E00C60330 /* ShapeShaders.metal */; };
-		EAC34AC61FF4486F00C60330 /* LightShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34AC01FF4486E00C60330 /* LightShaders.metal */; };
 		EAC34AC71FF4486F00C60330 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34AC11FF4486F00C60330 /* SpriteShaders.metal */; };
 		EAC34ACC1FF4496600C60330 /* Structures.h in Headers */ = {isa = PBXBuildFile; fileRef = EAC34ACB1FF4496500C60330 /* Structures.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EAC0AD281FF5AB0B007B4339 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA0363B11C31C85E00D283E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA0C9F481E0F21E900CCD0B8;
+			remoteInfo = GameEngine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EAC0AD2A1FF5AB0C007B4339 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EAC0AD271FF5AB0B007B4339 /* GameEngine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		EA0363CF1C31C85F00D283E3 /* GameEngine.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameEngine.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +146,7 @@
 		EAA99E2D1C41E6A500CF3246 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = resources/Test/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAA99E2F1C41E6BC00CF3246 /* GameEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameEngine.h; path = resources/GEFramework/GameEngine.h; sourceTree = "<group>"; };
 		EAA99E301C41E6BC00CF3246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/GEFramework/Info.plist; sourceTree = "<group>"; };
+		EAC0AD2B1FF5BB9B007B4339 /* TextureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
 		EAC34A201FF4469300C60330 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Globals.swift; path = GameEngine/Globals.swift; sourceTree = SOURCE_ROOT; };
 		EAC34A261FF446AA00C60330 /* TextureFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextureFrame.swift; sourceTree = "<group>"; };
 		EAC34A271FF446AA00C60330 /* LightData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightData.swift; sourceTree = "<group>"; };
@@ -155,7 +180,6 @@
 		EAC34A5C1FF446C400C60330 /* ComputeRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputeRenderer.swift; sourceTree = "<group>"; };
 		EAC34A5D1FF446C400C60330 /* LightTexturePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightTexturePipeline.swift; sourceTree = "<group>"; };
 		EAC34A5E1FF446C400C60330 /* BufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferManager.swift; sourceTree = "<group>"; };
-		EAC34A5F1FF446C400C60330 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		EAC34A601FF446C400C60330 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		EAC34A611FF446C400C60330 /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		EAC34A631FF446C400C60330 /* FontAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAtlas.swift; sourceTree = "<group>"; };
@@ -213,6 +237,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAC0AD261FF5AB0B007B4339 /* GameEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +247,7 @@
 		EA0363B01C31C85E00D283E3 = {
 			isa = PBXGroup;
 			children = (
-				EAC34A1F1FF4465E00C60330 /* GameEngine */,
+				EAC0AD251FF5A6A0007B4339 /* GameEngine */,
 				EAA99E231C41E64700CF3246 /* resources */,
 				EA0363D21C31C85F00D283E3 /* GameEngineTests */,
 				EA9DC9FA1E0F41ED000FCF02 /* Example-iOS */,
@@ -328,7 +353,7 @@
 			name = Test;
 			sourceTree = "<group>";
 		};
-		EAC34A1F1FF4465E00C60330 /* GameEngine */ = {
+		EAC0AD251FF5A6A0007B4339 /* GameEngine */ = {
 			isa = PBXGroup;
 			children = (
 				EAC34A201FF4469300C60330 /* Globals.swift */,
@@ -338,8 +363,7 @@
 				EAC34A241FF446AA00C60330 /* Nodes */,
 				EAC34A4D1FF446C400C60330 /* Views */,
 			);
-			name = GameEngine;
-			path = "New Group";
+			path = GameEngine;
 			sourceTree = "<group>";
 		};
 		EAC34A241FF446AA00C60330 /* Nodes */ = {
@@ -408,39 +432,39 @@
 				EAC34A651FF446C400C60330 /* GraphCache.swift */,
 				EAC34A661FF446C400C60330 /* Projection.swift */,
 				EAC34A4E1FF446C400C60330 /* Scene.swift */,
+				EAC0AD2B1FF5BB9B007B4339 /* TextureLoader.swift */,
 				EAC34A611FF446C400C60330 /* Updater.swift */,
 				EAC34A621FF446C400C60330 /* Font */,
-				EAC34A501FF446C400C60330 /* RenderPipelines */,
+				EAC34A501FF446C400C60330 /* Renderer */,
 			);
 			name = Views;
 			path = GameEngine/Views;
 			sourceTree = SOURCE_ROOT;
 		};
-		EAC34A501FF446C400C60330 /* RenderPipelines */ = {
+		EAC34A501FF446C400C60330 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
 				EAC34A511FF446C400C60330 /* Buffer.swift */,
 				EAC34A5E1FF446C400C60330 /* BufferManager.swift */,
-				EAC34A5F1FF446C400C60330 /* Device.swift */,
-				EAC34A5A1FF446C400C60330 /* Pipeline.swift */,
+				EAC34A591FF446C400C60330 /* Renderer.swift */,
 				EAC34A5B1FF446C400C60330 /* Compute */,
-				EAC34A521FF446C400C60330 /* RenderPipelines */,
+				EAC34A521FF446C400C60330 /* Pipelines */,
 			);
-			path = RenderPipelines;
+			path = Renderer;
 			sourceTree = "<group>";
 		};
-		EAC34A521FF446C400C60330 /* RenderPipelines */ = {
+		EAC34A521FF446C400C60330 /* Pipelines */ = {
 			isa = PBXGroup;
 			children = (
+				EAC34A5A1FF446C400C60330 /* Pipeline.swift */,
 				EAC34A531FF446C400C60330 /* LightPipeline.swift */,
 				EAC34A541FF446C400C60330 /* CompositionPipeline.swift */,
 				EAC34A551FF446C400C60330 /* SpritePipeline.swift */,
 				EAC34A561FF446C400C60330 /* TextPipeline.swift */,
 				EAC34A571FF446C400C60330 /* RenderPassQueue.swift */,
 				EAC34A581FF446C400C60330 /* ShapePipeline.swift */,
-				EAC34A591FF446C400C60330 /* Renderer.swift */,
 			);
-			path = RenderPipelines;
+			path = Pipelines;
 			sourceTree = "<group>";
 		};
 		EAC34A5B1FF446C400C60330 /* Compute */ = {
@@ -581,10 +605,12 @@
 				EA9DCA0B1E0F421B000FCF02 /* Sources */,
 				EA9DCA0C1E0F421B000FCF02 /* Frameworks */,
 				EA9DCA0D1E0F421B000FCF02 /* Resources */,
+				EAC0AD2A1FF5AB0C007B4339 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EAC0AD291FF5AB0B007B4339 /* PBXTargetDependency */,
 			);
 			name = "Example-macOS";
 			productName = "Example-macOS";
@@ -598,7 +624,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Anthony Green";
 				TargetAttributes = {
 					EA0363CE1C31C85F00D283E3 = {
@@ -734,7 +760,6 @@
 				EAC34A771FF446C400C60330 /* Updater.swift in Sources */,
 				EAC34A6D1FF446C400C60330 /* TextPipeline.swift in Sources */,
 				EAC34A4B1FF446AA00C60330 /* Updateable.swift in Sources */,
-				EAC34A751FF446C400C60330 /* Device.swift in Sources */,
 				EAC34A891FF446D200C60330 /* Screen.swift in Sources */,
 				EAC34A781FF446C400C60330 /* FontAtlas.swift in Sources */,
 				EAC34A451FF446AA00C60330 /* LightNode.swift in Sources */,
@@ -751,17 +776,16 @@
 				EAC34A8A1FF446D200C60330 /* Color.swift in Sources */,
 				EAC34A6E1FF446C400C60330 /* RenderPassQueue.swift in Sources */,
 				EAC34A721FF446C400C60330 /* ComputeRenderer.swift in Sources */,
-				EAC34AC41FF4486F00C60330 /* CompositionShaders.metal in Sources */,
 				EAC34AAF1FF4484300C60330 /* Mat.swift in Sources */,
 				EAC34A6A1FF446C400C60330 /* LightPipeline.swift in Sources */,
 				EAC34A691FF446C400C60330 /* Buffer.swift in Sources */,
 				EAC34A6C1FF446C400C60330 /* SpritePipeline.swift in Sources */,
 				EAC34A6B1FF446C400C60330 /* CompositionPipeline.swift in Sources */,
+				EAC0AD2C1FF5BB9B007B4339 /* TextureLoader.swift in Sources */,
 				EAC34A3F1FF446AA00C60330 /* Easing.swift in Sources */,
 				EAC34A211FF4469300C60330 /* Globals.swift in Sources */,
 				EAC34A411FF446AA00C60330 /* CameraNode.swift in Sources */,
 				EAC34A881FF446D200C60330 /* Point.swift in Sources */,
-				EAC34AC61FF4486F00C60330 /* LightShaders.metal in Sources */,
 				EAC34A841FF446D200C60330 /* CGExtensions.swift in Sources */,
 				EAC34A7B1FF446C400C60330 /* Projection.swift in Sources */,
 			);
@@ -787,6 +811,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		EAC0AD291FF5AB0B007B4339 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA0C9F481E0F21E900CCD0B8 /* GameEngine */;
+			targetProxy = EAC0AD281FF5AB0B007B4339 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		EA9DCA041E0F41ED000FCF02 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -807,14 +839,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -854,14 +892,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -919,7 +963,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -950,7 +994,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1014,6 +1058,7 @@
 		EA9DCA1C1E0F421B000FCF02 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1027,13 +1072,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		EA9DCA1D1E0F421B000FCF02 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1045,7 +1091,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "solarjetmen.Example-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

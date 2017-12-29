@@ -62,8 +62,8 @@ public extension Mat4 {
 
    - returns: A new `Mat4` representing a 2D rotation.
    */
-  public static func rotate(_ degrees: Float) -> Mat4 {
-    return rotateAround(Vec3(0.0, 0.0, 1.0), degrees)
+  public static func rotate(degrees: Float) -> Mat4 {
+    return rotateAround(axis: Vec3(0.0, 0.0, 1.0), degrees: degrees)
   }
 
   /**
@@ -74,8 +74,8 @@ public extension Mat4 {
 
    - returns: A new `Mat4` representing a rotation around an axis.
    */
-  public static func rotateAround(_ axis: Vec3, _ degrees: Float) -> Mat4 {
-    let angle = Math.degreesToRadians(degrees)
+  public static func rotateAround(axis: Vec3, degrees: Float) -> Mat4 {
+    let angle = Math.toRadians(degrees: degrees)
 
     let c = cos(angle)
     let s = sin(angle)

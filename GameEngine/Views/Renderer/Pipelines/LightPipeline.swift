@@ -12,9 +12,9 @@ import simd
 final class LightPipeline: RenderPipeline {
   let pipelineState: MTLRenderPipelineState
 
-  fileprivate let resolutionBuffer: Buffer
+  private let resolutionBuffer: Buffer
 
-  fileprivate struct Programs {
+  private struct Programs {
     static let Shader = "LightShaders"
     static let Vertex = "lightVertex"
     static let Fragment = "lightFragment"
@@ -23,19 +23,21 @@ final class LightPipeline: RenderPipeline {
   init(device: MTLDevice,
        vertexProgram: String = Programs.Vertex,
        fragmentProgram: String = Programs.Fragment) {
-    let pipelineDescriptor = LightPipeline.createPipelineDescriptor(device, vertexProgram: vertexProgram, fragmentProgram: fragmentProgram)
+    let pipelineDescriptor = LightPipeline.makePipelineDescriptor(device: device,
+                                                                  vertexProgram: vertexProgram,
+                                                                  fragmentProgram: fragmentProgram)
 
     pipelineState = LightPipeline.createPipelineState(device, descriptor: pipelineDescriptor)!
 
-    resolutionBuffer = Buffer(length: MemoryLayout<Vec2>.stride)
+    resolutionBuffer = Buffer(device: device, length: MemoryLayout<Vec2>.stride)
   }
 }
 
 extension LightPipeline {
-  func encode(_ encoder: MTLRenderCommandEncoder, bufferIndex: Int, uniformBuffer: Buffer, lightNodes: [LightNode]) {
+  func encode(encoder: MTLRenderCommandEncoder, bufferIndex: Int, uniformBuffer: Buffer, lightNodes: [LightNode]) {
     guard let light = lightNodes.first else { return }
 
-    resolutionBuffer.update([light.resolution.vec2], size: MemoryLayout<Vec2>.stride, bufferIndex: bufferIndex)
+    resolutionBuffer.update(data: [light.resolution.vec2], size: MemoryLayout<Vec2>.stride, bufferIndex: bufferIndex)
 
     encoder.pushDebugGroup("light encoder")
 

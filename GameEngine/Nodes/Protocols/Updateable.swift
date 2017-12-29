@@ -15,7 +15,7 @@ public protocol Updateable: Tree {
   var action: Action? { get }
   var hasAction: Bool { get }
 
-  func update(_ delta: CFTimeInterval)
-  func runAction(_ action: Action)
+  func update(delta: CFTimeInterval)
+  func run(action: Action)
   func stopAction()
 }

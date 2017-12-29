@@ -10,21 +10,21 @@ import Foundation
 import MetalKit
 
 final class Renderer {
-  fileprivate let commandQueue: MTLCommandQueue
+  private let commandQueue: MTLCommandQueue
 
-  fileprivate let shapePipeline: ShapePipeline
-  fileprivate let spritePipeline: SpritePipeline
-  fileprivate let textPipeline: TextPipeline
+  private let shapePipeline: ShapePipeline
+  private let spritePipeline: SpritePipeline
+  private let textPipeline: TextPipeline
   #if os(iOS)
-  fileprivate let lightPipeline: LightPipeline
-  fileprivate let compositionPipeline: CompositionPipeline
+  private let lightPipeline: LightPipeline
+  private let compositionPipeline: CompositionPipeline
   #endif //tmp
-  fileprivate let depthState: MTLDepthStencilState
+  private let depthState: MTLDepthStencilState
 
-  fileprivate let inflightSemaphore: DispatchSemaphore
+  private let inflightSemaphore: DispatchSemaphore
 
-  fileprivate let bufferManager: BufferManager
-  fileprivate var bufferIndex = 0
+  private let bufferManager: BufferManager
+  private var bufferIndex = 0
 
   init(device: MTLDevice, bufferManager: BufferManager) {
     //not sure where to set this up or if I even want to do it this way
@@ -39,15 +39,15 @@ final class Renderer {
     //descriptorQueue = RenderPassQueue(view: view)
 
     let factory = PipelineFactory(device: device)
-    shapePipeline = factory.constructShapePipeline()
-    spritePipeline = factory.constructSpritePipeline()
-    textPipeline = factory.constructTextPipeline()
+    shapePipeline = factory.makeShapePipeline()
+    spritePipeline = factory.makeSpritePipeline()
+    textPipeline = factory.makeTextPipeline()
     //tmp
     #if os(iOS)
-    lightPipeline = factory.constructLightPipeline()
-    compositionPipeline = factory.constructCompositionPipeline()
+    lightPipeline = factory.makeLightPipeline()
+    compositionPipeline = factory.makeCompositionPipeline()
     #endif
-    depthState = factory.constructDepthStencil()
+    depthState = factory.makeDepthStencil()
 
     inflightSemaphore = DispatchSemaphore(value: BUFFER_SIZE)
   }
@@ -75,7 +75,7 @@ final class Renderer {
       encoder?.setFrontFacing(.counterClockwise)
       encoder?.setCullMode(.back)
 
-      bufferManager.uniformBuffer.update([view], size: MemoryLayout<Mat4>.size, bufferIndex: bufferIndex, offset: MemoryLayout<Mat4>.size)
+      bufferManager.uniformBuffer.update(data: [view], size: MemoryLayout<Mat4>.size, bufferIndex: bufferIndex, offset: MemoryLayout<Mat4>.size)
 
       if shapeNodes.count > 0 {
 //        shapePipeline.encode(encoder,
@@ -90,7 +90,7 @@ final class Renderer {
         guard let spriteNodes = spriteNodes[key],
               let vertexBuffer = bufferManager[key] else { continue }
 
-        spritePipeline.encode(encoder!,
+        spritePipeline.encode(encoder: encoder!,
                               bufferIndex: bufferIndex,
                               vertexBuffer: vertexBuffer,
                               indexBuffer: bufferManager.indexBuffer,

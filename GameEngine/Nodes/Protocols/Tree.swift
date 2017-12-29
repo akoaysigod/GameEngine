@@ -41,7 +41,7 @@ public protocol Tree: class {
 
    - parameter node: The `Node` to add to the tree.
    */
-  func addNode(_ node: Node)
+  func add(node: Node)
 
   /**
    Remove a node from the hiearchy and returns the `Node` removed if it was found.
@@ -51,21 +51,13 @@ public protocol Tree: class {
 
    - returns: The `Node` removed or nil if it wasn't found.
    */
-  func removeNode<T: Node>(_ node: T?) -> T?
+  func remove<T: Node>(node: T?) -> T?
 
   /**
    Remove calling `Node` from it's parent. 
    By default, this is safe to call on a `Node` that has not been added to a hiearchy.
    */
   func removeFromParent()
-}
-
-public func +(lhs: Node, rhs: Node) {
-  lhs.addNode(rhs)
-}
-
-public func -(lhs: Node, rhs: Node) {
-  _ = lhs.removeNode(rhs)
 }
 
 extension Tree {
@@ -94,6 +86,14 @@ extension Tree {
   }
 
   public func removeFromParent() {
-    _ = parent?.removeNode(self as? Node)
+    _ = parent?.remove(node: self as? Node)
+  }
+
+  public static func +=(lhs: inout Tree, rhs: Node) {
+    lhs.add(node: rhs)
+  }
+
+  public static func -=(lhs: inout Tree, rhs: Node?) {
+    _ = lhs.remove(node: rhs)
   }
 }

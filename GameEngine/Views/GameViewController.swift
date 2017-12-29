@@ -30,10 +30,10 @@ import Metal
  view.presentScene(scene)
  ````
  */
-public class GameViewController: VC {
+open class GameViewController: VC {
   public var scene: Scene!
 
-  override public func loadView() {
+  override open func loadView() {
     view = GameView(frame: Screen.main.nativeBounds)
   }
 }

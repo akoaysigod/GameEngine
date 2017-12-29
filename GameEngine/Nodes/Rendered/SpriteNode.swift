@@ -30,7 +30,7 @@ open class SpriteNode: Node, Renderable {
   public let isVisible = true
 
   var quad: Quad {
-    let q = texture.flatMap { Quad.spriteRect($0.frame, color: color) } ?? Quad.rect(size, color: color)
+    let q = texture.flatMap { Quad.spriteRect(frame: $0.frame, color: color) } ?? Quad.rect(size: size, color: color)
     let vertices = q.vertices.map { vertex -> Vertex in
       let position = model * vertex.position
       return Vertex(position: position, st: vertex.st, color: color.vec4)
@@ -83,28 +83,11 @@ open class SpriteNode: Node, Renderable {
     self.init(texture: texture, color: .white, size: texture.size)
   }
 
-  /**
-   Convenience initializer. 
-   
-   - discussion: This should really only be used for prototyping as this is the slowest and most memory intensive version.
-                 It's pretty much used the same as `UIImage(named:)`. Unlike `UIImage`, however, it will force load an error image in the case 
-                 that the given image name does not exist. Defaults size to image size and color to white.
-
-   - parameter named: The name of the texture/image to be used.
-
-   - returns: A new instance of `SpriteNote`.
-   */
-  public convenience init(named: String) {
-    let texture = Texture(named: named, contentScale: 3.0) //fix this
-    let lightTexture = TextureAtlas.createLightMap(true, texture: texture)
-    self.init(texture: Texture(texture: texture.texture, lightMapTexture: lightTexture?.texture, frame: texture.frame))
-  }
-
   override func updateTransform() {
     super.updateTransform()
 
     guard let key = texture?.hashValue else { return }
 
-    scene?.updateNode(quad, index: index, key: key)
+    scene?.updateNode(quad: quad, index: index, key: key)
   }
 }

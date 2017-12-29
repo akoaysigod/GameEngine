@@ -119,7 +119,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
 
    - parameter delta: The amount of time that's passed since this function was last called.
    */
-  open func update(_ delta: CFTimeInterval) {
+  open func update(delta: CFTimeInterval) {
     guard let action = self.action else { return }
 
     if !action.completed {
@@ -146,7 +146,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
    
    - parameter action: The action to perform on the node.
    */
-  open func runAction(_ action: Action) {
+  open func run(action: Action) {
     self.action = action
   }
 
@@ -157,7 +157,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
 
   //MARK: Tree stuff
 
-  open func addNode(_ node: Node) {
+  open func add(node: Node) {
     guard node.parent == nil else {
       DLog("Node already has parent node.")
       return
@@ -186,12 +186,12 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     nodes += [node]
   }
 
-  open func removeNode<T: Node>(_ node: T?) -> T? {
+  open func remove<T: Node>(node: T?) -> T? {
     guard let node = node else { return nil }
     guard let index = nodes.find(node) else { return nil }
 
     if let scene = node.scene {
-      return scene.removeNode(node)
+      return scene.remove(node: node)
     }
 
     return nodes.remove(at: index) as? T
@@ -224,7 +224,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
 
     let scale = Mat4.scale(xScale, yScale)
     let worldTranslate = Mat4.translate(x - xRot, y - yRot, z)
-    let rotation = Mat4.rotate(-1 * self.rotation)
+    let rotation = Mat4.rotate(degrees: -1 * self.rotation)
     let rotationTranslate = Mat4.translate(xRot, yRot, z)
 
     var view = Mat4.identity
