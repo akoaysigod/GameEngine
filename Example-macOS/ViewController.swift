@@ -20,12 +20,13 @@ final class ViewController: GameViewController {
     view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
     scene = Scene(size: view.bounds.size.size)
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
-    view.presentScene(scene)
+    view.present(scene: scene)
 
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown"]
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
-    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames, contentScale: 1.0, createLightMap: true), //view.contentScaleFactor, createLightMap: true),
+    let textureLoader = view.textureLoader
+    if let environmentAtlas = try? textureLoader.makeTextureAtlas(imageNames: imageNames),
       let wall = environmentAtlas["Wall"],
       let floor = environmentAtlas["Floor"],
       let openDoor = environmentAtlas["OpenDoor"],
@@ -50,7 +51,7 @@ final class ViewController: GameViewController {
             sp = SpriteNode(texture: floor)
           }
           sp.position = Point(x: sp.size.width * Float(x), y: sp.size.height * Float(y))
-          scene.addNode(sp)
+          scene.add(node: sp)
         }
       }
 
@@ -60,8 +61,8 @@ final class ViewController: GameViewController {
       //      stairs.zPosition = 1
       //      scene.addNode(stairs)
 
-      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
-      scene.addNode(light)
+//      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
+//      scene.addNode(light)
       //      var nodes = [SpriteNode]()
       //      for y in (-10..<10) {
       //        for x in (-10..<10) {
@@ -140,14 +141,14 @@ final class ViewController: GameViewController {
     //let forever = Action.repeatForever(action)
     //colorRect.runAction(forever)
 
-    scene.addUINode(colorRect)
+    //scene.addUINode(colorRect)
 
     let colorRect2 = ShapeNode(width: 64, height: 64, color: .red)
     colorRect2.name = "Red rect"
     colorRect2.position = Point(x: -128.0, y: -64.0)
     //colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
     colorRect2.zPosition = 0
-    scene.addNode(colorRect2)
+    //scene.addNode(colorRect2)
 
     //    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
     //    colorRect3.name = "blue rect"
