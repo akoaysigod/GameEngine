@@ -77,7 +77,8 @@ struct Quad {
 }
 
 extension Quad {
-  fileprivate static var indicesData: [UInt16] {
+  //this is upside down? I ran into this problem before and now it's upside down again, i don't know anymore
+  private static var indicesData: [UInt16] {
     //this is clockwise but the textures end up being anticlockwise so ff == anti 
     //which is why the Quad for ShapeNode is different from the sprite one
     return [

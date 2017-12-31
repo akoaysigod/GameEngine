@@ -99,7 +99,7 @@ public extension NodeGeometry {
   }
 
   var z: Float {
-    return -1.0 * Float(zPosition / Int.max)
+    return -1.0 * Float(zPosition) / Float(Int32.max)
   }
 
   public var scale: (x: Float, y: Float) {

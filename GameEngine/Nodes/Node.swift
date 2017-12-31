@@ -89,7 +89,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     didSet { updateTransform() }
   }
 
-  public fileprivate(set) var transform: Mat4 = .identity
+  public private(set) var transform: Mat4 = .identity
 
   weak var camera: CameraNode?
 

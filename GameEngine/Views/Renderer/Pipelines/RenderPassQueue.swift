@@ -23,7 +23,7 @@ final class RenderPassQueue {
 
   private var currentDescriptorIndex = 0
 
-  private let colorAttachmentCount = 3
+  private let colorAttachmentCount = 1
 
   init(device: MTLDevice, depthTexture: MTLTexture) {
     self.device = device
@@ -51,9 +51,12 @@ final class RenderPassQueue {
 
   private func updateDepthTexture(width: Int, height: Int) {
     depthTexture = RenderPassQueue.createDepthTexture(width: width, height: height, device: device)
+    renderPassDescriptor.depthAttachment.texture = depthTexture
   }
 
   private func updateColorAttachments(width: Int, height: Int) {
+    guard colorAttachmentCount > 1 else { return }
+
     (1..<colorAttachmentCount).forEach {
       let texDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm,
                                                              width: width,

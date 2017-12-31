@@ -69,8 +69,8 @@ extension RenderPipeline {
     pipelineDescriptor.vertexFunction = vertexProgram
     pipelineDescriptor.fragmentFunction = fragmentProgram
     pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-    pipelineDescriptor.colorAttachments[1].pixelFormat = .bgra8Unorm
-    pipelineDescriptor.colorAttachments[2].pixelFormat = .bgra8Unorm
+//    pipelineDescriptor.colorAttachments[1].pixelFormat = .bgra8Unorm
+//    pipelineDescriptor.colorAttachments[2].pixelFormat = .bgra8Unorm
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
     //alpha testing

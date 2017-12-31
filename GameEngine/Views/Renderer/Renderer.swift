@@ -16,8 +16,8 @@ final class Renderer {
   private let spritePipeline: SpritePipeline
   private let textPipeline: TextPipeline
   #if os(iOS)
-  private let lightPipeline: LightPipeline
-  private let compositionPipeline: CompositionPipeline
+//  private let lightPipeline: LightPipeline
+//  private let compositionPipeline: CompositionPipeline
   #endif //tmp
   private let depthState: MTLDepthStencilState
 
@@ -44,14 +44,15 @@ final class Renderer {
     textPipeline = factory.makeTextPipeline()
     //tmp
     #if os(iOS)
-    lightPipeline = factory.makeLightPipeline()
-    compositionPipeline = factory.makeCompositionPipeline()
+//    lightPipeline = factory.makeLightPipeline()
+//    compositionPipeline = factory.makeCompositionPipeline()
     #endif
     depthState = factory.makeDepthStencil()
 
     inflightSemaphore = DispatchSemaphore(value: BUFFER_SIZE)
   }
 
+  private var captureCount = 0
   func render(nextRenderPass: NextRenderPass,
               view: Mat4,
               shapeNodes: [ShapeNode],
@@ -67,30 +68,39 @@ final class Renderer {
       (self.inflightSemaphore).signal()
     }
 
-    if let (renderPassDescriptor, drawable) = nextRenderPass() {
-      let encoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-      encoder?.label = "main encoder"
+    #if os(macOS)
+//    if #available(OSX 10.13, *) {
+//      let captureManager = MTLCaptureManager.shared()
+//      if !captureManager.isCapturing {
+//        captureManager.startCapture(commandQueue: commandQueue)
+//      }
+//    }
+    #endif
 
-      encoder?.setDepthStencilState(depthState)
-      encoder?.setFrontFacing(.counterClockwise)
-      encoder?.setCullMode(.back)
+    if let (renderPassDescriptor, drawable) = nextRenderPass(),
+       let encoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor) {
+      encoder.label = "main encoder"
+
+      encoder.setDepthStencilState(depthState)
+      encoder.setFrontFacing(.counterClockwise)
+      encoder.setCullMode(.back)
 
       bufferManager.uniformBuffer.update(data: [view], size: MemoryLayout<Mat4>.size, bufferIndex: bufferIndex, offset: MemoryLayout<Mat4>.size)
 
       if shapeNodes.count > 0 {
-//        shapePipeline.encode(encoder,
-//                             bufferIndex: bufferIndex,
-//                             vertexBuffer: bufferManager.shapeVertexBuffer,
-//                             indexBuffer: bufferManager.shapeIndexBuffer,
-//                             uniformBuffer: bufferManager.uniformBuffer,
-//                             nodes: shapeNodes)
+        shapePipeline.encode(encoder: encoder,
+                             bufferIndex: bufferIndex,
+                             vertexBuffer: bufferManager.shapeVertexBuffer,
+                             indexBuffer: bufferManager.shapeIndexBuffer,
+                             uniformBuffer: bufferManager.uniformBuffer,
+                             nodes: shapeNodes)
       }
 
       for key in spriteNodes.keys {
         guard let spriteNodes = spriteNodes[key],
               let vertexBuffer = bufferManager[key] else { continue }
 
-        spritePipeline.encode(encoder: encoder!,
+        spritePipeline.encode(encoder: encoder,
                               bufferIndex: bufferIndex,
                               vertexBuffer: vertexBuffer,
                               indexBuffer: bufferManager.indexBuffer,
@@ -104,13 +114,14 @@ final class Renderer {
       }
 
       #if os(iOS) //tmp
-      if let lightNode = lightNodes.first {
-        lightPipeline.encode(encoder!, bufferIndex: bufferIndex, uniformBuffer: bufferManager.uniformBuffer, lightNodes: lightNodes)
-        compositionPipeline.encode(encoder!, ambientColor: lightNode.ambientColor)
-      }
+//      if let lightNode = lightNodes.first {
+//        lightPipeline.encode(encoder!, bufferIndex: bufferIndex, uniformBuffer: bufferManager.uniformBuffer, lightNodes: lightNodes)
+//        compositionPipeline.encode(encoder!, ambientColor: lightNode.ambientColor)
+//      }
       #endif
 
-      encoder?.endEncoding()
+      encoder.endEncoding()
+      //commandQueue.insertDebugCaptureBoundary()
 
       commandBuffer?.present(drawable)
     }
@@ -118,6 +129,17 @@ final class Renderer {
     bufferIndex = (bufferIndex + 1) % BUFFER_SIZE
 
     commandBuffer?.commit()
+
+//    if captureCount < 5 {
+//      captureCount += 1
+//    }
+//    else {
+//      #if os(macOS)
+//        if #available(OSX 10.13, *) {
+//          MTLCaptureManager.shared().stopCapture()
+//        }
+//      #endif
+//    }
   }
 
   deinit {

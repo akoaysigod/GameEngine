@@ -12,6 +12,7 @@
 //  Copyright © 2015 Anthony Green. All rights reserved.
 //
 
+import GameEngine
 import UIKit
 
 final class TestGameViewController: GameViewController {
@@ -25,12 +26,13 @@ final class TestGameViewController: GameViewController {
     view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
     scene = Scene(size: view.bounds.size.size)
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
-    view.presentScene(scene)
+    view.present(scene: scene)
 
     let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown"]
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
-    if let environmentAtlas = try? TextureAtlas(imageNames: imageNames, contentScale: view.contentScaleFactor, createLightMap: true),
+    let textureLoader = view.textureLoader
+    if let environmentAtlas = try? textureLoader.makeTextureAtlas(imageNames: imageNames),
       let wall = environmentAtlas["Wall"],
       let floor = environmentAtlas["Floor"],
       let openDoor = environmentAtlas["OpenDoor"],
@@ -55,18 +57,28 @@ final class TestGameViewController: GameViewController {
             sp = SpriteNode(texture: floor)
           }
           sp.position = Point(x: sp.size.width * Float(x), y: sp.size.height * Float(y))
-          scene.addNode(sp)
+          //scene.add(node: sp)
         }
       }
+      let stairs = SpriteNode(texture: stairsDown)
+      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
+      stairs.position = Point(x: 0.0, y: 0.0)
+      stairs.zPosition = 1
+      scene.add(node: stairs)
 
+      let openDoor = SpriteNode(texture: openDoor)
+      openDoor.anchorPoint = Point(x: 0.5, y: 0.5)
+      openDoor.position = Point(x: openDoor.size.width, y: 0)
+      //openDoor.position = Point(x: 0.0, y: 0.0)
+      scene.add(node: openDoor)
       //      let stairs = SpriteNode(texture: stairsDown)
       //      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
       //      stairs.position = Point(x: 0.0, y: 0.0)
       //      stairs.zPosition = 1
       //      scene.addNode(stairs)
 
-      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
-      scene.addNode(light)
+//      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
+//      scene.addNode(light)
       //      var nodes = [SpriteNode]()
       //      for y in (-10..<10) {
       //        for x in (-10..<10) {
@@ -145,14 +157,14 @@ final class TestGameViewController: GameViewController {
     //let forever = Action.repeatForever(action)
     //colorRect.runAction(forever)
 
-    scene.addUINode(colorRect)
+    //scene.addUINode(colorRect)
 
     let colorRect2 = ShapeNode(width: 64, height: 64, color: .red)
     colorRect2.name = "Red rect"
-    colorRect2.position = Point(x: -128.0, y: -64.0)
+    //colorRect2.position = Point(x: -128.0, y: -64.0)
     //colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
-    colorRect2.zPosition = 0
-    scene.addNode(colorRect2)
+    colorRect2.zPosition = 1
+    scene.add(node: colorRect2)
 
     //    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
     //    colorRect3.name = "blue rect"
@@ -205,6 +217,7 @@ extension TestGameViewController {
     view.addGestureRecognizer(pinch)
   }
 
+  @objc
   func tap(_ t: UITapGestureRecognizer) {
     let p = t.location(in: view)
     let r = scene.convertPointFromView(p.point)
@@ -214,7 +227,8 @@ extension TestGameViewController {
       print($0.frame)
     }
   }
-  
+
+  @objc
   func panCamera(_ p: UIPanGestureRecognizer) {
     var pos = p.translation(in: view)
     pos.x *= CGFloat(scene.camera.xScale)
@@ -224,7 +238,8 @@ extension TestGameViewController {
     scene.camera.position += pos.point
     p.setTranslation(.zero, in: view)
   }
-  
+
+  @objc
   func zoomCamera(_ p: UIPinchGestureRecognizer) {
     let scale = self.scene.camera.scale * Float(p.scale)
     let realScale = max(0.5, min(scale, 5.0));

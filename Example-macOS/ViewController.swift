@@ -38,7 +38,7 @@ final class ViewController: GameViewController {
       //      let stairsDown = environmentAtlas["AngelOrange"],
       //      let stairsUp = environmentAtlas["AngelPurple"]
     {
-      let _ = [wall, floor, openDoor, stairsDown]
+      //let _ = [wall, floor, openDoor, stairsDown]
 
       (-5..<5).forEach { y in
         (-5..<5).forEach { x in
@@ -55,14 +55,20 @@ final class ViewController: GameViewController {
         }
       }
 
-      //      let stairs = SpriteNode(texture: stairsDown)
-      //      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
-      //      stairs.position = Point(x: 0.0, y: 0.0)
-      //      stairs.zPosition = 1
-      //      scene.addNode(stairs)
+      let stairs = SpriteNode(texture: stairsDown)
+      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
+      stairs.position = Point(x: 0.0, y: 0.0)
+      stairs.zPosition = 1
+      scene.add(node: stairs)
 
-//      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
-//      scene.addNode(light)
+      let openDoor = SpriteNode(texture: openDoor)
+      openDoor.anchorPoint = Point(x: 0.5, y: 0.5)
+      openDoor.position = Point(x: openDoor.size.width, y: 0)
+      scene.add(node: openDoor)
+
+
+      //      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
+      //      scene.addNode(light)
       //      var nodes = [SpriteNode]()
       //      for y in (-10..<10) {
       //        for x in (-10..<10) {
@@ -147,7 +153,8 @@ final class ViewController: GameViewController {
     colorRect2.name = "Red rect"
     colorRect2.position = Point(x: -128.0, y: -64.0)
     //colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
-    colorRect2.zPosition = 0
+    colorRect2.zPosition = 1
+    scene.add(node: colorRect2)
     //scene.addNode(colorRect2)
 
     //    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
