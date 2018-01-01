@@ -1,11 +1,3 @@
-//
-//  Sprite.swift
-//  MKTest
-//
-//  Created by Anthony Green on 12/30/15.
-//  Copyright © 2015 Anthony Green. All rights reserved.
-//
-
 import Metal
 import MetalKit
 

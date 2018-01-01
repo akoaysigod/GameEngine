@@ -1,11 +1,3 @@
-//
-//  GERenderer.swift
-//  MKTest
-//
-//  Created by Anthony Green on 12/23/15.
-//  Copyright © 2015 Anthony Green. All rights reserved.
-//
-
 import Foundation
 import MetalKit
 

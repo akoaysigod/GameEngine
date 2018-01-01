@@ -1,11 +1,3 @@
-//
-//  Quad.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 3/6/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import simd
 
 typealias Vertices = [Vertex]
@@ -67,14 +59,6 @@ struct Quad {
     let x = frame.x + halfWidth
     let y = frame.y - halfHeight
 
-//    let ll = Vertex(x: 0, y: sHeight,
-//                    s: x / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
-//    let ul = Vertex(x: 0, y: 0,
-//                    s: x / tWidth, t: y / tHeight, color: color.vec4)
-//    let ur = Vertex(x: sWidth, y: 0,
-//                    s: (x + sWidth) / tWidth, t: y / tHeight, color: color.vec4)
-//    let lr = Vertex(x: sWidth, y: sHeight,
-//                    s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
     let ll = Vertex(x: 0, y: sHeight,
                     s: x / tWidth, t: y / tHeight, color: color.vec4)
     let ul = Vertex(x: 0, y: 0,
@@ -89,7 +73,6 @@ struct Quad {
 }
 
 extension Quad {
-  //this is upside down? I ran into this problem before and now it's upside down again, i don't know anymore
   private static var indicesData: [UInt16] {
     //this is clockwise but the textures end up being anticlockwise so ff == anti 
     //which is why the Quad for ShapeNode is different from the sprite one

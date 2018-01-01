@@ -1,11 +1,3 @@
-//
-//  Rect.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 5/1/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 public struct Rect {
   public var x: Float
   public var y: Float

@@ -1,11 +1,3 @@
-//
-//  NormalShader.metal
-//  GameEngine
-//
-//  Created by Anthony Green on 5/30/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 #include <metal_stdlib>
 using namespace metal;
 

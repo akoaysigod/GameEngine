@@ -1,11 +1,3 @@
-//
-//  TextureFrame.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 3/27/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Foundation
 
 struct TextureFrame {

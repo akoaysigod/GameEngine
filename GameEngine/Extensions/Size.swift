@@ -1,11 +1,3 @@
-//
-//  Size.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 5/1/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Foundation
 
 /**

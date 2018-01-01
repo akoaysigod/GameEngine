@@ -1,11 +1,3 @@
-//
-//  Buffer.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 5/22/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Metal
 
 // lol srsly wtf? fix these index variables when apple fixes them

@@ -1,11 +1,3 @@
-//
-//  TextShader.metal
-//  GameEngine
-//
-//  Created by Anthony Green on 2/15/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 #include <metal_stdlib>
 using namespace metal;
 

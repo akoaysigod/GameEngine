@@ -1,11 +1,3 @@
-//
-//  Animation.swift
-//  MKTest
-//
-//  Created by Anthony Green on 1/2/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 public typealias ActionCompletion = () -> ()
 public typealias Actions = [Action]
 

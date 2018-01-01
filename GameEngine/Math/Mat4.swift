@@ -1,11 +1,3 @@
-//
-//  Mat4.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 4/10/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 /*
   I could probably drop the end of a lot of this since I'm mostly dealing with 2D space but 
   this so far seems to be easier so unless I see some reason to I'll probably just keep treating everything as being 3D.

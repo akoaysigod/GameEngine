@@ -1,11 +1,3 @@
-//
-//  TextPipeline.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 5/21/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Metal
 
 final class TextPipeline: RenderPipeline {

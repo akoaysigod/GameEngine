@@ -1,11 +1,3 @@
-//
-//  Tree.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 3/5/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Foundation
 import simd
 

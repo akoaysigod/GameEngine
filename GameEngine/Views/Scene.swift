@@ -1,11 +1,3 @@
-//
-//  Scene.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 1/10/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Foundation
 import Metal
 import simd

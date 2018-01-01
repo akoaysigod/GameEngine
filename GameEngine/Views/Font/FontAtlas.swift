@@ -1,11 +1,3 @@
-//
-//  FontAtlas.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 2/6/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import CoreText
 import Foundation
 //tmp

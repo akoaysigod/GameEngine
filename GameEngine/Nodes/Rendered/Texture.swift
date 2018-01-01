@@ -1,11 +1,3 @@
-//
-//  Texture.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 3/19/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Foundation
 import Metal
 import MetalKit

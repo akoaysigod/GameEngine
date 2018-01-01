@@ -1,11 +1,3 @@
-//
-//  ArrayExtension.swift
-//  GameEngine
-//
-//  Created by Anthony Green on 5/14/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 import Foundation
 
 extension Collection where Iterator.Element: Equatable {

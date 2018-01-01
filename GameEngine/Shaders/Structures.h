@@ -1,11 +1,3 @@
-//
-//  Structures.h
-//  GameEngine
-//
-//  Created by Anthony Green on 7/9/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 #ifndef Structures_h
 #define Structures_h
 

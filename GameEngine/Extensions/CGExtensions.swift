@@ -1,11 +1,3 @@
-//
-//  CGPointExtensions.swift
-//  MKTest
-//
-//  Created by Anthony Green on 1/2/16.
-//  Copyright © 2016 Anthony Green. All rights reserved.
-//
-
 #if os(iOS)
   import UIKit
 #else

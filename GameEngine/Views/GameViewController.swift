@@ -1,11 +1,3 @@
-//
-//  GameViewController.swift
-//  MKTest
-//
-//  Created by Anthony Green on 12/23/15.
-//  Copyright © 2015 Anthony Green. All rights reserved.
-//
-
 import Metal
 //tmp typealias stuff I think
 #if os(iOS)
