@@ -67,10 +67,22 @@ struct Quad {
     let x = frame.x + halfWidth
     let y = frame.y - halfHeight
 
-    let ll = Vertex(x: 0, y: sHeight, s: x / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
-    let ul = Vertex(x: 0, y: 0, s: x / tWidth, t: y / tHeight, color: color.vec4)
-    let ur = Vertex(x: sWidth, y: 0, s: (x + sWidth) / tWidth, t: y / tHeight, color: color.vec4)
-    let lr = Vertex(x: sWidth, y: sHeight, s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
+//    let ll = Vertex(x: 0, y: sHeight,
+//                    s: x / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
+//    let ul = Vertex(x: 0, y: 0,
+//                    s: x / tWidth, t: y / tHeight, color: color.vec4)
+//    let ur = Vertex(x: sWidth, y: 0,
+//                    s: (x + sWidth) / tWidth, t: y / tHeight, color: color.vec4)
+//    let lr = Vertex(x: sWidth, y: sHeight,
+//                    s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
+    let ll = Vertex(x: 0, y: sHeight,
+                    s: x / tWidth, t: y / tHeight, color: color.vec4)
+    let ul = Vertex(x: 0, y: 0,
+                    s: x / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
+    let ur = Vertex(x: sWidth, y: 0,
+                    s: (x + sWidth) / tWidth, t: (y + sHeight) / tHeight, color: color.vec4)
+    let lr = Vertex(x: sWidth, y: sHeight,
+                    s: (x + sWidth) / tWidth, t: y / tHeight, color: color.vec4)
 
     return Quad(vertices: [ll, ul, ur, lr])
   }

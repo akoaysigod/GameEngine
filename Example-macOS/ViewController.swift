@@ -22,7 +22,7 @@ final class ViewController: GameViewController {
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
     view.present(scene: scene)
 
-    let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown"]
+    let imageNames = ["Wall", "Floor", "OpenDoor", "StairsDown", "AngelGrey"]
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
     let textureLoader = view.textureLoader
@@ -34,7 +34,7 @@ final class ViewController: GameViewController {
       //let stairsUp = environmentAtlas["StairsUp"]
       //      let wall = environmentAtlas["AngelBlue"],
       //      let floor = environmentAtlas["AngelBrown"],
-      //      let openDoor = environmentAtlas["AngelGrey"],
+      //let angelGrey = environmentAtlas["AngelGrey"]
       //      let stairsDown = environmentAtlas["AngelOrange"],
       //      let stairsUp = environmentAtlas["AngelPurple"]
     {
@@ -65,6 +65,11 @@ final class ViewController: GameViewController {
       openDoor.anchorPoint = Point(x: 0.5, y: 0.5)
       openDoor.position = Point(x: openDoor.size.width, y: 0)
       scene.add(node: openDoor)
+
+//      let angelGrey = SpriteNode(texture: angelGrey)
+//      angelGrey.anchorPoint = Point(x: 0.5, y: 0.5)
+//      angelGrey.position = Point(x: 0, y: angelGrey.size.height)
+//      scene.add(node: angelGrey)
 
 
       //      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
