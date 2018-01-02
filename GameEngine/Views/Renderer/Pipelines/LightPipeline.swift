@@ -39,10 +39,10 @@ extension LightPipeline {
 
 //    var pos = Vec2(0.0, 0.0)
 //    encoder.setVertexBytes(&pos, length: MemoryLayout<Vec2>.size, at: 1)
-    let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
+    let (uBuffer, uOffset) = uniformBuffer.next(index: bufferIndex)
     encoder.setVertexBuffer(uBuffer, offset: uOffset, index: 1)
 
-    let (rBuffer, rOffset) = resolutionBuffer.nextBuffer(bufferIndex)
+    let (rBuffer, rOffset) = resolutionBuffer.next(index: bufferIndex)
     encoder.setFragmentBuffer(rBuffer, offset: rOffset, index: 0)
 
     var lightData = light.lightData

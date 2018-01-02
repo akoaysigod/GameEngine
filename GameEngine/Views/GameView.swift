@@ -1,6 +1,5 @@
 import Foundation
 import Metal
-import QuartzCore
 
 #if os(iOS)
   import UIKit
@@ -16,10 +15,12 @@ import QuartzCore
 open class GameView: V {
   private var currentScene: Scene?
 
-  private(set) var projection: Projection!
+  private(set) var projection: Projection
 
-  private(set) var device: MTLDevice
-  private weak var metalLayer: CAMetalLayer?
+  private let device: MTLDevice
+  private var metalLayer: CAMetalLayer? {
+    return layer as? CAMetalLayer
+  }
 
   private var updater: Updater!
 
@@ -28,14 +29,16 @@ open class GameView: V {
   /// Pauses rendering, automatically starts when a scene is presented
   public var paused = true
 
-  let bufferManager: BufferManager
+  private let bufferManager: BufferManager
   private let renderer: Renderer
   private let renderPassQueue: RenderPassQueue
 
   /// Use to load textures/atlases for `SpriteNode`s.
   public let textureLoader: TextureLoader
 
-  #if !os(macOS)
+  private var graphCache: GraphCache?
+
+  #if os(iOS)
     open static override var layerClass: AnyClass { return CAMetalLayer.self }
   #else
     open override func makeBackingLayer() -> CALayer { return CAMetalLayer() }
@@ -65,7 +68,6 @@ open class GameView: V {
       wantsLayer = true
     #endif
 
-    metalLayer = layer as? CAMetalLayer
     metalLayer?.device = device
     metalLayer?.pixelFormat = .bgra8Unorm
     metalLayer?.framebufferOnly = true
@@ -80,8 +82,9 @@ open class GameView: V {
 
   open func present(scene: Scene) {
     currentScene = scene
+    scene.graphCache = GraphCache(bufferManager: bufferManager)
     scene.view = self
-    scene.didMoveToView(self)
+    scene.didMoveTo(view: self)
     paused = false
   }
 }
@@ -115,7 +118,7 @@ extension GameView {
 
     if !paused {
       updateNodes(delta: delta, nodes: scene.allNodes)
-      scene.update(delta)
+      scene.update(delta: delta)
     }
     render(scene: scene)
   }

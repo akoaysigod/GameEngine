@@ -47,7 +47,7 @@ extension CompositionPipeline {
 
     encoder.setRenderPipelineState(pipelineState)
 
-    let (buffer, offset) = quadBuffer.nextBuffer(0)
+    let (buffer, offset) = quadBuffer.next(index: 0)
     encoder.setVertexBuffer(buffer, offset: offset, index: 0)
 
     var color = ambientColor.vec4

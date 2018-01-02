@@ -1,9 +1,9 @@
 import Metal
 
 final class BufferManager {
-  fileprivate let device: MTLDevice
+  private let device: MTLDevice
 
-  fileprivate let startSize = 500
+  private let startSize = 500
 
   let uniformBuffer: Buffer
   let uiUniformBuffer: Buffer
@@ -11,12 +11,12 @@ final class BufferManager {
   let shapeIndexBuffer: Buffer
   let shapeVertexBuffer: Buffer
 
-  fileprivate(set) var indexBuffer: Buffer
+  private(set) var indexBuffer: Buffer
 
-  fileprivate var vertexBuffer = [Int: Buffer]()
+  private var vertexBuffer = [Int: Buffer]()
 
   var lightVertexBuffer: Buffer?
-  fileprivate let maxLights = 100
+  private let maxLights = 100
 
   // I need to look into this more but for whatever macOS only accepts buffers in sizes of 256?
   // this adds padding to the uniform buffer which are only 128 bytes in size 

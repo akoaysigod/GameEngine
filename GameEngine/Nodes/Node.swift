@@ -10,10 +10,6 @@ import simd
 
 public typealias Nodes = [Node]
 
-public func ==(rhs: Node, lhs: Node) -> Bool {
-   return rhs.hashValue == lhs.hashValue
-}
-
 /**
  A `Node` is the most basic object from which most game type objects should be subclassed from.
  
@@ -27,7 +23,7 @@ public func ==(rhs: Node, lhs: Node) -> Bool {
  - TextNode
  - Camera
  */
-open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
+open class Node: NodeGeometry, Tree, Hashable {
   public var name: String? = nil
 
   public var scene: Scene? = nil
@@ -86,10 +82,12 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
   weak var camera: CameraNode?
 
   //tree related
-  fileprivate let uuid = UUID().uuidString
+  private let uuid = UUID().uuidString
   public var hashValue: Int { return uuid.hashValue }
-  public fileprivate(set) var nodes = Nodes()
-  public fileprivate(set) var parent: Node? = nil
+  public private(set) var nodes = Nodes()
+  public private(set) var parent: Node? = nil
+
+  private(set) public var action: Action? = nil
 
   /**
    Designated initializer. 
@@ -106,11 +104,6 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     updateTransform()
   }
   
-  /**
-   A function that's called on every frame update. When subclassing `Node` be sure to call super in this function.
-
-   - parameter delta: The amount of time that's passed since this function was last called.
-   */
   open func update(delta: CFTimeInterval) {
     guard let action = self.action else { return }
 
@@ -120,31 +113,6 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     else {
       self.action = nil
     }
-  }
-
-  //MARK: Actions
-
-  fileprivate(set) public var action: Action? = nil
-
-  /// True if this `Node` or any of it's parents' `Node` is currently running an action.
-  public var hasAction: Bool {
-    guard action == nil else { return true }
-    let parentActions = allParents.filter { $0.hasAction }
-    return parentActions.count > 0
-  }
-
-  /**
-   Run an `Action` on the `Node` object. 
-   
-   - parameter action: The action to perform on the node.
-   */
-  open func run(action: Action) {
-    self.action = action
-  }
-
-  open func stopAction() {
-    action?.stopAction()
-    action = nil
   }
 
   //MARK: Tree stuff
@@ -192,7 +160,7 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
   //MARK: transform caching
   
   var hasTransformUpdate = false
-  fileprivate var cachedModel: Mat4 = .identity
+  private var cachedModel: Mat4 = .identity
   public var model: Mat4 {
     if !hasTransformUpdate {
       return cachedModel
@@ -225,6 +193,29 @@ open class Node: NodeGeometry, Updateable, Tree, Equatable, Hashable {
     }
 
     transform = view * worldTranslate * rotation * rotationTranslate * scale
+  }
+}
+
+extension Node: Updateable {
+  public var hasAction: Bool {
+    guard action == nil else { return true }
+    let parentActions = allParents.filter { $0.hasAction }
+    return parentActions.count > 0
+  }
+
+  open func run(action: Action) {
+    self.action = action
+  }
+
+  open func stopAction() {
+    action?.stopAction()
+    action = nil
+  }
+}
+
+extension Node: Equatable {
+  public static func ==(rhs: Node, lhs: Node) -> Bool {
+    return rhs.hashValue == lhs.hashValue
   }
 }
 

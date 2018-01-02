@@ -1,11 +1,5 @@
 import Foundation
-import Metal
 import simd
-#if os(iOS)
-import UIKit
-#else
-import Cocoa
-#endif
 
 /**
  A `Scene` is a node object that holds everything on screen as the root of the node tree. Anything that needs to be displayed must be added to 
@@ -19,11 +13,7 @@ import Cocoa
                it will be the same camera used for each node added to the scene. Also, it probably makes little sense to add a scene as a child to another scene and may cause problems.
  */
 open class Scene {
-  open weak var view: GameView? {
-    didSet {
-      graphCache.bufferManager = view?.bufferManager
-    }
-  }
+  public weak var view: GameView?
 
   public fileprivate(set) var camera: CameraNode
 
@@ -31,7 +21,7 @@ open class Scene {
     return graphCache.allNodes
   }
 
-  let graphCache = GraphCache()
+  var graphCache: GraphCache!
 
   /// the ambient color for when light nodes are present, defaults to white
   open var ambientLightColor: Color = Color(1.0, 1.0, 1.0, 1.0) 
@@ -54,14 +44,14 @@ open class Scene {
    
    - parameter view: The `GameView` that owns the `Scene`.
    */
-  open func didMoveToView(_ view: GameView) {}
+  open func didMoveTo(view: GameView) {}
 
   /**
    This method can be overridden to perform per frame updates.
 
    - parameter delta: The amount of time that has passed since the last update.
    */
-  open func update(_ delta: Double) {}
+  open func update(delta: Double) {}
 }
 
 // MARK: Scene graph
@@ -101,7 +91,7 @@ extension Scene {
 
    - returns: An array of Nodes at a given point or an empty array if no nodes at point.
    */
-  public func nodesAtPoint(_ point: Point) -> Nodes {
+  public func nodesAt(point: Point) -> Nodes {
     return allNodes.filter { node -> Bool in
       let rect = node.frame
 
@@ -145,13 +135,13 @@ extension Scene {
    - returns: A point on the device's screen.
    */
   public func convertPointFromScene(_ point: Point) -> Point {
-    guard view != nil else {
+    guard let view = view else {
       DLog("Scene has not been presented but you're trying to convert a point to screen coordinates.")
       return .zero
     }
 
     let x = point.x
-    let y = Float(view!.bounds.height) - point.y
+    let y = Float(view.bounds.height) - point.y
     let vec = Vec4(x, y, 1.0, 1.0)
 
     let scale = 1.0 / camera.scale

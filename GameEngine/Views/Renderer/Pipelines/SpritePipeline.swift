@@ -45,9 +45,9 @@ extension SpritePipeline {
 
     encoder.setRenderPipelineState(pipelineState)
 
-    let (vBuffer, vOffset) = vertexBuffer.nextBuffer(bufferIndex)
+    let (vBuffer, vOffset) = vertexBuffer.next(index: bufferIndex)
     encoder.setVertexBuffer(vBuffer, offset: vOffset, index: 0)
-    let (uBuffer, uOffset) = uniformBuffer.nextBuffer(bufferIndex)
+    let (uBuffer, uOffset) = uniformBuffer.next(index: bufferIndex)
     encoder.setVertexBuffer(uBuffer, offset: uOffset, index: 1)
 
     encoder.setFragmentSamplerState(sampler, index: 0)
@@ -58,7 +58,7 @@ extension SpritePipeline {
 //    var lightColor = lights!.first!.ambientColor.vec4
 //    encoder.setFragmentBytes(&lightColor, length: MemoryLayout<Vec4>.size, at: 0)
 
-    let (iBuffer, iOffset) = indexBuffer.nextBuffer(bufferIndex)
+    let (iBuffer, iOffset) = indexBuffer.next(index: bufferIndex)
     encoder.drawIndexedPrimitives(type: .triangle,
                                   indexCount: 6 * nodes.count,
                                   indexType: .uint16,

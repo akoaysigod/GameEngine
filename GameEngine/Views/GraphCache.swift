@@ -1,5 +1,5 @@
 final class GraphCache {
-  fileprivate var updateNodes = Nodes()
+  private var updateNodes = Nodes()
   var allNodes: Nodes {
     return updateNodes
   }
@@ -7,10 +7,14 @@ final class GraphCache {
   private(set) var shapeNodes = [ShapeNode]()
   private(set) var spriteNodes = [Int: [SpriteNode]]()
   private var spriteIndex = [Int: Int]()
-  var bufferManager: BufferManager?
+  private let bufferManager: BufferManager
   private(set) var textNodes = [TextNode]()
   private(set) var lightNodes = [LightNode]()
   private var lightNodeIndex = 0
+
+  init(bufferManager: BufferManager) {
+    self.bufferManager = bufferManager
+  }
 
   func add(node: Node) {
     let allNodes = [node] + node.allNodes
@@ -25,7 +29,7 @@ final class GraphCache {
         let key = sprite.texture?.hashValue ?? -1
         if let arr = spriteNodes[key],
           let index = spriteIndex[key],
-          let buffer = bufferManager?[key] {
+          let buffer = bufferManager[key] {
           let newIndex = index + 1
           
           sprite.index = newIndex
@@ -39,13 +43,9 @@ final class GraphCache {
           spriteIndex.updateValue(0, forKey: key)
           spriteNodes.updateValue([sprite], forKey: key)
 
-          //FIX THIS
-          //bufferManager will definitely exist or this whole object is broken,
-          //this api sucks though
-          if let buffer = bufferManager?.makeBuffer(length: sprite.quad.size * 500) {
-            buffer.add(data: sprite.quad.vertices, size: sprite.quad.size)
-            bufferManager?[key] = buffer
-          }
+          let buffer = bufferManager.makeBuffer(length: sprite.quad.size * 500)
+          buffer.add(data: sprite.quad.vertices, size: sprite.quad.size)
+          bufferManager[key] = buffer
         }
       case let text as TextNode:
         textNodes += [text]
@@ -99,7 +99,7 @@ final class GraphCache {
   
   private func realignData(key: Int) {
     guard let nodes = spriteNodes[key] else { return }
-    guard let buffer = bufferManager?[key] else { return }
+    guard let buffer = bufferManager[key] else { return }
     
     nodes.enumerated().forEach { i, node in
       node.index = i
@@ -109,7 +109,7 @@ final class GraphCache {
   }
   
   func updateNode(quad: Quad, index: Int, key: Int) {
-    guard let buffer = bufferManager?[key] else { return }
+    guard let buffer = bufferManager[key] else { return }
     
     buffer.add(data: quad.vertices, size: quad.size, offset: index)
   }

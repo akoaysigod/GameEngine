@@ -60,15 +60,6 @@ final class Renderer {
       (self.inflightSemaphore).signal()
     }
 
-    #if os(macOS)
-//    if #available(OSX 10.13, *) {
-//      let captureManager = MTLCaptureManager.shared()
-//      if !captureManager.isCapturing {
-//        captureManager.startCapture(commandQueue: commandQueue)
-//      }
-//    }
-    #endif
-
     if let (renderPassDescriptor, drawable) = nextRenderPass(),
        let encoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor) {
       encoder.label = "main encoder"
@@ -121,17 +112,6 @@ final class Renderer {
     bufferIndex = (bufferIndex + 1) % BUFFER_SIZE
 
     commandBuffer?.commit()
-
-//    if captureCount < 5 {
-//      captureCount += 1
-//    }
-//    else {
-//      #if os(macOS)
-//        if #available(OSX 10.13, *) {
-//          MTLCaptureManager.shared().stopCapture()
-//        }
-//      #endif
-//    }
   }
 
   deinit {

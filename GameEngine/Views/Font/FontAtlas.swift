@@ -1,6 +1,6 @@
 import CoreText
 import Foundation
-//tmp
+
 #if os(iOS)
   import UIKit
   public typealias Font = UIFont
@@ -23,7 +23,7 @@ final class GlyphDescriptor: NSObject, NSCoding {
     self.bottomRightTexCoord = bottomRightTexCoord
   }
 
-  fileprivate struct Keys {
+  private struct Keys {
     static let GlyphIndex = "glyphindex"
     static let XLeftTex = "xlefttex"
     static let YLeftTex = "ylefttex"
@@ -54,7 +54,7 @@ final class GlyphDescriptor: NSObject, NSCoding {
 
 private final class FlatArray<T> {
   var arr: [T]
-  fileprivate let width: Int
+  private let width: Int
   
   init(count: Int, repeatedValue: T, width: Int) {
     self.arr = [T](repeating: repeatedValue, count: count)

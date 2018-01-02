@@ -1,10 +1,6 @@
 import Metal
 
-// lol srsly wtf? fix these index variables when apple fixes them
-// for some reason the compiler doesn't like pointer + something + something 
-// parens didn't fix it
-
-final class Buffer { //might change this to a protocol 
+final class Buffer { //might change this to a protocol
   private var buffer: MTLBuffer
   private let length: Int
 
@@ -14,11 +10,10 @@ final class Buffer { //might change this to a protocol
   }
 
   func add<T>(data: [T], size: Int, offset: Int = 0) {
-    var wtf = size * offset
-    memcpy(buffer.contents() + wtf, data, size)
-    wtf += length
-    memcpy(buffer.contents() + wtf, data, size)
-    memcpy(buffer.contents() + length * 2 + (size * offset), data, size) //LOL this is fine though?
+    for i in 0..<BUFFER_SIZE {
+      let wtf = (length * i) + (size * offset) //This still hasn't been fixed :(
+      memcpy(buffer.contents() + wtf, data, size)
+    }
   }
 
   func update<T>(data: [T], size: Int, bufferIndex: Int, offset: Int = 0) {
@@ -31,7 +26,7 @@ final class Buffer { //might change this to a protocol
     memcpy(buffer.contents() + wtf, data, size)
   }
 
-  func nextBuffer(_ bufferIndex: Int) -> (buffer: MTLBuffer, offset: Int) {
-    return (buffer, bufferIndex * length)
+  func next(index: Int) -> (buffer: MTLBuffer, offset: Int) {
+    return (buffer, index * length)
   }
 }
