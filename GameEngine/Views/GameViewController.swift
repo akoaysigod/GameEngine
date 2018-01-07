@@ -23,7 +23,14 @@ import Metal
  ````
  */
 open class GameViewController: VC {
-  public var scene: Scene!
+  #if os(macOS)
+  open override var preferredContentSize: NSSize {
+    didSet {
+      let size = Size(width: Int(preferredContentSize.width), height: Int(preferredContentSize.height))
+      (view as! GameView).updateDrawable(size: size)
+    }
+  }
+  #endif
 
   override open func loadView() {
     view = GameView(frame: Screen.main.nativeBounds)

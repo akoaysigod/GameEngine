@@ -140,14 +140,12 @@ extension GameView {
     }
   }
 
-  //not currently being used for anything
-  private func updateDrawableSize() {
-    let newSize = Screen.main.nativeBounds.size
-    metalLayer?.drawableSize = newSize
+  func updateDrawable(size: Size) {
+    metalLayer?.drawableSize = CGSize(width: size.width, height: size.height)
 
-    projection.update(newSize.size)
+    projection.update(size)
     bufferManager.updateProjection(projection.projection)
-    currentScene?.updateCameras(newSize.size)
+    currentScene?.updateCameras(size)
   }
 }
 
@@ -158,7 +156,7 @@ extension GameView: NSWindowDelegate {
   }
 
   public func windowDidResize(_ notification: Notification) {
-    updateDrawableSize()
+    updateDrawable(size: frame.size.size)
   }
 }
 #endif

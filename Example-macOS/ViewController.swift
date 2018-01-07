@@ -10,6 +10,9 @@ import Cocoa
 import GameEngine
 
 final class ViewController: GameViewController {
+  private let width = 1024
+  private let height = 768
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -18,7 +21,7 @@ final class ViewController: GameViewController {
 
     let view = self.view as! GameView
     view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
-    scene = Scene(size: view.bounds.size.size)
+    let scene = Scene(size: Size(width: width, height: height))
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
     view.present(scene: scene)
 
@@ -196,6 +199,11 @@ final class ViewController: GameViewController {
     
     //scene.removeNode(sp2)
     
+  }
+
+  override func viewWillAppear() {
+    super.viewWillAppear()
+    preferredContentSize = NSSize(width: width, height: height)
   }
 }
 

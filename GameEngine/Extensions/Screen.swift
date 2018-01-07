@@ -12,22 +12,22 @@ struct Screen {
   private let screen: _Screen
 
   var bounds: CGRect {
-    #if !os(macOS)
-      return screen.bounds
-    #else
+    #if os(macOS)
       return screen.frame
+    #else
+      return screen.bounds
     #endif
   }
 
   var nativeBounds: CGRect {
-    #if !os(macOS)
+    #if os(macOS)
+      return screen.frame
+    #else
       let scale = screen.nativeScale
       var bounds = self.bounds
       bounds.size.width *= scale
       bounds.size.height *= scale
       return bounds
-    #else
-      return screen.frame
     #endif
   }
 
