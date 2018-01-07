@@ -13,7 +13,7 @@ import Metal
  A `GameView` is a subclass of MTKView in order to tie into some of logic/delegate stuff provided for free by Apple.
  */
 open class GameView: V {
-  private var currentScene: Scene?
+  public private(set) var scene: Scene?
 
   private(set) var projection: Projection
 
@@ -81,7 +81,7 @@ open class GameView: V {
   }
 
   open func present(scene: Scene) {
-    currentScene = scene
+    self.scene = scene
     scene.graphCache = GraphCache(bufferManager: bufferManager)
     scene.view = self
     scene.didMoveTo(view: self)
@@ -112,7 +112,7 @@ extension GameView {
       //    }
     #endif
 
-    guard let scene = currentScene else {
+    guard let scene = scene else {
       return
     }
 
@@ -122,7 +122,7 @@ extension GameView {
     }
     render(scene: scene)
   }
-  
+
   private func updateNodes(delta: CFTimeInterval, nodes: Nodes) {
     nodes.forEach {
       $0.update(delta: delta)
@@ -145,7 +145,7 @@ extension GameView {
 
     projection.update(size)
     bufferManager.updateProjection(projection.projection)
-    currentScene?.updateCameras(size)
+    scene?.updateCameras(size)
   }
 }
 
