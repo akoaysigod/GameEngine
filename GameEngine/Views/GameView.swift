@@ -150,3 +150,15 @@ extension GameView {
     currentScene?.updateCameras(newSize.size)
   }
 }
+
+#if os(macOS)
+extension GameView: NSWindowDelegate {
+  open override func viewDidMoveToWindow() {
+      window?.delegate = self
+  }
+
+  public func windowDidResize(_ notification: Notification) {
+    updateDrawableSize()
+  }
+}
+#endif

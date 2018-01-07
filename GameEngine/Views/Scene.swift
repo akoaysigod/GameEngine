@@ -93,7 +93,7 @@ extension Scene {
    */
   public func nodesAt(point: Point) -> Nodes {
     return allNodes.filter { node -> Bool in
-      let rect = node.frame
+      let rect = node.boundingRect
 
       let ll = rect.origin
       let ur = rect.upperRight
