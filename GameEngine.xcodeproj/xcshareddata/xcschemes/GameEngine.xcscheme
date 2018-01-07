@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "GameEngine::math"
-               BuildableName = "math.framework"
-               BlueprintName = "math"
-               ReferencedContainer = "container:GameEngine.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "GameEngine::private"
-               BuildableName = "private.framework"
-               BlueprintName = "private"
+               BlueprintIdentifier = "EA0C9F481E0F21E900CCD0B8"
+               BuildableName = "GameEngine.framework"
+               BlueprintName = "GameEngine"
                ReferencedContainer = "container:GameEngine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,16 +29,6 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EA0363CE1C31C85F00D283E3"
-               BuildableName = "GameEngine.xctest"
-               BlueprintName = "GameEngineTests"
-               ReferencedContainer = "container:GameEngine.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <AdditionalOptions>
       </AdditionalOptions>
@@ -71,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "GameEngine::math"
-            BuildableName = "math.framework"
-            BlueprintName = "math"
+            BlueprintIdentifier = "EA0C9F481E0F21E900CCD0B8"
+            BuildableName = "GameEngine.framework"
+            BlueprintName = "GameEngine"
             ReferencedContainer = "container:GameEngine.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -86,6 +62,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EA0C9F481E0F21E900CCD0B8"
+            BuildableName = "GameEngine.framework"
+            BlueprintName = "GameEngine"
+            ReferencedContainer = "container:GameEngine.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
