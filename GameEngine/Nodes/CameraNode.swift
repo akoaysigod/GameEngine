@@ -35,7 +35,7 @@ public final class CameraNode: Node {
   fileprivate var width: Float
   fileprivate var height: Float
 
-  override init(size: Size) {
+  public override init(size: Size) {
     width = Float(size.width)
     height = Float(size.height)
 
