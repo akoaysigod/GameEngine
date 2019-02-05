@@ -15,7 +15,7 @@ open class ShapeNode: Node, Renderable {
   var texture: Texture? = nil
 
   open var hidden = false
-  open let isVisible = true
+  public let isVisible = true
 
   private(set) var quad: Quad
 
@@ -46,9 +46,9 @@ open class ShapeNode: Node, Renderable {
 
    - returns: A new instance of `ShapeNode`.
    */
-  public convenience init<T: ExpressibleByFloatLiteral>(width: T, height: T, color: Color) {
-    self.init(width: width, height: height, color: color)
-  }
+  //public convenience init<T: ExpressibleByFloatLiteral>(width: T, height: T, color: Color) {
+  //  self.init(width: width, height: height, color: color)
+  //}
 
   /**
    Convenience initializer. Creates a rectangular shape node of a given color.

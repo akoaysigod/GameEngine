@@ -86,7 +86,7 @@ open class TextNode: Node, Renderable {
   static func makeTextQuads(_ text: String, color: Color, fontAtlas: FontAtlas) -> Quads {
     let rect = CGRect(x: 0.0, y: 0.0, width: 400.0, height: 400.0)
 
-    let attr = [NSAttributedStringKey.font: fontAtlas.font]
+    let attr = [NSAttributedString.Key.font: fontAtlas.font]
     let attrStr = NSAttributedString(string: text, attributes: attr)
 
     let strRng = CFRangeMake(0, attrStr.length)
@@ -136,7 +136,7 @@ open class TextNode: Node, Renderable {
 
     let lines = CTFrameGetLines(frame) as [AnyObject] as! [CTLine] //lol
     let originBuffer = UnsafeMutablePointer<CGPoint>.allocate(capacity: lines.count)
-    defer { originBuffer.deinitialize(count: lines.count); originBuffer.deallocate(capacity: lines.count) }
+    defer { originBuffer.deinitialize(count: lines.count); originBuffer.deallocate() }
     CTFrameGetLineOrigins(frame, entire, originBuffer)
 
     //tmp

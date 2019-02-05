@@ -35,6 +35,7 @@ public extension CGPoint {
    - returns: A new instance of `CGPoint`.
    */
   public init(x: Float, y: Float) {
+    self.init()
     self.x = CGFloat(x)
     self.y = CGFloat(y)
   }

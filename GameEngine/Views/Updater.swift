@@ -29,7 +29,7 @@ extension Updater {
 #if !os(macOS)
   func createDisplayLink() {
     displayLink = CADisplayLink(target: self, selector: #selector(newFrame(_:)))
-    displayLink?.add(to: .main, forMode: .commonModes)
+    displayLink?.add(to: .main, forMode: RunLoop.Mode.common)
   }
   
   @objc private func newFrame(_ displayLink: CADisplayLink) {

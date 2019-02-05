@@ -39,7 +39,7 @@ open class GameView: V {
   private var graphCache: GraphCache?
 
   #if os(iOS)
-    open static override var layerClass: AnyClass { return CAMetalLayer.self }
+    open class override var layerClass: AnyClass { return CAMetalLayer.self }
   #else
     open override func makeBackingLayer() -> CALayer { return CAMetalLayer() }
   #endif

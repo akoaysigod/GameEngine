@@ -124,7 +124,7 @@ final class FontAtlas: NSObject, NSCoding {
 
     self.font = Font(name: fontName, size: CGFloat(fontSize))!
     self.textureSize = Int(aDecoder.decodeCInt(forKey: Keys.TextureSize))
-    self.textureData = aDecoder.decodeObject(forKey: Keys.TextureData) as! Data
+    self.textureData = aDecoder.decodeObject(forKey: Keys.TextureData) as? Data
     self.glyphDescriptors = aDecoder.decodeObject(forKey: Keys.GlyphDescriptors) as! [GlyphDescriptor]
     
     super.init()
@@ -143,7 +143,7 @@ final class FontAtlas: NSObject, NSCoding {
     let exampleStr: NSString = "123ABC"
     //tmp maybe
     #if os(iOS)
-      let exampleStrSize = exampleStr.size(withAttributes: [NSAttributedStringKey.font: font])
+      let exampleStrSize = exampleStr.size(withAttributes: [NSAttributedString.Key.font: font])
     #else
       let exampleStrSize = exampleStr.size(withAttributes: [NSAttributedStringKey.font: font])
     #endif
@@ -154,7 +154,7 @@ final class FontAtlas: NSObject, NSCoding {
   
   fileprivate func estimateLineWidth(_ font: Font) -> CGFloat {
     #if os(iOS)
-      let estimatedWidth = ("!" as NSString).size(withAttributes: [NSAttributedStringKey.font: font]).width
+      let estimatedWidth = ("!" as NSString).size(withAttributes: [NSAttributedString.Key.font: font]).width
     #else
       let estimatedWidth = ("!" as NSString).size(withAttributes: [NSAttributedStringKey.font: font]).width
     #endif
@@ -196,14 +196,14 @@ final class FontAtlas: NSObject, NSCoding {
     }
     
     let asciiGlyphs = UnsafeMutablePointer<UniChar>.allocate(capacity: 128)
-    defer { asciiGlyphs.deinitialize(count: 128); asciiGlyphs.deallocate(capacity: 128) }
+    defer { asciiGlyphs.deinitialize(count: 128); asciiGlyphs.deallocate() }
     
     for i in (0...127) {
       asciiGlyphs[i] = UniChar(i)
     }
     
     var glyphIndices = UnsafeMutablePointer<CGGlyph>.allocate(capacity: 128)
-    defer { glyphIndices.deinitialize(count: 128); glyphIndices.deallocate(capacity: 128) }
+    defer { glyphIndices.deinitialize(count: 128); glyphIndices.deallocate() }
     CTFontGetGlyphsForCharacters(ctFont, asciiGlyphs, glyphIndices, 128)
     
     return (0...127).map {
@@ -251,10 +251,10 @@ final class FontAtlas: NSObject, NSCoding {
     //TODO: refactor this
     glyphIndices(ctFont).forEach { glyph in //look into this bug in swift-mode need parens around this for smie, .forEach is worse
       var rect = UnsafeMutablePointer<CGRect>.allocate(capacity: 1)
-      defer { rect.deinitialize(); rect.deallocate(capacity: 1) }
+      defer { rect.deinitialize(count: 1); rect.deallocate() }
       
       let unsafeGlyph = UnsafeMutablePointer<CGGlyph>.allocate(capacity: 1)
-      defer { unsafeGlyph.deinitialize(); unsafeGlyph.deallocate(capacity: 1) }
+      defer { unsafeGlyph.deinitialize(count: 1); unsafeGlyph.deallocate() }
       unsafeGlyph[0] = glyph
       
       CTFontGetBoundingRectsForGlyphs(ctFont, .horizontal, unsafeGlyph, rect, 1)
@@ -273,7 +273,7 @@ final class FontAtlas: NSObject, NSCoding {
       
       var transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: glyphOriginX, ty: glyphOriginY)
       var unsafeTransform = UnsafeMutablePointer<CGAffineTransform>.allocate(capacity: 1)
-      defer { unsafeTransform.deinitialize(); unsafeTransform.deallocate(capacity: 1) }
+      defer { unsafeTransform.deinitialize(count: 1); unsafeTransform.deallocate() }
       unsafeTransform[0] = transform
       
       let path = CTFontCreatePathForGlyph(ctFont, glyph, unsafeTransform)
@@ -449,7 +449,7 @@ final class FontAtlas: NSObject, NSCoding {
     let height = asciiOnly ? Constants.AsciiWidth : Constants.AtlasSizeHeightMax
 
     let (atlasData, dataSize) = createAtlasForFont(font, width, height)
-    defer { atlasData.deinitialize(count: dataSize); atlasData.deallocate(capacity: dataSize) }
+    defer { atlasData.deinitialize(count: dataSize); atlasData.deallocate() }
 
     let distanceFields = computeSignedDistanceFields(atlasData, width, height)
 

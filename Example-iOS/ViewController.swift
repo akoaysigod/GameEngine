@@ -24,7 +24,7 @@ final class TestGameViewController: GameViewController {
 
     let view = self.view as! GameView
     view.clearColor = Color(0.0, 0.5, 0.0, 1.0)
-    scene = Scene(size: view.bounds.size.size)
+    let scene = Scene(size: view.bounds.size.size)
     scene.ambientLightColor = Color(0.25, 0.25, 0.25)
     view.present(scene: scene)
 
@@ -220,16 +220,21 @@ extension TestGameViewController {
   @objc
   func tap(_ t: UITapGestureRecognizer) {
     let p = t.location(in: view)
-    let r = scene.convertPointFromView(p.point)
-
-    scene.nodesAtPoint(r).forEach {
-      print($0.name ?? "")
-      print($0.frame)
+    if let gameView = view as? GameView,
+      let r = gameView.scene?.convertPointFromView(p.point) {
+      gameView.scene?.nodesAt(point: r).forEach {
+        print($0.name ?? "")
+        print($0.frame)
+      }
     }
   }
 
   @objc
   func panCamera(_ p: UIPanGestureRecognizer) {
+    guard let gameView = view as? GameView,
+      let scene = gameView.scene else {
+      return
+    }
     var pos = p.translation(in: view)
     pos.x *= CGFloat(scene.camera.xScale)
     pos.y *= CGFloat(scene.camera.yScale)
@@ -241,7 +246,11 @@ extension TestGameViewController {
 
   @objc
   func zoomCamera(_ p: UIPinchGestureRecognizer) {
-    let scale = self.scene.camera.scale * Float(p.scale)
+    guard let gameView = view as? GameView,
+      let scene = gameView.scene else {
+        return
+    }
+    let scale = scene.camera.scale * Float(p.scale)
     let realScale = max(0.5, min(scale, 5.0));
     scene.camera.zoom = realScale
     p.scale = 1.0
