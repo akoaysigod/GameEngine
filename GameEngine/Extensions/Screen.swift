@@ -25,8 +25,8 @@ struct Screen {
     #else
       let scale = screen.nativeScale
       var bounds = self.bounds
-      bounds.size.width *= scale
-      bounds.size.height *= scale
+//      bounds.size.width *= scale
+//      bounds.size.height *= scale
       return bounds
     #endif
   }

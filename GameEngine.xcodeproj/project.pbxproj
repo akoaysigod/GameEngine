@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A37A3FD2214A12500EE5A48 /* LightShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34AC01FF4486E00C60330 /* LightShaders.metal */; };
+		8A37A3FE2214BF6D00EE5A48 /* CompositionShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = EAC34ABE1FF4486E00C60330 /* CompositionShaders.metal */; };
 		EA23A20B1E144FED00D22762 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = EA1ACBF21C9E5D7000878EE6 /* error.png */; };
 		EA23A2111E14604000D22762 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DCA111E0F421B000FCF02 /* AppDelegate.swift */; };
 		EA23A2121E14604700D22762 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DCA131E0F421B000FCF02 /* ViewController.swift */; };
@@ -642,13 +644,13 @@
 					};
 					EA0C9F481E0F21E900CCD0B8 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = A9PBWT52W8;
+						DevelopmentTeam = 6WA4S3MYQ3;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 					};
 					EA9DC9F81E0F41ED000FCF02 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = A9PBWT52W8;
+						DevelopmentTeam = 6WA4S3MYQ3;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
@@ -758,6 +760,7 @@
 				EAC34A4A1FF446AA00C60330 /* Tree.swift in Sources */,
 				EAC34AAB1FF4484300C60330 /* Vec3.swift in Sources */,
 				EAC34AAA1FF4484300C60330 /* Mat2.swift in Sources */,
+				8A37A3FD2214A12500EE5A48 /* LightShaders.metal in Sources */,
 				EAC34A871FF446D200C60330 /* Size.swift in Sources */,
 				EAC34A421FF446AA00C60330 /* TextureAtlas.swift in Sources */,
 				EAC34A461FF446AA00C60330 /* ShapeNode.swift in Sources */,
@@ -779,6 +782,7 @@
 				EAC34AAD1FF4484300C60330 /* Vec2.swift in Sources */,
 				EAC34A3B1FF446AA00C60330 /* TextureFrame.swift in Sources */,
 				EAC34A441FF446AA00C60330 /* SpriteNode.swift in Sources */,
+				8A37A3FE2214BF6D00EE5A48 /* CompositionShaders.metal in Sources */,
 				EAC34A7A1FF446C400C60330 /* GraphCache.swift in Sources */,
 				EAC34A731FF446C400C60330 /* LightTexturePipeline.swift in Sources */,
 				EAC34A3D1FF446AA00C60330 /* Quad.swift in Sources */,
@@ -985,7 +989,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = A9PBWT52W8;
+				DEVELOPMENT_TEAM = 6WA4S3MYQ3;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1018,7 +1022,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = A9PBWT52W8;
+				DEVELOPMENT_TEAM = 6WA4S3MYQ3;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1047,15 +1051,15 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6WA4S3MYQ3;
 				INFOPLIST_FILE = "Example-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "solarjetmen.Example-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "sadfa-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1072,14 +1076,14 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6WA4S3MYQ3;
 				INFOPLIST_FILE = "Example-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "solarjetmen.Example-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "sadfa-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;

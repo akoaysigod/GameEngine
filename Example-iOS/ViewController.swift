@@ -32,7 +32,7 @@ final class TestGameViewController: GameViewController {
     //let imageNames = ["AngelBlue", "AngelBrown", "AngelGrey", "AngelGrey2", "AngelOrange", "AngelPurple", "AngelRed", "AngelSilver", "AntBlack"]
 
     let textureLoader = view.textureLoader
-    if let environmentAtlas = try? textureLoader.makeTextureAtlas(imageNames: imageNames),
+    if let environmentAtlas = try? textureLoader.makeTextureAtlas(imageNames: imageNames, createLightMap: true),
       let wall = environmentAtlas["Wall"],
       let floor = environmentAtlas["Floor"],
       let openDoor = environmentAtlas["OpenDoor"],
@@ -57,28 +57,30 @@ final class TestGameViewController: GameViewController {
             sp = SpriteNode(texture: floor)
           }
           sp.position = Point(x: sp.size.width * Float(x), y: sp.size.height * Float(y))
-          //scene.add(node: sp)
+          scene.add(node: sp)
         }
       }
       let stairs = SpriteNode(texture: stairsDown)
       stairs.anchorPoint = Point(x: 0.5, y: 0.5)
       stairs.position = Point(x: 0.0, y: 0.0)
       stairs.zPosition = 1
-      scene.add(node: stairs)
+      //scene.add(node: stairs)
 
       let openDoor = SpriteNode(texture: openDoor)
       openDoor.anchorPoint = Point(x: 0.5, y: 0.5)
       openDoor.position = Point(x: openDoor.size.width, y: 0)
       //openDoor.position = Point(x: 0.0, y: 0.0)
-      scene.add(node: openDoor)
+      //scene.add(node: openDoor)
       //      let stairs = SpriteNode(texture: stairsDown)
       //      stairs.anchorPoint = Point(x: 0.5, y: 0.5)
       //      stairs.position = Point(x: 0.0, y: 0.0)
       //      stairs.zPosition = 1
       //      scene.addNode(stairs)
 
-//      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
-//      scene.addNode(light)
+      let light = LightNode(position: Point(x: 0.0, y: 0.0), color: Color(0.67, 0.16, 0.0), radius: 400.0)
+      let light2 = LightNode(position: Point(x: -100, y: 0.0), color: Color(0.0, 0.16, 0.67), radius: 300)
+      scene.add(node: light)
+      scene.add(node: light2)
       //      var nodes = [SpriteNode]()
       //      for y in (-10..<10) {
       //        for x in (-10..<10) {
@@ -164,7 +166,7 @@ final class TestGameViewController: GameViewController {
     //colorRect2.position = Point(x: -128.0, y: -64.0)
     //colorRect2.anchorPoint = Point(x: -1.0, y: -1.0)
     colorRect2.zPosition = 1
-    scene.add(node: colorRect2)
+    //scene.add(node: colorRect2)
 
     //    let colorRect3 = ShapeNode(width: 100, height: 100, color: .blue)
     //    colorRect3.name = "blue rect"

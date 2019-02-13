@@ -8,7 +8,7 @@ final class Renderer {
   private let spritePipeline: SpritePipeline
   private let textPipeline: TextPipeline
   #if os(iOS)
-//  private let lightPipeline: LightPipeline
+  private let lightPipeline: LightPipeline
 //  private let compositionPipeline: CompositionPipeline
   #endif //tmp
   private let depthState: MTLDepthStencilState
@@ -36,7 +36,7 @@ final class Renderer {
     textPipeline = factory.makeTextPipeline()
     //tmp
     #if os(iOS)
-//    lightPipeline = factory.makeLightPipeline()
+    lightPipeline = factory.makeLightPipeline()
 //    compositionPipeline = factory.makeCompositionPipeline()
     #endif
     depthState = factory.makeDepthStencil()
@@ -97,10 +97,10 @@ final class Renderer {
       }
 
       #if os(iOS) //tmp
-//      if let lightNode = lightNodes.first {
-//        lightPipeline.encode(encoder!, bufferIndex: bufferIndex, uniformBuffer: bufferManager.uniformBuffer, lightNodes: lightNodes)
-//        compositionPipeline.encode(encoder!, ambientColor: lightNode.ambientColor)
-//      }
+        if let lightNode = lightNodes.first {
+            lightPipeline.encode(encoder: encoder, bufferIndex: bufferIndex, uniformBuffer: bufferManager.uniformBuffer, lightNodes: lightNodes)
+            compositionPipeline.encode(encoder: encoder, ambientColor: lightNode.ambientColor)
+        }
       #endif
 
       encoder.endEncoding()

@@ -45,6 +45,7 @@ fragment FragOut spriteFragment(VertexOut interpolated [[stage_in]],
   FragOut fragOut;
   fragOut.diffuse = texColor.sample(sampler2D, interpolated.texCoord);
   fragOut.normal = texNormal.sample(sampler2D, interpolated.texCoord);
+  fragOut.light = float4(0.0, 0.0, 0.0, 0.0);
   //fragOut.light = lightColor;
   return fragOut;
 }

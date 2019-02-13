@@ -15,7 +15,7 @@ final class RenderPassQueue {
 
   private var currentDescriptorIndex = 0
 
-  private let colorAttachmentCount = 1
+  private let colorAttachmentCount = 4
 
   init(device: MTLDevice, depthTexture: MTLTexture) {
     self.device = device

@@ -38,7 +38,7 @@ vertex VertexOut lightVertex(ushort vid [[vertex_id]],
   return outVertex;
 }
 
-fragment FragOut lightFragment(VertexOut interpolated [[stage_in]],
+fragment float4 lightFragment(VertexOut interpolated [[stage_in]],
                                constant float2& resolution [[buffer(0)]],
                                constant LightData& lightData [[buffer(1)]],
                                FragOut gBuffer)
@@ -62,7 +62,9 @@ fragment FragOut lightFragment(VertexOut interpolated [[stage_in]],
   FragOut fragOut;
   fragOut.diffuse = gBuffer.diffuse * light;
   fragOut.normal = gBuffer.normal;
-  fragOut.light = light;
+  gBuffer.light = light;
 
-  return fragOut;
+  // mostly works right now, maybe don't need to add the diffuse color it looks fine but it's dark
+  //return float4(gBuffer.diffuse.rgb * diffuse * attenuation, gBuffer.diffuse.a);
+  return float4(gBuffer.light.rgb, gBuffer.diffuse.a);
 }
